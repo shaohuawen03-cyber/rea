@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# media-batch —— 从文件里批量读链接，带间隔、失败重试、结果汇总
+#
+#   media-batch links.txt [media-fetch 的其它选项...]
+#
+# links.txt 一行一个链接，# 开头是注释，空行忽略。
+# 失败的行会写进 links.failed.txt，下次可以直接重跑。
+set -uo pipefail
+ROOT="${MEDIA_TOOLKIT_HOME:-$HOME/.local/media-toolkit}"
+FETCH="$ROOT/bin/media-fetch"
+[ $# -ge 1 ] || { echo "用法：media-batch links.txt [--cookies ...]" >&2; exit 2; }
+file="$1"; shift
+[ -f "$file" ] || { echo "找不到 $file" >&2; exit 2; }
+failed="${file%.*}.failed.txt"; : > "$failed"
+ok=0; bad=0
+while IFS= read -r line; do
+  line="${line%%#*}"; line="$(printf '%s' "$line" | xargs)"
+  [ -z "$line" ] && continue
+  if "$FETCH" "$line" "$@"; then ok=$((ok+1)); else bad=$((bad+1)); echo "$line" >> "$failed"; fi
+done < "$file"
+echo "完成：成功 $ok 条，失败 $bad 条${bad:+ }$( [ "$bad" -gt 0 ] && echo "（失败清单：$failed）")"
+[ "$bad" -eq 0 ]

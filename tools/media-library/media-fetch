@@ -1,0 +1,129 @@
+#!/usr/bin/env bash
+# media-fetch —— 一条命令把「链接」变成「原文件 + 元数据」，落盘结构对齐 Google Drive 素材库
+#
+#   media-fetch "<链接>" [更多链接...] [选项]
+#
+# 选项
+#   --out DIR          输出根目录（默认 ~/media-raw）
+#   --cookies FILE     Netscape 格式 cookie（小红书/抖音必需）
+#   --proxy URL        http://127.0.0.1:7890 之类
+#   --images           强制走 gallery-dl（图文/相册）
+#   --video            强制走 yt-dlp（视频）
+#   --probe            只解析标题/时长/格式，不落盘
+#   --quality N        最高分辨率上限，默认 1080
+#   --sleep N          多条链接之间的间隔秒数，默认 4（防风控）
+#
+# 产物
+#   <out>/<NN_平台>/<作者>/<日期>_<标题>_[<平台ID>]/
+#       *.mp4|*.jpg …     原文件
+#       *.info.json       yt-dlp 抓到的完整元数据
+#       meta.json         本次采集记录（来源链接、工具、文件清单、状态）
+set -euo pipefail
+
+ROOT="${MEDIA_TOOLKIT_HOME:-$HOME/.local/media-toolkit}"
+YTDLP="$ROOT/bin/yt-dlp"; GALDL="$ROOT/bin/gallery-dl"
+FFMPEG="$("$ROOT/venv/bin/python" -c 'import imageio_ffmpeg;print(imageio_ffmpeg.get_ffmpeg_exe())' 2>/dev/null || true)"
+OUT="$HOME/media-raw"; COOKIES=""; PROXY=""; MODE="auto"; PROBE=0; QUALITY=1080; SLEEP=4
+LINKS=()
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --out)     OUT="$2"; shift 2;;
+    --cookies) COOKIES="$2"; shift 2;;
+    --proxy)   PROXY="$2"; shift 2;;
+    --images)  MODE="images"; shift;;
+    --video)   MODE="video"; shift;;
+    --probe)   PROBE=1; shift;;
+    --quality) QUALITY="$2"; shift 2;;
+    --sleep)   SLEEP="$2"; shift 2;;
+    -h|--help) sed -n '2,25p' "$0"; exit 0;;
+    -*) echo "未知选项：$1" >&2; exit 2;;
+    *)  LINKS+=("$1"); shift;;
+  esac
+done
+[ ${#LINKS[@]} -gt 0 ] || { sed -n '2,25p' "$0"; exit 2; }
+[ -x "$YTDLP" ] || { echo "未安装：先运行 tools/media-library/install.sh" >&2; exit 1; }
+
+platform_dir() { # 域名 → 目录名（与 Drive 素材库一致）
+  case "$1" in
+    *xiaohongshu.com*|*xhslink.com*) echo "01_小红书素材";;
+    *douyin.com*|*iesdouyin.com*)    echo "02_抖音素材";;
+    *youtube.com*|*youtu.be*)        echo "03_YouTube素材";;
+    *bilibili.com*|*b23.tv*)         echo "05_B站素材";;
+    *kuaishou.com*)                  echo "06_快手素材";;
+    *tiktok.com*)                    echo "07_TikTok素材";;
+    *instagram.com*)                 echo "08_Instagram素材";;
+    *github.com*|*codeload.github*|*githubusercontent*) echo "04_其他平台素材/GitHub";;
+    *)                               echo "04_其他平台素材/$(printf '%s' "$1" | sed -E 's#^https?://(www\.)?##; s#/.*##')";;
+  esac
+}
+slug() { printf '%s' "$1" | tr '/\\:*?"<>|' '_' | tr -s ' ' | cut -c1-80; }
+
+COMMON=()
+[ -n "$COOKIES" ] && COMMON+=(--cookies "$COOKIES")
+[ -n "$PROXY" ]   && COMMON+=(--proxy "$PROXY")
+[ -n "$FFMPEG" ]  && COMMON+=(--ffmpeg-location "$FFMPEG")
+
+for link in "${LINKS[@]}"; do
+  host=$(printf '%s' "$link" | sed -E 's#^https?://##; s#/.*##')
+  pdir="$OUT/$(platform_dir "$link")"
+  echo "==> $link"
+
+  if [ "$PROBE" = "1" ]; then
+    "$YTDLP" "${COMMON[@]}" --skip-download --print "%(extractor)s | %(uploader)s | %(title)s | %(duration)ss | %(resolution)s" "$link" 2>&1 | tail -3 || true
+    continue
+  fi
+
+  tool="yt-dlp"
+  if [ "$MODE" = "images" ] || { [ "$MODE" = "auto" ] && printf '%s' "$link" | grep -qiE 'instagram|pinterest|weibo|tuchong|huaban'; }; then
+    tool="gallery-dl"
+  fi
+
+  if [ "$tool" = "gallery-dl" ]; then
+    # 图文：先落到临时目录，再整理成「一条笔记一个文件夹」
+    tmp=$(mktemp -d)
+    gd=( -d "$tmp" -o "base-directory=$tmp" --no-mtime )
+    [ -n "$COOKIES" ] && gd+=( --cookies "$COOKIES" )
+    [ -n "$PROXY" ]   && gd+=( --proxy "$PROXY" )
+    if "$GALDL" "${gd[@]}" "$link"; then
+      src=$(find "$tmp" -mindepth 1 -type d | tail -1); [ -z "$src" ] && src="$tmp"
+      name=$(basename "$src")
+      dest="$pdir/$name"
+      mkdir -p "$dest"; find "$src" -maxdepth 1 -type f -exec cp -n {} "$dest/" \;
+    else
+      echo "   gallery-dl 失败，回退 yt-dlp" >&2; tool="yt-dlp(回退)"; tmp2=$(mktemp -d)
+      "$YTDLP" "${COMMON[@]}" -f "bestvideo[height<=$QUALITY]+bestaudio/best" --write-info-json \
+        -P "$tmp2" -o "%(uploader_id,uploader|unknown)s/%(upload_date>%Y%m%d,upload_date|nodate)s_%(title).60s_[%(id)s]/%(title).60s.%(ext)s" "$link" || true
+      src=$(find "$tmp2" -mindepth 2 -type d | tail -1); dest="$pdir/${src#$tmp2/}"
+      mkdir -p "$dest"; find "$src" -maxdepth 1 -type f -exec cp -n {} "$dest/" 2>/dev/null || true
+      tmp="$tmp2"
+    fi
+  else
+    dest="$pdir"
+    args=( "${COMMON[@]}"
+      -f "bestvideo[height<=$QUALITY]+bestaudio/best[height<=$QUALITY]/best"
+      --merge-output-format mp4 --write-info-json --write-thumbnail --embed-metadata
+      -P "$pdir"
+      -o "%(uploader_id,uploader|unknown)s/%(upload_date>%Y%m%d,upload_date|nodate)s_%(title).60s_[%(id)s]/%(title).60s.%(ext)s" )
+    "$YTDLP" "${args[@]}" "$link" || true
+    info=$(find "$pdir" -name "*.info.json" -mmin -2 2>/dev/null | head -1)
+    [ -n "$info" ] && dest=$(dirname "$info")
+    tmp=""
+  fi
+
+  # meta.json：采集记录（不是元数据本体，用于追溯与去重）
+  if [ -d "${dest:-}" ]; then
+    files=$(cd "$dest" && find . -maxdepth 1 -type f ! -name meta.json -printf '%f\n' | sort)
+    bytes=$(cd "$dest" && find . -maxdepth 1 -type f ! -name meta.json -printf '%s\n' | awk '{s+=$1} END{print s+0}')
+    {
+      printf '{\n  "source_url": "%s",\n  "tool": "%s",\n  "collected_at": "%s",\n  "node": "%s",\n' \
+        "$link" "$tool" "$(date -u +%FT%TZ)" "$host"
+      printf '  "file_count": %s,\n  "total_bytes": %s,\n  "files": [' "$(printf '%s\n' "$files" | grep -c . || true)" "$bytes"
+      printf '%s\n' "$files" | awk 'NF{printf "%s    \"%s\"", (NR>1?",\n":""), $0} END{print ""}'
+      printf '  ]\n}\n'
+    } > "$dest/meta.json"
+    echo "   → $dest  ($(printf '%s\n' "$files" | grep -c . || true) 个文件, $bytes 字节)"
+  fi
+  [ -n "$tmp" ] && rm -rf "$tmp"
+  sleep "$SLEEP"
+done
