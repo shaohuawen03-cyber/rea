@@ -151,6 +151,7 @@ jobs:
           done
 
           # Make the token visible to the kaggle CLI regardless of its age.
+          # Formats: kaggle.json JSON | "username:key" classic | bare API token (KGAT_/sk-...).
           if [ -f ~/.gpu-relay/kaggle.json ]; then
             mkdir -p ~/.kaggle && cp ~/.gpu-relay/kaggle.json ~/.kaggle/kaggle.json && chmod 600 ~/.kaggle/kaggle.json
           elif [ -f ~/.gpu-relay/kaggle_token ]; then
@@ -158,13 +159,15 @@ jobs:
             mkdir -p ~/.kaggle
             if echo "$raw" | grep -q '^{'; then
               printf '%s\n' "$raw" > ~/.kaggle/kaggle.json
-            elif echo "$raw" | grep -q '^KGAT_'; then
-              printf '{"key":"%s"}\n' "$raw" > ~/.kaggle/kaggle.json
-            else
+            elif echo "$raw" | grep -q ':'; then
               user="${raw%%:*}"; key="${raw#*:}"
               printf '{"username":"%s","key":"%s"}\n' "$user" "$key" > ~/.kaggle/kaggle.json
+            else
+              # Bare API token: file-based auth + env auth (both accepted by the modern CLI).
+              printf '%s\n' "$raw" > ~/.kaggle/access_token
+              echo "KAGGLE_API_TOKEN=$raw" >> "$GITHUB_ENV"
             fi
-            chmod 600 ~/.kaggle/kaggle.json
+            chmod 600 ~/.kaggle/kaggle.json ~/.kaggle/access_token 2>/dev/null || true
           fi
 
           POST_HASH="$(hash_vault)"

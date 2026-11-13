@@ -58,6 +58,20 @@ def run_cmd(
     )
 
 
+def _write_access_token(token: str) -> None:
+    """Belt-and-braces: bare API tokens also land in ~/.kaggle/access_token for
+    CLIs that read the file rather than the KAGGLE_API_TOKEN env var."""
+    try:
+        kaggle_dir = os.path.expanduser("~/.kaggle")
+        os.makedirs(kaggle_dir, exist_ok=True)
+        path = os.path.join(kaggle_dir, "access_token")
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(token.strip() + "\n")
+        os.chmod(path, 0o600)
+    except OSError:
+        pass
+
+
 def resolve_colab_env() -> tuple[dict[str, str], str | None]:
     """Build environment with GOOGLE_APPLICATION_CREDENTIALS if available."""
     env = os.environ.copy()
@@ -83,6 +97,7 @@ def resolve_kaggle_env() -> tuple[dict[str, str], str | None]:
     """Configure Kaggle credentials from env or vault files."""
     env = os.environ.copy()
     if env.get("KAGGLE_API_TOKEN", "").strip():
+        _write_access_token(env["KAGGLE_API_TOKEN"].strip())
         return env, "env:KAGGLE_API_TOKEN"
     if env.get("KAGGLE_USERNAME", "").strip() and env.get("KAGGLE_KEY", "").strip():
         return env, "env:KAGGLE_USERNAME+KAGGLE_KEY"
@@ -102,6 +117,7 @@ def resolve_kaggle_env() -> tuple[dict[str, str], str | None]:
                 env["KAGGLE_KEY"] = key.strip()
                 return env, "vault:username:key"
             env["KAGGLE_API_TOKEN"] = raw
+            _write_access_token(raw)
             return env, "vault:KAGGLE_API_TOKEN"
 
     for p in ("~/.kaggle/access_token", "~/.kaggle/kaggle.json", "~/.kaggle/credentials.json"):

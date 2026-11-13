@@ -78,6 +78,24 @@ gh run download --dir /tmp/relay-out               # 完整 artifact（如 gh �
    `Drive:/MyDrive/arena-bridge/outbox/<job-id>/`。
 4. 沙箱侧（agent）用 google_drive 连接器读 outbox，或直接读单元格输出。
 
+## ⚠️ 一次性安装:启用工作流
+
+`gpu-relay.yml` 必须位于 `.github/workflows/` 才会被 GitHub Actions 执行。当前 Arena 的
+GitHub App token 没有 `workflows` 权限,无法推送该目录(实测:`refusing to allow a GitHub
+App to create or update workflow ... without 'workflows' permission`)。仓库管理员二选一:
+
+1. **(推荐)在 Arena 里重连 GitHub**,让 App 获得 `workflows` 权限;之后 agent 可以直接
+   `git mv cloud-gpu/gpu-relay.yml .github/workflows/gpu-relay.yml` 并推送。
+2. **github.com 网页手动一次**:打开
+   [cloud-gpu/gpu-relay.yml](https://github.com/shaohuawen03-cyber/rea/blob/arena/cac2205a-rea/cloud-gpu/gpu-relay.yml)
+   → Raw → 复制;再
+   [新建文件](https://github.com/shaohuawen03-cyber/rea/new/arena/cac2205a-rea?filename=.github%2Fworkflows%2Fgpu-relay.yml)
+   路径填 `.github/workflows/gpu-relay.yml`,粘贴内容,提交到分支
+   `arena/cac2205a-rea`。此提交本身就会触发第一次中继运行(探针 + 发布公钥)。
+
+首次触发后 `cloud-gpu/relay_pubkey.pem` 会自动出现;之后的 `queue.json` / `secrets/**`
+推送都会自动触发中继,无需再手工操作。
+
 ## 目录
 
 | 路径 | 说明 |
@@ -87,6 +105,7 @@ gh run download --dir /tmp/relay-out               # 完整 artifact（如 gh �
 | `scripts/drive_put.py` | 向预授权 Drive resumable URI 流式回传大产物 |
 | `jobs/queue.json` | 任务队列，**push 本文件即触发中继** |
 | `jobs/gpu_smoke.py` | Kaggle 2×T4 冒烟载荷（torch/CUDA/ESM 前向 + 可选 Drive 回传） |
+| `gpu-relay.yml` | 中继工作流本体;须安装到 `.github/workflows/` 后生效（见上文「一次性安装」） |
 | `colab/Arena_GPU_Bridge.ipynb` | 用户点击的 Colab 桥接笔记本 |
 | `secrets/` | 一次性加密信封（提交后由中继消费删除） |
 | `results/` | 中继回传的小结果（自动生成，≤2 MiB/文件） |
