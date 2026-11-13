@@ -72,11 +72,13 @@ gh run download --dir /tmp/relay-out               # 完整 artifact（如 gh �
 
 ### 3. Colab 手动通道
 
-1. 打开笔记本：<https://colab.research.google.com/github/shaohuawen03-cyber/rea/blob/arena/cac2205a-rea/cloud-gpu/colab/Arena_GPU_Bridge.ipynb>
-2. 菜单「代码执行程序 → 更改运行时类型」选 GPU，然后从上到下运行单元格。
-3. 有 inbox 任务就执行任务，没有就跑内置 GPU 冒烟；结果一律写
-   `Drive:/MyDrive/arena-bridge/outbox/<job-id>/`。
-4. 沙箱侧（agent）用 google_drive 连接器读 outbox，或直接读单元格输出。
+- **换账号版(GitHub 托管,任意 Google 账号可打开)**:
+  <https://colab.research.google.com/github/shaohuawen03-cyber/rea/blob/arena/cac2205a-rea/cloud-gpu/colab/Kaggle_Colab_Bridge.ipynb>
+  — Colab 换新账号登录也能用:挂载 Drive 时点**旧账号**(信箱在它 Drive 里),
+  密钥放**新账号**的 🔑 Secrets(`KAGGLE_API_TOKEN`,KGAT_/裸 token 均可)。
+- 旧版单文件夹笔记本(Drive 托管):
+  <https://colab.research.google.com/drive/1rz2lWhye5m4Wsunrt_U_WMcGlR8x63E4>
+  与 `Arena_GPU_Bridge.ipynb`(一次性冒烟版)共存,协议与信箱一致(`Colab Notebooks/Kaggle-Colab-Bridge`)。
 
 ## ⚠️ 一次性安装:启用工作流
 
