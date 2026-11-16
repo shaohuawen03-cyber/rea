@@ -59,42 +59,50 @@ def pI(seq):
 
 # ---------- Macrel 解析 ----------
 def find_macrel_tsv(outdir):
-    cands = []
-    for pat in ("*amp*prediction*.tsv", "*amp*.tsv", "*prediction*.tsv", "*.tsv"):
-        cands += glob.glob(os.path.join(outdir, "**", pat), recursive=True)
-    if not cands:
-        return None
-    # 特征列最多的表优先（含有 peptide + prediction 列）
-    best, best_cols = None, -1
-    for f in cands:
-        with open(f) as fh:
-            head = fh.readline().rstrip("\n").split("\t")
-        if len(head) > best_cols:
-            best, best_cols = f, len(head)
-    return best
+    cands = glob.glob(os.path.join(outdir, "**", "*.prediction.gz"), recursive=True)
+    cands += glob.glob(os.path.join(outdir, "**", "*.prediction.tsv"), recursive=True)
+    cands += glob.glob(os.path.join(outdir, "**", "*prediction*.tsv"), recursive=True)
+    cands += glob.glob(os.path.join(outdir, "**", "*amp*.tsv"), recursive=True)
+    return cands[0] if cands else None
+
+
+def _open_maybe_gzip(path):
+    if path.endswith(".gz"):
+        import gzip
+        return gzip.open(path, "rt")
+    return open(path)
 
 def read_macrel(tsv):
+    """解析 Macrel v1.6.1 产物（macrel.out.prediction.gz；支持 TSV 回退）。
+
+    列：Access Sequence AMP_family AMP_probability Hemolytic Hemolytic_probability
+    文件开头有一行 `# Prediction from macrel v1.6.1` 注释，需跳过。
+    语义：列出的肽 = Macrel 判阳（macrel 默认只输出 AMP）；未列出 = 判非 AMP。
+    """
     result = {}
-    with open(tsv) as fh:
-        rows = list(csv.DictReader(fh, delimiter="\t"))
-    low = [c.lower() for c in (rows[0].keys() if rows else [])]
+    with _open_maybe_gzip(tsv) as fh:
+        lines = [l for l in fh if not l.startswith("#")]
+    rows = list(csv.DictReader(lines, delimiter="\t"))
     def col(cands):
+        keys = rows[0].keys() if rows else []
         for c in cands:
-            for orig in (rows[0].keys() if rows else []):
+            for orig in keys:
                 if orig.lower() == c:
                     return orig
         return None
-    ccol = col(["peptide", "seq", "sequence"])
-    pcol = col(["prediction", "amp", "is_amp", "label", "pred"])
+    ccol = col(["sequence", "peptide", "seq"])
+    pcol = col(["amp_probability", "probability", "prediction", "amp", "is_amp", "label", "pred"])
     lcol = col(["hemolytic", "lytic", "lysis"])
     if ccol is None or pcol is None:
-        # 退化为：表序与 reps.faa 相同顺序（macrel 保证保序）→ 用前缀列
         return None
     for r in rows:
         seq = (r[ccol] or "").split()[0].strip().upper()
-        pred = str(r[pcol]).strip().lower()
-        amp = pred in ("true", "amp", "yes", "1", "t")
-        hemo = str(r[lcol]).strip().lower() if lcol else "unknown"
+        raw = str(r[pcol]).strip().lower()
+        try:
+            amp = float(raw) > 0.5 if raw not in ("true", "false", "yes", "no", "amp") else raw in ("true", "yes", "amp")
+        except ValueError:
+            amp = raw in ("true", "yes", "amp", "1", "t")
+        hemo = str(r[lcol]).strip() if lcol and r[lcol] is not None else "unknown"
         result[seq] = (amp, hemo)
     return result
 

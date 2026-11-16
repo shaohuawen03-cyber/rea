@@ -91,11 +91,14 @@ QC：`reps/unique ∈ [0.3, 0.9]`；聚类前后序列总质量（length 分布�
 
 ### 阶段 3a｜Macrel 独立筛选（并行路 A）
 ```bash
-scripts/02_macrel_predict.sh out/stage2/reps.faa out/stage3_macrel
+scripts/02_macrel_predict.sh out/stage2/reps.faa out/stage3_macrel 16   # MACREL_BIN=… 指定解释器；MACREL_FORCE=1 覆盖非空目录
 ```
-产物：Macrel 目录（`macrel_.../amp_prediction...tsv`，含 peptide/prediction/hemolytic）
-QC：表头含 peptide+prediction 列；AMP 阳率异常高（>5%）提示输入同源块或未排除已知 AMP；无输出表则先 `macrel --help` 核对 CLI（大版本间参数有差异），再用 `MACREL_ARGS=…` 覆盖。
-预期：AMP 率 0.1–3%（gut 宏基因组 0.1–1.65%，Santos-Júnior 2020）。
+产物（macrel v1.6.1 实测）：`out/stage3_macrel/macrel.out.prediction.gz`
+列：`Access  Sequence  AMP_family  AMP_probability  Hemolytic  Hemolytic_probability`（首行 `#` 注释；**只列出 AMP 阳性肽**）
+语义（05 脚本按此解析）：出现在表中 = Macrel 判阳；不在表中 = 判非 AMP。`MACREL_EXTRA=--keep-negatives` 可改为保留全部。
+QC：必须能解析出上述列（脚本自检）；AMP 阳率异常高（>5%）提示输入同源块或未排除已知 AMP；`--no-download-database` 避免首次运行联网下载 AMPSphere。
+预期：AMP 率 0.1–3%（gut 宏基因组 0.1–1.65%，Santos-Júnior 2020 PeerJ 8:e10555）。
+⚠️ CLI 口径：是 `macrel peptides -f … -o …`（肽序列）或 `macrel contigs …`（nt contigs）；不是 `macrel predict`。
 
 ### 阶段 3b｜权重获取（二选一）
 **A. 直接取回 real4 权重（前提：派发 real5 重训约 1 h，等你同意）**：内核会把 10 个 `.pt`（M1/M2 × seed 1..5）+ `biophys_scaler.joblib` 导出到 artifact 目录，relay 再抓回本仓库（见 §6）。
@@ -144,7 +147,7 @@ scripts/06_rule_b_ripp.sh contigs.fna out/rule_b
 | 0 | sample_map.tsv, sha256 | 总数/长度/头部唯一 | 数量不符或 sha256 变化 |
 | 1 | unique.faa, master.tsv | dup_ratio∈(0.2,0.95)；长度合规率 | 解析崩溃/空产物 |
 | 2 | reps.faa, cluster.tsv | reps/unique∈[0.3,0.9] | mmseqs 失败 |
-| 3a | Macrel tsv | 列齐；AMP 率 0.05%–5% | 表缺列/全阳/全阴 |
+| 3a | Macrel tsv | 列齐（Sequence/AMP_probability/Hemolytic）；AMP 率 0.05%–5% | 表缺列/全阳/全阴 |
 | 3b | weights/*.pt, manifest | sha256 与 manifest 一致（10 个） | 校验失败 |
 | 4 | pred_shard_*.tsv | 合计行数 == reps 数；分数分布合理 | checkpoint 缺失/NaN |
 | 5 | AMP_candidate_priority.tsv | Tier1≤5%；macrel_matched≥90% | 理化列全空 |
