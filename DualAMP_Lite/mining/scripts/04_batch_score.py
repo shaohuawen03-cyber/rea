@@ -60,13 +60,16 @@ def main():
     args = ap.parse_args()
     assert 0 <= args.shard < args.num_shards
 
-    leanrea = args.leanrea_dir or os.path.join(args.export_dir, "leanrea")
-    if not os.path.isdir(os.path.join(leanrea, "dualamp-lite")):
+    # leanrea_dir = leanrea 仓库根目录（默认 .external/leanrea）；包路径 = <leanrea>/dualamp-lite/dualamp_lite
+    leanrea = args.leanrea_dir or os.path.join(".external", "leanrea")
+    pkg_parent = os.path.join(leanrea, "dualamp-lite")
+    if not os.path.isdir(os.path.join(pkg_parent, "dualamp_lite")):
         import subprocess
-        os.makedirs(leanrea, exist_ok=True)
+        os.makedirs(os.path.dirname(leanrea) or ".", exist_ok=True)
+        print(f"cloning leanrea into {leanrea} (repo root)")
         subprocess.check_call(["git", "clone", "--depth", "1", "-b", "arena/4ecb70f1-leanrea",
-                               "https://github.com/hukeying85-ux/leanrea.git", os.path.join(leanrea, "dualamp-lite")])
-    sys.path.insert(0, os.path.join(leanrea, "dualamp-lite"))
+                               "https://github.com/hukeying85-ux/leanrea.git", leanrea])
+    sys.path.insert(0, pkg_parent)
 
     import torch
     from dualamp_lite import features, models  # noqa: E402

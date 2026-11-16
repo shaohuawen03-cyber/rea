@@ -103,7 +103,7 @@ def read_macrel(tsv, missing_as_nonamp=True):
     with _open_maybe_gzip(tsv) as fh:
         lines = [l for l in fh if not l.startswith("#")]
     header = lines[0].rstrip("\n").split("\t") if lines else []
-    rows = list(csv.DictReader(lines[1:], delimiter="\t")) if len(lines) > 1 else []
+    rows = list(csv.DictReader(lines, delimiter="\t")) if lines else []  # DictReader 自动以首行为 fieldnames
     def col(cands):
         for c in cands:
             for orig in header:

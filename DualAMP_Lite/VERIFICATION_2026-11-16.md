@@ -224,3 +224,21 @@ candidate_v2（positive_core_v2）训练时引擎固定（MMseqs2），避免同
 `--limit` 弃用为抽样方法（改 00b reservoir 分层抽样）；04 `global`→`nonlocal` 且 resume 绑定输入/权重 sha256；
 05 Tier2 与 README 一致（M2≥0.95 ∨ M1≥0.90∧M2≥0.75）；pI/净电荷复用 leanrea biophys（含端基）；
 Macrel 5–9/>100 记 NA；QC 阈值改警示、闭合为硬条件；06 标注 `RiPP_workflow_scaffold`。
+
+---
+
+## §11 全链路冒烟实测（2026-11-16；本沙箱：2 × CPU / 3 GB / 无 GPU）
+
+**声明**：以下输入 = A 快照（Release 2026_04）随机 18–50 aa 片段 110,000 条（seed 20261116），
+**仅用于性能/连通性验证，不是真实 sORF 数据、不产生生物学结论、不用于论文**。
+
+| 阶段 | 结果 | 耗时/注记 |
+|---|---|---|
+| 00 标准化+精确去重 | 110,000 → 109,748 unique（252 重复；全部合规；低复杂度 0；source_map 64 桶闭合：rows=after_alphabet=110,000） | 1.7 s；73 MB 输出（含 sqlite） |
+| 01 mmseqs 家族聚类 | easy-cluster 0.90/0.90；109,748 → 106,579 reps（reps_fraction 0.971——随机片段几乎无可合并家族，属预期；真实 sORF 会显著更低）；`cluster_rows == unique_inputs` 闭合 ✓ | 5.3 s；mmseqs 自 GitHub 静态构建 18-8cc5c（cmake+ninja） |
+| 02 Macrel 独立筛选 | 109,748 条（≥10 aa 层）；**AMP 调用 2,734（2.5%）**——随机 cytoplasm 片段组成偏组成，预期高于肠道 0.1–1.65% 区间 | 12.5 s |
+| 04 ESM-2/双模型打分 | 控制流冒烟（mock 权重+fake encoder，仅测述流）：行数闭合；`--resume` 正确跳过已写行；meta 绑定 输入/权重 sha256（改输入→拒绝错位续跑）；`--shard/--num-shards` 闭合（2×50+表头） | 106,579 行 28 s |
+| 04 真值数值路径 | **未在本沙箱验证**（无 GPU，PyPI 仅 CUDA 版 torch ~3 GB，download.pytorch.org 不可达）；真实性证据由 real4（Kaggle fair-esm 特征→训练→报告）提供 | — |
+| 05 合并+Tier | 真实 macrel 产物 × 106,579 行（随机分数）：7.3 s；Macrel_AMP 匹配 2,599（其余 51–100 aa 层未进 5–50 reps，属预期）；Layer/NA 语义正确 | 本轮发现并修复：empty prediction.gz 曾致全 NA（csv.DictReader 与手动 header 切片重复）；04 的 leanrea_dir 语义修正为“仓库根（包父目录=<dir>/dualamp-lite）” |
+
+**结论**：阶段 00→05 全链路连通、闭合检查有效、可续跑；真实运行 = 用你的 sORF FAA + v2 权重重跑同一命令序列即可。

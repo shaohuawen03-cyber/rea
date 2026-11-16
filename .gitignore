@@ -86,3 +86,8 @@ DualAMP_Lite/mining/out/
 # 临时冒烟目录
 .tmp-smoke/
 .backup-now/
+
+.tmp-bench/
+.tmp-tools/
+.tmp-mmseqs-src/
+.tmp-mmseqs.tar.gz
