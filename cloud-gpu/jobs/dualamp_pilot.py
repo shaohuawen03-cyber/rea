@@ -133,25 +133,113 @@ def _ensure_deps():
         log("installing missing deps: " + ", ".join(missing))
         subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", *missing])
 
-def _ensure_mmseqs():
-    """Try to install MMseqs2 via apt so clustering uses the real tool instead of
-    the k-mer fallback (which over-clusters short peptides and dumps ~80% of
-    positives into review). Never fatal: fall back gracefully."""
-    import shutil
-    if shutil.which("mmseqs"):
-        log("mmseqs already available: " + shutil.which("mmseqs"))
-        return
+_CD_HIT_SHIM = r'''#!/usr/bin/env python3
+"""Minimal cd-hit shim backed by the mmseqs2 engine.
+Accepts -i/-o/-c/-aL (+ ignored extras); writes a CD-HIT .clstr file."""
+import argparse, subprocess
+
+def main():
+    p = argparse.ArgumentParser()
+    p.add_argument("-i", dest="inp", required=True)
+    p.add_argument("-o", dest="out", required=True)
+    p.add_argument("-c", type=float, required=True)
+    p.add_argument("-aL", type=float, default=0.8)
+    a, _ = p.parse_known_args()
+    lengths, name, buf = {}, None, []
+    with open(a.inp) as fh:
+        for line in fh:
+            if line.startswith(">"):
+                if name is not None:
+                    lengths[name] = len("".join(buf))
+                name = line[1:].split()[0]; buf = []
+            else:
+                buf.append(line.strip())
+        if name is not None:
+            lengths[name] = len("".join(buf))
+    tmpdir = a.out + "_tmp"; prefix = a.out + "_mm"
+    subprocess.check_call(["mmseqs", "easy-cluster", a.inp, prefix, tmpdir,
+                           "--min-seq-id", f"{a.c:.2f}", "-c", f"{a.aL:.2f}",
+                           "--cov-mode", "0", "-v", "0"])
+    clusters, order = {}, []
+    with open(prefix + "_cluster.tsv") as fh:
+        for line in fh:
+            rep, mem = line.rstrip("\n").split("\t")
+            if rep not in clusters:
+                clusters[rep] = len(order); order.append(rep)
+    members = {}
+    with open(prefix + "_cluster.tsv") as fh:
+        for line in fh:
+            rep, mem = line.rstrip("\n").split("\t")
+            members.setdefault(clusters[rep], []).append((mem, mem == rep))
+    with open(a.out + ".clstr", "w") as out:
+        for idx in range(len(order)):
+            out.write(f">Cluster {idx}\n")
+            for rank, (mem, is_rep) in enumerate(members[idx]):
+                ln = lengths.get(mem, 0)
+                if is_rep:
+                    out.write(f"{rank}\t{ln}aa, >{mem}... *\n")
+                else:
+                    out.write(f"{rank}\t{ln}aa, >{mem}... at +/99.00%\n")
+
+main()
+'''
+
+
+def _selftest_cdhit():
+    import os, tempfile
+    d = tempfile.mkdtemp()
+    fa = os.path.join(d, "t.fasta")
+    with open(fa, "w") as fh:
+        fh.write(">id0\nACDEFGHIKLMNPQRSTVWY\n>id1\nACDEFGHIKLMNPQRSTVWF\n>id2\nWWWWWWWWWWWWWWWWWWWW\n")
     try:
-        subprocess.check_call(["apt-get", "update", "-qq"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        subprocess.check_call(["apt-get", "install", "-y", "-qq", "mmseqs2"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        log("mmseqs2 installed via apt: " + str(shutil.which("mmseqs")))
-    except Exception as exc:
-        log(f"WARNING: mmseqs2 apt install failed ({exc}); falling back to CD-HIT/k-mer")
+        subprocess.check_call(["cd-hit", "-i", fa, "-o", os.path.join(d, "o"),
+                               "-c", "0.4", "-aL", "0.8", "-n", "2", "-d", "0",
+                               "-T", "2", "-M", "0"],
+                              stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        cl = os.path.join(d, "o.clstr")
+        return os.path.exists(cl) and os.path.getsize(cl) > 0
+    except Exception:
+        return False
+
+
+def _ensure_clustering():
+    """Guarantee dualamp_lite's first clustering tier (cd-hit) actually works:
+    apt mmseqs2 engine (+ cd-hit if the distro ships it), plus a source self-test
+    of whatever `cd-hit` is on PATH; if the self-test fails and an mmseqs engine
+    exists, install a /usr/local/bin/cd-hit shim (shadows /usr/bin via PATH)."""
+    import shutil
+    if shutil.which("mmseqs") is None:
+        try:
+            subprocess.check_call(["apt-get", "update", "-qq"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            subprocess.check_call(["apt-get", "install", "-y", "-qq", "mmseqs2"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        except Exception as exc:
+            log(f"warning: mmseqs2 apt install failed: {exc}")
+    if shutil.which("cd-hit") is None:
+        try:
+            subprocess.check_call(["apt-get", "install", "-y", "-qq", "cd-hit"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            log("cd-hit installed via apt: " + str(shutil.which("cd-hit")))
+        except Exception as exc:
+            log(f"warning: cd-hit apt install failed: {exc}; will rely on shim if an mmseqs engine exists")
+    if shutil.which("cd-hit") is not None and _selftest_cdhit():
+        log("cd-hit self-test OK: " + str(shutil.which("cd-hit")))
+        return
+    if shutil.which("mmseqs") is not None:
+        try:
+            Path("/usr/local/bin/cd-hit").write_text(_CD_HIT_SHIM)
+            os.chmod("/usr/local/bin/cd-hit", 0o755)
+            if _selftest_cdhit():
+                log("native cd-hit missing/broken; installed cd-hit->mmseqs shim at /usr/local/bin/cd-hit (self-test OK)")
+                return
+            log("ERROR: cd-hit shim installed but self-test FAILED; k-mer fallback will be used")
+        except Exception as exc:
+            log(f"ERROR: failed to install cd-hit shim: {exc}; k-mer fallback will be used")
+    else:
+        log("WARNING: neither cd-hit nor mmseqs available; k-mer fallback will be used")
 
 def main():
     os.environ.setdefault("TORCH_HOME", "/tmp/torch_home")
     _ensure_deps()
-    _ensure_mmseqs()
+    _ensure_clustering()
     ap = argparse.ArgumentParser()
     ap.add_argument("--mode", choices=["real", "dry", "negatives-only"], default="dry")
     ap.add_argument("--workdir", default="/tmp/dualamp-pilot")
