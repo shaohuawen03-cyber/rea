@@ -124,8 +124,12 @@ QC（脚本自检列；警示）：AMP 率>5% 先查同源块；<10 aa 与 >100 
 ### 阶段 3b｜权重（二选一）
 **A. 正式：等 positive_core_v2 锁定后** → `POSITIVES_SHA256=<v2 sha> scripts/03_train_export.sh <v2.fasta> weights`（≈1–2 h GPU）
 **B. 调试/测速（非正式，2026-11-16 用户指示先跑）**：real5 = Kaggle 夜跑同口径 candidate_v1（5 seeds × 5 folds × 60 ep），
-导出 10 个 .pt + scaler；产物标注 `candidate_v1_pilot_weights`，仅调试/初筛，不发布为正式模型、不写论文；
-v2 回填后再训。
+导出 .pt + scaler；产物标注 `candidate_v1_pilot_weights`，仅调试/初筛，不发布为正式模型、不写论文；
+v2 回填后再训。**已跑通：2026-11-16T11:24Z Kaggle T4 完成（kernel shaohuawen/dualamp-real5-20261116）；
+测试集 AUROC：M1 0.9767–0.9791 / M2 0.9796–0.9809 / M3 0.9770–0.9803；M0_RF ≈ 0.964。
+15 个 .pt（M1/M2/M3 × 5 seeds，M2/M3 各 ≈2 MB 贴近 2 MiB 上限）+ scaler 在 workflow artifact
+`gpu-relay-run-18`（14 天过期）与 Kaggle kernel 输出里；按仓库约定不进 Git（.gitignore），
+**永久存放待用户选择：GitHub Release / HuggingFace / Google Drive（见 VERIFICATION 2026-11-16 §11 与 §6）。**
 
 ### 阶段 4｜ESM-2 → M1/M2 批量打分
 ```bash
