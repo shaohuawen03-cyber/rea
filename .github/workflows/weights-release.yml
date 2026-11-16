@@ -65,55 +65,8 @@ jobs:
         id: pkg
         run: |
           set -euo pipefail
-          SRC=/tmp/weights-src
-          PKG=/tmp/pkg
-          TAG="${{ inputs.release_tag }}"
-          EXPECT="${{ inputs.expected_pt }}"
-          rm -rf "$PKG"
-          mkdir -p "$PKG/model" "$PKG/features" "$PKG/meta"
-
-          echo "== source tree =="
-          find "$SRC" -type f | sort | sed 's|^|  |'
-
-          found=0
-          while IFS= read -r -d '' f; do
-            base="$(basename "$f")"
-            name="${base#model_}"
-            cp "$f" "$PKG/model/$name"
-            found=$((found + 1))
-          done < <(find "$SRC" -type f -name '*.pt' -print0)
-          echo "pt files: $found (expected $EXPECT)"
-          if [ "$found" != "$EXPECT" ]; then
-            echo "::error::expected $EXPECT .pt files, found $found — aborting to avoid a bad release"
-            exit 1
-          fi
-
-          scaler="$(find "$SRC" -type f -name 'features_biophys_scaler.joblib' | head -n1 || true)"
-          if [ -n "$scaler" ]; then
-            cp "$scaler" "$PKG/features/biophys_scaler.joblib"
-          else
-            echo "::warning::features_biophys_scaler.joblib not found in artifact"
-          fi
-
-          for pat in _pilot_summary.json model_train_summary.json \
-                     dataset_dataset_summary.json dataset_label_audit.csv \
-                     manuscript_D10_test_metrics.csv manuscript_D10_evaluation_report.md \
-                     manuscript_D11_external_validation.csv manuscript_D15_input_sha256.tsv \
-                     ablation_D9_ablation.csv dualamp-real5-20261116.log result.json; do
-            f="$(find "$SRC" -type f -name "$pat" | head -n1 || true)"
-            if [ -n "$f" ]; then
-              cp "$f" "$PKG/meta/$pat"
-            else
-              echo "::warning::missing meta file: $pat"
-            fi
-          done
-
-          python3 cloud-gpu/scripts/pack_release_assets.py "$PKG" "$TAG"
-
-          TARBALL="/tmp/${TAG}.tar.gz"
-          tar -czf "$TARBALL" -C "$PKG" .
-          echo "TARBALL=$TARBALL" >> "$GITHUB_OUTPUT"
-          echo "=== tarball ==="; ls -la "$TARBALL"
+          python3 cloud-gpu/scripts/pack_release_assets.py /tmp/weights-src /tmp/pkg "${{ inputs.release_tag }}" "${{ inputs.expected_pt }}"
+          echo "TARBALL=/tmp/${{ inputs.release_tag }}.tar.gz" >> "$GITHUB_OUTPUT"
 
       - name: Publish release (prerelease) with assets
         env:
