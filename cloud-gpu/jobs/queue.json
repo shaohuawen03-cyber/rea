@@ -186,9 +186,10 @@
       "extra_pip": [],
       "serve_minutes": 15.0,
       "wait": true,
-      "status": "pending",
+      "status": "completed",
       "created_at_utc": "2026-11-16T05:28:00Z",
-      "kernel_slug": "dualamp-real4-20261116"
+      "kernel_slug": "dualamp-real4-20261116",
+      "finished_at_utc": "2026-11-16T05:28:34Z"
     }
   ]
 }
