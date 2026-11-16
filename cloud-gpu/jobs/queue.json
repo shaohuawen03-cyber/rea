@@ -12,9 +12,10 @@
       "extra_pip": [],
       "serve_minutes": 0.0,
       "wait": true,
-      "status": "pending",
+      "status": "completed",
       "created_at_utc": "2026-11-12T03:20:00Z",
-      "note": "Round 1: validate the relay loop itself (credentials, CLIs, results return path)."
+      "note": "Round 1: validate the relay loop itself (credentials, CLIs, results return path).",
+      "finished_at_utc": "2026-11-16T00:53:56Z"
     }
   ]
 }
