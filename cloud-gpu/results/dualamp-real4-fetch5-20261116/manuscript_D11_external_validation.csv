@@ -1,0 +1,4 @@
+split,model,threshold,n,n_pos,mean_score,frac_predicted_positive
+scrambled,M1,0.6847199999999999,500,0,0.7764052748680115,0.732
+scrambled,M2,0.8848834,500,0,0.6501514911651611,0.568
+scrambled,M3,0.8100902,500,0,0.634890615940094,0.566
