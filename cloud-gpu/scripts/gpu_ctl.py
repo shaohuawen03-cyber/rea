@@ -459,7 +459,7 @@ def execute_kaggle_job(job: dict[str, Any], run_dir: str) -> dict[str, Any]:
     if mode == "output":
         tmp_out = tempfile.mkdtemp(prefix="kag_out_")
         try:
-            out = run_cmd(["kaggle", "kernels", "output", kernel_ref, "-p", tmp_out, "-o"], env=kaggle_env, timeout=300)
+            out = run_cmd(["kaggle", "kernels", "output", kernel_ref, "-p", tmp_out, "-o"], env=kaggle_env, timeout=900)
             copied = _copy_small_outputs(tmp_out, run_dir)
             payload = {
                 "job_id": job["id"],
@@ -560,7 +560,7 @@ def execute_kaggle_job(job: dict[str, Any], run_dir: str) -> dict[str, Any]:
                 break
         tmp_out = tempfile.mkdtemp(prefix="kag_out_")
         try:
-            run_cmd(["kaggle", "kernels", "output", kernel_ref, "-p", tmp_out, "-o"], env=kaggle_env, timeout=300)
+            run_cmd(["kaggle", "kernels", "output", kernel_ref, "-p", tmp_out, "-o"], env=kaggle_env, timeout=900)
             copied_files = _copy_small_outputs(tmp_out, run_dir)
         finally:
             shutil.rmtree(tmp_out, ignore_errors=True)
