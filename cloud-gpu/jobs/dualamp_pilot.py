@@ -164,7 +164,7 @@ def main():
         want_sha = os.environ.get("FASTA_SHA256", EXPECTED_POS_SHA256).strip()
         raw = None
         url = os.environ.get("FASTA_URL", "").strip()
-        fid = os.environ.get("FASTA_ID", "").strip()
+        fid = os.environ.get("FASTA_ID", "11vvQSlOJDjt8v6qHCB4LWg6mRK3DwNis").strip()  # gdown 需要 anyone-with-link 只读（派发窗内开放，跑完回收）
         if fid:
             log(f"downloading positives via gdown (Drive file id {fid[:6]}…)")
             subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", "gdown"])

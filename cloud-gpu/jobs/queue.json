@@ -79,6 +79,25 @@
       "created_at_utc": "2026-11-16T01:24:34Z",
       "kernel_slug": "dualamp-dry-20261116",
       "finished_at_utc": "2026-11-16T01:40:01Z"
+    },
+    {
+      "id": "dualamp-real-20261116",
+      "provider": "kaggle",
+      "mode": "run",
+      "accelerator": "NvidiaTeslaT4",
+      "script_path": "cloud-gpu/jobs/dualamp_pilot.py",
+      "script_args": [
+        "--mode",
+        "real"
+      ],
+      "extra_pip": [
+        "fair-esm"
+      ],
+      "serve_minutes": 15.0,
+      "wait": true,
+      "status": "pending",
+      "created_at_utc": "2026-11-16T02:11:28Z",
+      "kernel_slug": "dualamp-real-20261116"
     }
   ]
 }
