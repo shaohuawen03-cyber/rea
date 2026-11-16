@@ -126,9 +126,11 @@ def shadow_positives(out_path, n=150, seed=20261116):
             f.write(f">MOCK_P{i:04d}\n{''.join(rng.choice(AA) for _ in range(L))}\n")
 
 def main():
+    os.environ.setdefault("TORCH_HOME", "/tmp/torch_home")
     ap = argparse.ArgumentParser()
     ap.add_argument("--mode", choices=["real", "dry", "negatives-only"], default="dry")
-    ap.add_argument("--workdir", default="/kaggle/working/dualamp-pilot")
+    ap.add_argument("--workdir", default="/tmp/dualamp-pilot")
+    ap.add_argument("--artifact-dir", default=os.getcwd())
     ap.add_argument("--epochs", type=int, default=60)
     ap.add_argument("--seeds", default="1,2,3,4,5")
     ap.add_argument("--folds", type=int, default=5)
@@ -214,7 +216,7 @@ def main():
     run([sys.executable, "-m", "dualamp_lite", "report", "--workdir", str(wd / "run")],
         env={**os.environ, "PYTHONPATH": str(pkg)})
 
-    outdir = wd / "artifacts"; outdir.mkdir(exist_ok=True)
+    outdir = Path(args.artifact_dir); outdir.mkdir(parents=True, exist_ok=True)
     keep = ["dataset/dataset_summary.json", "dataset/label_audit.csv",
             "dataset/D1_sample_metadata.csv",
             "manuscript/D10_test_metrics.csv", "manuscript/D10_evaluation_report.md",
