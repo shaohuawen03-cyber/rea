@@ -98,8 +98,8 @@ QC：表头含 peptide+prediction 列；AMP 阳率异常高（>5%）提示输入
 预期：AMP 率 0.1–3%（gut 宏基因组 0.1–1.65%，Santos-Júnior 2020）。
 
 ### 阶段 3b｜权重获取（二选一）
-**A. 直接用 real4 已训权重（推荐）**：已由本轮 `gpu-relay` fetch6 任务取回（见 §6），`weights/` 内 10 个 `.pt`（M1/M2 × seed 1..5）+ `export_manifest.json`(sha256)。
-**B. 本机重训导出**（用于将来 positive_core_v2 定稿训练）：
+**A. 直接取回 real4 权重（前提：派发 real5 重训约 1 h，等你同意）**：内核会把 10 个 `.pt`（M1/M2 × seed 1..5）+ `biophys_scaler.joblib` 导出到 artifact 目录，relay 再抓回本仓库（见 §6）。
+**B. 本机重训导出**（等价，适合你有 GPU 的机器）：
 ```bash
 scripts/03_train_export.sh /path/to/candidate_v1.fasta model_export
 ```
@@ -113,7 +113,7 @@ for k in $(seq 0 9); do
     --out out/stage4/pred_shard_${k}.tsv --shard $k --num-shards 10 \
     --batch-size 128 --device cuda &
 done; wait
-cat out/stage4/pred_shard_*.tsv > out/stage4/DualAMP_prediction.tsv   # 去重表头：先处理第一行
+cat out/stage4/pred_shard_*.tsv | awk 'NR==1 || $1 != "seq"' > out/stage4/DualAMP_prediction.tsv
 ```
 续跑：加 `--resume`（按已有行数跳过）。吞吐参考（real4，fair-esm fp16，9505 条/13.2 s on 2×T4 ≈ 720 seq/s）：
 > **>1亿条 ESM 全量打分是铁律禁忌——只跑 reps.faa**。1e8 → 去重/聚类后按 0.4–0.7 计，仍 4e7–7e7；单 T4 需数天，建议 ≥4×A10/A100 或先转 pilot 标定；`--limit` 可控规模。
@@ -161,16 +161,19 @@ scripts/06_rule_b_ripp.sh contigs.fna out/rule_b
 - ❌ 原始 sORF FASTA、>2 MiB 文件进 Git；权重走 Release/HF（§6）。
 - ❌ 跳过任何 `qc_*.json` 直接进入下一阶段。
 
-## 6. 权重（.pt）交付方式
+## 6. 权重（.pt）交付方式——先说坏消息
 
-- real4 kernel 输出里**确实有** `.pt`（`train.py: torch.save(paths.model/...)`），但 rea 的 fetch 管线
-  `gpu_ctl.py:_copy_small_outputs` 显式排除 `.pt`（防大文件入 Git）——这就是之前 fetch5 只有 12 个 md/csv/json 的原因。
-- 本轮修复：`_copy_small_outputs` 放宽 `.pt` + `cloud-gpu/results/**/*.pt` 加入 `.gitignore`
-  → 派发 `dualamp-real4-fetch6`（仅 output 模式，**不重训、不改任何数据**）→ 用 `gh run download` 取回
-  → 权重落到 `DualAMP_Lite/mining/weights/`（git-ignored）→ 打包 `dualamp-real4-pilot-weights.tar.gz`
-  → 发布 **GitHub Release**（本仓库，tag `dualamp-real4-pilot`）。
-- HuggingFace：你之前说可以给账号——给我一个**仅针对一个目标仓库的 write token**（例如 `…/dualamp-real4-pilot`），
-  我即 `huggingface-cli upload`。（token 不会写入 Git；仅本次会话内使用。）
+- **real4 的 .pt 已经拿不到了。** `dualamp_pilot.py` 的工作区是 `/tmp/dualamp-pilot`（不在 `/kaggle/working`），
+  `train.py` 把 .pt 写进 `<workdir>/model/`，内核结束即随会话销毁；本轮 fetch6（仅 output 模式）已证实
+  kernel 输出里没有任何 `.pt`（沿袭 fetch1–5 的 12 件产物）。
+- 处置：① 已补丁 `dualamp_pilot.py`——real5 起把 `model/*.pt` + `biophys_scaler.joblib` 导出到 artifact 目录
+  （≤2 MiB 才导出），配合 `gpu_ctl.py:_copy_small_outputs` 放宽 `.pt`（已推送）；② `DualAMP_Lite/mining/weights/`
+  已 git-ignored 不入库。
+- **你只需选一条路**：**A)** 同意派发 real5（同 seed/口径重训一遍，≈1 h，产出即权重，我随后 fetch 取回并发布
+  到 GitHub Release + 你给的 HF 仓库）；**B)** 你在自己有 GPU 的机器上跑
+  `scripts/03_train_export.sh /path/to/candidate_v1.fasta model_export`，产出等价。
+- 拿到后：打包 `dualamp-real4-pilot-weights.tar.gz` → tag `dualamp-real4-pilot` → **GitHub Release**（assets，
+  不占 Git 体积）+ **HuggingFace**（给我一个仅目标仓库的 write token 即可；token 不入 Git、仅本会话使用）。
 
 ## 7. 文献（本 README 的事实源）
 

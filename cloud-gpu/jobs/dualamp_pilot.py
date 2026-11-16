@@ -424,6 +424,22 @@ def main():
     for p in (wd / "run" / "splits").glob("*.csv") if (wd / "run" / "splits").exists() else []:
         if p.stat().st_size <= 2 * 1024 * 1024:
             (outdir / f"splits_{p.name}").write_bytes(p.read_bytes()); copied.append(f"splits_{p.name}")
+    # real5 起：把模型权重一并导出到 artifact_dir，供 relay 取回（<=2 MiB 才入 Git；
+    # fetch 侧 _copy_small_outputs 现在允许 .pt，bot 不直接提交 .pt，权重走 Release/HF）。
+    model_dir = wd / "run" / "model"
+    if model_dir.exists():
+        for p in sorted(model_dir.glob("*.pt")):
+            if p.stat().st_size <= 2 * 1024 * 1024:
+                (outdir / f"model_{p.name}").write_bytes(p.read_bytes())
+                copied.append(f"model_{p.name}")
+        for p in sorted(model_dir.glob("*.joblib"))[:8]:
+            if p.stat().st_size <= 2 * 1024 * 1024:
+                (outdir / f"model_{p.name}").write_bytes(p.read_bytes())
+                copied.append(f"model_{p.name}")
+    scaler = wd / "run" / "features" / "biophys_scaler.joblib"
+    if scaler.exists() and scaler.stat().st_size <= 2 * 1024 * 1024:
+        (outdir / "features_biophys_scaler.joblib").write_bytes(scaler.read_bytes())
+        copied.append("features_biophys_scaler.joblib")
     (outdir / "_pilot_summary.json").write_text(json.dumps({
         "mode": args.mode, "mock_positives": mock,
         "positives": len(pos_seqs), "negatives_stats": neg_stats,
