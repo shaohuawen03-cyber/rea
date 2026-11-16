@@ -152,12 +152,75 @@ def main():
     pos_fasta = data / "positives.fasta"
     mock = args.mode != "real"
     if args.mode == "real":
-        url = os.environ.get("FASTA_URL", "").strip()
         want_sha = os.environ.get("FASTA_SHA256", EXPECTED_POS_SHA256).strip()
-        assert url, "real mode requires FASTA_URL (one-time preauthorized Drive link)"
-        log("downloading positives via one-time preauthorized URL")
-        import urllib.request
-        raw = urllib.request.urlopen(url, timeout=600).read()
+        raw = None
+        url = os.environ.get("FASTA_URL", "").strip()
+        fid = os.environ.get("FASTA_ID", "").strip()
+        if fid:
+            log(f"downloading positives via gdown (Drive file id {fid[:6]}…)")
+            subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", "gdown"])
+            import gdown
+            raw_path = str(data / "positive_core_candidate_v1.fasta")
+            got_path = gdown.download(id=fid, output=raw_path, quiet=False)
+            assert got_path, "gdown failed (file must be 'anyone with link can view')"
+            raw = Path(got_path).read_bytes()
+        elif url:
+            log("downloading positives via preauthorized URL")
+            import urllib.request
+            raw = urllib.request.urlopen(url, timeout=600).read()
+        else:
+            sa = os.environ.get("DRIVE_SA_JSON", "").strip()   # not recommended; prefer private dataset
+            if sa:
+                log("downloading positives via service account (Drive API)")
+                subprocess.check_call([sys.executable, "-m", "pip", "install", "-q",
+                                       "google-api-python-client", "google-auth"])
+                import json as _json, tempfile
+                from google.oauth2 import service_account
+                from googleapiclient.discovery import build
+                with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as tf:
+                    tf.write(sa); sa_path = tf.name
+                creds = service_account.Credentials.from_service_account_file(
+                    sa_path, scopes=["https://www.googleapis.com/auth/drive.readonly"])
+                svc = build("drive", "v3", credentials=creds)
+                sa_fid = os.environ.get("FASTA_ID", "11vvQSlOJDjt8v6qHCB4LWg6mRK3DwNis")
+                req = svc.files().get_media(fileId=sa_fid)
+                with tempfile.NamedTemporaryFile(delete=False) as tf2:
+                    from googleapiclient.http import MediaIoBaseDownload
+                    import io
+                    buf = io.BytesIO()
+                    dl = MediaIoBaseDownload(buf, req)
+                    done = False
+                    while not done:
+                        _, done = dl.next_chunk()
+                    raw = buf.getvalue()
+            else:
+                sa_ds = os.environ.get("SA_DATASET", "").strip()  # e.g. shaohuawen/dualamp-drive-sa
+                sa_path = "/kaggle/input/dualamp-drive-sa/service_account.json"
+                alt_dir = "/kaggle/input/" + sa_ds.split("/", 1)[-1] if sa_ds else None
+                for cand in [sa_path, (alt_dir + "/service_account.json") if alt_dir else None]:
+                    if cand and os.path.exists(cand):
+                        sa_path = cand; break
+                if os.path.exists(sa_path):
+                    log("downloading positives via private Kaggle dataset service account")
+                    subprocess.check_call([sys.executable, "-m", "pip", "install", "-q",
+                                           "google-api-python-client", "google-auth"])
+                    from google.oauth2 import service_account
+                    from googleapiclient.discovery import build
+                    from googleapiclient.http import MediaIoBaseDownload
+                    import io
+                    creds = service_account.Credentials.from_service_account_file(
+                        sa_path, scopes=["https://www.googleapis.com/auth/drive.readonly"])
+                    svc = build("drive", "v3", credentials=creds)
+                    sa_fid = os.environ.get("FASTA_ID", "11vvQSlOJDjt8v6qHCB4LWg6mRK3DwNis")
+                    req = svc.files().get_media(fileId=sa_fid)
+                    buf = io.BytesIO()
+                    dl = MediaIoBaseDownload(buf, req)
+                    done = False
+                    while not done:
+                        _, done = dl.next_chunk()
+                    raw = buf.getvalue()
+                else:
+                    raise RuntimeError("real mode needs FASTA_ID (public-link) / FASTA_URL (preauthorized) / private SA dataset or DRIVE_SA_JSON")
         got = hashlib.sha256(raw).hexdigest()
         assert got == want_sha, f"sha256 mismatch: {got} != {want_sha}"
         pos_fasta.write_bytes(raw)
