@@ -1,1 +1,2 @@
-=== Running job gpu-smoke-20261113 (kaggle / run) ===
+=== Running job dualamp-dry-20261116 (kaggle / run) ===
+[ERROR] Job dualamp-dry-20261116 failed: Command '['kaggle', 'kernels', 'output', 'shaohuawen/dualamp-dry-20261116', '-p', '/tmp/kag_out_qrsfldx_', '-o']' timed out after 300 seconds

@@ -59,9 +59,11 @@
       ],
       "serve_minutes": 15.0,
       "wait": true,
-      "status": "pending",
+      "status": "failed",
       "created_at_utc": "2026-11-16T01:16:27Z",
-      "kernel_slug": "dualamp-dry-20261116"
+      "kernel_slug": "dualamp-dry-20261116",
+      "error": "Command '['kaggle', 'kernels', 'output', 'shaohuawen/dualamp-dry-20261116', '-p', '/tmp/kag_out_qrsfldx_', '-o']' timed out after 300 seconds",
+      "finished_at_utc": "2026-11-16T01:23:32Z"
     }
   ]
 }

@@ -1,0 +1,6 @@
+{
+  "job_id": "dualamp-dry-20261116",
+  "status": "failed",
+  "error": "Command '['kaggle', 'kernels', 'output', 'shaohuawen/dualamp-dry-20261116', '-p', '/tmp/kag_out_qrsfldx_', '-o']' timed out after 300 seconds",
+  "timestamp_utc": "2026-11-16T01:23:32Z"
+}
