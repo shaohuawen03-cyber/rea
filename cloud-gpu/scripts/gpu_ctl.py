@@ -590,7 +590,7 @@ def _copy_small_outputs(src_root: str, dst_dir: str) -> list[str]:
     for root, _, files in os.walk(src_root):
         for fn in files:
             full = os.path.join(root, fn)
-            if os.path.getsize(full) <= MAX_GIT_FILE_BYTES and not fn.endswith((".pt", ".pth", ".safetensors", ".onnx", ".gguf")):
+            if os.path.getsize(full) <= MAX_GIT_FILE_BYTES and not fn.endswith((".pth", ".safetensors", ".onnx", ".gguf")):
                 rel = os.path.relpath(full, src_root).replace(os.sep, "_")
                 shutil.copy2(full, os.path.join(dst_dir, rel))
                 copied.append(rel)

@@ -77,3 +77,8 @@ Thumbs.db
 website/_site/
 # Temporary translation output prepared before replacing the complete site.
 website/.i18n-*/
+
+# real4 权重——走 GitHub Release / HuggingFace，不入库
+cloud-gpu/results/**/*.pt
+DualAMP_Lite/mining/weights/
+DualAMP_Lite/mining/out/

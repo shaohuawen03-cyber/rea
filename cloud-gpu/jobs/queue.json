@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-12T03:20:00Z",
+  "updated_at_utc": "2026-11-12T00:00:00Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -235,6 +235,21 @@
       "created_at_utc": "2026-11-16T06:45:57Z",
       "kernel_slug": "dualamp-real4-20261116",
       "finished_at_utc": "2026-11-16T06:46:45Z"
+    },
+    {
+      "id": "dualamp-real4-fetch6-20261116",
+      "provider": "kaggle",
+      "mode": "output",
+      "accelerator": "NvidiaTeslaT4",
+      "script_path": "",
+      "script_args": [],
+      "extra_pip": [],
+      "serve_minutes": 15.0,
+      "wait": true,
+      "status": "pending",
+      "created_at_utc": "2026-11-12T00:00:00Z",
+      "kernel_slug": "dualamp-real4-20261116",
+      "note": "Fetch .pt weights (gpu_ctl now allows .pt <=2MiB); bot will NOT commit them (.gitignore); retrieved via gh workflow artifact."
     }
   ]
 }
