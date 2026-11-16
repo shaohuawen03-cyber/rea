@@ -1,0 +1,12 @@
+{
+  "job_id": "dualamp-real4-20261116",
+  "provider": "kaggle",
+  "mode": "run",
+  "accelerator": "NvidiaTeslaT4",
+  "kernel_ref": "shaohuawen/dualamp-real4-20261116",
+  "kernel_url": "https://www.kaggle.com/code/shaohuawen/dualamp-real4-20261116",
+  "status": "pushed_async",
+  "copied_files": [],
+  "push_output": "Kernel version 1 successfully pushed.  Please check progress at https://www.kaggle.com/code/shaohuawen/dualamp-real4-20261116",
+  "updated_at_utc": "2026-11-16T05:16:02Z"
+}
