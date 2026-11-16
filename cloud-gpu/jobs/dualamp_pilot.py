@@ -133,9 +133,25 @@ def _ensure_deps():
         log("installing missing deps: " + ", ".join(missing))
         subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", *missing])
 
+def _ensure_mmseqs():
+    """Try to install MMseqs2 via apt so clustering uses the real tool instead of
+    the k-mer fallback (which over-clusters short peptides and dumps ~80% of
+    positives into review). Never fatal: fall back gracefully."""
+    import shutil
+    if shutil.which("mmseqs"):
+        log("mmseqs already available: " + shutil.which("mmseqs"))
+        return
+    try:
+        subprocess.check_call(["apt-get", "update", "-qq"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        subprocess.check_call(["apt-get", "install", "-y", "-qq", "mmseqs2"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        log("mmseqs2 installed via apt: " + str(shutil.which("mmseqs")))
+    except Exception as exc:
+        log(f"WARNING: mmseqs2 apt install failed ({exc}); falling back to CD-HIT/k-mer")
+
 def main():
     os.environ.setdefault("TORCH_HOME", "/tmp/torch_home")
     _ensure_deps()
+    _ensure_mmseqs()
     ap = argparse.ArgumentParser()
     ap.add_argument("--mode", choices=["real", "dry", "negatives-only"], default="dry")
     ap.add_argument("--workdir", default="/tmp/dualamp-pilot")

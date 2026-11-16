@@ -190,6 +190,7 @@ jobs:
         run: |
           mkdir -p /tmp/private-gpu-runs
           cp cloud-gpu/jobs/queue.json /tmp/private-gpu-runs/queue.json
+          export RUN_STARTED_UTC="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
           ARGS=(run-queue --queue /tmp/private-gpu-runs/queue.json --runs-dir /tmp/private-gpu-runs)
           if [ -n "${{ inputs.only_id }}" ]; then
             ARGS+=(--only-id "${{ inputs.only_id }}")
@@ -201,9 +202,11 @@ jobs:
           tail -c 4000 /tmp/private-gpu-runs/dispatch.log || true
           # Fail the step if any job failed (queue status written by gpu_ctl).
           python - <<'PY'
-          import json, sys
+          import json, os, sys
+          cutoff = os.environ.get("RUN_STARTED_UTC", "")
           q = json.load(open("/tmp/private-gpu-runs/queue.json"))
-          failed = [j["id"] for j in q.get("jobs", []) if j.get("status") == "failed"]
+          # 只惩罚本次运行内（finished_at >= run 开始时间）失败的任务，历史遗留失败不再拖垮 run 结论
+          failed = [j["id"] for j in q.get("jobs", []) if j.get("status") == "failed" and j.get("finished_at_utc", "") >= cutoff]
           if failed:
               print("failed jobs:", ", ".join(failed))
               sys.exit(1)
