@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-12T00:00:00Z",
+  "updated_at_utc": "2026-11-16T00:00:00Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -251,6 +251,28 @@
       "kernel_slug": "dualamp-real4-20261116",
       "note": "Fetch .pt weights (gpu_ctl now allows .pt <=2MiB); bot will NOT commit them (.gitignore); retrieved via gh workflow artifact.",
       "finished_at_utc": "2026-11-16T07:26:27Z"
+    },
+    {
+      "id": "dualamp-real5-20261116",
+      "provider": "kaggle",
+      "mode": "run",
+      "accelerator": "NvidiaTeslaT4",
+      "script_path": "cloud-gpu/jobs/dualamp_pilot.py",
+      "script_args": [
+        "--mode",
+        "real"
+      ],
+      "extra_pip": [
+        "fair-esm"
+      ],
+      "serve_minutes": 15.0,
+      "wait": true,
+      "status": "failed",
+      "created_at_utc": "2026-11-16T00:00:00Z",
+      "kernel_slug": "dualamp-real5-20261116",
+      "note": "candidate_v1 retrain to RECOVER .pt weights (user ordered); pilot_weights ONLY; v2 waits for Review_Result. Exports handled by patched pilot (model/*.pt <=2MiB -> artifact dir -> relay artifact; not committed to git).",
+      "error": "Kaggle kernel shaohuawen/dualamp-real5-20261116 ended with error; inspect logs in /tmp/private-gpu-runs/dualamp-real5-20261116.",
+      "finished_at_utc": "2026-11-16T09:03:28Z"
     }
   ]
 }

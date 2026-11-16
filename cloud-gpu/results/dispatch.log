@@ -1,0 +1,2 @@
+=== Running job dualamp-real5-20261116 (kaggle / run) ===
+[ERROR] Job dualamp-real5-20261116 failed: Kaggle kernel shaohuawen/dualamp-real5-20261116 ended with error; inspect logs in /tmp/private-gpu-runs/dualamp-real5-20261116.

@@ -267,10 +267,12 @@
       ],
       "serve_minutes": 15.0,
       "wait": true,
-      "status": "pending",
+      "status": "failed",
       "created_at_utc": "2026-11-16T00:00:00Z",
       "kernel_slug": "dualamp-real5-20261116",
-      "note": "candidate_v1 retrain to RECOVER .pt weights (user ordered); pilot_weights ONLY; v2 waits for Review_Result. Exports handled by patched pilot (model/*.pt <=2MiB -> artifact dir -> relay artifact; not committed to git)."
+      "note": "candidate_v1 retrain to RECOVER .pt weights (user ordered); pilot_weights ONLY; v2 waits for Review_Result. Exports handled by patched pilot (model/*.pt <=2MiB -> artifact dir -> relay artifact; not committed to git).",
+      "error": "Kaggle kernel shaohuawen/dualamp-real5-20261116 ended with error; inspect logs in /tmp/private-gpu-runs/dualamp-real5-20261116.",
+      "finished_at_utc": "2026-11-16T09:03:28Z"
     }
   ]
 }

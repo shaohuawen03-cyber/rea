@@ -1,0 +1,49 @@
+[{"stream_name":"stdout","time":5.457328455,"data":"[dualamp_pilot 09:02:36] installing missing deps: biopython\n"}
+,{"stream_name":"stdout","time":29.239607537,"data":"[dualamp_pilot 09:03:00] cd-hit installed via apt: /usr/bin/cd-hit\n"}
+,{"stream_name":"stdout","time":36.010941639,"data":"[dualamp_pilot 09:03:06] installed cd-hit-\u003emmseqs shim at /usr/local/bin/cd-hit (self-test OK; native cd-hit bypassed)\n"}
+,{"stream_name":"stdout","time":36.012306957,"data":"[dualamp_pilot 09:03:06] cloning repo branch arena/cac2205a-rea\n"}
+,{"stream_name":"stderr","time":36.035931902,"data":"Cloning into '/tmp/dualamp-pilot/rea'...\n"}
+,{"stream_name":"stdout","time":40.113013139,"data":"[dualamp_pilot 09:03:10] downloading positives via gdown (Drive file id 11vvQS…)\n"}
+,{"stream_name":"stderr","time":43.226983367,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":43.227405718,"data":"  File \"/usr/local/lib/python3.13/dist-packages/gdown/download.py\", line 273, in download\n"}
+,{"stream_name":"stderr","time":43.227421347,"data":"    url = get_url_from_gdrive_confirmation(res.text)\n"}
+,{"stream_name":"stderr","time":43.227428092,"data":"  File \"/usr/local/lib/python3.13/dist-packages/gdown/download.py\", line 55, in get_url_from_gdrive_confirmation\n"}
+,{"stream_name":"stderr","time":43.227435163,"data":"    raise FileURLRetrievalError(\n"}
+,{"stream_name":"stderr","time":43.227441099,"data":"    ...\u003c4 lines\u003e...\n"}
+,{"stream_name":"stderr","time":43.227447358,"data":"    )\n"}
+,{"stream_name":"stderr","time":43.227453043,"data":"gdown.exceptions.FileURLRetrievalError: Cannot retrieve the public link of the file. You may need to change the permission to 'Anyone with the link', or have had many accesses. Check FAQ in https://github.com/wkentaro/gdown?tab=readme-ov-file#faq.\n"}
+,{"stream_name":"stderr","time":43.227465086,"data":"\n"}
+,{"stream_name":"stderr","time":43.227470806,"data":"During handling of the above exception, another exception occurred:\n"}
+,{"stream_name":"stderr","time":43.227476838,"data":"\n"}
+,{"stream_name":"stderr","time":43.22748202,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":43.228061943,"data":"  File \"/kaggle/src/script.py\", line 8, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":43.228075711,"data":"    runpy.run_path('/tmp/_payload.py', run_name='__main__')\n"}
+,{"stream_name":"stderr","time":43.228082207,"data":"    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":43.228087295,"data":"  File \"\u003cfrozen runpy\u003e\", line 294, in run_path\n"}
+,{"stream_name":"stderr","time":43.228092589,"data":"  File \"\u003cfrozen runpy\u003e\", line 98, in _run_module_code\n"}
+,{"stream_name":"stderr","time":43.228097731,"data":"  File \"\u003cfrozen runpy\u003e\", line 88, in _run_code\n"}
+,{"stream_name":"stderr","time":43.228102819,"data":"  File \"/tmp/_payload.py\", line 453, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":43.228108055,"data":"    main()\n"}
+,{"stream_name":"stderr","time":43.228112833,"data":"    ~~~~^^\n"}
+,{"stream_name":"stderr","time":43.228117517,"data":"  File \"/tmp/_payload.py\", line 290, in main\n"}
+,{"stream_name":"stderr","time":43.22812259,"data":"    got_path = gdown.download(id=fid, output=raw_path, quiet=False)\n"}
+,{"stream_name":"stderr","time":43.228129672,"data":"  File \"/usr/local/lib/python3.13/dist-packages/gdown/download.py\", line 284, in download\n"}
+,{"stream_name":"stderr","time":43.228140552,"data":"    raise FileURLRetrievalError(message)\n"}
+,{"stream_name":"stderr","time":43.228161841,"data":"gdown.exceptions.FileURLRetrievalError: Failed to retrieve file url:\n"}
+,{"stream_name":"stderr","time":43.228189541,"data":"\n"}
+,{"stream_name":"stderr","time":43.228208958,"data":"\tCannot retrieve the public link of the file. You may need to change\n"}
+,{"stream_name":"stderr","time":43.228215489,"data":"\tthe permission to 'Anyone with the link', or have had many accesses.\n"}
+,{"stream_name":"stderr","time":43.228219588,"data":"\tCheck FAQ in https://github.com/wkentaro/gdown?tab=readme-ov-file#faq.\n"}
+,{"stream_name":"stderr","time":43.228223573,"data":"\n"}
+,{"stream_name":"stderr","time":43.228227296,"data":"You may still be able to access the file from the browser:\n"}
+,{"stream_name":"stderr","time":43.228231074,"data":"\n"}
+,{"stream_name":"stderr","time":43.22823473,"data":"\thttps://drive.google.com/uc?id=11vvQSlOJDjt8v6qHCB4LWg6mRK3DwNis\n"}
+,{"stream_name":"stderr","time":43.228238709,"data":"\n"}
+,{"stream_name":"stderr","time":43.228242396,"data":"but Gdown can't. Please check connections and permissions.\n"}
+,{"stream_name":"stderr","time":45.30498941,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":45.30502078,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":45.645131099,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":45.64515828,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":46.659677329,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":47.723114899,"data":"[NbConvertApp] Writing 320204 bytes to __results__.html\n"}
+]
