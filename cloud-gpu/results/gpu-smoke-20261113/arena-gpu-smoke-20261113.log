@@ -1,0 +1,45 @@
+[{"stream_name":"stdout","time":21.747171612,"data":"Downloading: \"https://dl.fbaipublicfiles.com/fair-esm/models/esm2_t12_35M_UR50D.pt\" to /root/.cache/torch/hub/checkpoints/esm2_t12_35M_UR50D.pt\n"}
+,{"stream_name":"stdout","time":22.595591528,"data":"Downloading: \"https://dl.fbaipublicfiles.com/fair-esm/regression/esm2_t12_35M_UR50D-contact-regression.pt\" to /root/.cache/torch/hub/checkpoints/esm2_t12_35M_UR50D-contact-regression.pt\n"}
+,{"stream_name":"stdout","time":24.652551729,"data":"{\n"}
+,{"stream_name":"stdout","time":24.652603165,"data":"  \"script\": \"gpu_smoke_v4\",\n"}
+,{"stream_name":"stdout","time":24.652609284,"data":"  \"timestamp_utc\": \"2026-11-16T01:01:25Z\",\n"}
+,{"stream_name":"stdout","time":24.652613931,"data":"  \"python\": \"3.13.16\",\n"}
+,{"stream_name":"stdout","time":24.652618017,"data":"  \"platform\": \"Linux-6.18.55+-x86_64-with-glibc2.39\",\n"}
+,{"stream_name":"stdout","time":24.652621945,"data":"  \"nvidia_smi\": \"GPU 0: Tesla T4 (UUID: GPU-51f428e7-e30f-20be-e950-9843da22a82d)\\nGPU 1: Tesla T4 (UUID: GPU-13c8d2b7-057e-3abb-abc2-0d369a5eebd7)\\n\",\n"}
+,{"stream_name":"stdout","time":24.652626755,"data":"  \"nvidia_smi_query\": \"0, Tesla T4, 15360 MiB, 0 %\\n1, Tesla T4, 15360 MiB, 0 %\\n\",\n"}
+,{"stream_name":"stdout","time":24.652631927,"data":"  \"steps\": {\n"}
+,{"stream_name":"stdout","time":24.652635607,"data":"    \"load_sec\": 1.76,\n"}
+,{"stream_name":"stdout","time":24.652639197,"data":"    \"forward_sec\": 0.959\n"}
+,{"stream_name":"stdout","time":24.65264277,"data":"  },\n"}
+,{"stream_name":"stdout","time":24.652646161,"data":"  \"torch\": {\n"}
+,{"stream_name":"stdout","time":24.652649625,"data":"    \"version\": \"2.11.0+cu130\",\n"}
+,{"stream_name":"stdout","time":24.652653354999998,"data":"    \"cuda_available\": true,\n"}
+,{"stream_name":"stdout","time":24.652656939,"data":"    \"cuda_version\": \"13.0\",\n"}
+,{"stream_name":"stdout","time":24.652670885,"data":"    \"device_count\": 2,\n"}
+,{"stream_name":"stdout","time":24.652673859,"data":"    \"devices\": [\n"}
+,{"stream_name":"stdout","time":24.652676329,"data":"      \"Tesla T4\",\n"}
+,{"stream_name":"stdout","time":24.652678755,"data":"      \"Tesla T4\"\n"}
+,{"stream_name":"stdout","time":24.652681119,"data":"    ]\n"}
+,{"stream_name":"stdout","time":24.652683421,"data":"  },\n"}
+,{"stream_name":"stdout","time":24.65268582,"data":"  \"esm\": {\n"}
+,{"stream_name":"stdout","time":24.652688205,"data":"    \"version\": \"2.0.0\",\n"}
+,{"stream_name":"stdout","time":24.652690721,"data":"    \"model\": \"esm2_t12_35M_UR50D\",\n"}
+,{"stream_name":"stdout","time":24.652693208,"data":"    \"device\": \"cuda\",\n"}
+,{"stream_name":"stdout","time":24.652695725,"data":"    \"alphabet_size\": 33\n"}
+,{"stream_name":"stdout","time":24.652698732,"data":"  },\n"}
+,{"stream_name":"stdout","time":24.652716225,"data":"  \"embedding\": {\n"}
+,{"stream_name":"stdout","time":24.652720645,"data":"    \"dim\": 480,\n"}
+,{"stream_name":"stdout","time":24.652724726,"data":"    \"n_peptides\": 8,\n"}
+,{"stream_name":"stdout","time":24.652728595,"data":"    \"max_len\": 37,\n"}
+,{"stream_name":"stdout","time":24.652732414,"data":"    \"finite\": true,\n"}
+,{"stream_name":"stdout","time":24.652736436,"data":"    \"mean_norm\": 6.9407,\n"}
+,{"stream_name":"stdout","time":24.652740403,"data":"    \"pairwise_min_cos\": 0.6842\n"}
+,{"stream_name":"stdout","time":24.654453727,"data":"  }\n"}
+,{"stream_name":"stdout","time":24.654466604,"data":"}\n"}
+,{"stream_name":"stderr","time":33.114967974,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":33.115029225,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":33.555466785,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":33.555491943,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":34.476841138,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":35.884970455,"data":"[NbConvertApp] Writing 289560 bytes to __results__.html\n"}
+]

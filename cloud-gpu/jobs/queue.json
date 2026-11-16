@@ -29,9 +29,10 @@
       ],
       "serve_minutes": 15.0,
       "wait": true,
-      "status": "pending",
+      "status": "completed",
       "created_at_utc": "2026-11-16T01:00:33Z",
-      "kernel_slug": "arena-gpu-smoke-20261113"
+      "kernel_slug": "arena-gpu-smoke-20261113",
+      "finished_at_utc": "2026-11-16T01:02:16Z"
     }
   ]
 }

@@ -1,0 +1,36 @@
+{
+  "script": "gpu_smoke_v4",
+  "timestamp_utc": "2026-11-16T01:01:25Z",
+  "python": "3.13.16",
+  "platform": "Linux-6.18.55+-x86_64-with-glibc2.39",
+  "nvidia_smi": "GPU 0: Tesla T4 (UUID: GPU-51f428e7-e30f-20be-e950-9843da22a82d)\nGPU 1: Tesla T4 (UUID: GPU-13c8d2b7-057e-3abb-abc2-0d369a5eebd7)\n",
+  "nvidia_smi_query": "0, Tesla T4, 15360 MiB, 0 %\n1, Tesla T4, 15360 MiB, 0 %\n",
+  "steps": {
+    "load_sec": 1.76,
+    "forward_sec": 0.959
+  },
+  "torch": {
+    "version": "2.11.0+cu130",
+    "cuda_available": true,
+    "cuda_version": "13.0",
+    "device_count": 2,
+    "devices": [
+      "Tesla T4",
+      "Tesla T4"
+    ]
+  },
+  "esm": {
+    "version": "2.0.0",
+    "model": "esm2_t12_35M_UR50D",
+    "device": "cuda",
+    "alphabet_size": 33
+  },
+  "embedding": {
+    "dim": 480,
+    "n_peptides": 8,
+    "max_len": 37,
+    "finite": true,
+    "mean_norm": 6.9407,
+    "pairwise_min_cos": 0.6842
+  }
+}

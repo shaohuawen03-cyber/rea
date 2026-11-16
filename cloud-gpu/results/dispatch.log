@@ -1,12 +1,1 @@
 === Running job gpu-smoke-20261113 (kaggle / run) ===
-[ERROR] Job gpu-smoke-20261113 failed: Kaggle auth failed: Authentication required to call the Kaggle API.
-
-First, you will need a Kaggle account. You can sign up at
-  https://www.kaggle.com/account/login
-
-Recommended: log in with OAuth via a web-based authorization flow.
-No token to manage; credentials are cached locally for you.
-    kaggle auth login
-
-If you'd rather not use OAuth, generate an API token at
-  https://www.kaggle.com/settings/api  (click "
