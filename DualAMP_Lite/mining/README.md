@@ -14,6 +14,7 @@
    ⚠️ test 已用于模型比较，**不可再称盲测**；v2 正式版须重新锁定独立测试集。
 2. **代码在哪？见 §7 链接。**推理代码 = 上游 `hukeying85-ux/leanrea` @`arena/4ecb70f1-leanrea`（dualamp-lite）；
    本目录是 >1 亿条 sORF 的可执行漏斗（00/00b/01–06），脚本全部通过语法与 mini 冒烟测试。
+   **2026-11-16 用户指示：先训 real5（candidate_v1 口径，导出 .pt）恢复流水线可用性——产权重标注 `candidate_v1_pilot_weights`（仅调试/初筛，非 v2 正式模型）；v2 回填 Review_Result 后再训。**
 3. **权重（.pt）拿不到。** Kaggle 内核工作区是 `/tmp/dualamp-pilot`，不在 `/kaggle/working`；
    `train.py` 把 .pt 写进 `<workdir>/model/`，内核结束即销毁。本轮 fetch6（仅 output 模式）复验 kernel 输出无任何 `.pt`。
    补救已就绪：pilot 已补丁（real5 起导出 .pt ≤2 MiB 到 artifact；`gpu_ctl` 放宽 `.pt`；`.gitignore` 排除入库）。
@@ -122,8 +123,9 @@ QC（脚本自检列；警示）：AMP 率>5% 先查同源块；<10 aa 与 >100 
 
 ### 阶段 3b｜权重（二选一）
 **A. 正式：等 positive_core_v2 锁定后** → `POSITIVES_SHA256=<v2 sha> scripts/03_train_export.sh <v2.fasta> weights`（≈1–2 h GPU）
-**B. 调试/测速（非正式）**：`scripts/03_train_export.sh <candidate_v1.fasta> weights`（sha 锁=v1 值 `7b6ea121…`）
-→ 仅用于流程调试，产物标注 `candidate_v1_pilot_weights`，不发布为正式模型。
+**B. 调试/测速（非正式，2026-11-16 用户指示先跑）**：real5 = Kaggle 夜跑同口径 candidate_v1（5 seeds × 5 folds × 60 ep），
+导出 10 个 .pt + scaler；产物标注 `candidate_v1_pilot_weights`，仅调试/初筛，不发布为正式模型、不写论文；
+v2 回填后再训。
 
 ### 阶段 4｜ESM-2 → M1/M2 批量打分
 ```bash
