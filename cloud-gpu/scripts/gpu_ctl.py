@@ -546,7 +546,7 @@ def execute_kaggle_job(job: dict[str, Any], run_dir: str) -> dict[str, Any]:
     final_status = "pushed_async"
 
     if wait_for_completion:
-        poll_timeout = int(job.get("timeout_sec", 3600))
+        poll_timeout = int(job.get("timeout_sec", 9000))  # 全量 real 运行约 60-70min，默认 60min 会误判 pushed_async
         deadline = time.time() + poll_timeout
         while time.time() < deadline:
             time.sleep(20)

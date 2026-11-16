@@ -160,6 +160,20 @@
       "created_at_utc": "2026-11-16T04:15:01Z",
       "kernel_slug": "dualamp-real4-20261116",
       "finished_at_utc": "2026-11-16T05:16:02Z"
+    },
+    {
+      "id": "dualamp-real4-fetch-20261116",
+      "provider": "kaggle",
+      "mode": "output",
+      "accelerator": "NvidiaTeslaT4",
+      "script_path": "",
+      "script_args": [],
+      "extra_pip": [],
+      "serve_minutes": 15.0,
+      "wait": true,
+      "status": "pending",
+      "created_at_utc": "2026-11-16T05:16:59Z",
+      "kernel_slug": "dualamp-real4-20261116"
     }
   ]
 }
