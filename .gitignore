@@ -82,3 +82,7 @@ website/.i18n-*/
 cloud-gpu/results/**/*.pt
 DualAMP_Lite/mining/weights/
 DualAMP_Lite/mining/out/
+
+# 临时冒烟目录
+.tmp-smoke/
+.backup-now/

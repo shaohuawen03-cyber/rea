@@ -5,13 +5,15 @@
 # 只训 M1/M2（M3 与 M0_RF 按人工审定不作为主模型，可省 ~1 h）。
 # 用法：03_train_export.sh /path/to/positive_core_candidate_v1.fasta /path/to/export_dir [workdir]
 set -euo pipefail
+# 正式权重 = positive_core_v2 锁定后的重训产物（不是 candidate_v1）。
+# POSITIVES_SHA256：正式 run 前必须设为 v2 阳性 fasta 的 sha256；缺省值是 candidate_v1 锁（仅调试）。
 POS="${1:?usage: 03_train_export.sh positives.fasta export_dir [workdir]}"
 EXPORT="${2:?export dir required}"
 WORK="${3:-$HOME/dualamp-export-work}"
 REPO_DIR="${REPO_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)}"
 LEANREA_DIR="${LEANREA_DIR:-$REPO_DIR/.external/leanrea}"
 LEANREA_BRANCH="${LEANREA_BRANCH:-arena/4ecb70f1-leanrea}"
-LOCK="7b6ea12136623e85218ba78cfd4b713985a3122b24c61650e536e724b768aa1d"
+LOCK="${POSITIVES_SHA256:-7b6ea12136623e85218ba78cfd4b713985a3122b24c61650e536e724b768aa1d}"
 
 python3 - "$POS" "$LOCK" << 'PY'
 import hashlib, sys
@@ -50,7 +52,8 @@ sources:
 YAML
 
 export PYTHONPATH="$LEANREA_DIR/dualamp-lite"
-echo "== build（cd-hit 聚类；方法如实记录在 dataset_summary.json）=="
+echo "== build（聚类：与 real4 相同 shim→MMseqs2 口径，0.40/0.80；方法如实记录在 dataset_summary.json）=="
+echo "   注意：real4 实测为 mmseqs easy-cluster shim（非原生 cd-hit），v2 沿用同一引擎并固定版本；若坚持原生 cd-hit 需重跑分组"
 python3 -m dualamp_lite build --manifest "$WORK/data/sources.yaml" --workdir "$WORK/run" --cluster-method auto
 echo "== features（fair-esm t12_35M）=="
 python3 -m dualamp_lite features --workdir "$WORK/run" --backend fair-esm --batch-size 64

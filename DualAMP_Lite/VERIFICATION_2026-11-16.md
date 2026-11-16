@@ -199,3 +199,28 @@
 ### 9.6 一句话结论
 数据准备的**数量级账本闭合且可复现**（3,579+10,000+500 全程 sha256/seed/脚本锁定，聚类工具如实入账）；
 但**标签质量与组成偏好两个硬前提未解决**——数据准备"可复现"达标、"可入论文"不达标。
+
+---
+
+## §10 real4 聚类引擎更正（2026-11-16，外部 AI 审阅 → 逐条核实后）
+
+**声明（前版本有误，现更正）**：real4 中 `dataset_dataset_summary.json` 记录 `cluster_method=cdhit`，
+但实际执行引擎为 **MMseqs2 easy-cluster**——Kaggle 日志原文：
+
+```
+[dualamp_pilot 04:16:13] cd-hit installed via apt: /usr/bin/cd-hit
+[dualamp_pilot 04:16:19] installed cd-hit->mmseqs shim at /usr/local/bin/cd-hit (self-test OK; native cd-hit bypassed)
+[04:17:12] INFO    clustering: cdhit at identity 0.40 / coverage 0.80 -> 11570 clusters
+```
+
+即 `/usr/local/bin/cd-hit` 是 rea 载荷内置的 MMseqs2 shim；native cd-hit 被绕过。
+后果：real4 的 cluster-level 切分（11,570 clusters；train/val/test 9,505/2,037/2,037）与结论不作废，
+但论文/方法学**不得**写“使用原生 CD-HIT 完成聚类”；须固定引擎为 MMseqs2 并记录版本与参数
+（`--min-seq-id 0.40 -c 0.80`）。若坚持原生 CD-HIT 口径，须重跑数据集分组与模型训练（非本文结论前提）。
+candidate_v2（positive_core_v2）训练时引擎固定（MMseqs2），避免同口径混用。
+
+**其他核实项（同时修正于 mining 脚本）**：00 源映射缺失（已加 source_map 分桶 + 闭合硬 QC）；
+低复杂度序列改为标记保留；长度上限 50→100（5–9 探索层/10–50 核心/51–100 Macrel/>100 前体表）；
+`--limit` 弃用为抽样方法（改 00b reservoir 分层抽样）；04 `global`→`nonlocal` 且 resume 绑定输入/权重 sha256；
+05 Tier2 与 README 一致（M2≥0.95 ∨ M1≥0.90∧M2≥0.75）；pI/净电荷复用 leanrea biophys（含端基）；
+Macrel 5–9/>100 记 NA；QC 阈值改警示、闭合为硬条件；06 标注 `RiPP_workflow_scaffold`。

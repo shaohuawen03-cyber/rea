@@ -15,6 +15,22 @@ import argparse, json, os, sys, time
 
 import numpy as np
 
+SCRIPT_VERSION = "04_batch_score.py v2 (resume keyed on input+checkpoints sha256)"
+
+def sha256_file(path):
+    h = __import__("hashlib").sha256()
+    with open(path, "rb") as fh:
+        for chunk in iter(lambda: fh.read(1 << 22), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+def checkpoints_sha256(export_dir):
+    import hashlib, glob, os
+    lines = []
+    for f in sorted(glob.glob(os.path.join(export_dir, "model", "*.pt"))):
+        lines.append(f"{os.path.basename(f)}:{os.path.getsize(f)}:{sha256_file(f)}")
+    return hashlib.sha256("\n".join(lines).encode()).hexdigest()
+
 def iter_fasta(path):
     name, buf = None, []
     with open(path) as fh:
@@ -85,6 +101,23 @@ def main():
 
     physio0 = torch.zeros((args.batch_size, 0), dtype=torch.float32, device=device)
 
+    # resume 保护：必须匹配 输入 sha256 + 权重集 sha256 + shard 配置
+    meta_path = args.out + ".meta.json"
+    meta = {"version": SCRIPT_VERSION,
+            "input_sha256": sha256_file(args.input),
+            "checkpoints_sha256": checkpoints_sha256(args.export_dir),
+            "shard": args.shard, "num_shards": args.num_shards,
+            "leanrea_dir": os.path.abspath(leanrea)}
+    if args.resume:
+        if not os.path.exists(meta_path):
+            sys.exit(f"ERROR: --resume 要求存在 {meta_path}；已有输出来源不明，拒绝续跑。")
+        old_meta = json.load(open(meta_path))
+        for k in ("input_sha256", "checkpoints_sha256", "shard", "num_shards"):
+            if old_meta.get(k) != meta[k]:
+                sys.exit(f"ERROR: {k} 与 {meta_path} 不一致（{old_meta.get(k)} != {meta[k]}）；拒绝错位续跑。")
+    with open(meta_path, "w") as fh:
+        json.dump(meta, fh, indent=2, ensure_ascii=False)
+
     done_lines = 0
     if args.resume and os.path.exists(args.out):
         with open(args.out) as fh:
@@ -101,7 +134,7 @@ def main():
         seen = 0
 
         def flush(batch):
-            global n_written
+            nonlocal n_written
             seqs = [s for _, s in batch]
             residue, mask, mean = enc.encode(seqs, batch_size=len(seqs))
             residue_t = torch.from_numpy(residue).to(device)
