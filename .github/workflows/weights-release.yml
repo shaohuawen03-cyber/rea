@@ -1,0 +1,187 @@
+name: weights-release
+
+# One-off / reusable weights archiver: fetch a gpu-relay workflow artifact
+# and publish it as a GitHub Release (prerelease) as assets.
+#
+# Why this exists: the Arena sandbox can only reach github.com (artifact zips
+# live on an Azure blob host that is unreachable from the sandbox), so the
+# archival must run on a GitHub-hosted runner. It is a MANUAL workflow — it
+# does not run on push and does not touch the gpu-relay dispatch chain.
+#
+# Contents published per release:
+#   dualamp-*.tar.gz       all *.pt + features_biophys_scaler.joblib + meta/
+#   SHA256SUMS.txt         sha256 (and byte size via manifest) of packaged files
+#   export_manifest.json   provenance: source run / kernel / commit / positives sha256
+#
+# Weights are candidate_v1_pilot artifacts unless the manifest says otherwise.
+# Never publish positive_core_v2 weights through this path before v2 freeze.
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: 'gpu-relay run id to fetch the artifact from (e.g. 43842046392)'
+        required: true
+      artifact_name:
+        description: 'Artifact name in that run (e.g. gpu-relay-run-18)'
+        required: true
+        default: 'gpu-relay-run-18'
+      release_tag:
+        description: 'Release tag to create (must not already exist)'
+        required: true
+      release_title:
+        description: 'Release title'
+        required: true
+      expected_pt:
+        description: 'Expected number of .pt files (safety check)'
+        required: false
+        default: '15'
+
+permissions:
+  contents: write   # create the release + upload assets
+  actions: read     # actions/download-artifact needs this for cross-run fetch
+
+concurrency:
+  group: weights-release-${{ inputs.release_tag }}
+  cancel-in-progress: false
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download source artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ inputs.artifact_name }}
+          run-id: ${{ inputs.run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: /tmp/weights-src
+
+      - name: Package weights + provenance
+        id: pkg
+        run: |
+          set -euo pipefail
+          SRC=/tmp/weights-src
+          PKG=/tmp/pkg
+          TAG="${{ inputs.release_tag }}"
+          EXPECT="${{ inputs.expected_pt }}"
+          rm -rf "$PKG"
+          mkdir -p "$PKG/model" "$PKG/features" "$PKG/meta"
+
+          echo "== source tree =="
+          find "$SRC" -type f | sort | sed 's|^|  |'
+
+          found=0
+          while IFS= read -r -d '' f; do
+            base="$(basename "$f")"
+            name="${base#model_}"
+            cp "$f" "$PKG/model/$name"
+            found=$((found + 1))
+          done < <(find "$SRC" -type f -name '*.pt' -print0)
+          echo "pt files: $found (expected $EXPECT)"
+          if [ "$found" != "$EXPECT" ]; then
+            echo "::error::expected $EXPECT .pt files, found $found — aborting to avoid a bad release"
+            exit 1
+          fi
+
+          scaler="$(find "$SRC" -type f -name 'features_biophys_scaler.joblib' | head -n1 || true)"
+          if [ -n "$scaler" ]; then
+            cp "$scaler" "$PKG/features/biophys_scaler.joblib"
+          else
+            echo "::warning::features_biophys_scaler.joblib not found in artifact"
+          fi
+
+          for pat in _pilot_summary.json model_train_summary.json \
+                     dataset_dataset_summary.json dataset_label_audit.csv \
+                     manuscript_D10_test_metrics.csv manuscript_D10_evaluation_report.md \
+                     manuscript_D11_external_validation.csv manuscript_D15_input_sha256.tsv \
+                     ablation_D9_ablation.csv dualamp-real5-20261116.log result.json; do
+            f="$(find "$SRC" -type f -name "$pat" | head -n1 || true)"
+            if [ -n "$f" ]; then
+              cp "$f" "$PKG/meta/$pat"
+            else
+              echo "::warning::missing meta file: $pat"
+            fi
+          done
+
+          python3 - "$PKG" "$TAG" <<'PY'
+import hashlib, json, os, sys, datetime
+pkg, tag = sys.argv[1], sys.argv[2]
+files = []
+for root, _, names in os.walk(pkg):
+    for n in sorted(names):
+        p = os.path.join(root, n)
+        rel = os.path.relpath(p, pkg)
+        h = hashlib.sha256()
+        with open(p, "rb") as fh:
+            for chunk in iter(lambda: fh.read(1 << 20), b""):
+                h.update(chunk)
+        files.append({"file": rel, "bytes": os.path.getsize(p), "sha256": h.hexdigest()})
+files.sort(key=lambda d: d["file"])
+with open(os.path.join(pkg, "SHA256SUMS.txt"), "w", encoding="utf-8") as fh:
+    for d in files:
+        fh.write(f"{d['sha256']}  {d['file']}\n")
+manifest = {
+    "release_tag": tag,
+    "archived_utc": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+    "provenance": {
+        "source_workflow_run": "gpu-relay 43842046392 ($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/43842046392)",
+        "kernel": "shaohuawen/dualamp-real5-20261116",
+        "trained_from_commit": "8a2d232 (chore(relay): 重排 real5)",
+        "positives_fasta_sha256": "7b6ea12136623e85218ba78cfd4b713985a3122b24c61650e536e724b768aa1d",
+        "models": "M1,M2,M3 x seeds 1-5 (60 epochs, 5 folds); M0_RF sklearn not exported as .pt",
+        "backend": "fair-esm esm2_t12_35M_UR50D embeddings (ESM backbone NOT saved in .pt)",
+    },
+    "label_note": ("candidate_v1_pilot_weights — unreviewed candidate_v1, NOT positive_core_v2, "
+                   "NOT for publication / not the formal model. M1/M2/M3 x 5 seeds; "
+                   "positive_core_v2 retrain required after Review_Result backfill."),
+    "file_count": len(files),
+    "total_bytes": sum(d["bytes"] for d in files),
+    "files": files,
+}
+with open(os.path.join(pkg, "export_manifest.json"), "w", encoding="utf-8") as fh:
+    json.dump(manifest, fh, indent=2, ensure_ascii=False)
+print(json.dumps({"packaged": len(files), "total_bytes": manifest["total_bytes"]}, ensure_ascii=False))
+PY
+
+          TARBALL="/tmp/${TAG}.tar.gz"
+          tar -czf "$TARBALL" -C "$PKG" .
+          echo "TARBALL=$TARBALL" >> "$GITHUB_OUTPUT"
+          echo "=== tarball ==="; ls -la "$TARBALL"
+
+      - name: Publish release (prerelease) with assets
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ inputs.release_tag }}
+          TITLE: ${{ inputs.release_title }}
+        run: |
+          set -euo pipefail
+          {
+            echo '> ⚠️ **candidate_v1_pilot_weights，不是 positive_core_v2，不可入论文；阈值内嵌于每个 .pt。**'
+            echo ''
+            echo '| 项 | 值 |'
+            echo '| --- | --- |'
+            echo '| 口径 | candidate_v1（未 Review_Result 回填） |'
+            echo '| 来源 | gpu-relay run 43842046392 → kernel shaohuawen/dualamp-real5-20261116 |'
+            echo '| 训练 commit | 8a2d232 |'
+            echo '| 阳性 SHA256 | 7b6ea12136623e85218ba78cfd4b713985a3122b24c61650e536e724b768aa1d |'
+            echo '| 模型 | M1 / M2 / M3 × seeds 1–5（60 ep，5 fold）；M0_RF 为 sklearn，未导出 .pt |'
+            echo '| 测试 AUROC | M1 0.9767–0.9791 / M2 0.9796–0.9809 / M3 0.9770–0.9803 |'
+            echo ''
+            echo '内容：`model/`（15 × .pt）+ `features/biophys_scaler.joblib` + `meta/`（summary、D10/D11/D15、ablation、log、result.json）+ `SHA256SUMS.txt` + `export_manifest.json`。'
+            echo ''
+            echo '注意：测试集已参与模型比较，不是盲测；positive_core_v2 冻结后仍需正式重训并更新本 release。'
+          } > /tmp/release_notes.md
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "::error::release tag $TAG already exists — refusing to overwrite"
+            exit 1
+          fi
+          gh release create "$TAG" "${{ steps.pkg.outputs.TARBALL }}" /tmp/pkg/SHA256SUMS.txt /tmp/pkg/export_manifest.json \
+            --repo "$GITHUB_REPOSITORY" --prerelease --title "$TITLE" --notes-file /tmp/release_notes.md
+          {
+            echo '### Release published'
+            echo ''
+            echo "- tag: $TAG"
+            echo "- assets:"
+            gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[] | "  - \(.name) (\(.size) bytes)"'
+          } >> "$GITHUB_STEP_SUMMARY"
