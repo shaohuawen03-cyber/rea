@@ -1,0 +1,22 @@
+{
+  "job_id": "dualamp-real4-fetch6-20261116",
+  "provider": "kaggle",
+  "mode": "output",
+  "kernel_ref": "shaohuawen/dualamp-real4-20261116",
+  "copied_files": [
+    "_pilot_summary.json",
+    "ablation_D9_ablation.csv",
+    "dataset_D1_sample_metadata.csv",
+    "dataset_dataset_summary.json",
+    "dataset_label_audit.csv",
+    "dualamp-real4-20261116.log",
+    "features_feature_meta.json",
+    "manuscript_D10_evaluation_report.md",
+    "manuscript_D10_test_metrics.csv",
+    "manuscript_D11_external_validation.csv",
+    "manuscript_D15_input_sha256.tsv",
+    "model_train_summary.json"
+  ],
+  "cli_output": "Downloading _pilot_summary.json to /tmp/kag_out_zyk0dj6l\n\nOutput file downloaded to /tmp/kag_out_zyk0dj6l/_pilot_summary.json\nDownloading ablation_D9_ablation.csv to /tmp/kag_out_zyk0dj6l\n\nOutput file downloaded to /tmp/kag_out_zyk0dj6l/ablation_D9_ablation.csv\nDownloading dataset_D1_sample_metadata.csv to /tmp/kag_out_zyk0dj6l\n\nOutput file downloaded to /tmp/kag_out_zyk0dj6l/dataset_D1_sample_metadata.csv\nDownloading dataset_dataset_summary.json to /tmp/kag_out_zyk0dj6l\n\nOutput file downloaded to /tmp/kag_out_zyk0dj6l/dataset_dataset_summary.json\nDownloading dataset_label_audit.csv to /tmp/ka",
+  "fetched_at_utc": "2026-11-16T07:26:27Z"
+}
