@@ -487,7 +487,7 @@ def execute_kaggle_job(job: dict[str, Any], run_dir: str) -> dict[str, Any]:
         script_src = sf.read()
 
     injected_env: dict[str, str] = {}
-    for k in ("DRIVE_UPLOAD_URI", "DRIVE_ENDPOINT_UPLOAD_URI"):
+    for k in ("DRIVE_UPLOAD_URI", "DRIVE_ENDPOINT_UPLOAD_URI", "FASTA_URL", "FASTA_SHA256", "REA_BRANCH"):
         if os.environ.get(k):
             injected_env[k] = os.environ[k]
 
