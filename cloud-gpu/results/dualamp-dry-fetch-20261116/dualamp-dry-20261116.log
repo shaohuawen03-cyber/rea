@@ -1,0 +1,84 @@
+[{"stream_name":"stdout","time":4.448358838,"data":"[dualamp_pilot 01:17:18] cloning repo branch arena/cac2205a-rea\n"}
+,{"stream_name":"stderr","time":4.465784716,"data":"Cloning into '/kaggle/working/dualamp-pilot/rea'...\n"}
+,{"stream_name":"stdout","time":7.964300935,"data":"[dualamp_pilot 01:17:21] MOCK positives written (not citable)\n"}
+,{"stream_name":"stdout","time":7.96449598,"data":"[dualamp_pilot 01:17:21] positives: 150\n"}
+,{"stream_name":"stdout","time":15.584711461,"data":"[dualamp_pilot 01:17:29] negatives stats: {\"proteins_total\": 117172, \"keyword_excluded\": 18, \"fragments_raw\": 351462, \"fragments_standard_aa\": 351429, \"fragments_dedup\": 351119, \"fragments_hit_positive_4mer_gt08\": 0, \"negatives_final\": 400, \"seed\": 11, \"cap\": 400, \"seconds\": 7.6}\n"}
+,{"stream_name":"stdout","time":15.584755287,"data":"[dualamp_pilot 01:17:29] cloning leanrea @ arena/4ecb70f1-leanrea\n"}
+,{"stream_name":"stderr","time":15.586532702,"data":"Cloning into '/kaggle/working/dualamp-pilot/rea/lee'...\n"}
+,{"stream_name":"stdout","time":27.285715287,"data":"[dualamp_pilot 01:17:41] $ /usr/bin/python3 -m dualamp_lite build --manifest /kaggle/working/dualamp-pilot/data/sources.yaml --workdir /kaggle/working/dualamp-pilot/run --cluster-method auto\n"}
+,{"stream_name":"stdout","time":28.463092279,"data":"[01:17:42] INFO    reading sources from /kaggle/working/dualamp-pilot/data/sources.yaml\n"}
+,{"stream_name":"stdout","time":28.480087484,"data":"[01:17:42] INFO      source mock_positives         layer=general_amp          kept=  150 (from 150 rows)\n"}
+,{"stream_name":"stdout","time":28.485377737,"data":"[01:17:42] INFO      source uniprot_a_fragments    layer=negative_background  kept=  400 (from 400 rows)\n"}
+,{"stream_name":"stdout","time":28.488262853,"data":"[01:17:42] INFO    after length/alphabet filtering: 550 records\n"}
+,{"stream_name":"stdout","time":29.046054202,"data":"[01:17:43] INFO      dedup: 550 records -\u003e 550 unique sequences\n"}
+,{"stream_name":"stdout","time":29.059236774,"data":"[01:17:43] INFO      scrambled challenge set: +150 sequences\n"}
+,{"stream_name":"stdout","time":29.059961265,"data":"[01:17:43] WARNING   CD-HIT / MMseqs2 not found - using the built-in k-mer clustering fallback. Record this in the methods section (plan §5 requires naming the tool and params).\n"}
+,{"stream_name":"stdout","time":29.662239919,"data":"[01:17:43] INFO    clustering: kmer_fallback(k=3) at identity 0.40 / coverage 0.80 -\u003e 596 clusters\n"}
+,{"stream_name":"stdout","time":29.669267527,"data":"[01:17:43] WARNING   14 homology clusters contain both labels - assigned to 'review' (never trained on)\n"}
+,{"stream_name":"stdout","time":29.825960661,"data":"[01:17:43] INFO      split sizes: {'train': 364, 'scrambled': 150, 'val': 78, 'test': 78, 'review': 30}\n"}
+,{"stream_name":"stdout","time":29.869855167,"data":"[01:17:43] INFO    dataset written: 700 sequences, 596 clusters, test=78 (pos=20) - see /kaggle/working/dualamp-pilot/run/dataset/dataset_all.csv\n"}
+,{"stream_name":"stdout","time":29.870107352,"data":"[01:17:43] INFO    step1 build_dataset finished in 1.4s\n"}
+,{"stream_name":"stdout","time":29.870201885,"data":"sequences=700 clusters=596 test=78\n"}
+,{"stream_name":"stdout","time":29.973477646,"data":"[dualamp_pilot 01:17:43] $ /usr/bin/python3 -m dualamp_lite features --workdir /kaggle/working/dualamp-pilot/run --backend fair-esm --batch-size 64\n"}
+,{"stream_name":"stdout","time":35.94848882,"data":"[01:17:49] INFO    device: cuda\n"}
+,{"stream_name":"stdout","time":37.146874204,"data":"[01:17:51] INFO    step2 extract_features finished in 6.7s\n"}
+,{"stream_name":"stderr","time":37.147408263,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":37.147652047,"data":"  File \"/kaggle/working/dualamp-pilot/rea/lee/dualamp-lite/dualamp_lite/biophys.py\", line 209, in instability_index\n"}
+,{"stream_name":"stderr","time":37.147679789,"data":"    from Bio.SeqUtils.ProtParam import ProteinAnalysis\n"}
+,{"stream_name":"stderr","time":37.147684747,"data":"ModuleNotFoundError: No module named 'Bio'\n"}
+,{"stream_name":"stderr","time":37.147688164,"data":"\n"}
+,{"stream_name":"stderr","time":37.147691342,"data":"The above exception was the direct cause of the following exception:\n"}
+,{"stream_name":"stderr","time":37.1476947,"data":"\n"}
+,{"stream_name":"stderr","time":37.147697703,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":37.148486165,"data":"  File \"\u003cfrozen runpy\u003e\", line 203, in _run_module_as_main\n"}
+,{"stream_name":"stderr","time":37.148501574,"data":"  File \"\u003cfrozen runpy\u003e\", line 88, in _run_code\n"}
+,{"stream_name":"stderr","time":37.14850603,"data":"  File \"/kaggle/working/dualamp-pilot/rea/lee/dualamp-lite/dualamp_lite/__main__.py\", line 4, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":37.148510189,"data":"    raise SystemExit(main())\n"}
+,{"stream_name":"stderr","time":37.148513447,"data":"                     ~~~~^^\n"}
+,{"stream_name":"stderr","time":37.14851684,"data":"  File \"/kaggle/working/dualamp-pilot/rea/lee/dualamp-lite/dualamp_lite/cli.py\", line 354, in main\n"}
+,{"stream_name":"stderr","time":37.14852058,"data":"    return args.func(args)\n"}
+,{"stream_name":"stderr","time":37.14852405,"data":"           ~~~~~~~~~^^^^^^\n"}
+,{"stream_name":"stderr","time":37.148527602,"data":"  File \"/kaggle/working/dualamp-pilot/rea/lee/dualamp-lite/dualamp_lite/cli.py\", line 150, in cmd_features\n"}
+,{"stream_name":"stderr","time":37.148531366,"data":"    meta = extract_all(_feature_cfg(args), paths, force=args.force, logger=logger)\n"}
+,{"stream_name":"stderr","time":37.148534572,"data":"  File \"/kaggle/working/dualamp-pilot/rea/lee/dualamp-lite/dualamp_lite/features.py\", line 267, in extract_all\n"}
+,{"stream_name":"stderr","time":37.148538375,"data":"    split: biophys.compute_features(df[\"seq\"].tolist(), logger=logger)\n"}
+,{"stream_name":"stderr","time":37.148541971,"data":"           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":37.148545396,"data":"  File \"/kaggle/working/dualamp-pilot/rea/lee/dualamp-lite/dualamp_lite/biophys.py\", line 257, in compute_features\n"}
+,{"stream_name":"stderr","time":37.148548899,"data":"    values = feature_dict(seq)\n"}
+,{"stream_name":"stderr","time":37.148552116,"data":"  File \"/kaggle/working/dualamp-pilot/rea/lee/dualamp-lite/dualamp_lite/biophys.py\", line 226, in feature_dict\n"}
+,{"stream_name":"stderr","time":37.148555482,"data":"    instab = instability_index(seq)\n"}
+,{"stream_name":"stderr","time":37.148558847,"data":"  File \"/kaggle/working/dualamp-pilot/rea/lee/dualamp-lite/dualamp_lite/biophys.py\", line 211, in instability_index\n"}
+,{"stream_name":"stderr","time":37.14856261,"data":"    raise ImportError(\n"}
+,{"stream_name":"stderr","time":37.148565914,"data":"        \"biopython is required for the instability index: pip install biopython\"\n"}
+,{"stream_name":"stderr","time":37.148569374,"data":"    ) from exc\n"}
+,{"stream_name":"stderr","time":37.14857249,"data":"ImportError: biopython is required for the instability index: pip install biopython\n"}
+,{"stream_name":"stderr","time":39.26134737,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":39.262628455,"data":"  File \"/kaggle/src/script.py\", line 8, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":39.262645844,"data":"    runpy.run_path('/tmp/_payload.py', run_name='__main__')\n"}
+,{"stream_name":"stderr","time":39.262682789,"data":"    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":39.262687356,"data":"  File \"\u003cfrozen runpy\u003e\", line 294, in run_path\n"}
+,{"stream_name":"stderr","time":39.262691478,"data":"  File \"\u003cfrozen runpy\u003e\", line 98, in _run_module_code\n"}
+,{"stream_name":"stderr","time":39.262695245,"data":"  File \"\u003cfrozen runpy\u003e\", line 88, in _run_code\n"}
+,{"stream_name":"stderr","time":39.26269976,"data":"  File \"/tmp/_payload.py\", line 246, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":39.262703913,"data":"    main()\n"}
+,{"stream_name":"stderr","time":39.262707165,"data":"    ~~~~^^\n"}
+,{"stream_name":"stderr","time":39.262710358,"data":"  File \"/tmp/_payload.py\", line 207, in main\n"}
+,{"stream_name":"stderr","time":39.262713726,"data":"    run([sys.executable, \"-m\", \"dualamp_lite\", \"features\", \"--workdir\", str(wd / \"run\"),\n"}
+,{"stream_name":"stderr","time":39.262717633,"data":"    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":39.262721093,"data":"         \"--backend\", \"fair-esm\", \"--batch-size\", \"64\"],\n"}
+,{"stream_name":"stderr","time":39.262724676,"data":"         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":39.262727995,"data":"        env={**os.environ, \"PYTHONPATH\": str(pkg)})\n"}
+,{"stream_name":"stderr","time":39.262731495,"data":"        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":39.262734802,"data":"  File \"/tmp/_payload.py\", line 202, in run\n"}
+,{"stream_name":"stderr","time":39.262738136,"data":"    subprocess.check_call(cmd, cwd=str(pkg), **kw)\n"}
+,{"stream_name":"stderr","time":39.26274144,"data":"    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":39.262744846,"data":"  File \"/usr/lib/python3.13/subprocess.py\", line 420, in check_call\n"}
+,{"stream_name":"stderr","time":39.262748265,"data":"    raise CalledProcessError(retcode, cmd)\n"}
+,{"stream_name":"stderr","time":39.262751656,"data":"subprocess.CalledProcessError: Command '['/usr/bin/python3', '-m', 'dualamp_lite', 'features', '--workdir', '/kaggle/working/dualamp-pilot/run', '--backend', 'fair-esm', '--batch-size', '64']' returned non-zero exit status 1.\n"}
+,{"stream_name":"stderr","time":41.285765227,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":41.285791466,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":41.532117302,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":41.532150448,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":42.285200075,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":43.150614687,"data":"[NbConvertApp] Writing 298395 bytes to __results__.html\n"}
+]

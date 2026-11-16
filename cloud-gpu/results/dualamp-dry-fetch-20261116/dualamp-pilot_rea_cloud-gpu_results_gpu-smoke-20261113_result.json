@@ -1,0 +1,15 @@
+{
+  "job_id": "gpu-smoke-20261113",
+  "provider": "kaggle",
+  "mode": "run",
+  "accelerator": "NvidiaTeslaT4",
+  "kernel_ref": "shaohuawen/arena-gpu-smoke-20261113",
+  "kernel_url": "https://www.kaggle.com/code/shaohuawen/arena-gpu-smoke-20261113",
+  "status": "completed",
+  "copied_files": [
+    "arena-gpu-smoke-20261113.log",
+    "gpu_smoke_v4_result.json"
+  ],
+  "push_output": "Kernel version 1 successfully pushed.  Please check progress at https://www.kaggle.com/code/shaohuawen/arena-gpu-smoke-20261113",
+  "updated_at_utc": "2026-11-16T01:02:16Z"
+}

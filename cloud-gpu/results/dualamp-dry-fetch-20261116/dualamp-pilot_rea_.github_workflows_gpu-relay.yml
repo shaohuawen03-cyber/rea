@@ -1,0 +1,326 @@
+name: gpu-relay
+
+# Cloud GPU Control Plane: Kaggle & Colab relay for the restricted Arena sandbox.
+#
+# Why this exists: the sandbox can only reach github.com / pypi.org / npmjs.org.
+# It cannot reach kaggle.com, colab.research.google.com or oauth2.googleapis.com.
+# GitHub Actions runners CAN. So the loop is:
+#
+#   sandbox --git push (queue.json)--> Actions relay --kaggle CLI--> Kaggle GPU
+#   sandbox <--git pull (results/)--- Actions relay <--kernel output-- Kaggle
+#
+# Credential model (zero plaintext cloud credentials in the repo):
+#   - Preferred: repo Actions secrets KAGGLE_USERNAME + KAGGLE_KEY (or KAGGLE_API_TOKEN),
+#     set once by the repo admin. Secret values never appear in git.
+#   - Fallback: one-time hybrid RSA+AES envelopes in cloud-gpu/secrets/*.enc, encrypted
+#     against cloud-gpu/relay_pubkey.pem (the relay publishes its public key on first run
+#     and keeps the private key only in the Actions cache). Each envelope is consumed
+#     (git rm) in the same run that decrypts it.
+#
+# Result model: small JSON/log outputs are committed back to cloud-gpu/results/<job-id>/
+# (<= 2 MiB per file) and uploaded as a workflow artifact. Larger payloads can be streamed
+# to a private Google Drive resumable session by setting DRIVE_RESULT_UPLOAD_URI.
+
+on:
+  push:
+    paths:
+      - 'cloud-gpu/jobs/queue.json'
+      - 'cloud-gpu/secrets/**'
+      - '.github/workflows/gpu-relay.yml'
+    branches:
+      - '**'
+  workflow_dispatch:
+    inputs:
+      only_id:
+        description: 'Run only specified job id'
+        required: false
+        default: ''
+      force:
+        description: 'Force re-run completed jobs'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gpu-relay-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  dispatch:
+    # Skip the bot's own commits (envelope consumption / result publish) to avoid loops.
+    if: github.event_name != 'push' || !contains(github.event.head_commit.message, 'gpu-relay:')
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Kaggle & Colab CLIs
+        run: |
+          python -m pip install --quiet --upgrade pip
+          python -m pip install --quiet kaggle six
+          python -m pip install --quiet google-colab-cli || echo "google-colab-cli unavailable; Colab CLI lane disabled"
+
+      - name: Restore persistent auth vault
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/.gpu-relay
+          key: gpu-relay-vault-${{ github.run_id }}
+          restore-keys: |
+            gpu-relay-vault-
+
+      - name: Prepare keypair, credentials and one-time envelopes
+        id: vault
+        env:
+          SECRET_COLAB_ADC_JSON: ${{ secrets.COLAB_ADC_JSON }}
+          SECRET_KAGGLE_API_TOKEN: ${{ secrets.KAGGLE_API_TOKEN }}
+          SECRET_KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+          SECRET_KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+        run: |
+          set -euo pipefail
+          mkdir -p ~/.gpu-relay
+          chmod 700 ~/.gpu-relay
+
+          hash_vault() {
+            find ~/.gpu-relay -maxdepth 1 -type f -print0 | sort -z | xargs -0 sha256sum 2>/dev/null | sha256sum | awk '{print $1}'
+          }
+          PRE_HASH="$(hash_vault)"
+
+          # Relay RSA keypair: generated on first run, cached in Actions cache,
+          # public half published to cloud-gpu/relay_pubkey.pem for envelope encryption.
+          if [ ! -f ~/.gpu-relay/key.pem ]; then
+            openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:4096 -out ~/.gpu-relay/key.pem 2>/dev/null
+            chmod 600 ~/.gpu-relay/key.pem
+          fi
+          openssl pkey -in ~/.gpu-relay/key.pem -pubout -out cloud-gpu/relay_pubkey.pem
+
+          if [ -n "$SECRET_COLAB_ADC_JSON" ]; then
+            printf '%s\n' "$SECRET_COLAB_ADC_JSON" > ~/.gpu-relay/colab_adc.json
+            chmod 600 ~/.gpu-relay/colab_adc.json
+          fi
+          if [ -n "$SECRET_KAGGLE_API_TOKEN" ]; then
+            printf '%s\n' "$SECRET_KAGGLE_API_TOKEN" > ~/.gpu-relay/kaggle_token
+            chmod 600 ~/.gpu-relay/kaggle_token
+          elif [ -n "$SECRET_KAGGLE_USERNAME" ] && [ -n "$SECRET_KAGGLE_KEY" ]; then
+            printf '%s:%s\n' "$SECRET_KAGGLE_USERNAME" "$SECRET_KAGGLE_KEY" > ~/.gpu-relay/kaggle_token
+            chmod 600 ~/.gpu-relay/kaggle_token
+          fi
+
+          # Consume one-time envelopes: KAGGLE_API_TOKEN.enc / KAGGLE_API_JSON.enc /
+          # COLAB_ADC_JSON.enc / VAULT_JSON.enc / anything else lands in GITHUB_ENV by name.
+          shopt -s nullglob
+          for enc_file in cloud-gpu/secrets/*.enc; do
+            name="$(basename "$enc_file" .enc)"
+            tmp_plain="$(mktemp)"
+            chmod 600 "$tmp_plain"
+            if python cloud-gpu/scripts/encrypt_secret.py decrypt --privkey ~/.gpu-relay/key.pem --in "$enc_file" --out "$tmp_plain" >/dev/null; then
+              val="$(cat "$tmp_plain")"
+              if [ -n "$val" ]; then
+                echo "::add-mask::$val"
+              fi
+              case "$name" in
+                COLAB_ADC_JSON)
+                  cp "$tmp_plain" ~/.gpu-relay/colab_adc.json
+                  chmod 600 ~/.gpu-relay/colab_adc.json
+                  ;;
+                KAGGLE_API_TOKEN)
+                  cp "$tmp_plain" ~/.gpu-relay/kaggle_token
+                  chmod 600 ~/.gpu-relay/kaggle_token
+                  ;;
+                KAGGLE_API_JSON)
+                  cp "$tmp_plain" ~/.gpu-relay/kaggle.json
+                  chmod 600 ~/.gpu-relay/kaggle.json
+                  ;;
+                *)
+                  echo "$name=$val" >> "$GITHUB_ENV"
+                  ;;
+              esac
+              git rm -f --ignore-unmatch "$enc_file" >/dev/null 2>&1 || rm -f "$enc_file"
+            else
+              echo "warning: could not decrypt $enc_file (wrong relay key?) — leaving in place" >&2
+            fi
+            rm -f "$tmp_plain"
+          done
+
+          # Make the token visible to the kaggle CLI regardless of its age.
+          # Formats: kaggle.json JSON | "username:key" classic | bare API token (KGAT_/sk-...).
+          if [ -f ~/.gpu-relay/kaggle.json ]; then
+            mkdir -p ~/.kaggle && cp ~/.gpu-relay/kaggle.json ~/.kaggle/kaggle.json && chmod 600 ~/.kaggle/kaggle.json
+          elif [ -f ~/.gpu-relay/kaggle_token ]; then
+            raw="$(cat ~/.gpu-relay/kaggle_token)"
+            mkdir -p ~/.kaggle
+            if echo "$raw" | grep -q '^{'; then
+              printf '%s\n' "$raw" > ~/.kaggle/kaggle.json
+            elif echo "$raw" | grep -q ':'; then
+              user="${raw%%:*}"; key="${raw#*:}"
+              printf '{"username":"%s","key":"%s"}\n' "$user" "$key" > ~/.kaggle/kaggle.json
+            else
+              # Bare API token: file-based auth + env auth (both accepted by the modern CLI).
+              printf '%s\n' "$raw" > ~/.kaggle/access_token
+              echo "KAGGLE_API_TOKEN=$raw" >> "$GITHUB_ENV"
+            fi
+            chmod 600 ~/.kaggle/kaggle.json ~/.kaggle/access_token 2>/dev/null || true
+          fi
+
+          POST_HASH="$(hash_vault)"
+          if [ "$PRE_HASH" != "$POST_HASH" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Persist updated auth vault in Actions cache
+        if: steps.vault.outputs.changed == 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: ~/.gpu-relay
+          key: gpu-relay-vault-${{ github.run_id }}
+
+      - name: Execute GPU job queue (private run dir outside git)
+        id: run_jobs
+        continue-on-error: true
+        run: |
+          mkdir -p /tmp/private-gpu-runs
+          cp cloud-gpu/jobs/queue.json /tmp/private-gpu-runs/queue.json
+          ARGS=(run-queue --queue /tmp/private-gpu-runs/queue.json --runs-dir /tmp/private-gpu-runs)
+          if [ -n "${{ inputs.only_id }}" ]; then
+            ARGS+=(--only-id "${{ inputs.only_id }}")
+          fi
+          if [ "${{ inputs.force }}" = "true" ]; then
+            ARGS+=(--force)
+          fi
+          python cloud-gpu/scripts/gpu_ctl.py "${ARGS[@]}" >/tmp/private-gpu-runs/dispatch.log 2>&1 || true
+          tail -c 4000 /tmp/private-gpu-runs/dispatch.log || true
+          # Fail the step if any job failed (queue status written by gpu_ctl).
+          python - <<'PY'
+          import json, sys
+          q = json.load(open("/tmp/private-gpu-runs/queue.json"))
+          failed = [j["id"] for j in q.get("jobs", []) if j.get("status") == "failed"]
+          if failed:
+              print("failed jobs:", ", ".join(failed))
+              sys.exit(1)
+          PY
+
+      - name: Collect small results into cloud-gpu/results
+        if: always()
+        run: |
+          python - <<'PY'
+          import glob, json, os, shutil
+          runs_root = "/tmp/private-gpu-runs"
+          dest_root = "cloud-gpu/results"
+          os.makedirs(dest_root, exist_ok=True)
+          max_bytes = 2 * 1024 * 1024
+          for entry in sorted(glob.glob(os.path.join(runs_root, "*"))):
+              if not os.path.isdir(entry):
+                  continue
+              jid = os.path.basename(entry)
+              dst = os.path.join(dest_root, jid)
+              os.makedirs(dst, exist_ok=True)
+              for root, _, files in os.walk(entry):
+                  for fn in files:
+                      full = os.path.join(root, fn)
+                      if os.path.getsize(full) <= max_bytes:
+                          shutil.copy2(full, os.path.join(dst, fn))
+          # Queue snapshot with final statuses + dispatch log tail.
+          for src, name in (
+              (os.path.join(runs_root, "queue.json"), "queue-final.json"),
+              (os.path.join(runs_root, "dispatch.log"), "dispatch.log"),
+          ):
+              if os.path.exists(src) and os.path.getsize(src) <= max_bytes:
+                  shutil.copy2(src, os.path.join(dest_root, name))
+              elif os.path.exists(src):
+                  with open(src, "rb") as f:
+                      tail = f.read()[-max_bytes:]
+                  with open(os.path.join(dest_root, name), "wb") as f:
+                      f.write(tail)
+          with open(os.path.join(dest_root, "run-meta.json"), "w", encoding="utf-8") as f:
+              json.dump({
+                  "run_id": os.environ.get("GITHUB_RUN_ID", ""),
+                  "run_number": os.environ.get("GITHUB_RUN_NUMBER", ""),
+                  "ref": os.environ.get("GITHUB_REF_NAME", ""),
+                  "sha": os.environ.get("GITHUB_SHA", ""),
+              }, f, indent=2)
+              f.write("\n")
+          print("results collected")
+          PY
+
+      - name: Upload run bundle as workflow artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gpu-relay-run-${{ github.run_number }}
+          path: |
+            /tmp/private-gpu-runs
+            cloud-gpu/results
+          retention-days: 14
+          if-no-files-found: ignore
+
+      - name: Stream execution report to private Google Drive
+        if: always() && env.DRIVE_RESULT_UPLOAD_URI != ''
+        run: |
+          set -euo pipefail
+          tmp_rep="$(mktemp)"
+          chmod 600 "$tmp_rep"
+          python - "$tmp_rep" <<'PY'
+          import datetime, glob, json, os, sys
+          runs_root = "/tmp/private-gpu-runs"
+          bundle = {
+              "timestamp_utc": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+              "queue_final": json.load(open(os.path.join(runs_root, "queue.json"))) if os.path.exists(os.path.join(runs_root, "queue.json")) else None,
+              "jobs": {},
+          }
+          for entry in sorted(glob.glob(os.path.join(runs_root, "*"))):
+              if not os.path.isdir(entry):
+                  continue
+              jid = os.path.basename(entry)
+              jdata = {}
+              for fname in os.listdir(entry):
+                  fpath = os.path.join(entry, fname)
+                  if os.path.isfile(fpath):
+                      try:
+                          jdata[fname] = json.load(open(fpath, "r", encoding="utf-8"))
+                      except Exception:
+                          jdata[fname] = open(fpath, "r", encoding="utf-8", errors="replace").read()[-8000:]
+              bundle["jobs"][jid] = jdata
+          with open(sys.argv[1], "w", encoding="utf-8") as f:
+              json.dump(bundle, f, ensure_ascii=False, indent=2)
+              f.write("\n")
+          PY
+          python cloud-gpu/scripts/drive_put.py --uri-env DRIVE_RESULT_UPLOAD_URI --file "$tmp_rep" --mime application/json >/dev/null
+          rm -f "$tmp_rep"
+
+      - name: Publish results, queue snapshot and consumed envelopes
+        if: always()
+        run: |
+          set -euo pipefail
+          git config user.name  "gpu-relay[bot]"
+          git config user.email "gpu-relay[bot]@users.noreply.github.com"
+          # Updated queue statuses travel back with the results.
+          if [ -f /tmp/private-gpu-runs/queue.json ]; then
+            cp /tmp/private-gpu-runs/queue.json cloud-gpu/jobs/queue.json
+          fi
+          git add cloud-gpu/relay_pubkey.pem cloud-gpu/results cloud-gpu/jobs/queue.json 2>/dev/null || true
+          git add -u cloud-gpu/secrets 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "nothing to publish"
+            exit 0
+          fi
+          git commit -m "gpu-relay: publish results and consume one-time envelopes"
+          for i in 1 2 3; do
+            git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            git fetch origin "${GITHUB_REF_NAME}"
+            git rebase "origin/${GITHUB_REF_NAME}" || { git rebase --abort; exit 1; }
+          done
+          exit 1
+
+      - name: Propagate job exit status
+        if: steps.run_jobs.outcome == 'failure'
+        run: exit 1

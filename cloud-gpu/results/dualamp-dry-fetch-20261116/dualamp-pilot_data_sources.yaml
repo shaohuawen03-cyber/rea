@@ -1,0 +1,15 @@
+sources:
+  - id: mock_positives
+    path: /kaggle/working/dualamp-pilot/data/positives.fasta
+    format: fasta
+    layer: general_amp
+    label: 1
+    min_len: 8
+    max_len: 50
+  - id: uniprot_a_fragments
+    path: /kaggle/working/dualamp-pilot/data/negatives.fasta
+    format: fasta
+    layer: negative_background
+    label: 0
+    min_len: 8
+    max_len: 50

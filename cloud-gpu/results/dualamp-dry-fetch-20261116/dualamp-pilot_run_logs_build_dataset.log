@@ -1,0 +1,12 @@
+[2026-11-16 01:17:42] INFO    reading sources from /kaggle/working/dualamp-pilot/data/sources.yaml
+[2026-11-16 01:17:42] INFO      source mock_positives         layer=general_amp          kept=  150 (from 150 rows)
+[2026-11-16 01:17:42] INFO      source uniprot_a_fragments    layer=negative_background  kept=  400 (from 400 rows)
+[2026-11-16 01:17:42] INFO    after length/alphabet filtering: 550 records
+[2026-11-16 01:17:43] INFO      dedup: 550 records -> 550 unique sequences
+[2026-11-16 01:17:43] INFO      scrambled challenge set: +150 sequences
+[2026-11-16 01:17:43] WARNING   CD-HIT / MMseqs2 not found - using the built-in k-mer clustering fallback. Record this in the methods section (plan §5 requires naming the tool and params).
+[2026-11-16 01:17:43] INFO    clustering: kmer_fallback(k=3) at identity 0.40 / coverage 0.80 -> 596 clusters
+[2026-11-16 01:17:43] WARNING   14 homology clusters contain both labels - assigned to 'review' (never trained on)
+[2026-11-16 01:17:43] INFO      split sizes: {'train': 364, 'scrambled': 150, 'val': 78, 'test': 78, 'review': 30}
+[2026-11-16 01:17:43] INFO    dataset written: 700 sequences, 596 clusters, test=78 (pos=20) - see /kaggle/working/dualamp-pilot/run/dataset/dataset_all.csv
+[2026-11-16 01:17:43] INFO    step1 build_dataset finished in 1.4s
