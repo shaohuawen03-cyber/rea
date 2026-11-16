@@ -135,9 +135,11 @@
       ],
       "serve_minutes": 15.0,
       "wait": true,
-      "status": "pending",
+      "status": "failed",
       "created_at_utc": "2026-11-16T04:10:35Z",
-      "kernel_slug": "dualamp-real3-20261116"
+      "kernel_slug": "dualamp-real3-20261116",
+      "error": "Kaggle kernel shaohuawen/dualamp-real3-20261116 ended with error; inspect logs in /tmp/private-gpu-runs/dualamp-real3-20261116.",
+      "finished_at_utc": "2026-11-16T04:12:57Z"
     }
   ]
 }

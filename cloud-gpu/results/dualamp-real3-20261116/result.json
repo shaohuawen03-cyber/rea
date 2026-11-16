@@ -1,0 +1,6 @@
+{
+  "job_id": "dualamp-real3-20261116",
+  "status": "failed",
+  "error": "Kaggle kernel shaohuawen/dualamp-real3-20261116 ended with error; inspect logs in /tmp/private-gpu-runs/dualamp-real3-20261116.",
+  "timestamp_utc": "2026-11-16T04:12:57Z"
+}

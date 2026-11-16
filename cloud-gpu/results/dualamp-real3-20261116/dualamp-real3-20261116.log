@@ -1,0 +1,94 @@
+[{"stream_name":"stdout","time":4.564757802,"data":"[dualamp_pilot 04:11:20] installing missing deps: biopython\n"}
+,{"stream_name":"stdout","time":26.364938322,"data":"[dualamp_pilot 04:11:42] cd-hit installed via apt: /usr/bin/cd-hit\n"}
+,{"stream_name":"stdout","time":26.386611756,"data":"[dualamp_pilot 04:11:42] cd-hit self-test OK: /usr/bin/cd-hit\n"}
+,{"stream_name":"stdout","time":26.387942906,"data":"[dualamp_pilot 04:11:42] cloning repo branch arena/cac2205a-rea\n"}
+,{"stream_name":"stderr","time":26.410241859,"data":"Cloning into '/tmp/dualamp-pilot/rea'...\n"}
+,{"stream_name":"stdout","time":30.127712444,"data":"[dualamp_pilot 04:11:46] downloading positives via gdown (Drive file id 11vvQS…)\n"}
+,{"stream_name":"stderr","time":33.905812517,"data":"Downloading...\n"}
+,{"stream_name":"stderr","time":33.905842107,"data":"From: https://drive.google.com/uc?id=11vvQSlOJDjt8v6qHCB4LWg6mRK3DwNis\n"}
+,{"stream_name":"stderr","time":33.905847039,"data":"To: /tmp/dualamp-pilot/data/positive_core_candidate_v1.fasta\n"}
+,{"stream_name":"stderr","time":33.92105302,"data":"\r  0%|          | 0.00/133k [00:00\u003c?, ?B/s]\r100%|██████████| 133k/133k [00:00\u003c00:00, 103MB/s]\n"}
+,{"stream_name":"stdout","time":33.924188899,"data":"[dualamp_pilot 04:11:50] positives sha256 OK (133202 bytes)\n"}
+,{"stream_name":"stdout","time":33.926057661,"data":"[dualamp_pilot 04:11:50] positives: 3579\n"}
+,{"stream_name":"stdout","time":43.533900682,"data":"[dualamp_pilot 04:11:59] negatives stats: {\"proteins_total\": 117172, \"keyword_excluded\": 18, \"fragments_raw\": 351462, \"fragments_standard_aa\": 351429, \"fragments_dedup\": 351119, \"fragments_hit_positive_4mer_gt08\": 1096, \"negatives_final\": 10000, \"seed\": 11, \"cap\": 10000, \"seconds\": 9.6}\n"}
+,{"stream_name":"stdout","time":43.533943297,"data":"[dualamp_pilot 04:11:59] cloning leanrea @ arena/4ecb70f1-leanrea\n"}
+,{"stream_name":"stderr","time":43.535884802,"data":"Cloning into '/tmp/dualamp-pilot/rea/lee'...\n"}
+,{"stream_name":"stdout","time":54.882527099,"data":"[dualamp_pilot 04:12:11] $ /usr/bin/python3 -m dualamp_lite build --manifest /tmp/dualamp-pilot/data/sources.yaml --workdir /tmp/dualamp-pilot/run --cluster-method auto\n"}
+,{"stream_name":"stdout","time":56.075812888,"data":"[04:12:12] INFO    reading sources from /tmp/dualamp-pilot/data/sources.yaml\n"}
+,{"stream_name":"stdout","time":56.124545343,"data":"[04:12:12] INFO      source candidate_v1           layer=general_amp          kept= 3579 (from 3579 rows)\n"}
+,{"stream_name":"stdout","time":56.213249509,"data":"[04:12:12] INFO      source uniprot_a_fragments    layer=negative_background  kept=10000 (from 10000 rows)\n"}
+,{"stream_name":"stdout","time":56.240205482,"data":"[04:12:12] INFO    after length/alphabet filtering: 13579 records\n"}
+,{"stream_name":"stdout","time":69.920963215,"data":"[04:12:26] INFO      dedup: 13579 records -\u003e 13579 unique sequences\n"}
+,{"stream_name":"stdout","time":69.959527465,"data":"[04:12:26] INFO      scrambled challenge set: +500 sequences\n"}
+,{"stream_name":"stdout","time":82.541953789,"data":"[04:12:38] INFO    step1 build_dataset finished in 26.5s\n"}
+,{"stream_name":"stderr","time":82.552065346,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":82.553583363,"data":"  File \"\u003cfrozen runpy\u003e\", line 203, in _run_module_as_main\n"}
+,{"stream_name":"stderr","time":82.553601508,"data":"  File \"\u003cfrozen runpy\u003e\", line 88, in _run_code\n"}
+,{"stream_name":"stderr","time":82.553608136,"data":"  File \"/tmp/dualamp-pilot/rea/lee/dualamp-lite/dualamp_lite/__main__.py\", line 4, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":82.553614388,"data":"    raise SystemExit(main())\n"}
+,{"stream_name":"stderr","time":82.553630852,"data":"                     ~~~~^^\n"}
+,{"stream_name":"stderr","time":82.553635711,"data":"  File \"/tmp/dualamp-pilot/rea/lee/dualamp-lite/dualamp_lite/cli.py\", line 354, in main\n"}
+,{"stream_name":"stderr","time":82.553640313,"data":"    return args.func(args)\n"}
+,{"stream_name":"stderr","time":82.553644439,"data":"           ~~~~~~~~~^^^^^^\n"}
+,{"stream_name":"stderr","time":82.55364829,"data":"  File \"/tmp/dualamp-pilot/rea/lee/dualamp-lite/dualamp_lite/cli.py\", line 138, in cmd_build\n"}
+,{"stream_name":"stderr","time":82.553652197,"data":"    summary = build_dataset(_dataset_cfg(args), paths, manifest=manifest, logger=logger)\n"}
+,{"stream_name":"stderr","time":82.553655904,"data":"  File \"/tmp/dualamp-pilot/rea/lee/dualamp-lite/dualamp_lite/dataset.py\", line 635, in build_dataset\n"}
+,{"stream_name":"stderr","time":82.553659671,"data":"    df[\"cluster\"] = df[\"seq\"].map(mapping).astype(int)\n"}
+,{"stream_name":"stderr","time":82.553663393,"data":"                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^\n"}
+,{"stream_name":"stderr","time":82.553670659,"data":"  File \"/usr/local/lib/python3.13/dist-packages/pandas/core/generic.py\", line 6665, in astype\n"}
+,{"stream_name":"stderr","time":82.553674229,"data":"    new_data = self._mgr.astype(dtype=dtype, copy=copy, errors=errors)\n"}
+,{"stream_name":"stderr","time":82.553676767,"data":"  File \"/usr/local/lib/python3.13/dist-packages/pandas/core/internals/managers.py\", line 449, in astype\n"}
+,{"stream_name":"stderr","time":82.553689851,"data":"    return self.apply(\n"}
+,{"stream_name":"stderr","time":82.553693283,"data":"           ~~~~~~~~~~^\n"}
+,{"stream_name":"stderr","time":82.553696985,"data":"        \"astype\",\n"}
+,{"stream_name":"stderr","time":82.553699575,"data":"        ^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":82.553701845,"data":"    ...\u003c3 lines\u003e...\n"}
+,{"stream_name":"stderr","time":82.553704327,"data":"        using_cow=using_copy_on_write(),\n"}
+,{"stream_name":"stderr","time":82.553706705,"data":"        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":82.553709095,"data":"    )\n"}
+,{"stream_name":"stderr","time":82.553711372,"data":"    ^\n"}
+,{"stream_name":"stderr","time":82.553713672,"data":"  File \"/usr/local/lib/python3.13/dist-packages/pandas/core/internals/managers.py\", line 363, in apply\n"}
+,{"stream_name":"stderr","time":82.553716251,"data":"    applied = getattr(b, f)(**kwargs)\n"}
+,{"stream_name":"stderr","time":82.553718687,"data":"  File \"/usr/local/lib/python3.13/dist-packages/pandas/core/internals/blocks.py\", line 784, in astype\n"}
+,{"stream_name":"stderr","time":82.553721215,"data":"    new_values = astype_array_safe(values, dtype, copy=copy, errors=errors)\n"}
+,{"stream_name":"stderr","time":82.553723895,"data":"  File \"/usr/local/lib/python3.13/dist-packages/pandas/core/dtypes/astype.py\", line 237, in astype_array_safe\n"}
+,{"stream_name":"stderr","time":82.553726475,"data":"    new_values = astype_array(values, dtype, copy=copy)\n"}
+,{"stream_name":"stderr","time":82.553741577,"data":"  File \"/usr/local/lib/python3.13/dist-packages/pandas/core/dtypes/astype.py\", line 182, in astype_array\n"}
+,{"stream_name":"stderr","time":82.553745867,"data":"    values = _astype_nansafe(values, dtype, copy=copy)\n"}
+,{"stream_name":"stderr","time":82.553749949,"data":"  File \"/usr/local/lib/python3.13/dist-packages/pandas/core/dtypes/astype.py\", line 101, in _astype_nansafe\n"}
+,{"stream_name":"stderr","time":82.553755198,"data":"    return _astype_float_to_int_nansafe(arr, dtype, copy)\n"}
+,{"stream_name":"stderr","time":82.553759247,"data":"  File \"/usr/local/lib/python3.13/dist-packages/pandas/core/dtypes/astype.py\", line 145, in _astype_float_to_int_nansafe\n"}
+,{"stream_name":"stderr","time":82.553769019,"data":"    raise IntCastingNaNError(\n"}
+,{"stream_name":"stderr","time":82.553772681,"data":"        \"Cannot convert non-finite values (NA or inf) to integer\"\n"}
+,{"stream_name":"stderr","time":82.553776305,"data":"    )\n"}
+,{"stream_name":"stderr","time":82.553779708,"data":"pandas.errors.IntCastingNaNError: Cannot convert non-finite values (NA or inf) to integer\n"}
+,{"stream_name":"stderr","time":82.669487962,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":82.670357443,"data":"  File \"/kaggle/src/script.py\", line 8, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":82.6703677,"data":"    runpy.run_path('/tmp/_payload.py', run_name='__main__')\n"}
+,{"stream_name":"stderr","time":82.670372019,"data":"    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":82.670375482,"data":"  File \"\u003cfrozen runpy\u003e\", line 294, in run_path\n"}
+,{"stream_name":"stderr","time":82.670379085,"data":"  File \"\u003cfrozen runpy\u003e\", line 98, in _run_module_code\n"}
+,{"stream_name":"stderr","time":82.670382457,"data":"  File \"\u003cfrozen runpy\u003e\", line 88, in _run_code\n"}
+,{"stream_name":"stderr","time":82.67038616,"data":"  File \"/tmp/_payload.py\", line 424, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":82.670390564,"data":"    main()\n"}
+,{"stream_name":"stderr","time":82.670394094,"data":"    ~~~~^^\n"}
+,{"stream_name":"stderr","time":82.670397454,"data":"  File \"/tmp/_payload.py\", line 382, in main\n"}
+,{"stream_name":"stderr","time":82.670401204,"data":"    run([sys.executable, \"-m\", \"dualamp_lite\", \"build\", \"--manifest\", str(manifest),\n"}
+,{"stream_name":"stderr","time":82.670405654,"data":"    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":82.670430097,"data":"         \"--workdir\", str(wd / \"run\"), \"--cluster-method\", \"auto\"],\n"}
+,{"stream_name":"stderr","time":82.670435501,"data":"         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":82.670439214,"data":"        env={**os.environ, \"PYTHONPATH\": str(pkg)})\n"}
+,{"stream_name":"stderr","time":82.670443459,"data":"        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":82.670447303,"data":"  File \"/tmp/_payload.py\", line 380, in run\n"}
+,{"stream_name":"stderr","time":82.670451002,"data":"    subprocess.check_call(cmd, cwd=str(pkg), **kw)\n"}
+,{"stream_name":"stderr","time":82.670454271,"data":"    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":82.670457514,"data":"  File \"/usr/lib/python3.13/subprocess.py\", line 420, in check_call\n"}
+,{"stream_name":"stderr","time":82.670460944,"data":"    raise CalledProcessError(retcode, cmd)\n"}
+,{"stream_name":"stderr","time":82.670468902,"data":"subprocess.CalledProcessError: Command '['/usr/bin/python3', '-m', 'dualamp_lite', 'build', '--manifest', '/tmp/dualamp-pilot/data/sources.yaml', '--workdir', '/tmp/dualamp-pilot/run', '--cluster-method', 'auto']' returned non-zero exit status 1.\n"}
+,{"stream_name":"stderr","time":84.454703935,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":84.454729352,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":84.722449018,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":84.722482717,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":87.407343974,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":88.314887165,"data":"[NbConvertApp] Writing 316940 bytes to __results__.html\n"}
+]
