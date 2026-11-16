@@ -125,8 +125,17 @@ def shadow_positives(out_path, n=150, seed=20261116):
             L = rng.randint(12, 40)
             f.write(f">MOCK_P{i:04d}\n{''.join(rng.choice(AA) for _ in range(L))}\n")
 
+def _ensure_deps():
+    import importlib
+    need = {"Bio": "biopython", "yaml": "pyyaml"}
+    missing = [pkg for mod, pkg in need.items() if importlib.util.find_spec(mod) is None]
+    if missing:
+        log("installing missing deps: " + ", ".join(missing))
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", *missing])
+
 def main():
     os.environ.setdefault("TORCH_HOME", "/tmp/torch_home")
+    _ensure_deps()
     ap = argparse.ArgumentParser()
     ap.add_argument("--mode", choices=["real", "dry", "negatives-only"], default="dry")
     ap.add_argument("--workdir", default="/tmp/dualamp-pilot")

@@ -73,7 +73,13 @@
 - 链路（全部走 `cloud-gpu/jobs/dualamp_pilot.py`）：
   `git clone` 本分支（含 A 快照）→ 阴性构建 → leanrea `dualamp-lite`（build → features[fair-esm t12_35M] → train → report）→
   小文件（D10 指标/报告/summary JSON/切分 CSV ≤2 MiB）回传 `cloud-gpu/results/<job-id>/`。
-- `dualamp-dry-20261116`（MOCK 阳性，仅验证 plumbing）：派发与内核执行约 5 分钟后进入产物取回阶段
+- `dualamp-dry-20261116`（MOCK 阳性，仅验证 plumbing）：
+  - **build 全量成功**（seed=11）：700 条（150 MOCK 阳性 + 400 A 阴性 + 150 scrambled）→ k-mer 聚类 596簇（CD-HIT/MMseqs2 不可用，回退 k=3，已在报告标注）→ 14 个同源簇双标签入 review 不训练 → train 364 / val 78 / test 78（阳性 20）/ review 30 / scrambled 150。
+  - **features 崩溃**：镜像缺 biopython（`No module named 'Bio'`，instability_index 需要）→ 已修复：载荷内 `_ensure_deps()` 自装 biopython/pyyaml（`9acb8c8` 之后的补丁）。
+  - **产物取回超时→补拉成功**：首趟 `kaggle kernels output` 300s 超时（产物含 .git+ESM 权重，>60MB）；`dualamp-dry-fetch-20261116`（mode=output）于 2026-11-16T01:44Z 完成，4623 个文件入 `cloud-gpu/results/dualamp-dry-fetch-20261116/`（已清理至 20 个关键文件：dataset_summary/日志/切分CSV）。
+  - 已修复：载荷自清（`/tmp` 中间产物、ESM 权重不入产物、白名单回传、output 超时 900s）。
+  - **MOCK 指标不可引用；pipeline 代码路径 build 已验证可跑通，features/train 待 real 模式复核。**
+  - 派发与内核执行约 5 分钟后进入产物取回阶段
   （与内核状态 complete 一致，但未 100% 证实）；`kaggle kernels output` **两次超时**（300s），
   根因：载荷把 `.git`+gzip（合计 >60 MB）、ESM 权重（~140 MB）、npz/模型留在 `/kaggle/working`，
   内核产物目录过大，API 取回超时。
