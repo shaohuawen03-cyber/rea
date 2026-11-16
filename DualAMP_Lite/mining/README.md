@@ -127,9 +127,11 @@ QC（脚本自检列；警示）：AMP 率>5% 先查同源块；<10 aa 与 >100 
 导出 .pt + scaler；产物标注 `candidate_v1_pilot_weights`，仅调试/初筛，不发布为正式模型、不写论文；
 v2 回填后再训。**已跑通：2026-11-16T11:24Z Kaggle T4 完成（kernel shaohuawen/dualamp-real5-20261116）；
 测试集 AUROC：M1 0.9767–0.9791 / M2 0.9796–0.9809 / M3 0.9770–0.9803；M0_RF ≈ 0.964。
-15 个 .pt（M1/M2/M3 × 5 seeds，M2/M3 各 ≈2 MB 贴近 2 MiB 上限）+ scaler 在 workflow artifact
-`gpu-relay-run-18`（14 天过期）与 Kaggle kernel 输出里；按仓库约定不进 Git（.gitignore），
-**永久存放待用户选择：GitHub Release / HuggingFace / Google Drive（见 VERIFICATION 2026-11-16 §11 与 §6）。**
+15 个 .pt（M1/M2/M3 × 5 seeds，M2/M3 各 ≈2 MB 贴近 2 MiB 上限）+ scaler 按仓库约定不进 Git
+（.gitignore `cloud-gpu/results/**/*.pt`）。**永久存放：GitHub prerelease `dualamp-real5-candidate_v1-pilot-weights-20261116`
+（2026-11-16 发布；`.tar.gz` 20,928,730 bytes + `SHA256SUMS.txt` + `export_manifest.json` provenance），
+workflow artifact `gpu-relay-run-18`（11/30 过期）仅为历史通道。归档由手动工作流 `weights-release.yml` 完成
+（workflow_dispatch；不改 gpu-relay 派发链）。
 
 ### 阶段 4｜ESM-2 → M1/M2 批量打分
 ```bash
