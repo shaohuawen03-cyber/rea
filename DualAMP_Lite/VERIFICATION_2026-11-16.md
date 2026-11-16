@@ -112,11 +112,23 @@
   - 修复（cd24de9/40db0af）：内核内始终优先使用 **mmseqs 引擎 + 自建 cd-hit shim**（/usr/local/bin/cd-hit，PATH 遮蔽原生），
     shim 保证**每个输入 id 都进入 .clstr**（未被聚类的追加为单例簇），并对成员数做端到端校验（已本地单测：含 5-mer、
     BXZ/U 字母、空映射场景全通过）。同时 relay 轮询默认 3600→9000s（real4 曾在阈值被判 pushed_async）。
-  - **`dualamp-real4-20261116`（04:15Z 推送，模式不变）**：内核至今（05:40Z）**无任何输出**
-    （fetch ×3 均空；`kaggle kernels output` 无文件）→ 判定 Kaggle 侧排队/未运行（非沙箱问题）。不会影响 real-2 结果有效性。
-- 冻结结论（本轮）：pipeline 已在真实数据上**端到端跑通两次**（D10 指标+D9 消融+D11 挑战集+D15 manifest）；
-  但所有 real 指标都基于 k-mer 回退聚类（80% 阳性被剔），**不可入论文、不可作定稿**；
-  candidate_v1 仍为已锁但未定稿候选集；230 抽核未回填；positive_core_v2 未定稿。
+  - **`dualamp-real4-20261116`（04:15Z 推送 → 06:0xZ 内核完成 → 06:46Z 第 5 次补拉取回全部 12 个产物）**：
+    内核侧 apt 注入 **mmseqs2 + 自建 cd-hit shim**（PATH 遮蔽原生 cd-hit；覆盖兜底：未聚类 id 追加单例簇），
+    dataset_summary.cluster_method=**`cdhit`**，**11,570 簇**，**0 个跨标签簇 → review=0**（k-mer 时代的 2,852 阳性-黑洞消失）。
+    **阳性 3,579 全部进训练集链路**（train 2,505 / val 537 / test 537 = 3,579 ✓）；阴性 10,000 ✓；**train 9,505 / val 2,037 / test 2,037**
+    （阳性占比 ~69.6/14.5/14.5 行；聚类按 80/10/10 分簇）。**独立测试指标（test n=2,037，阳 537；簇级 CI）**：
+    M3 AUROC 0.9815 [0.9746, 0.9872] / AUPRC 0.9683 / MCC 0.866 / Sens 0.812 / Spec 0.997；
+    M2 0.9810 / 0.9676 / 0.873；M1 0.9801 / 0.9660 / 0.877（Sens 0.851）；M0_RF 0.9695 / 0.9433 / 0.819。
+    消融（cd-hit 口径）：M3 vs M0_RF auroc Δ0.012（p=5.2e-4，BH q=0.002 显著）、mcc Δ0.047（q<0.001 显著）；
+    M3 vs M1 / M3 vs M2 各指标均不显著（M1/M2 的 biophys+CNN 融合与否无差别，q>0.4）。
+    ⚠️ scrambled 挑战集被判阳率：M1 73.2% / M2 56.8% / M3 56.6%（阈值按 val-OOF MCC 定）→ **模型强烈依赖组成偏好**，
+    与 M1/M3 高 Sens 一致；须在后续重训中加入组成对齐约束或作报告限制。
+    k-mer 回退结果（real-1/2）对应数据标注"仅工程对照"，不引用。
+- 冻结结论（本轮）：pipeline 已在真实数据上**端到端跑通三次**（D10 指标+D9 消融+D11 挑战集+D15 manifest）；
+  **real4（cd-hit/mmseqs 口径）为当前可信结果**：全量 3,579 阳性 + 10,000 阴性、0 跨标签簇、计数闭合、
+  指标（M3 AUROC 0.9815）报告可用——但仍属 **candidate_v1（未抽核）pilot**，**不可入论文、不可作定稿**；
+  candidate_v1 已锁未定稿（230 抽核未回填）；positive_core_v2 未定稿；test 集在两个聚类口径下各评估一次，
+  汇报须双口径并列并声明先后顺序。
 - 工作流修复清单（已入库）：a) 载荷自清（17371d3）；b) 失败传播仅限本次 run（`83719bc`；real2 首次 conclusion=success）；
   c) 轮询 3600→9000s；d) Drive 短时只读窗口（allow_file_discovery=false）**用后即焚** + 用后 list_permissions 复核。
 
@@ -133,11 +145,57 @@
 
 ## 8. 待办（按序）
 
-1. ~~real 模式全量 PILOT~~ **已完成（k-mer 路径，测试集 M3 AUROC 0.990）**；**mmseqs 路径（real4）内核仍在 Kaggle 排队，
-   需在其产物回传后复核：聚类方法应为 `cdhit`（shim/mmseqs 引擎），review 集阳性应显著少于 2,852**。回拉命令：
-   `gpu_ctl.py enqueue --mode output --kernel-slug dualamp-real4-20261116 …`（或等下次会话直接补拉）。
+1. ~~real 模式全量 PILOT~~ **已完成**：cd-hit/mmseqs 口径（real4）为可信结果——全量 3,579/10,000 进簇、
+   0 跨标签簇（review=0）、Test M3 AUROC 0.9815；k-mer 版（real-1/2）仅工程对照。产物已入仓
+   `cloud-gpu/results/dualamp-real4-fetch5-20261116/`。
+   下一轮：v2 定稿后的正式训练 + scrambled 组成对齐修正 + 230 抽核回填。
 2. 拿到 mmseqs 版指标后：40% identity 划分审计 + 最近邻泄漏审计（k-mer 近似→mmseqs/CD-HIT 复核，含 cross-label 簇数复核）。
 3. 230 条人工抽核回填 → 出 positive_core_v2 → 弱阴性在 v2 定稿后启动 → 正式训练。
 4. 论文口径提醒：APD2024 快照与 2026-01-01 官方 3,379/430 的差异；DRAMP4.0 paper 30,260 vs 快照 public 39,125 的关系；
    "candidate_v1 pilot" 不得写成定稿结论；k-mer 回退限制与 scrambled >40% 判阳现象须写入方法限制；
    CD-HIT 静默丢短肽（<10 aa）+ leanrea mmseqs 产物格式误判两个坑已入 relay 修复，勿在其他环境复踩。
+## 9. 数据准备总量复核（2026-11-16，real4/cd-hit 口径——论文级参考）
+
+### 9.1 阳性锁账（3,579）
+| 层 | 数量 |
+|---|---|
+| CORE_EXPLICIT_ACTIVITY_TARGETED | 2,895（2,805 具名细菌靶标 + 90 Gram 信号） |
+| CORE_EXPLICIT_ACTIVITY_TARGET_UNKNOWN | 666（显式抗菌字段 + 靶标占位符） |
+| CORE_GENERIC_UPGRADED_TARGETED | 18 |
+| **合计** | **3,579** = fasta 条数 ✓（= 2,895+666+18） |
+- sha256 `7b6ea12136623e85218ba78cfd4b713985a3122b24c61650e536e724b768aa1d`（133,202 B）锁定；repo 未入此文件（未发表数据）。
+- length ∈ [5, 50]、标准 20 字母表：过滤后丢弃 0 条（dropped_records=0）✓。
+- 完整性：2,505(train)+537(val)+537(test) = 3,579 ✓ 无重复、无跨集簇。
+- **标签有效性上限未知**：230 抽核（5%×2,895+10%×666+100%×18，seed 20261110）Review_Result 仍空 → 任何"高精度"结论的标签质量前提未验证；**v2 前不可入论文**。
+
+### 9.2 阴性可复现账（10,000）
+- 源：UniProt KB Release 2026_04（2026-11-04 下载）Swiss-Prot reviewed + Bacteria + `cc_scl_term:SL-0086`（Cytoplasm 受控词汇）
+  − 抗菌关键词（antimicrobial|bacteriocin|defensin|antibiotic，排除各 18 条蛋白）→ **117,172** 胞质蛋白（proteome 完整性双档 sha256 锁，见 §1）。
+- 滑窗片段化（5–50 aa）：351,462 → 标准字母表 351,429 → 去重 351,119 → 与阳性 4-mer>0.8 重合剔除 1,096（→池 **350,023**）
+  → **seed=11** 采样 **10,000**（cap=10,000；negatives_final=10,000）✓。全程确定性、无外部随机性。
+- 与文献口径一致：Macrel（Porto et al.）以真核/胞内蛋白片段作阴性池；AMP-activity-ml（DRAMP5 同类管线）同为"reviewed UniProt 胞质片段 + CD-HIT 40% + StratifiedGroupKFold"设计；tsAMP（Front Microbiol 2026）同样 CD-HIT 40% 整簇划分 train/test。
+
+### 9.3 聚类与切分账（cd-hit 0.40 / 0.80，StratifiedGroupKFold 8:1:1）
+- 引擎：mmseqs2 + 自建 cd-hit shim（/usr/local/bin/cd-hit，覆盖兜底，单测通过）；`cluster_method="cdhit"` 如实入账。
+- **11,570 簇**；**cross-label 簇 = 0** → review = 0（2026-11-16 前的 k-mer 回退把 885 簇/2,582 阴+2,852 阳误判为双标签，已作废）。
+- 切分（行数）：train 9,505（阳 2,505/阴 7,000）｜val 2,037（537/1,500）｜test 2,037（537/1,500）｜scrambled 500（0/500）。
+  → 阳性 3,579、阴性 10,000 **精确闭合** ✓；scrambled 500 组成匹配噪声，不参与训练/阈值选择。
+- 簇数切分 ~80/10/10；行数比例偏差来自簇大小不均（方法章节须照写）。
+- dev=OOF 预测存在（11,542 行）→ 阈值仅按 val-OOF MCC 调优；**test 仅评估一次**（real4 = cd-hit 版；k-mer 版为历史对照）。
+
+### 9.4 复现清单（第三方重跑）
+1. 分支 `arena/cac2205a-rea`（本文件所在 commit）；2. A 快照 `uniprot_bacteria_cytoplasm_reviewed.{fasta,tsv}.gz`（§1 sha256）；
+3. candidate_v1（Drive 侧，sha256 见 §4）；4. sources.yaml sha256 `03f712be…`（manifest 锁）；5. seed=11（阴性）、seeds=1..5（模型）、folds=5；
+6. 环境：Kaggle 1×T4（本次）、torch 2.11.0+cu130、fair-esm（esm2_t12_35M_UR50D，repr_layer 12，masked-mean 480d）、python 3.13.16；
+7. 特征：AA+35 biophys；StandardScaler 仅 train 拟合（|r|≥0.85 冗余对 3 组，已记录）；
+8. 交付：`cloud-gpu/results/dualamp-real4-fetch5-20261116/`（D10 指标/报告、D9 消融、D15 sha256 manifest 56 文件）。
+
+### 9.5 已知偏差与禁止声称项（必须写入 manuscript limitations）
+- **标签未抽核**（230 条）→ 不可称"标签完备"；candidate_v1 与 v2 不同（v2 依据抽核修订）。
+- **scrambled 判阳率 57–73%**（M1 73.2% / M2 56.8% / M3 56.6%）→ 模型存在强组成偏好；不可声称学习到序列序或特异性机制；建议：组成对齐分析 + 对组成对齐阴性重训后再定论。
+- AMP 家族过表征残差（文献讨论过的问题）；Test 指标 CI 为簇级（非肽级），与评估单位一致。
+- k-mer 回退版与 cd-hit 版 test 集不同（前者 109 阳、后者 537 阳）；**论文写数须以 cd-hit 版为准并注明先后**。
+
+### 9.6 一句话结论
+数据准备的**数量级账本闭合且可复现**（3,579+10,000+500 全程 sha256/seed/脚本锁定，聚类工具如实入账）；
+但**标签质量与组成偏好两个硬前提未解决**——数据准备"可复现"达标、"可入论文"不达标。
