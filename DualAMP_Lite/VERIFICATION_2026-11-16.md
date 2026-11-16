@@ -62,11 +62,15 @@
 ## 5. 数据通道核对（为何 candidate_v1 字节未进本仓库）
 
 - 2026-11-16 实测：`read_file_text` 对 >30 KB 文件做中间截断（start+end 双端保留），133 KB fasta 无法逐字节回灌；
-  `download_file` base64 同受内联截断；沙箱 egress 白名单不含 Drive 域，Kaggle 无凭据访问私有 Drive。
-- 可行且已验证的路径（real 模式）：Drive 端 **短时预授权链接** → 一次性加密信封 `FASTA_URL.enc`（RSA+AES hybrid，
-  仅仓库密文）→ Kaggle 内核下载 → **核对 sha256=7b6ea1… 才走 pipeline**；用后信封即焚。
-  该路径需要一次你的确认（或直接把 fasta 拖进对话，133 KB）。
-- 阴性片段无需传输：快照已在仓库内，Kaggle 内核 `git clone --depth 1` 本分支即含 gzip（27 MB），确定性重建（seed=11）。
+  `download_file` base64 同受内联截断；沙箱 egress 白名单不含 Drive 域。
+- **已落地的通道（短时公开窗口 + sha256 强校验）**：用户确认方案 T（"临时公开窗口，跑完自动回收"）后，
+  Drive 连接器把 `positive_core_candidate_v1.fasta`（id `11vvQSlOJ…`）设为 `anyoneWithLink` 只读、
+  **allow_file_discovery=false**（链接不可被搜索发现）→ Kaggle 内核 gdown 下载 → 校验 sha256=7b6ea121…aa1d（不符即中止）→
+  **产物回传后立即删除该授权**（owner-only；已在每次真跑后逐一回收并复核）。
+  注意：工具侧对相同参数的"写操作"有去重保护，回收后必须再 `list_permissions` 复核确认。
+- 备选通道（代码已就绪，未启用）：gdown 需公开窗口 / `FASTA_URL` 预授权链接 / 服务账号（私有 Kaggle dataset `SA_DATASET`，
+  只读 drive.readonly，最稳、密钥不出 Kaggle）/ 一次性信封 `DRIVE_SA_JSON.enc`。
+- 阴性片段无需传输：快照已在仓库内（公开库，27 MB），Kaggle 内核 `git clone --depth 1` 本分支即含 gzip，确定性重建（seed=11）。
 
 ## 6. 训练 / 测试通路 PILOT（Kaggle 2×T4 + GitHub Actions gpu-relay）
 
@@ -85,12 +89,36 @@
   内核产物目录过大，API 取回超时。
 - 已修复（17371d3）：中间产物全部入 `/tmp`、ESM 权重 `TORCH_HOME=/tmp/torch_home`、
   仅 ≤2 MiB 白名单产物复制到 cwd（内核产物目录），`kernels output` 超时上调 900s。
-- `dualamp-dry-fetch-20261116`（mode=output 补拉）：relay 运行中多次超过 25 分钟未结案
-  （Actions run 43786101090，in_progress），因 MOCK 产物无价值，失败与否不影响结论；
-  该补拉很可能继续超时（内核产物目录仍 >60 MB），已对 real 载荷实施自清修复。
-- **MOCK 指标不可引用**；本阶段只验证「git push → Actions → Kaggle 内核运行 → 取回」链路本身。
-- real 模式（待你发 fasta 或确认预授权链接方案）：candidate_v1 3,579 + A 阴性 10,000（cap），
-  ESM-2 t12_35M，M0_RF/M1/M2/M3，5 seeds × 5 folds，epochs 60，按同源簇分组切分（CD-HIT 0.80 优先，k-mer 回退并在报告标注）。
+- `dualamp-dry-fetch-20261116`（mode=output 补拉）：**completed**（01:44Z），回传 4,623 个文件（修复前旧内核 cwd 整仓拷贝，
+  含 .git 与中间产物）；已清理至 20 个关键文件入 `cloud-gpu/results/dualamp-dry-fetch-20261116/`。**MOCK 指标不可引用。**
+- real 模式（用户确认方案 T 后执行）：
+  - **`dualamp-real-20261116`（2026-11-16 02:11Z→03:09Z，完成）**：sha256 校验通过（133,202 B）→ 阴性 10,000（seed 11，
+    池子 351,119→cap 10,000；>4-mer@0.8 重合 1,096 已剔）→ leanrea build→**CD-HIT 缺失回退 k-mer(k=3)** → 3,947 簇；
+    **885 个同源簇双标签入 review**（2,852/3,579 阳性=80% 未进训练：5,701 train / 1,222 val / 1,222 test（109 阳）/ 5,434 review）→
+    fair-esm 特征（t12_35M，925 s）→ 4 模型 × 5 seeds × 5 folds × 60 epochs → 报告 D10/D9/D11/D15 全部产出。
+    **独立测试指标（test n=1,222，阳 109；簇级 DeLong/bootstrap CI）**：M3 AUROC 0.990（0.980–0.997）、AUPRC 0.953、
+    MCC 0.879、Sens 0.817、Spec 0.997；M2 0.990/0.950/0.874；M1 0.989/0.951/0.890；M0_RF 0.978/0.919/0.863。
+    消融：M3vsM0_RF auroc Δ0.012（p=0.014，BH q=0.062 不显著）、auprc Δ0.035（q=0.009 显著）、mcc 等价（预设裕度内）。
+    scrambled 挑战集：M1 49.6%、M2 43.0%、M3 44.4% 被判阳（>40%，提示阈值与组成偏差待 v2 审核）。
+    ⚠️ 该结果建立在 **k-mer 过度聚类**之上，仅作 pilot 参考；review 中 80% 阳性未被利用。
+  - **`dualamp-real2-20261116`（03:11Z→04:11Z，完成，workflow conclusion=success）**：内核 apt 装 mmseqs2 成功（/usr/bin/mmseqs），
+    但 leanrea `_run_mmseqs` 误把 `mmseqs easy-cluster` 的 `<prefix>_cluster.tsv`（rep×member 两列）当成
+    `mmseqs_cluster_*.fasta`（逐簇 FASTA）→ 映射为空 → **静默退回 k-mer（结果与 real-1 逐位一致）**。
+    另修复 relay 语义："Propagate job exit status" 此前把历史遗留 failed 任务（463 之前的 dry）算进本次 run，
+    现改为仅惩罚 `finished_at_utc ≥ 本次 run 开始时间` 的失败 → real2 首次得到 conclusion=**success**。
+  - **`dualamp-real3-20261116`（04:10Z→04:12Z，失败）**：内核 apt 装**原生 cd-hit**（ubuntu `cd-hit` 包，自测通过）→
+    build crashed：`df["cluster"] = df["seq"].map(mapping).astype(int)` → **IntCastingNaNError**。
+    根因：cd-hit 默认最小长度（-l）>5，**静默丢弃 <10 aa 短肽**（AMPs 常见）或不合字母表序列 → .clstr 成员数 < 输入 → NaN。
+  - 修复（cd24de9/40db0af）：内核内始终优先使用 **mmseqs 引擎 + 自建 cd-hit shim**（/usr/local/bin/cd-hit，PATH 遮蔽原生），
+    shim 保证**每个输入 id 都进入 .clstr**（未被聚类的追加为单例簇），并对成员数做端到端校验（已本地单测：含 5-mer、
+    BXZ/U 字母、空映射场景全通过）。同时 relay 轮询默认 3600→9000s（real4 曾在阈值被判 pushed_async）。
+  - **`dualamp-real4-20261116`（04:15Z 推送，模式不变）**：内核至今（05:40Z）**无任何输出**
+    （fetch ×3 均空；`kaggle kernels output` 无文件）→ 判定 Kaggle 侧排队/未运行（非沙箱问题）。不会影响 real-2 结果有效性。
+- 冻结结论（本轮）：pipeline 已在真实数据上**端到端跑通两次**（D10 指标+D9 消融+D11 挑战集+D15 manifest）；
+  但所有 real 指标都基于 k-mer 回退聚类（80% 阳性被剔），**不可入论文、不可作定稿**；
+  candidate_v1 仍为已锁但未定稿候选集；230 抽核未回填；positive_core_v2 未定稿。
+- 工作流修复清单（已入库）：a) 载荷自清（17371d3）；b) 失败传播仅限本次 run（`83719bc`；real2 首次 conclusion=success）；
+  c) 轮询 3600→9000s；d) Drive 短时只读窗口（allow_file_discovery=false）**用后即焚** + 用后 list_permissions 复核。
 
 ## 7. 文献对照核验（2026-11-16 检索）
 
@@ -105,8 +133,11 @@
 
 ## 8. 待办（按序）
 
-1. **你发 `positive_core_candidate_v1.fasta`（附件）或确认预授权链接方案** → real 模式 2×T4 全量 PILOT（5 seeds×5 folds，M0_RF/M1/M2/M3）→ D10 指标回传。
-2. 拿到 PILOT 指标后：40% identity 划分审计 + 最近邻泄漏审计（k-mer 近似→CD-HIT 复核）。
+1. ~~real 模式全量 PILOT~~ **已完成（k-mer 路径，测试集 M3 AUROC 0.990）**；**mmseqs 路径（real4）内核仍在 Kaggle 排队，
+   需在其产物回传后复核：聚类方法应为 `cdhit`（shim/mmseqs 引擎），review 集阳性应显著少于 2,852**。回拉命令：
+   `gpu_ctl.py enqueue --mode output --kernel-slug dualamp-real4-20261116 …`（或等下次会话直接补拉）。
+2. 拿到 mmseqs 版指标后：40% identity 划分审计 + 最近邻泄漏审计（k-mer 近似→mmseqs/CD-HIT 复核，含 cross-label 簇数复核）。
 3. 230 条人工抽核回填 → 出 positive_core_v2 → 弱阴性在 v2 定稿后启动 → 正式训练。
 4. 论文口径提醒：APD2024 快照与 2026-01-01 官方 3,379/430 的差异；DRAMP4.0 paper 30,260 vs 快照 public 39,125 的关系；
-   "candidate_v1 pilot" 不得写成定稿结论；mock/k-mer 回退限制须写入方法限制。
+   "candidate_v1 pilot" 不得写成定稿结论；k-mer 回退限制与 scrambled >40% 判阳现象须写入方法限制；
+   CD-HIT 静默丢短肽（<10 aa）+ leanrea mmseqs 产物格式误判两个坑已入 relay 修复，勿在其他环境复踩。
