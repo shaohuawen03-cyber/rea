@@ -171,8 +171,17 @@ def main():
         for line in fh:
             rep, mem = line.rstrip("\n").split("\t")
             members.setdefault(clusters[rep], []).append((mem, mem == rep))
+    seen = set()
+    for idx in range(len(order)):
+        for mem, _ in members[idx]:
+            seen.add(mem)
+    missing = [sid for sid in lengths if sid not in seen]
+    if missing:
+        print(f"shim: {len(missing)} unclustered ids appended as singletons")
+        for sid in missing:
+            members[len(members)] = [(sid, True)]
     with open(a.out + ".clstr", "w") as out:
-        for idx in range(len(order)):
+        for idx in sorted(members):
             out.write(f">Cluster {idx}\n")
             for rank, (mem, is_rep) in enumerate(members[idx]):
                 ln = lengths.get(mem, 0)
@@ -220,19 +229,23 @@ def _ensure_clustering():
             log("cd-hit installed via apt: " + str(shutil.which("cd-hit")))
         except Exception as exc:
             log(f"warning: cd-hit apt install failed: {exc}; will rely on shim if an mmseqs engine exists")
-    if shutil.which("cd-hit") is not None and _selftest_cdhit():
-        log("cd-hit self-test OK: " + str(shutil.which("cd-hit")))
-        return
+    # Prefer the mmseqs-backed shim unconditionally when an mmseqs engine exists:
+    # native cd-hit silently drops sequences < its default minimum length (AMPs
+    # can be 5 aa) and sequences with non-standard letters, which crashes the
+    # downstream df["cluster"] map with NaN -> IntCastingNaNError. The shim covers
+    # every input id by construction.
     if shutil.which("mmseqs") is not None:
         try:
             Path("/usr/local/bin/cd-hit").write_text(_CD_HIT_SHIM)
             os.chmod("/usr/local/bin/cd-hit", 0o755)
             if _selftest_cdhit():
-                log("native cd-hit missing/broken; installed cd-hit->mmseqs shim at /usr/local/bin/cd-hit (self-test OK)")
+                log("installed cd-hit->mmseqs shim at /usr/local/bin/cd-hit (self-test OK; native cd-hit bypassed)")
                 return
-            log("ERROR: cd-hit shim installed but self-test FAILED; k-mer fallback will be used")
+            log("ERROR: cd-hit shim self-test FAILED; k-mer fallback will be used")
         except Exception as exc:
             log(f"ERROR: failed to install cd-hit shim: {exc}; k-mer fallback will be used")
+    elif shutil.which("cd-hit") is not None and _selftest_cdhit():
+        log("mmseqs engine missing; using native cd-hit (self-test OK) with known short-seq caveat")
     else:
         log("WARNING: neither cd-hit nor mmseqs available; k-mer fallback will be used")
 
