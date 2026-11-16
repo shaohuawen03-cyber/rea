@@ -29,9 +29,11 @@
       ],
       "serve_minutes": 15.0,
       "wait": true,
-      "status": "pending",
+      "status": "failed",
       "created_at_utc": "2026-11-16T00:55:42Z",
-      "kernel_slug": "arena-gpu-smoke-20261113"
+      "kernel_slug": "arena-gpu-smoke-20261113",
+      "error": "Kaggle auth failed: Authentication required to call the Kaggle API.\n\nFirst, you will need a Kaggle account. You can sign up at\n  https://www.kaggle.com/account/login\n\nRecommended: log in with OAuth via a web-based authorization flow.\nNo token to manage; credentials are cached locally for you.\n    kaggle auth login\n\nIf you'd rather not use OAuth, generate an API token at\n  https://www.kaggle.com/settings/api  (click \"",
+      "finished_at_utc": "2026-11-16T00:56:23Z"
     }
   ]
 }
