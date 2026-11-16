@@ -49,6 +49,10 @@ jobs:
   archive:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+
       - name: Download source artifact
         uses: actions/download-artifact@v4
         with:
@@ -104,45 +108,7 @@ jobs:
             fi
           done
 
-          python3 - "$PKG" "$TAG" <<'PY'
-import hashlib, json, os, sys, datetime
-pkg, tag = sys.argv[1], sys.argv[2]
-files = []
-for root, _, names in os.walk(pkg):
-    for n in sorted(names):
-        p = os.path.join(root, n)
-        rel = os.path.relpath(p, pkg)
-        h = hashlib.sha256()
-        with open(p, "rb") as fh:
-            for chunk in iter(lambda: fh.read(1 << 20), b""):
-                h.update(chunk)
-        files.append({"file": rel, "bytes": os.path.getsize(p), "sha256": h.hexdigest()})
-files.sort(key=lambda d: d["file"])
-with open(os.path.join(pkg, "SHA256SUMS.txt"), "w", encoding="utf-8") as fh:
-    for d in files:
-        fh.write(f"{d['sha256']}  {d['file']}\n")
-manifest = {
-    "release_tag": tag,
-    "archived_utc": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-    "provenance": {
-        "source_workflow_run": "gpu-relay 43842046392 ($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/43842046392)",
-        "kernel": "shaohuawen/dualamp-real5-20261116",
-        "trained_from_commit": "8a2d232 (chore(relay): 重排 real5)",
-        "positives_fasta_sha256": "7b6ea12136623e85218ba78cfd4b713985a3122b24c61650e536e724b768aa1d",
-        "models": "M1,M2,M3 x seeds 1-5 (60 epochs, 5 folds); M0_RF sklearn not exported as .pt",
-        "backend": "fair-esm esm2_t12_35M_UR50D embeddings (ESM backbone NOT saved in .pt)",
-    },
-    "label_note": ("candidate_v1_pilot_weights — unreviewed candidate_v1, NOT positive_core_v2, "
-                   "NOT for publication / not the formal model. M1/M2/M3 x 5 seeds; "
-                   "positive_core_v2 retrain required after Review_Result backfill."),
-    "file_count": len(files),
-    "total_bytes": sum(d["bytes"] for d in files),
-    "files": files,
-}
-with open(os.path.join(pkg, "export_manifest.json"), "w", encoding="utf-8") as fh:
-    json.dump(manifest, fh, indent=2, ensure_ascii=False)
-print(json.dumps({"packaged": len(files), "total_bytes": manifest["total_bytes"]}, ensure_ascii=False))
-PY
+          python3 cloud-gpu/scripts/pack_release_assets.py "$PKG" "$TAG"
 
           TARBALL="/tmp/${TAG}.tar.gz"
           tar -czf "$TARBALL" -C "$PKG" .
