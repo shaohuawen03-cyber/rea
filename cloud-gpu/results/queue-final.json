@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-17T02:59:16Z",
+  "updated_at_utc": "2026-11-17T07:32:00Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -295,6 +295,51 @@
       "kernel_slug": "dualamp-real6-repro-20261117",
       "note": "Reproducibility replication of real5 (candidate_v1): leanrea pinned to f610dc00… (branch tip unchanged 2026-11-11→2026-11-16T10:00Z, verified via gh api); PYTHONHASHSEED=0; torch/fair-esm/mmseqs versions logged. No intended behavior change; D10/D9/D11 should match real5 within GPU-nondeterminism noise. PILOT 口径，不可入论文。DO NOT overwrite real5/real4 artifacts.",
       "finished_at_utc": "2026-11-17T04:53:05Z"
+    },
+    {
+      "provider": "kaggle",
+      "mode": "run",
+      "accelerator": "NvidiaTeslaT4",
+      "script_path": "cloud-gpu/jobs/dualamp_pilot.py",
+      "extra_pip": [
+        "fair-esm"
+      ],
+      "serve_minutes": 15.0,
+      "wait": true,
+      "status": "completed",
+      "created_at_utc": "2026-11-17T07:32:00Z",
+      "id": "dualamp-real6b-verify-20261117",
+      "script_args": [
+        "--mode",
+        "real",
+        "--neg-mode",
+        "standard"
+      ],
+      "kernel_slug": "dualamp-real6b-verify-20261117",
+      "note": "Determinism verification rerun of real6 (PYTHONHASHSEED=0, same standard negatives, leanrea f610dc00, same positives sha256). Expect D10/D9 metrics near-identical to real6 modulo GPU/cuDNN noise. PILOT口径，不可入论文。DO NOT overwrite real5/real6 artifacts.",
+      "finished_at_utc": "2026-11-17T09:19:13Z"
+    },
+    {
+      "provider": "kaggle",
+      "mode": "run",
+      "accelerator": "NvidiaTeslaT4",
+      "script_path": "cloud-gpu/jobs/dualamp_pilot.py",
+      "extra_pip": [
+        "fair-esm"
+      ],
+      "serve_minutes": 15.0,
+      "wait": true,
+      "status": "pending",
+      "created_at_utc": "2026-11-17T07:32:00Z",
+      "id": "dualamp-real7-negmatched-20261117",
+      "script_args": [
+        "--mode",
+        "real",
+        "--neg-mode",
+        "composition-matched"
+      ],
+      "kernel_slug": "dualamp-real7-negmatched-20261117",
+      "note": "Composition-matched hard negatives (P1/P2 fix): expect LOWER test AUROC and LOWER scrambled false-positive rate than real6/real5 — that is the intended cost, not a score chase. PILOT口径，不可入论文。DO NOT overwrite real5/real6 artifacts."
     }
   ]
 }
