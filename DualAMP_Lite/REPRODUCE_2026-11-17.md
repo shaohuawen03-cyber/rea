@@ -49,3 +49,27 @@ git log --oneline -1                          # 应等于包含本文件的提�
 python cloud-gpu/scripts/pack_release_assets.py --help   # 权重打包（仅 Release 用）
 # 指标复核：对比 manuscript_D10_test_metrics.csv（real5）与 real6-repro 同名文件
 ```
+
+## 6. real6-repro 实测结果（2026-11-17T03:16→04:53Z，run 44009042607，success）
+
+**内核侧核验（全部通过）**：版本 torch 2.11.0+cu130 / sklearn 1.6.1 / pandas 2.3.3 / numpy 2.1.3 / Bio 1.88（与 real5 一致）；阳性 sha256 OK（133,202 B）；负例统计与 real5 完全一致（seed 11，351,462→10,000，standard 模式）；leanrea pin 断言通过（`leanrea pinned at f610dc00…938a13`）；mmseqs shim 自检 OK；11,570 簇；split 计数一致（9,505/2,037/2,037@537 阳/500 scrambled）。
+
+**但未达逐位一致（原因已定位）**：`clusters.tsv`、`splits/*.csv`、`dataset_all.fasta`、`features/*.npz`、`biophys_scaler.joblib` 的 sha256 与 real5 全部不同。计数相同、成员不同——即**划分被重新抽样**。根因：real5 未设置 PYTHONHASHSEED（每进程随机 hash 顺序）→ mmseqs 输出顺序/簇划分/split 抽样顺序改变。real6 = 同配方、同锁定代码（f610dc00）、同阳性（sha256 一致）、仅管道顺序不同 → **实质上是一次“重复划分（repeated split）稳健性检验”**。现内核已默认 PYTHONHASHSEED=0（741dbef）。
+
+**划分间差异（real6 − real5）**：
+
+| 模型 | ΔAUROC | ΔMCC | ΔAUPRC | 判定 |
+|---|---|---|---|---|
+| M0_RF | +0.0056 | −0.0094 | −0.0010 | 划分随机性（RF 对顺序敏感） |
+| M1 | −0.0007 | −0.0046 | −0.0020 | 达标（≤ seed SD） |
+| M2 | −0.0022 | −0.0197 | −0.0045 | AUROC 达标；MCC 漂移（阈值重拟合） |
+| M3 | +0.0005 | −0.0180 | −0.0012 | AUROC 达标；MCC 漂移（阈值重拟合） |
+
+**主结论在重复划分下全部稳健**：M3 vs M0_RF AUROC Δ+0.0115 [0.004, 0.019]，p=0.0018，BH q=0.008（FDR 显著；AUPRC q≈0；MCC Δ+0.036 q=0.020 显著）；M3 vs M1、M3 vs M2 均无 FDR 显著（q≥0.053）；scrambled 判阳率 69.0/59.0/63.8%（real4/real5/real6：M1 67–73 / M2 57–59 / M3 57–64 —— 组成偏好是稳健事实，不是抽样噪声）。
+
+**论文表述建议**：
+> “To assess split-to-split variability we repeated the full build with an independent pipeline order (real6-repro): ΔAUROC ≤ 0.006 across all models and both runs preserved every headline conclusion (neural > RF, FDR-significant; no measurable gain from the biophysical branch). Bitwise reproducibility additionally requires PYTHONHASHSEED and environment pinning (implemented since commit 741dbef; PYTHONHASHSEED=0). cuDNN algorithm selection remains a residual source of ~1e-6-level floating-point noise.”
+
+**判定（诚实）**：复刻任务达成“流程级复现 + 附带 split 稳健性证据”，但**未达逐位一致**；real5 本身未固定 hash 种子，事后无法恢复其确切划分。论文中不得声称 bit-exact，只可声称“在 seed SD / split 方差内复现”（实测 CNN 模型 ≤0.002，所有模型 ≤0.006）。
+
+**real7（组成匹配硬负例）**：未派发；依赖 Actions（现已恢复）与单独窗口；real6 结论确立后可随时派发。
