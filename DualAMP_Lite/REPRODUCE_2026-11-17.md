@@ -25,6 +25,8 @@
 
 ## 3. real5 → real6-repro：如何验证“复刻的结果一样”
 
+> **2026-11-17 03:05Z 事件**：`gh workflow_dispatch workflow=gpu-relay.yml -f only_id=dualamp-real6-repro-20261117` 返回 HTTP 422 —— 仓库 GitHub Actions 被禁用（`Actions has been disabled for this repository`），push 触发同样未产生 run。real6 **未运行**。Positives Drive 链接窗口已立即关闭并 list_permissions 复核（仅 owner）。**恢复路径**：仓库 owner 于 Settings → Actions → General 重新启用 Actions，然后重推 queue.json 或 workflow_dispatch（only_id=dualamp-real6-repro-20261117）；重新派发前需临时开启 Positives anyone-with-link 窗口，跑后即焚。
+
 1. 派发 `dualamp-real6-repro-20261117`（`--neg-mode standard`，行为零改动，仅 pin + 日志）。
 2. 对比 `manuscript_D10_test_metrics.csv` 的 M2/M3/M1 的 AUROC/MCC/F1 与 real5：
    - **合格**：|ΔAUROC| ≤ 0.001（即 ≤ seed SD），MCC ≤ 0.005；
