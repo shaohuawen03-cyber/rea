@@ -23,6 +23,11 @@ from pathlib import Path
 REPO = "https://github.com/shaohuawen03-cyber/rea"
 LEANREA = "https://github.com/hukeying85-ux/leanrea"
 LEANREA_BRANCH = "arena/4ecb70f1-leanrea"
+# 2026-11-17: pin the exact leanrea revision used for the real4/real5 builds.
+# Branch tip was f610dc00 at 2026-11-11T11:59Z and did not move before 2026-11-16T10:00Z
+# (verified with `gh api repos/hukeying85-ux/leanrea/commits?sha=arena/4ecb70f1-leanrea&until=2026-11-16T10:00:00Z`),
+# i.e. real5 trained against this exact tree. Override via LEANREA_REV env only with explicit reason.
+LEANREA_REV = os.environ.get("LEANREA_REV", "f610dc00b1aec3ab948a5b77574af0e644259a13")
 EXPECTED_POS_SHA256 = "7b6ea12136623e85218ba78cfd4b713985a3122b24c61650e536e724b768aa1d"
 AA = "ACDEFGHIKLMNPQRSTVWY"
 EXCLUDE_RE = re.compile(r"antimicrobial|bacteriocin|defensin|antibiotic|microcin|lantibio|nisin|pediocin|thuricin|cytolysin|subtilin|enterocin|leucocin", re.I)
@@ -55,7 +60,18 @@ def load_tsv_meta(path):
             )
     return meta
 
-def build_negatives(fasta_gz, tsv_gz, out_fasta, positive_seqs, cap=10000, seed=11):
+AA_INDEX = {c: i for i, c in enumerate(AA)}
+
+def _aac(seq):
+    v = [0.0] * 20
+    for c in seq:
+        j = AA_INDEX.get(c)
+        if j is not None:
+            v[j] += 1.0
+    n = len(seq) or 1
+    return [x / n for x in v]
+
+def build_negatives(fasta_gz, tsv_gz, out_fasta, positive_seqs, cap=10000, seed=11, neg_mode="standard"):
     t0 = time.time()
     meta = load_tsv_meta(tsv_gz)
     pos_kmers = set()
@@ -98,6 +114,36 @@ def build_negatives(fasta_gz, tsv_gz, out_fasta, positive_seqs, cap=10000, seed=
                         continue
             kept.append((acc, frag))
     rng.shuffle(kept)
+    if neg_mode == "composition-matched":
+        # P1/P2 hard-negative fix (v0.2): keep only fragments whose 20-dim amino-acid
+        # composition squared distance to the positive mean composition is at/below the
+        # 30th percentile of all eligible fragments. Same seed/cap; sampled from the
+        # matched subset. Expect LOWER metrics than standard mode — that is the point.
+        pos_list = list(positive_seqs) if not isinstance(positive_seqs, list) else positive_seqs
+        pbar = [0.0] * 20
+        for s_ in pos_list:
+            a = _aac(s_)
+            for i in range(20):
+                pbar[i] += a[i]
+        npos = len(pos_list) or 1
+        pbar = [x / npos for x in pbar]
+        scored = []
+        for acc, frag in kept:
+            a = _aac(frag)
+            d = sum((a[i] - pbar[i]) ** 2 for i in range(20))
+            scored.append((d, acc, frag))
+        ds = sorted(d for d, _, _ in scored)
+        cut = ds[int(0.30 * len(ds))] if ds else 0.0
+        kept = [(acc, frag) for d, acc, frag in scored if d <= cut]
+        rng2 = random.Random(seed)
+        rng2.shuffle(kept)
+        stats["neg_mode"] = "composition-matched"
+        stats["compmatch_cutoff_sqdist"] = cut
+        stats["compmatch_eligible"] = len(scored)
+        stats["compmatch_kept"] = len(kept)
+        log(f"composition-matched negatives: {len(kept)}/{len(scored)} kept (cutoff sqdist {cut:.4f})")
+    else:
+        stats["neg_mode"] = "standard"
     kept = kept[:cap]
     stats["negatives_final"] = len(kept)
     with open(out_fasta, "w", encoding="utf-8") as f:
@@ -251,7 +297,28 @@ def _ensure_clustering():
 
 def main():
     os.environ.setdefault("TORCH_HOME", "/tmp/torch_home")
+    os.environ.setdefault("PYTHONHASHSEED", "0")   # deterministic set/dict iteration where applicable
     _ensure_deps()
+    try:
+        import torch
+        log(f"versions: torch={torch.__version__} cuda={torch.version.cuda} device={torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'cpu'}")
+    except Exception as exc:
+        log(f"versions: torch unavailable ({exc})")
+    for mod in ("fair_esm", "sklearn", "pandas", "numpy", "Bio"):
+        try:
+            m = __import__(mod)
+            log(f"versions: {mod}={getattr(m, '__version__', 'unknown')}")
+        except Exception as exc:
+            log(f"versions: {mod} missing ({exc})")
+    try:
+        out = subprocess.check_output(["mmseqs", "version"], text=True, stderr=subprocess.STDOUT).strip()
+        log(f"versions: mmseqs {out}")
+    except Exception:
+        try:
+            out = subprocess.check_output(["mmseqs", "-h"], text=True, stderr=subprocess.STDOUT).splitlines()[0]
+            log(f"versions: mmseqs {out}")
+        except Exception:
+            log("versions: mmseqs not found")
     _ensure_clustering()
     ap = argparse.ArgumentParser()
     ap.add_argument("--mode", choices=["real", "dry", "negatives-only"], default="dry")
@@ -262,6 +329,8 @@ def main():
     ap.add_argument("--folds", type=int, default=5)
     ap.add_argument("--models", default="M0_RF,M1,M2,M3")
     ap.add_argument("--neg-cap", type=int, default=10000)
+    ap.add_argument("--neg-mode", choices=["standard", "composition-matched"], default="standard",
+                    help="standard = real4/real5 recipe; composition-matched = hard negatives (P1/P2 fix)")
     args = ap.parse_args()
     wd = Path(args.workdir); wd.mkdir(parents=True, exist_ok=True)
     data = wd / "data"; data.mkdir(exist_ok=True)
@@ -358,7 +427,7 @@ def main():
     pos_seqs = read_fasta(pos_fasta)
     log(f"positives: {len(pos_seqs)}")
     neg_fasta = data / "negatives.fasta"
-    neg_stats = build_negatives(fa, tsv, neg_fasta, set(pos_seqs) if not mock else set(), cap=args.neg_cap, seed=11)
+    neg_stats = build_negatives(fa, tsv, neg_fasta, set(pos_seqs) if not mock else set(), cap=args.neg_cap, seed=11, neg_mode=args.neg_mode)
     log(f"negatives stats: {json.dumps(neg_stats, ensure_ascii=False)}")
     if args.mode == "negatives-only":
         (wd / "negatives_stats.json").write_text(json.dumps(neg_stats, indent=2, ensure_ascii=False))
@@ -366,8 +435,16 @@ def main():
 
     dualamp = repo_root / "lee"
     if not dualamp.exists():
-        log(f"cloning leanrea @ {LEANREA_BRANCH}")
+        log(f"cloning leanrea @ {LEANREA_BRANCH} then pinning {LEANREA_REV[:12]}")
         subprocess.check_call(["git", "clone", "--depth", "1", "-b", LEANREA_BRANCH, LEANREA, str(dualamp)])
+        subprocess.check_call(["git", "-C", str(dualamp), "fetch", "--depth", "1", "origin", LEANREA_REV])
+        subprocess.check_call(["git", "-C", str(dualamp), "checkout", "--detach", LEANREA_REV])
+    try:
+        head = subprocess.check_output(["git", "-C", str(dualamp), "rev-parse", "HEAD"], text=True).strip()
+        log(f"leanrea pinned at {head} (expected {LEANREA_REV})")
+        assert head == LEANREA_REV, "leanrea HEAD mismatch after pin"
+    except Exception as exc:
+        log(f"WARNING: could not verify leanrea pin ({exc})")
     pkg = dualamp / "dualamp-lite"
 
     manifest = data / "sources.yaml"
@@ -444,6 +521,7 @@ def main():
         "mode": args.mode, "mock_positives": mock,
         "positives": len(pos_seqs), "negatives_stats": neg_stats,
         "models": args.models, "seeds": args.seeds, "folds": args.folds, "epochs": args.epochs,
+        "neg_mode": args.neg_mode, "leanrea_rev": LEANREA_REV,
         "note": "PILOT on candidate_v1 (unreviewed, NOT v2 定稿). 不可入论文。" if not mock else "DRY RUN with MOCK positives; numbers are meaningless.",
         "artifacts_copied": copied, "artifacts_missing": missing,
     }, indent=2, ensure_ascii=False))
