@@ -1,0 +1,143 @@
+{
+  "backend": "fair-esm",
+  "model_name": "esm2_t12_35M_UR50D",
+  "repr_layer": 12,
+  "embed_dim": 480,
+  "pooling": "masked mean over residues (no BOS/CLS/EOS/padding)",
+  "splits": {
+    "train": {
+      "n": 9505,
+      "max_len": 50,
+      "dtype": "float16",
+      "seconds": 13.0,
+      "bytes": 479609260
+    },
+    "val": {
+      "n": 2037,
+      "max_len": 50,
+      "dtype": "float16",
+      "seconds": 2.8,
+      "bytes": 102788916
+    },
+    "test": {
+      "n": 2037,
+      "max_len": 50,
+      "dtype": "float16",
+      "seconds": 2.6,
+      "bytes": 102788916
+    },
+    "scrambled": {
+      "n": 500,
+      "max_len": 50,
+      "dtype": "float16",
+      "seconds": 0.6,
+      "bytes": 25216970
+    }
+  },
+  "biophys": {
+    "n_features": 35,
+    "names": [
+      "aac_A",
+      "aac_C",
+      "aac_D",
+      "aac_E",
+      "aac_F",
+      "aac_G",
+      "aac_H",
+      "aac_I",
+      "aac_K",
+      "aac_L",
+      "aac_M",
+      "aac_N",
+      "aac_P",
+      "aac_Q",
+      "aac_R",
+      "aac_S",
+      "aac_T",
+      "aac_V",
+      "aac_W",
+      "aac_Y",
+      "mw_kda",
+      "net_charge_ph74",
+      "pi_norm",
+      "gravy",
+      "instability_norm",
+      "aromaticity",
+      "boman_index",
+      "hydrophobic_moment_100deg",
+      "frac_krh",
+      "frac_de",
+      "frac_hydrophobic",
+      "frac_helix_forming",
+      "length",
+      "charge_count_diff",
+      "unstable_flag"
+    ],
+    "groups": {
+      "aac": [
+        "aac_A",
+        "aac_C",
+        "aac_D",
+        "aac_E",
+        "aac_F",
+        "aac_G",
+        "aac_H",
+        "aac_I",
+        "aac_K",
+        "aac_L",
+        "aac_M",
+        "aac_N",
+        "aac_P",
+        "aac_Q",
+        "aac_R",
+        "aac_S",
+        "aac_T",
+        "aac_V",
+        "aac_W",
+        "aac_Y"
+      ],
+      "global": [
+        "mw_kda",
+        "net_charge_ph74",
+        "pi_norm",
+        "gravy",
+        "instability_norm",
+        "aromaticity",
+        "boman_index"
+      ],
+      "amphipathicity": [
+        "hydrophobic_moment_100deg",
+        "frac_krh",
+        "frac_de",
+        "frac_hydrophobic",
+        "frac_helix_forming"
+      ],
+      "supplementary": [
+        "length",
+        "charge_count_diff",
+        "unstable_flag"
+      ]
+    },
+    "notes": {
+      "aac": "mole percent, the 20 values sum to 100 (linear constraint)",
+      "net_charge_ph74": "Henderson-Hasselbalch, N-term 9.69 / C-term 2.34, side-chain pKa fixed in code",
+      "pi_norm": "isoelectric point / 14 (bisection over pH 0-14)",
+      "instability_norm": "Biopython ProtParam instability index / 100",
+      "boman_index": "Radzicka & Wolfenden 1988 transfer free energies, kcal/mol, sum / length",
+      "hydrophobic_moment_100deg": "Eisenberg 1984 scale, 100 deg, 11-residue windows, per residue",
+      "aliphatic_index": "ExPASy ProtParam: A + 2.9 V + 3.9 (I + L) in mole percent; computed but not in the vector because it is collinear with AAC",
+      "dimensionality": "the V3 table sums to 34; +1 Boman index = 35 reported features"
+    },
+    "scaler": "StandardScaler fitted on train only",
+    "redundant_pairs": 4,
+    "redundancy_threshold": 0.85
+  },
+  "config": {
+    "batch_size": 64,
+    "max_residues": 512,
+    "storage_dtype": "float16",
+    "device": "cuda"
+  },
+  "elapsed_seconds": 25.5,
+  "demo_mode": false
+}

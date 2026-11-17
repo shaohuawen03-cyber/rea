@@ -1,0 +1,176 @@
+[{"stream_name":"stdout","time":6.835883618,"data":"[dualamp_pilot 03:17:22] installing missing deps: biopython\n"}
+,{"stream_name":"stdout","time":17.829838736,"data":"[dualamp_pilot 03:17:33] versions: torch=2.11.0+cu130 cuda=13.0 device=Tesla T4\n"}
+,{"stream_name":"stdout","time":17.830102235,"data":"[dualamp_pilot 03:17:33] versions: fair_esm missing (No module named 'fair_esm')\n"}
+,{"stream_name":"stdout","time":20.775001758,"data":"[dualamp_pilot 03:17:36] versions: sklearn=1.6.1\n"}
+,{"stream_name":"stdout","time":20.775033792,"data":"[dualamp_pilot 03:17:36] versions: pandas=2.3.3\n"}
+,{"stream_name":"stdout","time":20.775036962,"data":"[dualamp_pilot 03:17:36] versions: numpy=2.1.3\n"}
+,{"stream_name":"stdout","time":20.775572007,"data":"[dualamp_pilot 03:17:36] versions: Bio=1.88\n"}
+,{"stream_name":"stdout","time":20.776758799,"data":"[dualamp_pilot 03:17:36] versions: mmseqs not found\n"}
+,{"stream_name":"stdout","time":43.326050574,"data":"[dualamp_pilot 03:17:59] cd-hit installed via apt: /usr/bin/cd-hit\n"}
+,{"stream_name":"stdout","time":49.387251877,"data":"[dualamp_pilot 03:18:05] installed cd-hit-\u003emmseqs shim at /usr/local/bin/cd-hit (self-test OK; native cd-hit bypassed)\n"}
+,{"stream_name":"stdout","time":49.388652648,"data":"[dualamp_pilot 03:18:05] cloning repo branch arena/cac2205a-rea\n"}
+,{"stream_name":"stderr","time":49.410444968,"data":"Cloning into '/tmp/dualamp-pilot/rea'...\n"}
+,{"stream_name":"stdout","time":52.870366166,"data":"[dualamp_pilot 03:18:08] downloading positives via gdown (Drive file id 11vvQS…)\n"}
+,{"stream_name":"stderr","time":56.837122378,"data":"Downloading...\n"}
+,{"stream_name":"stderr","time":56.837152225,"data":"From: https://drive.google.com/uc?id=11vvQSlOJDjt8v6qHCB4LWg6mRK3DwNis\n"}
+,{"stream_name":"stderr","time":56.837157538,"data":"To: /tmp/dualamp-pilot/data/positive_core_candidate_v1.fasta\n"}
+,{"stream_name":"stderr","time":56.840124202,"data":"\r  0%|          | 0.00/133k [00:00\u003c?, ?B/s]\r100%|██████████| 133k/133k [00:00\u003c00:00, 94.7MB/s]\n"}
+,{"stream_name":"stdout","time":56.843481194,"data":"[dualamp_pilot 03:18:12] positives sha256 OK (133202 bytes)\n"}
+,{"stream_name":"stdout","time":56.845477072,"data":"[dualamp_pilot 03:18:12] positives: 3579\n"}
+,{"stream_name":"stdout","time":66.863756852,"data":"[dualamp_pilot 03:18:22] negatives stats: {\"proteins_total\": 117172, \"keyword_excluded\": 18, \"fragments_raw\": 351462, \"fragments_standard_aa\": 351429, \"fragments_dedup\": 351119, \"fragments_hit_positive_4mer_gt08\": 1096, \"negatives_final\": 10000, \"seed\": 11, \"cap\": 10000, \"neg_mode\": \"standard\", \"seconds\": 10.0}\n"}
+,{"stream_name":"stdout","time":66.863841618,"data":"[dualamp_pilot 03:18:22] cloning leanrea @ arena/4ecb70f1-leanrea then pinning f610dc00b1ae\n"}
+,{"stream_name":"stderr","time":66.86591338,"data":"Cloning into '/tmp/dualamp-pilot/rea/lee'...\n"}
+,{"stream_name":"stderr","time":87.79605008,"data":"From https://github.com/hukeying85-ux/leanrea\n"}
+,{"stream_name":"stderr","time":87.79608115,"data":" * branch            f610dc00b1aec3ab948a5b77574af0e644259a13 -\u003e FETCH_HEAD\n"}
+,{"stream_name":"stderr","time":87.909725436,"data":"HEAD is now at f610dc0 docs: add AMP data and model Word summary\n"}
+,{"stream_name":"stdout","time":87.913077806,"data":"[dualamp_pilot 03:18:43] leanrea pinned at f610dc00b1aec3ab948a5b77574af0e644259a13 (expected f610dc00b1aec3ab948a5b77574af0e644259a13)\n"}
+,{"stream_name":"stdout","time":87.913574486,"data":"[dualamp_pilot 03:18:43] $ /usr/bin/python3 -m dualamp_lite build --manifest /tmp/dualamp-pilot/data/sources.yaml --workdir /tmp/dualamp-pilot/run --cluster-method auto\n"}
+,{"stream_name":"stdout","time":88.448052117,"data":"[03:18:44] INFO    reading sources from /tmp/dualamp-pilot/data/sources.yaml\n"}
+,{"stream_name":"stdout","time":88.502055664,"data":"[03:18:44] INFO      source candidate_v1           layer=general_amp          kept= 3579 (from 3579 rows)\n"}
+,{"stream_name":"stdout","time":88.598166546,"data":"[03:18:44] INFO      source uniprot_a_fragments    layer=negative_background  kept=10000 (from 10000 rows)\n"}
+,{"stream_name":"stdout","time":88.624327697,"data":"[03:18:44] INFO    after length/alphabet filtering: 13579 records\n"}
+,{"stream_name":"stdout","time":102.427993433,"data":"[03:18:58] INFO      dedup: 13579 records -\u003e 13579 unique sequences\n"}
+,{"stream_name":"stdout","time":102.467119895,"data":"[03:18:58] INFO      scrambled challenge set: +500 sequences\n"}
+,{"stream_name":"stdout","time":109.044132993,"data":"[03:19:04] INFO    clustering: cdhit at identity 0.40 / coverage 0.80 -\u003e 11570 clusters\n"}
+,{"stream_name":"stdout","time":113.051957248,"data":"[03:19:08] INFO      split sizes: {'train': 9505, 'test': 2037, 'val': 2037, 'scrambled': 500}\n"}
+,{"stream_name":"stdout","time":113.419758389,"data":"[03:19:09] INFO    dataset written: 14079 sequences, 11570 clusters, test=2037 (pos=537) - see /tmp/dualamp-pilot/run/dataset/dataset_all.csv\n"}
+,{"stream_name":"stdout","time":113.421936383,"data":"[03:19:09] INFO    step1 build_dataset finished in 25.0s\n"}
+,{"stream_name":"stdout","time":113.421953479,"data":"sequences=14079 clusters=11570 test=2037\n"}
+,{"stream_name":"stdout","time":113.544511132,"data":"[dualamp_pilot 03:19:09] $ /usr/bin/python3 -m dualamp_lite features --workdir /tmp/dualamp-pilot/run --backend fair-esm --batch-size 64\n"}
+,{"stream_name":"stdout","time":115.504767236,"data":"[03:19:11] INFO    device: cuda\n"}
+,{"stream_name":"stdout","time":116.822953842,"data":"[03:19:12] INFO      biophys 5000/9505\n"}
+,{"stream_name":"stdout","time":118.681677127,"data":"[03:19:14] INFO    biophys: 35 features, 4 pairs with |r| \u003e= 0.85 (see biophys_correlation.csv)\n"}
+,{"stream_name":"stdout","time":118.681708644,"data":"[03:19:14] WARNING   estimated residue-tensor RAM ~10.4 GB for the train split; consider splitting the dataset or lowering --max-residues\n"}
+,{"stream_name":"stdout","time":118.681826842,"data":"[03:19:14] INFO    feature backend: fair-esm\n"}
+,{"stream_name":"stdout","time":134.979821025,"data":"Downloading: \"https://dl.fbaipublicfiles.com/fair-esm/models/esm2_t12_35M_UR50D.pt\" to /tmp/torch_home/hub/checkpoints/esm2_t12_35M_UR50D.pt\n"}
+,{"stream_name":"stdout","time":134.979868982,"data":"Downloading: \"https://dl.fbaipublicfiles.com/fair-esm/regression/esm2_t12_35M_UR50D-contact-regression.pt\" to /tmp/torch_home/hub/checkpoints/esm2_t12_35M_UR50D-contact-regression.pt\n"}
+,{"stream_name":"stdout","time":134.97987376,"data":"[03:19:30] INFO      train: 9505 x 50 x 480 (457.4 MB) in 13.0s -\u003e train_feat.npz\n"}
+,{"stream_name":"stdout","time":137.744266408,"data":"[03:19:33] INFO      val: 2037 x 50 x 480 (98.0 MB) in 2.8s -\u003e val_feat.npz\n"}
+,{"stream_name":"stdout","time":140.378515037,"data":"[03:19:36] INFO      test: 2037 x 50 x 480 (98.0 MB) in 2.6s -\u003e test_feat.npz\n"}
+,{"stream_name":"stdout","time":141.021817009,"data":"[03:19:36] INFO      scrambled: 500 x 50 x 480 (24.0 MB) in 0.6s -\u003e scrambled_feat.npz\n"}
+,{"stream_name":"stdout","time":141.025418891,"data":"[03:19:36] INFO    step2 extract_features finished in 27.0s\n"}
+,{"stream_name":"stdout","time":141.032640379,"data":"backend=fair-esm embed_dim=480 demo=False\n"}
+,{"stream_name":"stdout","time":144.242904065,"data":"[dualamp_pilot 03:19:39] $ /usr/bin/python3 -m dualamp_lite train --workdir /tmp/dualamp-pilot/run --models M0_RF,M1,M2,M3 --seeds 1,2,3,4,5 --folds 5 --epochs 60 --loss bce\n"}
+,{"stream_name":"stdout","time":147.675298173,"data":"[03:19:43] INFO    dev: 11542 peptides (3042 pos) in 9116 clusters | test: 2037 peptides (537 pos) in 1955 clusters\n"}
+,{"stream_name":"stdout","time":147.675782787,"data":"[03:19:43] INFO    training M0_RF ...\n"}
+,{"stream_name":"stdout","time":204.661251735,"data":"[03:20:40] INFO      M0_RF seed 1: dev OOF AUROC 0.980, test AUROC 0.970\n"}
+,{"stream_name":"stdout","time":260.146524356,"data":"[03:21:35] INFO      M0_RF seed 2: dev OOF AUROC 0.979, test AUROC 0.969\n"}
+,{"stream_name":"stdout","time":315.061140371,"data":"[03:22:30] INFO      M0_RF seed 3: dev OOF AUROC 0.980, test AUROC 0.969\n"}
+,{"stream_name":"stdout","time":370.002738914,"data":"[03:23:25] INFO      M0_RF seed 4: dev OOF AUROC 0.980, test AUROC 0.970\n"}
+,{"stream_name":"stdout","time":425.079777632,"data":"[03:24:20] INFO      M0_RF seed 5: dev OOF AUROC 0.980, test AUROC 0.969\n"}
+,{"stream_name":"stdout","time":545.480298831,"data":"[03:26:21] INFO    training M1 ...\n"}
+,{"stream_name":"stdout","time":618.848282833,"data":"[03:27:34] INFO        M1/s1/f0 early stop at epoch 32 (best 20, val AUROC 0.989)\n"}
+,{"stream_name":"stdout","time":691.950105336,"data":"[03:28:47] INFO        M1/s1/f1 early stop at epoch 36 (best 24, val AUROC 0.990)\n"}
+,{"stream_name":"stdout","time":781.525938593,"data":"[03:30:17] INFO        M1/s1/f2 early stop at epoch 44 (best 32, val AUROC 0.992)\n"}
+,{"stream_name":"stdout","time":840.905145917,"data":"[03:31:16] INFO        M1/s1/f3 early stop at epoch 29 (best 17, val AUROC 0.993)\n"}
+,{"stream_name":"stdout","time":900.052014735,"data":"[03:32:15] INFO        M1/s1/f4 early stop at epoch 29 (best 17, val AUROC 0.990)\n"}
+,{"stream_name":"stdout","time":953.353213177,"data":"[03:33:09] INFO      M1 seed 1: dev OOF AUROC 0.991, test AUROC 0.977 MCC 0.846 (epochs=20)\n"}
+,{"stream_name":"stdout","time":1004.335107841,"data":"[03:34:00] INFO        M1/s2/f0 early stop at epoch 24 (best 12, val AUROC 0.994)\n"}
+,{"stream_name":"stdout","time":1070.488590542,"data":"[03:35:06] INFO        M1/s2/f1 early stop at epoch 33 (best 21, val AUROC 0.991)\n"}
+,{"stream_name":"stdout","time":1116.881025626,"data":"[03:35:52] INFO        M1/s2/f2 early stop at epoch 23 (best 11, val AUROC 0.988)\n"}
+,{"stream_name":"stdout","time":1173.026461403,"data":"[03:36:48] INFO        M1/s2/f3 early stop at epoch 28 (best 16, val AUROC 0.987)\n"}
+,{"stream_name":"stdout","time":1239.103108694,"data":"[03:37:54] INFO        M1/s2/f4 early stop at epoch 33 (best 21, val AUROC 0.989)\n"}
+,{"stream_name":"stdout","time":1283.829616617,"data":"[03:38:39] INFO      M1 seed 2: dev OOF AUROC 0.989, test AUROC 0.977 MCC 0.856 (epochs=16)\n"}
+,{"stream_name":"stdout","time":1336.132550632,"data":"[03:39:31] INFO        M1/s3/f0 early stop at epoch 25 (best 13, val AUROC 0.988)\n"}
+,{"stream_name":"stdout","time":1366.076227591,"data":"[03:40:01] INFO        M1/s3/f1 early stop at epoch 15 (best 3, val AUROC 0.989)\n"}
+,{"stream_name":"stdout","time":1455.915375905,"data":"[03:41:31] INFO        M1/s3/f2 early stop at epoch 45 (best 33, val AUROC 0.991)\n"}
+,{"stream_name":"stdout","time":1507.78330187,"data":"[03:42:23] INFO        M1/s3/f3 early stop at epoch 26 (best 14, val AUROC 0.993)\n"}
+,{"stream_name":"stdout","time":1599.78718618,"data":"[03:43:55] INFO        M1/s3/f4 early stop at epoch 46 (best 34, val AUROC 0.993)\n"}
+,{"stream_name":"stdout","time":1640.531531168,"data":"[03:44:36] INFO      M1 seed 3: dev OOF AUROC 0.990, test AUROC 0.977 MCC 0.849 (epochs=14)\n"}
+,{"stream_name":"stdout","time":1749.948310864,"data":"[03:46:25] INFO        M1/s4/f0 early stop at epoch 54 (best 42, val AUROC 0.989)\n"}
+,{"stream_name":"stdout","time":1800.093425415,"data":"[03:47:15] INFO        M1/s4/f1 early stop at epoch 25 (best 13, val AUROC 0.992)\n"}
+,{"stream_name":"stdout","time":1871.549623395,"data":"[03:48:27] INFO        M1/s4/f2 early stop at epoch 36 (best 24, val AUROC 0.991)\n"}
+,{"stream_name":"stdout","time":1913.368890365,"data":"[03:49:09] INFO        M1/s4/f3 early stop at epoch 21 (best 9, val AUROC 0.989)\n"}
+,{"stream_name":"stdout","time":2012.242826299,"data":"[03:50:47] INFO        M1/s4/f4 early stop at epoch 50 (best 38, val AUROC 0.992)\n"}
+,{"stream_name":"stdout","time":2071.481930774,"data":"[03:51:47] INFO      M1 seed 4: dev OOF AUROC 0.990, test AUROC 0.978 MCC 0.860 (epochs=24)\n"}
+,{"stream_name":"stdout","time":2139.285303013,"data":"[03:52:54] INFO        M1/s5/f0 early stop at epoch 33 (best 21, val AUROC 0.984)\n"}
+,{"stream_name":"stdout","time":2212.488684915,"data":"[03:54:08] INFO        M1/s5/f1 early stop at epoch 37 (best 25, val AUROC 0.990)\n"}
+,{"stream_name":"stdout","time":2281.96066548,"data":"[03:55:17] INFO        M1/s5/f2 early stop at epoch 35 (best 23, val AUROC 0.993)\n"}
+,{"stream_name":"stdout","time":2381.073116606,"data":"[03:56:56] INFO        M1/s5/f3 early stop at epoch 50 (best 38, val AUROC 0.994)\n"}
+,{"stream_name":"stdout","time":2425.058111185,"data":"[03:57:40] INFO        M1/s5/f4 early stop at epoch 22 (best 10, val AUROC 0.993)\n"}
+,{"stream_name":"stdout","time":2482.247078867,"data":"[03:58:37] INFO      M1 seed 5: dev OOF AUROC 0.991, test AUROC 0.978 MCC 0.847 (epochs=23)\n"}
+,{"stream_name":"stdout","time":2600.348602562,"data":"[04:00:36] INFO    training M2 ...\n"}
+,{"stream_name":"stdout","time":2649.140017884,"data":"[04:01:24] INFO        M2/s1/f0 early stop at epoch 17 (best 5, val AUROC 0.992)\n"}
+,{"stream_name":"stdout","time":2707.979919459,"data":"[04:02:23] INFO        M2/s1/f1 early stop at epoch 24 (best 12, val AUROC 0.993)\n"}
+,{"stream_name":"stdout","time":2781.955817632,"data":"[04:03:37] INFO        M2/s1/f2 early stop at epoch 30 (best 18, val AUROC 0.993)\n"}
+,{"stream_name":"stdout","time":2838.59491266,"data":"[04:04:34] INFO        M2/s1/f3 early stop at epoch 23 (best 11, val AUROC 0.994)\n"}
+,{"stream_name":"stdout","time":2888.168622157,"data":"[04:05:23] INFO        M2/s1/f4 early stop at epoch 20 (best 8, val AUROC 0.991)\n"}
+,{"stream_name":"stdout","time":2920.607230843,"data":"[04:05:56] INFO      M2 seed 1: dev OOF AUROC 0.990, test AUROC 0.978 MCC 0.851 (epochs=11)\n"}
+,{"stream_name":"stdout","time":2965.0623593,"data":"[04:06:40] INFO        M2/s2/f0 early stop at epoch 17 (best 5, val AUROC 0.994)\n"}
+,{"stream_name":"stdout","time":3022.213211788,"data":"[04:07:37] INFO        M2/s2/f1 early stop at epoch 23 (best 11, val AUROC 0.992)\n"}
+,{"stream_name":"stdout","time":3059.367764415,"data":"[04:08:15] INFO        M2/s2/f2 early stop at epoch 15 (best 3, val AUROC 0.988)\n"}
+,{"stream_name":"stdout","time":3096.724843963,"data":"[04:08:52] INFO        M2/s2/f3 early stop at epoch 15 (best 3, val AUROC 0.989)\n"}
+,{"stream_name":"stdout","time":3146.197476491,"data":"[04:09:41] INFO        M2/s2/f4 early stop at epoch 20 (best 8, val AUROC 0.993)\n"}
+,{"stream_name":"stdout","time":3167.166546956,"data":"[04:10:02] INFO      M2 seed 2: dev OOF AUROC 0.988, test AUROC 0.976 MCC 0.860 (epochs=5)\n"}
+,{"stream_name":"stdout","time":3201.445112259,"data":"[04:10:37] INFO        M2/s3/f0 early stop at epoch 13 (best 1, val AUROC 0.988)\n"}
+,{"stream_name":"stdout","time":3243.470704397,"data":"[04:11:19] INFO        M2/s3/f1 early stop at epoch 17 (best 5, val AUROC 0.991)\n"}
+,{"stream_name":"stdout","time":3312.359709129,"data":"[04:12:28] INFO        M2/s3/f2 early stop at epoch 28 (best 16, val AUROC 0.993)\n"}
+,{"stream_name":"stdout","time":3369.068285079,"data":"[04:13:24] INFO        M2/s3/f3 early stop at epoch 23 (best 11, val AUROC 0.993)\n"}
+,{"stream_name":"stdout","time":3411.074330171,"data":"[04:14:06] INFO        M2/s3/f4 early stop at epoch 17 (best 5, val AUROC 0.995)\n"}
+,{"stream_name":"stdout","time":3432.311269603,"data":"[04:14:28] INFO      M2 seed 3: dev OOF AUROC 0.987, test AUROC 0.978 MCC 0.874 (epochs=5)\n"}
+,{"stream_name":"stdout","time":3478.80906213,"data":"[04:15:14] INFO        M2/s4/f0 early stop at epoch 18 (best 6, val AUROC 0.992)\n"}
+,{"stream_name":"stdout","time":3516.108195786,"data":"[04:15:51] INFO        M2/s4/f1 early stop at epoch 15 (best 3, val AUROC 0.992)\n"}
+,{"stream_name":"stdout","time":3575.44170438,"data":"[04:16:51] INFO        M2/s4/f2 early stop at epoch 24 (best 12, val AUROC 0.993)\n"}
+,{"stream_name":"stdout","time":3607.968650801,"data":"[04:17:23] INFO        M2/s4/f3 early stop at epoch 13 (best 1, val AUROC 0.989)\n"}
+,{"stream_name":"stdout","time":3679.594645108,"data":"[04:18:35] INFO        M2/s4/f4 early stop at epoch 29 (best 17, val AUROC 0.993)\n"}
+,{"stream_name":"stdout","time":3703.862325442,"data":"[04:18:59] INFO      M2 seed 4: dev OOF AUROC 0.988, test AUROC 0.977 MCC 0.854 (epochs=6)\n"}
+,{"stream_name":"stdout","time":3745.649686415,"data":"[04:19:41] INFO        M2/s5/f0 early stop at epoch 16 (best 4, val AUROC 0.986)\n"}
+,{"stream_name":"stdout","time":3792.546588753,"data":"[04:20:28] INFO        M2/s5/f1 early stop at epoch 19 (best 7, val AUROC 0.991)\n"}
+,{"stream_name":"stdout","time":3834.626591512,"data":"[04:21:10] INFO        M2/s5/f2 early stop at epoch 17 (best 5, val AUROC 0.993)\n"}
+,{"stream_name":"stdout","time":3896.591483641,"data":"[04:22:12] INFO        M2/s5/f3 early stop at epoch 25 (best 13, val AUROC 0.996)\n"}
+,{"stream_name":"stdout","time":3931.493520719,"data":"[04:22:47] INFO        M2/s5/f4 early stop at epoch 14 (best 2, val AUROC 0.994)\n"}
+,{"stream_name":"stdout","time":3953.554571342,"data":"[04:23:09] INFO      M2 seed 5: dev OOF AUROC 0.989, test AUROC 0.977 MCC 0.854 (epochs=5)\n"}
+,{"stream_name":"stdout","time":4071.726549218,"data":"[04:25:07] INFO    training M3 ...\n"}
+,{"stream_name":"stdout","time":4118.16777983,"data":"[04:25:53] INFO        M3/s1/f0 early stop at epoch 17 (best 5, val AUROC 0.992)\n"}
+,{"stream_name":"stdout","time":4159.848570118,"data":"[04:26:35] INFO        M3/s1/f1 early stop at epoch 16 (best 4, val AUROC 0.992)\n"}
+,{"stream_name":"stdout","time":4219.892316933,"data":"[04:27:35] INFO        M3/s1/f2 early stop at epoch 23 (best 11, val AUROC 0.992)\n"}
+,{"stream_name":"stdout","time":4277.801700673,"data":"[04:28:33] INFO        M3/s1/f3 early stop at epoch 22 (best 10, val AUROC 0.992)\n"}
+,{"stream_name":"stdout","time":4315.150420583,"data":"[04:29:10] INFO        M3/s1/f4 early stop at epoch 14 (best 2, val AUROC 0.991)\n"}
+,{"stream_name":"stdout","time":4337.923562701,"data":"[04:29:33] INFO      M3 seed 1: dev OOF AUROC 0.987, test AUROC 0.978 MCC 0.873 (epochs=5)\n"}
+,{"stream_name":"stdout","time":4374.317416072,"data":"[04:30:10] INFO        M3/s2/f0 early stop at epoch 13 (best 1, val AUROC 0.994)\n"}
+,{"stream_name":"stdout","time":4408.577611119,"data":"[04:30:44] INFO        M3/s2/f1 early stop at epoch 13 (best 1, val AUROC 0.991)\n"}
+,{"stream_name":"stdout","time":4448.279100609,"data":"[04:31:23] INFO        M3/s2/f2 early stop at epoch 15 (best 3, val AUROC 0.990)\n"}
+,{"stream_name":"stdout","time":4487.764132191,"data":"[04:32:03] INFO        M3/s2/f3 early stop at epoch 15 (best 3, val AUROC 0.989)\n"}
+,{"stream_name":"stdout","time":4529.976354882,"data":"[04:32:45] INFO        M3/s2/f4 early stop at epoch 16 (best 4, val AUROC 0.990)\n"}
+,{"stream_name":"stdout","time":4551.447201997,"data":"[04:33:07] INFO      M3 seed 2: dev OOF AUROC 0.986, test AUROC 0.980 MCC 0.851 (epochs=3)\n"}
+,{"stream_name":"stdout","time":4587.972170746,"data":"[04:33:43] INFO        M3/s3/f0 early stop at epoch 13 (best 1, val AUROC 0.988)\n"}
+,{"stream_name":"stdout","time":4627.2318969,"data":"[04:34:22] INFO        M3/s3/f1 early stop at epoch 15 (best 3, val AUROC 0.991)\n"}
+,{"stream_name":"stdout","time":4666.474844429,"data":"[04:35:02] INFO        M3/s3/f2 early stop at epoch 15 (best 3, val AUROC 0.992)\n"}
+,{"stream_name":"stdout","time":4708.492996378,"data":"[04:35:44] INFO        M3/s3/f3 early stop at epoch 16 (best 4, val AUROC 0.994)\n"}
+,{"stream_name":"stdout","time":4785.667556425,"data":"[04:37:01] INFO        M3/s3/f4 early stop at epoch 29 (best 17, val AUROC 0.996)\n"}
+,{"stream_name":"stdout","time":4805.294385095,"data":"[04:37:20] INFO      M3 seed 3: dev OOF AUROC 0.988, test AUROC 0.981 MCC 0.868 (epochs=3)\n"}
+,{"stream_name":"stdout","time":4876.622880721,"data":"[04:38:32] INFO        M3/s4/f0 early stop at epoch 25 (best 13, val AUROC 0.993)\n"}
+,{"stream_name":"stdout","time":4921.47937429,"data":"[04:39:17] INFO        M3/s4/f1 early stop at epoch 17 (best 5, val AUROC 0.993)\n"}
+,{"stream_name":"stdout","time":4966.439174263,"data":"[04:40:02] INFO        M3/s4/f2 early stop at epoch 17 (best 5, val AUROC 0.992)\n"}
+,{"stream_name":"stdout","time":5001.384011848,"data":"[04:40:37] INFO        M3/s4/f3 early stop at epoch 13 (best 1, val AUROC 0.990)\n"}
+,{"stream_name":"stdout","time":5075.057174985,"data":"[04:41:50] INFO        M3/s4/f4 early stop at epoch 27 (best 15, val AUROC 0.994)\n"}
+,{"stream_name":"stdout","time":5100.035249661,"data":"[04:42:15] INFO      M3 seed 4: dev OOF AUROC 0.983, test AUROC 0.979 MCC 0.831 (epochs=5)\n"}
+,{"stream_name":"stdout","time":5145.547328889,"data":"[04:43:01] INFO        M3/s5/f0 early stop at epoch 16 (best 4, val AUROC 0.986)\n"}
+,{"stream_name":"stdout","time":5198.485328587,"data":"[04:43:54] INFO        M3/s5/f1 early stop at epoch 20 (best 8, val AUROC 0.991)\n"}
+,{"stream_name":"stdout","time":5269.706018026,"data":"[04:45:05] INFO        M3/s5/f2 early stop at epoch 27 (best 15, val AUROC 0.994)\n"}
+,{"stream_name":"stdout","time":5353.772144124,"data":"[04:46:29] INFO        M3/s5/f3 early stop at epoch 32 (best 20, val AUROC 0.996)\n"}
+,{"stream_name":"stdout","time":5401.384143353,"data":"[04:47:17] INFO        M3/s5/f4 early stop at epoch 18 (best 6, val AUROC 0.993)\n"}
+,{"stream_name":"stdout","time":5428.572631412,"data":"[04:47:44] INFO      M3 seed 5: dev OOF AUROC 0.990, test AUROC 0.977 MCC 0.858 (epochs=8)\n"}
+,{"stream_name":"stdout","time":5682.140748484,"data":"[04:51:57] INFO      comparisons: 9 (BH-FDR controlled at 0.05)\n"}
+,{"stream_name":"stdout","time":5682.492687347,"data":"[04:51:58] INFO      external[scrambled] M1: {'n': 500, 'n_pos': 0, 'mean_score': 0.763338029384613, 'frac_predicted_positive': 0.69}\n"}
+,{"stream_name":"stdout","time":5682.92478658,"data":"[04:51:58] INFO      external[scrambled] M2: {'n': 500, 'n_pos': 0, 'mean_score': 0.6657261252403259, 'frac_predicted_positive': 0.59}\n"}
+,{"stream_name":"stdout","time":5683.361635113,"data":"[04:51:59] INFO      external[scrambled] M3: {'n': 500, 'n_pos': 0, 'mean_score': 0.7257739901542664, 'frac_predicted_positive': 0.638}\n"}
+,{"stream_name":"stdout","time":5683.365866639,"data":"[04:51:59] INFO    wrote D10_test_metrics.csv and D9_ablation.csv\n"}
+,{"stream_name":"stdout","time":5683.372854167,"data":"[04:51:59] INFO    step3 train_and_eval finished in 5536.5s\n"}
+,{"stream_name":"stdout","time":5683.469153157,"data":"models=['M0_RF', 'M1', 'M2', 'M3']\n"}
+,{"stream_name":"stdout","time":5683.469188805,"data":"  M0_RF        AUROC=0.970 MCC=0.821 AUPRC=0.942\n"}
+,{"stream_name":"stdout","time":5683.469207115,"data":"  M1           AUROC=0.978 MCC=0.859 AUPRC=0.960\n"}
+,{"stream_name":"stdout","time":5683.469211833,"data":"  M2           AUROC=0.979 MCC=0.858 AUPRC=0.962\n"}
+,{"stream_name":"stdout","time":5683.469215957,"data":"  M3           AUROC=0.981 MCC=0.857 AUPRC=0.965\n"}
+,{"stream_name":"stdout","time":5686.594911121,"data":"[dualamp_pilot 04:52:02] $ /usr/bin/python3 -m dualamp_lite report --workdir /tmp/dualamp-pilot/run\n"}
+,{"stream_name":"stdout","time":5705.09833027,"data":"[04:52:20] INFO    report written: /tmp/dualamp-pilot/run/manuscript/D10_evaluation_report.md\n"}
+,{"stream_name":"stdout","time":5707.074374222,"data":"report: /tmp/dualamp-pilot/run/manuscript/D10_evaluation_report.md\n"}
+,{"stream_name":"stdout","time":5707.07439846,"data":"manifest: /tmp/dualamp-pilot/run/manuscript/D15_input_sha256.tsv (56 files)\n"}
+,{"stream_name":"stdout","time":5707.792232399,"data":"[dualamp_pilot 04:52:23] artifacts: dataset_dataset_summary.json, dataset_label_audit.csv, dataset_D1_sample_metadata.csv, manuscript_D10_test_metrics.csv, manuscript_D10_evaluation_report.md, manuscript_D11_external_validation.csv, manuscript_D15_input_sha256.tsv, ablation_D9_ablation.csv, model_train_summary.json, features_feature_meta.json, model_M1_seed1.pt, model_M1_seed2.pt, model_M1_seed3.pt, model_M1_seed4.pt, model_M1_seed5.pt, model_M2_seed1.pt, model_M2_seed2.pt, model_M2_seed3.pt, model_M2_seed4.pt, model_M2_seed5.pt, model_M3_seed1.pt, model_M3_seed2.pt, model_M3_seed3.pt, model_M3_seed4.pt, model_M3_seed5.pt, features_biophys_scaler.joblib\n"}
+,{"stream_name":"stderr","time":5710.235896846,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":5710.235934945,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":5710.491011021,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":5710.491036943,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":5711.241039376,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":5712.283973947,"data":"[NbConvertApp] Writing 329087 bytes to __results__.html\n"}
+]

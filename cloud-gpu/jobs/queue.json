@@ -290,10 +290,11 @@
       ],
       "serve_minutes": 15.0,
       "wait": true,
-      "status": "pending",
+      "status": "completed",
       "created_at_utc": "2026-11-17T02:59:16Z",
       "kernel_slug": "dualamp-real6-repro-20261117",
-      "note": "Reproducibility replication of real5 (candidate_v1): leanrea pinned to f610dc00… (branch tip unchanged 2026-11-11→2026-11-16T10:00Z, verified via gh api); PYTHONHASHSEED=0; torch/fair-esm/mmseqs versions logged. No intended behavior change; D10/D9/D11 should match real5 within GPU-nondeterminism noise. PILOT 口径，不可入论文。DO NOT overwrite real5/real4 artifacts."
+      "note": "Reproducibility replication of real5 (candidate_v1): leanrea pinned to f610dc00… (branch tip unchanged 2026-11-11→2026-11-16T10:00Z, verified via gh api); PYTHONHASHSEED=0; torch/fair-esm/mmseqs versions logged. No intended behavior change; D10/D9/D11 should match real5 within GPU-nondeterminism noise. PILOT 口径，不可入论文。DO NOT overwrite real5/real4 artifacts.",
+      "finished_at_utc": "2026-11-17T04:53:05Z"
     }
   ]
 }
