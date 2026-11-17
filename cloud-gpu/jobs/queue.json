@@ -329,7 +329,7 @@
       ],
       "serve_minutes": 15.0,
       "wait": true,
-      "status": "pending",
+      "status": "failed",
       "created_at_utc": "2026-11-17T07:32:00Z",
       "id": "dualamp-real7-negmatched-20261117",
       "script_args": [
@@ -339,7 +339,9 @@
         "composition-matched"
       ],
       "kernel_slug": "dualamp-real7-negmatched-20261117",
-      "note": "Composition-matched hard negatives (P1/P2 fix): expect LOWER test AUROC and LOWER scrambled false-positive rate than real6/real5 — that is the intended cost, not a score chase. PILOT口径，不可入论文。DO NOT overwrite real5/real6 artifacts."
+      "note": "Composition-matched hard negatives (P1/P2 fix): expect LOWER test AUROC and LOWER scrambled false-positive rate than real6/real5 — that is the intended cost, not a score chase. PILOT口径，不可入论文。DO NOT overwrite real5/real6 artifacts.",
+      "error": "Kaggle kernel shaohuawen/dualamp-real7-negmatched-20261117 ended with error; inspect logs in /tmp/private-gpu-runs/dualamp-real7-negmatched-20261117.",
+      "finished_at_utc": "2026-11-17T10:52:17Z"
     }
   ]
 }

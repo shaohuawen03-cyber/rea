@@ -1,0 +1,56 @@
+[{"stream_name":"stdout","time":6.1979743880000004,"data":"[dualamp_pilot 10:50:42] installing missing deps: biopython\n"}
+,{"stream_name":"stdout","time":17.483907914,"data":"[dualamp_pilot 10:50:53] versions: torch=2.11.0+cu130 cuda=13.0 device=Tesla T4\n"}
+,{"stream_name":"stdout","time":17.484113577,"data":"[dualamp_pilot 10:50:53] versions: fair_esm missing (No module named 'fair_esm')\n"}
+,{"stream_name":"stdout","time":20.369325668,"data":"[dualamp_pilot 10:50:56] versions: sklearn=1.6.1\n"}
+,{"stream_name":"stdout","time":20.369370026,"data":"[dualamp_pilot 10:50:56] versions: pandas=2.3.3\n"}
+,{"stream_name":"stdout","time":20.369376223,"data":"[dualamp_pilot 10:50:56] versions: numpy=2.1.3\n"}
+,{"stream_name":"stdout","time":20.36985395,"data":"[dualamp_pilot 10:50:56] versions: Bio=1.88\n"}
+,{"stream_name":"stdout","time":20.371052183,"data":"[dualamp_pilot 10:50:56] versions: mmseqs not found\n"}
+,{"stream_name":"stdout","time":61.578483427,"data":"[dualamp_pilot 10:51:37] cd-hit installed via apt: /usr/bin/cd-hit\n"}
+,{"stream_name":"stdout","time":67.631606934,"data":"[dualamp_pilot 10:51:43] installed cd-hit-\u003emmseqs shim at /usr/local/bin/cd-hit (self-test OK; native cd-hit bypassed)\n"}
+,{"stream_name":"stdout","time":67.633198615,"data":"[dualamp_pilot 10:51:43] cloning repo branch arena/cac2205a-rea\n"}
+,{"stream_name":"stderr","time":67.658060533,"data":"Cloning into '/tmp/dualamp-pilot/rea'...\n"}
+,{"stream_name":"stdout","time":71.742887524,"data":"[dualamp_pilot 10:51:47] downloading positives via gdown (Drive file id 11vvQS…)\n"}
+,{"stream_name":"stderr","time":74.314566339,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":74.314973843,"data":"  File \"/usr/local/lib/python3.13/dist-packages/gdown/download.py\", line 273, in download\n"}
+,{"stream_name":"stderr","time":74.31498834,"data":"    url = get_url_from_gdrive_confirmation(res.text)\n"}
+,{"stream_name":"stderr","time":74.314993497,"data":"  File \"/usr/local/lib/python3.13/dist-packages/gdown/download.py\", line 55, in get_url_from_gdrive_confirmation\n"}
+,{"stream_name":"stderr","time":74.314998355,"data":"    raise FileURLRetrievalError(\n"}
+,{"stream_name":"stderr","time":74.315002673,"data":"    ...\u003c4 lines\u003e...\n"}
+,{"stream_name":"stderr","time":74.315007077,"data":"    )\n"}
+,{"stream_name":"stderr","time":74.31501586,"data":"gdown.exceptions.FileURLRetrievalError: Cannot retrieve the public link of the file. You may need to change the permission to 'Anyone with the link', or have had many accesses. Check FAQ in https://github.com/wkentaro/gdown?tab=readme-ov-file#faq.\n"}
+,{"stream_name":"stderr","time":74.315040221,"data":"\n"}
+,{"stream_name":"stderr","time":74.315050068,"data":"During handling of the above exception, another exception occurred:\n"}
+,{"stream_name":"stderr","time":74.315054944,"data":"\n"}
+,{"stream_name":"stderr","time":74.315059007,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":74.315664354,"data":"  File \"/kaggle/src/script.py\", line 8, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":74.315674486,"data":"    runpy.run_path('/tmp/_payload.py', run_name='__main__')\n"}
+,{"stream_name":"stderr","time":74.315679728,"data":"    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":74.315684697,"data":"  File \"\u003cfrozen runpy\u003e\", line 294, in run_path\n"}
+,{"stream_name":"stderr","time":74.315689788,"data":"  File \"\u003cfrozen runpy\u003e\", line 98, in _run_module_code\n"}
+,{"stream_name":"stderr","time":74.315694841,"data":"  File \"\u003cfrozen runpy\u003e\", line 88, in _run_code\n"}
+,{"stream_name":"stderr","time":74.315699759,"data":"  File \"/tmp/_payload.py\", line 535, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":74.315717171,"data":"    main()\n"}
+,{"stream_name":"stderr","time":74.315721168,"data":"    ~~~~^^\n"}
+,{"stream_name":"stderr","time":74.315725057,"data":"  File \"/tmp/_payload.py\", line 362, in main\n"}
+,{"stream_name":"stderr","time":74.315729254,"data":"    got_path = gdown.download(id=fid, output=raw_path, quiet=False)\n"}
+,{"stream_name":"stderr","time":74.315733404,"data":"  File \"/usr/local/lib/python3.13/dist-packages/gdown/download.py\", line 284, in download\n"}
+,{"stream_name":"stderr","time":74.31573722,"data":"    raise FileURLRetrievalError(message)\n"}
+,{"stream_name":"stderr","time":74.3157493,"data":"gdown.exceptions.FileURLRetrievalError: Failed to retrieve file url:\n"}
+,{"stream_name":"stderr","time":74.315752877,"data":"\n"}
+,{"stream_name":"stderr","time":74.315755937,"data":"\tCannot retrieve the public link of the file. You may need to change\n"}
+,{"stream_name":"stderr","time":74.315761259,"data":"\tthe permission to 'Anyone with the link', or have had many accesses.\n"}
+,{"stream_name":"stderr","time":74.315768555,"data":"\tCheck FAQ in https://github.com/wkentaro/gdown?tab=readme-ov-file#faq.\n"}
+,{"stream_name":"stderr","time":74.315771027,"data":"\n"}
+,{"stream_name":"stderr","time":74.315773154,"data":"You may still be able to access the file from the browser:\n"}
+,{"stream_name":"stderr","time":74.315775423,"data":"\n"}
+,{"stream_name":"stderr","time":74.315777603,"data":"\thttps://drive.google.com/uc?id=11vvQSlOJDjt8v6qHCB4LWg6mRK3DwNis\n"}
+,{"stream_name":"stderr","time":74.315779876,"data":"\n"}
+,{"stream_name":"stderr","time":74.315782029,"data":"but Gdown can't. Please check connections and permissions.\n"}
+,{"stream_name":"stderr","time":79.613925883,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":79.613957256,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":79.924276138,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":79.924304667,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":80.709682504,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":81.821867289,"data":"[NbConvertApp] Writing 329885 bytes to __results__.html\n"}
+]

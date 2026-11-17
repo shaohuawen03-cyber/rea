@@ -1,0 +1,6 @@
+{
+  "job_id": "dualamp-real7-negmatched-20261117",
+  "status": "failed",
+  "error": "Kaggle kernel shaohuawen/dualamp-real7-negmatched-20261117 ended with error; inspect logs in /tmp/private-gpu-runs/dualamp-real7-negmatched-20261117.",
+  "timestamp_utc": "2026-11-17T10:52:17Z"
+}
