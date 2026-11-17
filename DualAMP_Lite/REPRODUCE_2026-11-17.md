@@ -95,3 +95,41 @@ python cloud-gpu/scripts/pack_release_assets.py --help   # 权重打包（仅 Re
 **对论文的意义**：三次独立构建已经给出 headline 全部稳健的证据链；“复刻相同结果”这一字面验收未达（也不可能，除非钉死 Kaggle 镜像+mmseqs 单线程），但**指标级复现界限明确**：AUROC spread ≤ 0.0061（全部模型），seed_sd 0.0002–0.0015；MCC 漂移主要来自 dev-OOF 阈值重拟合（M2 阈值 0.725→0.840→0.892）。
 
 **real7（composition-matched 硬负例）**：2026-11-17T09:28Z 派发（run 44055910802），Positives 窗口 09:28 开→09:47 关并复核仅 owner；结果待回收后写入 §8。
+
+## 8. real7 实测（composition-matched 硬负例，2026-11-17 派发）
+
+### 8.0 派发事故与窗口协议修正（重要）
+- **第 1 次派发**（run 44055910802，09:23Z）：内核 **10:50 才真正启动**（T4 排队 ~87 分钟），而 Positives 窗口已按惯例于 ~20 分钟后（09:47）关闭 → 内核在 `positives sha256` 下载处 `gdown` 失败，**verdict=failure（未产出任何科学结果，未动任何既有产物，fail-safe 生效）**。
+- **协议修正**：窗口必须保持开放直到 **relay run 完成**（`gh run` 结论出后立即关闭并复核），不能按固定分钟数关闭——内核何时拉取阳性由 Kaggle 排队决定。
+- **第 2 次派发**（run 44072623616，`force=true` 重跑同一 job，11:15Z）：窗口 **11:15 开 → 13:12 运行完成后立即关闭，list_permissions 复核仅 owner**。失控窗口暴露时间共 1h57m（可接受，协议已修正）。
+
+### 8.1 构建核验（全部通过）
+- 阳性 sha256 OK（133,202 B）；`leanrea pinned at f610dc00…` 断言通过；torch 2.11.0+cu130 / sklearn 1.6.1 一致。
+- 硬负例过滤器生效：全量合格片段 350,023 → 与阳性均值 AAC 平方距离 ≤ 30 百分位（cutoff **0.0418**）→ 105,007 → seed 11 抽样 10,000。
+- **簇 10,507（标准模式 11,570）；跨标签簇 2 → review=2**（标准模式 review=0）——组成越像，跨标签同源簇越多，泄漏在结构层面显形。
+
+### 8.2 指标（real7 vs real5，Δ）
+| 模型 | AUROC | AUPRC | MCC | scrambled 判阳 |
+|---|---|---|---|---|
+| M0_RF | 0.9888 (+0.0248) | 0.9736 (+0.0302) | 0.8751 (+0.0443) | — |
+| M1 | 0.9926 (+0.0143) | 0.9854 (+0.0235) | 0.9238 (+0.0606) | 0.764 (real5: 0.670) |
+| M2 | 0.9948 (+0.0138) | 0.9887 (+0.0219) | 0.9170 (+0.0394) | 0.656 (real5: 0.586) |
+| M3 | 0.9947 (+0.0141) | 0.9889 (+0.0224) | 0.9235 (+0.0483) | 0.640 (real5: 0.574) |
+
+D9：M3>M0_RF 仍 FDR 显著（Δ+0.0059，q=3.2e-04）；M3 vs M1（auroc q=0.032，auprc q=0.0068）首次翻为 FDR 显著（边缘）；M3 vs M2 仍无显著（q=0.861）。
+
+### 8.3 诚实解读（不可写成“模型更强/修复生效”）
+1. **scrambled 判阳率没有下降**（M1 0.764 / M2 0.656 / M3 0.640，均 ≥ 标准模式）→ P1/P2 的“组成偏好”没有被缓解。
+2. **Vinpo 假象**：本设计把 composition-matched 负例同时用于 train 和 test。负类分布收窄（单峰、低熵）使任务变容易，AUROC 全线 +0.014~+0.025 是**分布收窄假象**，不是判别力提升；M1 的 frac_predicted_positive 上升（0.229→0.259）进一步说明决策边界整体右移/左移——灵敏度全面上升（M1 0.834→0.935）换来的是 specificity 全面下降（0.993→0.983）。
+3. **机制确认**：组成匹配后，模型仍需要额外特征才能赢过难负例；结果与 “AMP 预测器以 AA 组成而非残基顺序为主要信号”（Bioinformatics bbac343；BATTLE-AMP preprint）一致；我们的观测（scrambled FPR 在所有四种配置中均 0.54–0.76）是**结构性事实，须在 limitations 中披露**（P1–P22 照旧）。
+4. **真正的 P1/P2 检验（待做，零 GPU 成本）**：不重新训练，而是用 real5/real6 的冻结模型对 **composition-matched 负例做跨分布评估**（matched-vs-standard 负例的判阳率差）；更严格则是“标准训练、matched 测试”的迁移报告。请求你确认后再派（需从 real5 workflow artifact 取回 .pt 权重做评估）。
+5. **结论**：real7 提交了一个**负面结果**——组成匹配硬负例不会自动消除组成偏好；论文应报告此点，而不是隐藏。头条结论（神经 > RF，FDR 显著；生物物理分支无可测量增益；组成偏好稳健存在）在四次构建（real5/6/6b/7）下全部保持。
+
+### 8.4 可复用命令
+- 重跑 hard-negative：queue job `dualamp-real7-negmatched-20261117`（`--neg-mode composition-matched`），结果在 `cloud-gpu/results/dualamp-real7-negmatched-20261117/`。
+- 对照：`python cloud-gpu/scripts/compare_dualamp_runs.py cloud-gpu/results/dualamp-real5-20261116 cloud-gpu/results/dualamp-real7-negmatched-20261117`。
+
+## 9. 当前未闭合项
+1. **v2 正式主线**：230 条 Review_Result **0/230 已填**（见 V2_RUNBOOK_2026-11-17.md）——唯一人工闸门；完成后按 runbook 执行 build→real8→Release。
+2. P1/P2 跨分布评估（§8.3-4）——等你确认。
+3. v0.4 论文附录：real6b 三次汇总 + real7 负面结果待写入（本文件 §7–§8 已为笔）。
