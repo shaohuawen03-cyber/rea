@@ -172,7 +172,7 @@ def shadow_positives(out_path, n=150, seed=20261116):
             f.write(f">MOCK_P{i:04d}\n{''.join(rng.choice(AA) for _ in range(L))}\n")
 
 def _ensure_deps():
-    import importlib
+    import importlib, importlib.util
     need = {"Bio": "biopython", "yaml": "pyyaml"}
     missing = [pkg for mod, pkg in need.items() if importlib.util.find_spec(mod) is None]
     if missing:
@@ -329,6 +329,9 @@ def main():
     ap.add_argument("--folds", type=int, default=5)
     ap.add_argument("--models", default="M0_RF,M1,M2,M3")
     ap.add_argument("--neg-cap", type=int, default=10000)
+    ap.add_argument("--fasta-id", default="11vvQSlOJDjt8v6qHCB4LWg6mRK3DwNis",
+                    help="Drive file id of the positives FASTA (candidate_v1 default; pass the v2 file id with --fasta-sha for the v2 retrain)")
+    ap.add_argument("--fasta-sha", default=EXPECTED_POS_SHA256, help="sha256 of the positives FASTA; must match, else abort")
     ap.add_argument("--neg-mode", choices=["standard", "composition-matched"], default="standard",
                     help="standard = real4/real5 recipe; composition-matched = hard negatives (P1/P2 fix)")
     args = ap.parse_args()
@@ -347,10 +350,10 @@ def main():
     pos_fasta = data / "positives.fasta"
     mock = args.mode != "real"
     if args.mode == "real":
-        want_sha = os.environ.get("FASTA_SHA256", EXPECTED_POS_SHA256).strip()
+        want_sha = (os.environ.get("FASTA_SHA256", "").strip() or args.fasta_sha).strip()
         raw = None
         url = os.environ.get("FASTA_URL", "").strip()
-        fid = os.environ.get("FASTA_ID", "11vvQSlOJDjt8v6qHCB4LWg6mRK3DwNis").strip()  # gdown 需要 anyone-with-link 只读（派发窗内开放，跑完回收）
+        fid = (os.environ.get("FASTA_ID", "").strip() or args.fasta_id).strip()  # gdown 需要 anyone-with-link 只读（派发窗内开放，跑完回收）; v2 retrain: --fasta-id <v2 file id>
         if fid:
             log(f"downloading positives via gdown (Drive file id {fid[:6]}…)")
             subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", "gdown"])
@@ -522,6 +525,7 @@ def main():
         "positives": len(pos_seqs), "negatives_stats": neg_stats,
         "models": args.models, "seeds": args.seeds, "folds": args.folds, "epochs": args.epochs,
         "neg_mode": args.neg_mode, "leanrea_rev": LEANREA_REV,
+        "positives_file_id": (os.environ.get("FASTA_ID", "").strip() or args.fasta_id), "positives_sha256_want": (os.environ.get("FASTA_SHA256", "").strip() or args.fasta_sha),
         "note": "PILOT on candidate_v1 (unreviewed, NOT v2 定稿). 不可入论文。" if not mock else "DRY RUN with MOCK positives; numbers are meaningless.",
         "artifacts_copied": copied, "artifacts_missing": missing,
     }, indent=2, ensure_ascii=False))
