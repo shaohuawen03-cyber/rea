@@ -28,6 +28,7 @@ import subprocess
 import sys
 import time
 import urllib.request
+import traceback
 from pathlib import Path
 
 REPO = "https://github.com/shaohuawen03-cyber/rea"
@@ -72,23 +73,35 @@ def read_fasta(path):
         if name: seqs.append("".join(chunks))
     return seqs
 
-def dl(url, dst, retries=4, chunk=1 << 20):
+def dl(url, dst, retries=3, chunk=1 << 20):
     dst = Path(dst)
-    last = None
+    ua = ("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+          "(KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36")
     for attempt in range(1, retries + 1):
+        # try curl first (Kaggle images ship it)
+        if subprocess.run(["bash", "-lc", "command -v curl >/dev/null"],
+                          stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).returncode == 0:
+            rc = subprocess.run(["bash", "-lc",
+                                 f"curl -fL --retry 2 --retry-all-errors --max-time 240 "
+                                 f"-A '{ua}' -o '{dst}' '{url}'"]).returncode
+            if rc == 0 and dst.exists() and dst.stat().st_size > 0:
+                log(f"curl ok: {url.rsplit('/',1)[-1]} -> {dst} ({dst.stat().st_size} B)")
+                return dst
+            log(f"curl attempt {attempt} failed (rc={rc})")
+        # fallback: urllib with browser UA
         try:
-            with urllib.request.urlopen(url, timeout=180) as r, open(dst, "wb") as f:
+            req = urllib.request.Request(url, headers={"User-Agent": ua})
+            with urllib.request.urlopen(req, timeout=180) as r, open(dst, "wb") as f:
                 while True:
                     b = r.read(chunk)
                     if not b: break
                     f.write(b)
-            log(f"download ok: {url.rsplit('/',1)[-1]} -> {dst} ({dst.stat().st_size} B)")
+            log(f"urllib ok: {url.rsplit('/',1)[-1]} -> {dst} ({dst.stat().st_size} B)")
             return dst
-        except Exception as exc:  # noqa: BLE001 - retry then raise
-            last = exc
-            log(f"download attempt {attempt}/{retries} failed: {exc}")
+        except Exception as exc:  # noqa: BLE001
+            log(f"urllib attempt {attempt} failed: {exc}")
             time.sleep(5 * attempt)
-    raise RuntimeError(f"download failed after {retries} retries: {url}: {last}")
+    raise RuntimeError(f"download failed after {retries} rounds: {url}")
 
 def verify_release_assets(workdir):
     """独立于发布 runner 的资产复核（本 kernel 通过 GitHub 直链下载）。"""
@@ -172,11 +185,6 @@ def main():
     log(f"positives: {len(pos_seqs)}")
     pos_set = set(pos_seqs)
 
-    # ---- 3) prerelease download + independent sha256 verify ----------------
-    rel_dir = wd / "release"
-    ext, verify_ok = verify_release_assets(rel_dir)
-    log(f"weights verify: {'PASS' if verify_ok else 'FAIL'}")
-
     # ---- 4) rebuild negatives (both modes, same recipe/seed) ---------------
     neg_std = data / "negatives_standard.fasta"
     neg_mat = data / "negatives_matched.fasta"
@@ -196,10 +204,32 @@ def main():
                        f"{'PASS' if cut is not None and abs(cut - CUTOFF_WANT) < 1e-4 else 'DIFF'}")
     recon_lines.append(f"{'composition-matched':18s} {'compmatch_kept':38s} want~=105007 got={mat_stats.get('compmatch_kept')}")
     (out / "recon_verification.txt").write_text("\n".join(recon_lines) + "\n", encoding="utf-8")
+    recon_sha_lines = [f"sha256 standard  {sha256_file(neg_std)}", f"sha256 matched   {sha256_file(neg_mat)}"]
+    with open(out / "recon_verification.txt", "a", encoding="utf-8") as fh:
+        fh.write("\n".join(recon_sha_lines) + "\n")
 
     if args.mode == "negatives-only":
         (out / "negatives_stats.json").write_text(json.dumps({"standard": std_stats, "matched": mat_stats},
                                                              indent=2, ensure_ascii=False), encoding="utf-8")
+        return
+
+    # ---- 3b) prerelease download + independent sha256 verify (non-fatal) ------
+    rel_dir = wd / "release"
+    try:
+        ext, verify_ok = verify_release_assets(rel_dir)
+        log(f"weights verify: {'PASS' if verify_ok else 'FAIL'}")
+    except Exception as exc:  # noqa: BLE001 - publish diagnostics instead of crashing silently
+        traceback.print_exc()
+        (out / "_eval_failed.json").write_text(json.dumps({
+            "status": "failed", "stage": "release_assets", "error": repr(exc)}, indent=2, ensure_ascii=False),
+            encoding="utf-8")
+        log("FATAL at release-assets stage; diagnostics written to _eval_failed.json; scoring skipped")
+        return
+
+    if not verify_ok:
+        (out / "_eval_failed.json").write_text(json.dumps({
+            "status": "failed", "stage": "weights_verify", "error": "SHA256SUMS mismatch"}, indent=2), encoding="utf-8")
+        log("FATAL: prerelease sha256 verification FAILED; refusing to score mismatched weights")
         return
 
     # ---- 5) leanrea @ f610dc00 + fair-esm encode ---------------------------
@@ -333,4 +363,13 @@ def main():
     log("artifacts written: eval_frozen_real5_metrics.csv, summary.json, summary.md, weights_verify.txt, recon_verification.txt")
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except SystemExit:
+        raise
+    except Exception:
+        traceback.print_exc()
+        (Path(os.environ.get("EVAL_ARTIFACT_DIR", os.getcwd())) / "_eval_failed.json").write_text(
+            json.dumps({"status": "failed", "stage": "unhandled", "error": "see traceback in kernel log"}, indent=2),
+            encoding="utf-8")
+        raise
