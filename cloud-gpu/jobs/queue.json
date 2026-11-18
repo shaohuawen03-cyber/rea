@@ -363,7 +363,7 @@
       "kernel_slug": "dualamp-eval-frozen-real5-20261118",
       "note": "Frozen-weight cross-distribution eval (P1/P2): rebuild standard + composition-matched negatives (seed 11, same recipe as real5/real7, recon stats logged), download prerelease tarball and independently sha256-verify against SHA256SUMS.txt inside the kernel, then score all 15 real5 checkpoints (M1/M2/M3 x5 seeds, embedded thresholds) on matched vs standard negatives + eval-scrambled probes + candidate_v1 positives (Auroc). NO retraining. Needs the candidate_v1 positives Drive window opened before dispatch and closed only after the relay run completes. PILOT 口径；metrics 不可入论文正文结论（附录可引）。DO NOT touch real5/6/6b/7 artifacts.",
       "error": "Kaggle kernel shaohuawen/dualamp-eval-frozen-real5-20261118 ended with error; inspect logs in /tmp/private-gpu-runs/dualamp-eval-frozen-real5-20261118.",
-      "finished_at_utc": "2026-11-18T02:05:33Z"
+      "finished_at_utc": "2026-11-18T02:18:01Z"
     }
   ]
 }

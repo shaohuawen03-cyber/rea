@@ -11,5 +11,7 @@ composition-matched fragments_dedup                        want=351119 got=35111
 composition-matched fragments_hit_positive_4mer_gt08       want=1096 got=1096 PASS
 composition-matched negatives_final                        want=10000 got=10000 PASS
 composition-matched compmatch_eligible                     want=350023 got=350023 PASS
-composition-matched compmatch_cutoff_sqdist                want~=0.04177 got=0.041767388228834954 PASS
+composition-matched compmatch_cutoff_sqdist                want~=0.04177 got=0.04176738822883499 PASS
 composition-matched compmatch_kept                         want~=105007 got=105007
+sha256 standard  92a71037999f8b20bff2f874b4b912b3001a74916317d3c92b2d88eb4bc5a865
+sha256 matched   eade986681cdf77c2f915728eb0939124cf924fda350919b6ec992c0e70fd607

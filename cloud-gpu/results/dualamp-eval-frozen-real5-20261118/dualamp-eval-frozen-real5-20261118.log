@@ -1,63 +1,100 @@
-[{"stream_name":"stdout","time":4.40749273,"data":"[eval_frozen 02:04:16] cloning repo branch arena/cac2205a-rea\n"}
-,{"stream_name":"stderr","time":4.431898626,"data":"Cloning into '/tmp/frozen-eval/rea'...\n"}
-,{"stream_name":"stdout","time":10.733371688,"data":"[eval_frozen 02:04:22] downloading positives via gdown (Drive id 11vvQS…)\n"}
-,{"stream_name":"stderr","time":12.358169992,"data":"Downloading...\n"}
-,{"stream_name":"stderr","time":12.358195354,"data":"From: https://drive.google.com/uc?id=11vvQSlOJDjt8v6qHCB4LWg6mRK3DwNis\n"}
-,{"stream_name":"stderr","time":12.358200232,"data":"To: /tmp/frozen-eval/data/positives.fasta\n"}
-,{"stream_name":"stderr","time":12.373682314,"data":"\r  0%|          | 0.00/133k [00:00\u003c?, ?B/s]\r100%|██████████| 133k/133k [00:00\u003c00:00, 87.4MB/s]\n"}
-,{"stream_name":"stdout","time":12.376806742,"data":"[eval_frozen 02:04:24] positives sha256: 7b6ea12136623e85218ba78cfd4b713985a3122b24c61650e536e724b768aa1d (want 7b6ea12136623e85218ba78cfd4b713985a3122b24c61650e536e724b768aa1d)\n"}
-,{"stream_name":"stdout","time":12.378663823,"data":"[eval_frozen 02:04:24] positives: 3579\n"}
-,{"stream_name":"stdout","time":12.552155927,"data":"[eval_frozen 02:04:24] download ok: SHA256SUMS.txt -\u003e /tmp/frozen-eval/release/SHA256SUMS.txt (2439 B)\n"}
-,{"stream_name":"stdout","time":12.663883517,"data":"[eval_frozen 02:04:24] download ok: export_manifest.json -\u003e /tmp/frozen-eval/release/export_manifest.json (5207 B)\n"}
-,{"stream_name":"stdout","time":13.112874266,"data":"[eval_frozen 02:04:25] download ok: dualamp-real5-candidate_v1-pilot-weights-20261116.tar.gz -\u003e /tmp/frozen-eval/release/dualamp-real5-candidate_v1-pilot-weights-20261116.tar.gz (20928730 B)\n"}
-,{"stream_name":"stdout","time":13.345360213,"data":"[eval_frozen 02:04:25] weights verify: PASS\n"}
-,{"stream_name":"stdout","time":35.28105908,"data":"[dualamp_pilot 02:04:47] composition-matched negatives: 105007/350023 kept (cutoff sqdist 0.0418)\n"}
-,{"stream_name":"stdout","time":35.385267405,"data":"[eval_frozen 02:04:47] negatives standard: {\"proteins_total\": 117172, \"keyword_excluded\": 18, \"fragments_raw\": 351462, \"fragments_standard_aa\": 351429, \"fragments_dedup\": 351119, \"fragments_hit_positive_4mer_gt08\": 1096, \"negatives_final\": 10000, \"seed\": 11, \"cap\": 10000, \"neg_mode\": \"standard\", \"seconds\": 9.5}\n"}
-,{"stream_name":"stdout","time":35.385305831,"data":"[eval_frozen 02:04:47] negatives matched : {\"proteins_total\": 117172, \"keyword_excluded\": 18, \"fragments_raw\": 351462, \"fragments_standard_aa\": 351429, \"fragments_dedup\": 351119, \"fragments_hit_positive_4mer_gt08\": 1096, \"negatives_final\": 10000, \"seed\": 11, \"cap\": 10000, \"neg_mode\": \"composition-matched\", \"compmatch_cutoff_sqdist\": 0.041767388228834954, \"compmatch_eligible\": 350023, \"compmatch_kept\": 105007, \"seconds\": 12.4}\n"}
-,{"stream_name":"stdout","time":35.385673441,"data":"[eval_frozen 02:04:47] cloning leanrea @ arena/4ecb70f1-leanrea then pinning f610dc00b1ae\n"}
-,{"stream_name":"stderr","time":35.387665639,"data":"Cloning into '/tmp/frozen-eval/rea/lee'...\n"}
-,{"stream_name":"stderr","time":47.425349813,"data":"From https://github.com/hukeying85-ux/leanrea\n"}
-,{"stream_name":"stderr","time":47.425379394,"data":" * branch            f610dc00b1aec3ab948a5b77574af0e644259a13 -\u003e FETCH_HEAD\n"}
-,{"stream_name":"stderr","time":47.952394065,"data":"HEAD is now at f610dc0 docs: add AMP data and model Word summary\n"}
-,{"stream_name":"stdout","time":47.954841908,"data":"[eval_frozen 02:04:59] leanrea pinned at f610dc00b1ae\n"}
-,{"stream_name":"stdout","time":54.916187831,"data":"Downloading: \"https://dl.fbaipublicfiles.com/fair-esm/models/esm2_t12_35M_UR50D.pt\" to /tmp/torch_home/hub/checkpoints/esm2_t12_35M_UR50D.pt\n"}
-,{"stream_name":"stdout","time":55.411298255,"data":"Downloading: \"https://dl.fbaipublicfiles.com/fair-esm/regression/esm2_t12_35M_UR50D-contact-regression.pt\" to /tmp/torch_home/hub/checkpoints/esm2_t12_35M_UR50D-contact-regression.pt\n"}
-,{"stream_name":"stdout","time":57.36341314,"data":"[eval_frozen 02:05:09] encoding positives: 3579 seqs\n"}
-,{"stream_name":"stderr","time":63.505289498,"data":"Traceback (most recent call last):\n"}
-,{"stream_name":"stderr","time":63.505504469,"data":"  File \"/tmp/frozen-eval/rea/lee/dualamp-lite/dualamp_lite/biophys.py\", line 209, in instability_index\n"}
-,{"stream_name":"stderr","time":63.50551354,"data":"    from Bio.SeqUtils.ProtParam import ProteinAnalysis\n"}
-,{"stream_name":"stderr","time":63.505517319,"data":"ModuleNotFoundError: No module named 'Bio'\n"}
-,{"stream_name":"stderr","time":63.505666885,"data":"\n"}
-,{"stream_name":"stderr","time":63.50569237,"data":"The above exception was the direct cause of the following exception:\n"}
-,{"stream_name":"stderr","time":63.505697291,"data":"\n"}
-,{"stream_name":"stderr","time":63.50570066,"data":"Traceback (most recent call last):\n"}
-,{"stream_name":"stderr","time":63.506440861,"data":"  File \"/kaggle/src/script.py\", line 8, in \u003cmodule\u003e\n"}
-,{"stream_name":"stderr","time":63.506452436000004,"data":"    runpy.run_path('/tmp/_payload.py', run_name='__main__')\n"}
-,{"stream_name":"stderr","time":63.506456324,"data":"    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
-,{"stream_name":"stderr","time":63.506459886,"data":"  File \"\u003cfrozen runpy\u003e\", line 294, in run_path\n"}
-,{"stream_name":"stderr","time":63.506463167,"data":"  File \"\u003cfrozen runpy\u003e\", line 98, in _run_module_code\n"}
-,{"stream_name":"stderr","time":63.506466679,"data":"  File \"\u003cfrozen runpy\u003e\", line 88, in _run_code\n"}
-,{"stream_name":"stderr","time":63.50647007,"data":"  File \"/tmp/_payload.py\", line 336, in \u003cmodule\u003e\n"}
-,{"stream_name":"stderr","time":63.506473492,"data":"    main()\n"}
-,{"stream_name":"stderr","time":63.506476786,"data":"    ~~~~^^\n"}
-,{"stream_name":"stderr","time":63.50647979,"data":"  File \"/tmp/_payload.py\", line 253, in main\n"}
-,{"stream_name":"stderr","time":63.506483746,"data":"    feats = {tag: encode_set(seqs, tag) for tag, seqs in sets.items()}\n"}
-,{"stream_name":"stderr","time":63.506487187,"data":"                  ~~~~~~~~~~^^^^^^^^^^^\n"}
-,{"stream_name":"stderr","time":63.506490346,"data":"  File \"/tmp/_payload.py\", line 237, in encode_set\n"}
-,{"stream_name":"stderr","time":63.506493291,"data":"    raw = biophys.compute_features(seqs)\n"}
-,{"stream_name":"stderr","time":63.506496396,"data":"  File \"/tmp/frozen-eval/rea/lee/dualamp-lite/dualamp_lite/biophys.py\", line 257, in compute_features\n"}
-,{"stream_name":"stderr","time":63.506499969000004,"data":"    values = feature_dict(seq)\n"}
-,{"stream_name":"stderr","time":63.506503477,"data":"  File \"/tmp/frozen-eval/rea/lee/dualamp-lite/dualamp_lite/biophys.py\", line 226, in feature_dict\n"}
-,{"stream_name":"stderr","time":63.506507175,"data":"    instab = instability_index(seq)\n"}
-,{"stream_name":"stderr","time":63.506510633,"data":"  File \"/tmp/frozen-eval/rea/lee/dualamp-lite/dualamp_lite/biophys.py\", line 211, in instability_index\n"}
-,{"stream_name":"stderr","time":63.506514721,"data":"    raise ImportError(\n"}
-,{"stream_name":"stderr","time":63.506528013,"data":"        \"biopython is required for the instability index: pip install biopython\"\n"}
-,{"stream_name":"stderr","time":63.506531388,"data":"    ) from exc\n"}
-,{"stream_name":"stderr","time":63.506534915,"data":"ImportError: biopython is required for the instability index: pip install biopython\n"}
-,{"stream_name":"stderr","time":67.939864168,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
-,{"stream_name":"stderr","time":67.939891331,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
-,{"stream_name":"stderr","time":68.185787386,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
-,{"stream_name":"stderr","time":68.185813136,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
-,{"stream_name":"stderr","time":68.94106801,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
-,{"stream_name":"stderr","time":69.842106949,"data":"[NbConvertApp] Writing 312072 bytes to __results__.html\n"}
+[{"stream_name":"stdout","time":5.446373231,"data":"[eval_frozen 02:16:24] cloning repo branch arena/cac2205a-rea\n"}
+,{"stream_name":"stderr","time":5.470234213,"data":"Cloning into '/tmp/frozen-eval/rea'...\n"}
+,{"stream_name":"stdout","time":11.878766202,"data":"[eval_frozen 02:16:31] downloading positives via gdown (Drive id 11vvQS…)\n"}
+,{"stream_name":"stderr","time":17.133324043000002,"data":"Downloading...\n"}
+,{"stream_name":"stderr","time":17.133351249,"data":"From: https://drive.google.com/uc?id=11vvQSlOJDjt8v6qHCB4LWg6mRK3DwNis\n"}
+,{"stream_name":"stderr","time":17.133354667,"data":"To: /tmp/frozen-eval/data/positives.fasta\n"}
+,{"stream_name":"stderr","time":17.149291175,"data":"\r  0%|          | 0.00/133k [00:00\u003c?, ?B/s]\r100%|██████████| 133k/133k [00:00\u003c00:00, 93.1MB/s]\n"}
+,{"stream_name":"stdout","time":17.152373706,"data":"[eval_frozen 02:16:36] positives sha256: 7b6ea12136623e85218ba78cfd4b713985a3122b24c61650e536e724b768aa1d (want 7b6ea12136623e85218ba78cfd4b713985a3122b24c61650e536e724b768aa1d)\n"}
+,{"stream_name":"stdout","time":17.15417928,"data":"[eval_frozen 02:16:36] positives: 3579\n"}
+,{"stream_name":"stdout","time":39.388905745,"data":"[dualamp_pilot 02:16:58] composition-matched negatives: 105007/350023 kept (cutoff sqdist 0.0418)\n"}
+,{"stream_name":"stdout","time":39.491485983,"data":"[eval_frozen 02:16:58] negatives standard: {\"proteins_total\": 117172, \"keyword_excluded\": 18, \"fragments_raw\": 351462, \"fragments_standard_aa\": 351429, \"fragments_dedup\": 351119, \"fragments_hit_positive_4mer_gt08\": 1096, \"negatives_final\": 10000, \"seed\": 11, \"cap\": 10000, \"neg_mode\": \"standard\", \"seconds\": 9.7}\n"}
+,{"stream_name":"stdout","time":39.491530487,"data":"[eval_frozen 02:16:58] negatives matched : {\"proteins_total\": 117172, \"keyword_excluded\": 18, \"fragments_raw\": 351462, \"fragments_standard_aa\": 351429, \"fragments_dedup\": 351119, \"fragments_hit_positive_4mer_gt08\": 1096, \"negatives_final\": 10000, \"seed\": 11, \"cap\": 10000, \"neg_mode\": \"composition-matched\", \"compmatch_cutoff_sqdist\": 0.04176738822883499, \"compmatch_eligible\": 350023, \"compmatch_kept\": 105007, \"seconds\": 12.5}\n"}
+,{"stream_name":"stderr","time":39.528836286,"data":"  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n"}
+,{"stream_name":"stderr","time":39.528859242,"data":"                                 Dload  Upload   Total   Spent    Left  Speed\n"}
+,{"stream_name":"stderr","time":39.679951849,"data":"\r  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\r  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\r  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n"}
+,{"stream_name":"stderr","time":39.752110295,"data":"\r100  2439  100  2439    0     0  10902      0 --:--:-- --:--:-- --:--:-- 10902\n"}
+,{"stream_name":"stdout","time":39.754972617,"data":"[eval_frozen 02:16:59] curl ok: SHA256SUMS.txt -\u003e /tmp/frozen-eval/release/SHA256SUMS.txt (2439 B)\n"}
+,{"stream_name":"stderr","time":39.77115436,"data":"  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n"}
+,{"stream_name":"stderr","time":39.771503955,"data":"                                 Dload  Upload   Total   Spent    Left  Speed\n"}
+,{"stream_name":"stderr","time":39.963127635,"data":"\r  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\r  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n"}
+,{"stream_name":"stderr","time":40.03808122,"data":"\r100  5207  100  5207    0     0  19494      0 --:--:-- --:--:-- --:--:-- 19494\n"}
+,{"stream_name":"stdout","time":40.041029335,"data":"[eval_frozen 02:16:59] curl ok: export_manifest.json -\u003e /tmp/frozen-eval/release/export_manifest.json (5207 B)\n"}
+,{"stream_name":"stderr","time":40.056461697,"data":"  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n"}
+,{"stream_name":"stderr","time":40.056527241,"data":"                                 Dload  Upload   Total   Spent    Left  Speed\n"}
+,{"stream_name":"stderr","time":40.26033829,"data":"\r  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\r  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n"}
+,{"stream_name":"stderr","time":40.927831978,"data":"\r  6 19.9M    6 1389k    0     0  2701k      0  0:00:07 --:--:--  0:00:07 2701k\r100 19.9M  100 19.9M    0     0  22.9M      0 --:--:-- --:--:-- --:--:-- 52.1M\n"}
+,{"stream_name":"stdout","time":40.931351428,"data":"[eval_frozen 02:17:00] curl ok: dualamp-real5-candidate_v1-pilot-weights-20261116.tar.gz -\u003e /tmp/frozen-eval/release/dualamp-real5-candidate_v1-pilot-weights-20261116.tar.gz (20928730 B)\n"}
+,{"stream_name":"stdout","time":41.173411755,"data":"[eval_frozen 02:17:00] weights verify: PASS\n"}
+,{"stream_name":"stdout","time":41.173437671,"data":"[eval_frozen 02:17:00] cloning leanrea @ arena/4ecb70f1-leanrea then pinning f610dc00b1ae\n"}
+,{"stream_name":"stderr","time":41.17516777,"data":"Cloning into '/tmp/frozen-eval/rea/lee'...\n"}
+,{"stream_name":"stderr","time":59.073350582,"data":"From https://github.com/hukeying85-ux/leanrea\n"}
+,{"stream_name":"stderr","time":59.073376935,"data":" * branch            f610dc00b1aec3ab948a5b77574af0e644259a13 -\u003e FETCH_HEAD\n"}
+,{"stream_name":"stderr","time":59.592789716,"data":"HEAD is now at f610dc0 docs: add AMP data and model Word summary\n"}
+,{"stream_name":"stdout","time":59.595401089,"data":"[eval_frozen 02:17:19] leanrea pinned at f610dc00b1ae\n"}
+,{"stream_name":"stdout","time":67.871313505,"data":"Downloading: \"https://dl.fbaipublicfiles.com/fair-esm/models/esm2_t12_35M_UR50D.pt\" to /tmp/torch_home/hub/checkpoints/esm2_t12_35M_UR50D.pt\n"}
+,{"stream_name":"stdout","time":68.751383433,"data":"Downloading: \"https://dl.fbaipublicfiles.com/fair-esm/regression/esm2_t12_35M_UR50D-contact-regression.pt\" to /tmp/torch_home/hub/checkpoints/esm2_t12_35M_UR50D-contact-regression.pt\n"}
+,{"stream_name":"stdout","time":71.142773865,"data":"[eval_frozen 02:17:30] encoding positives: 3579 seqs\n"}
+,{"stream_name":"stderr","time":77.522255957,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":77.522455421,"data":"  File \"/tmp/frozen-eval/rea/lee/dualamp-lite/dualamp_lite/biophys.py\", line 209, in instability_index\n"}
+,{"stream_name":"stderr","time":77.52246667,"data":"    from Bio.SeqUtils.ProtParam import ProteinAnalysis\n"}
+,{"stream_name":"stderr","time":77.522471661,"data":"ModuleNotFoundError: No module named 'Bio'\n"}
+,{"stream_name":"stderr","time":77.522587211,"data":"\n"}
+,{"stream_name":"stderr","time":77.522599361,"data":"The above exception was the direct cause of the following exception:\n"}
+,{"stream_name":"stderr","time":77.522604645,"data":"\n"}
+,{"stream_name":"stderr","time":77.522608987,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":77.523481591,"data":"  File \"/tmp/_payload.py\", line 367, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":77.523499621,"data":"    main()\n"}
+,{"stream_name":"stderr","time":77.523504523,"data":"    ~~~~^^\n"}
+,{"stream_name":"stderr","time":77.523508909,"data":"  File \"/tmp/_payload.py\", line 283, in main\n"}
+,{"stream_name":"stderr","time":77.523513504,"data":"    feats = {tag: encode_set(seqs, tag) for tag, seqs in sets.items()}\n"}
+,{"stream_name":"stderr","time":77.523518089,"data":"                  ~~~~~~~~~~^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":77.52354194,"data":"  File \"/tmp/_payload.py\", line 267, in encode_set\n"}
+,{"stream_name":"stderr","time":77.523544938,"data":"    raw = biophys.compute_features(seqs)\n"}
+,{"stream_name":"stderr","time":77.523547932,"data":"  File \"/tmp/frozen-eval/rea/lee/dualamp-lite/dualamp_lite/biophys.py\", line 257, in compute_features\n"}
+,{"stream_name":"stderr","time":77.523550649,"data":"    values = feature_dict(seq)\n"}
+,{"stream_name":"stderr","time":77.523553032,"data":"  File \"/tmp/frozen-eval/rea/lee/dualamp-lite/dualamp_lite/biophys.py\", line 226, in feature_dict\n"}
+,{"stream_name":"stderr","time":77.523555617,"data":"    instab = instability_index(seq)\n"}
+,{"stream_name":"stderr","time":77.523558083,"data":"  File \"/tmp/frozen-eval/rea/lee/dualamp-lite/dualamp_lite/biophys.py\", line 211, in instability_index\n"}
+,{"stream_name":"stderr","time":77.523560616,"data":"    raise ImportError(\n"}
+,{"stream_name":"stderr","time":77.523562981,"data":"        \"biopython is required for the instability index: pip install biopython\"\n"}
+,{"stream_name":"stderr","time":77.523565625,"data":"    ) from exc\n"}
+,{"stream_name":"stderr","time":77.523567985,"data":"ImportError: biopython is required for the instability index: pip install biopython\n"}
+,{"stream_name":"stderr","time":77.524468,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":77.524640978,"data":"  File \"/tmp/frozen-eval/rea/lee/dualamp-lite/dualamp_lite/biophys.py\", line 209, in instability_index\n"}
+,{"stream_name":"stderr","time":77.52465553,"data":"    from Bio.SeqUtils.ProtParam import ProteinAnalysis\n"}
+,{"stream_name":"stderr","time":77.524659671,"data":"ModuleNotFoundError: No module named 'Bio'\n"}
+,{"stream_name":"stderr","time":77.524663154,"data":"\n"}
+,{"stream_name":"stderr","time":77.52466642,"data":"The above exception was the direct cause of the following exception:\n"}
+,{"stream_name":"stderr","time":77.52466977,"data":"\n"}
+,{"stream_name":"stderr","time":77.524672802,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":77.525399337,"data":"  File \"/kaggle/src/script.py\", line 8, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":77.525417003,"data":"    runpy.run_path('/tmp/_payload.py', run_name='__main__')\n"}
+,{"stream_name":"stderr","time":77.525421371,"data":"    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":77.525425041,"data":"  File \"\u003cfrozen runpy\u003e\", line 294, in run_path\n"}
+,{"stream_name":"stderr","time":77.525428722,"data":"  File \"\u003cfrozen runpy\u003e\", line 98, in _run_module_code\n"}
+,{"stream_name":"stderr","time":77.52543186,"data":"  File \"\u003cfrozen runpy\u003e\", line 88, in _run_code\n"}
+,{"stream_name":"stderr","time":77.525435003,"data":"  File \"/tmp/_payload.py\", line 367, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":77.52543859,"data":"    main()\n"}
+,{"stream_name":"stderr","time":77.525441672,"data":"    ~~~~^^\n"}
+,{"stream_name":"stderr","time":77.525444608,"data":"  File \"/tmp/_payload.py\", line 283, in main\n"}
+,{"stream_name":"stderr","time":77.525447822,"data":"    feats = {tag: encode_set(seqs, tag) for tag, seqs in sets.items()}\n"}
+,{"stream_name":"stderr","time":77.525451146,"data":"                  ~~~~~~~~~~^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":77.525454432,"data":"  File \"/tmp/_payload.py\", line 267, in encode_set\n"}
+,{"stream_name":"stderr","time":77.525458102,"data":"    raw = biophys.compute_features(seqs)\n"}
+,{"stream_name":"stderr","time":77.525472272,"data":"  File \"/tmp/frozen-eval/rea/lee/dualamp-lite/dualamp_lite/biophys.py\", line 257, in compute_features\n"}
+,{"stream_name":"stderr","time":77.525475913,"data":"    values = feature_dict(seq)\n"}
+,{"stream_name":"stderr","time":77.525479581,"data":"  File \"/tmp/frozen-eval/rea/lee/dualamp-lite/dualamp_lite/biophys.py\", line 226, in feature_dict\n"}
+,{"stream_name":"stderr","time":77.525483529,"data":"    instab = instability_index(seq)\n"}
+,{"stream_name":"stderr","time":77.525487269,"data":"  File \"/tmp/frozen-eval/rea/lee/dualamp-lite/dualamp_lite/biophys.py\", line 211, in instability_index\n"}
+,{"stream_name":"stderr","time":77.525490963,"data":"    raise ImportError(\n"}
+,{"stream_name":"stderr","time":77.525494509,"data":"        \"biopython is required for the instability index: pip install biopython\"\n"}
+,{"stream_name":"stderr","time":77.525497845,"data":"    ) from exc\n"}
+,{"stream_name":"stderr","time":77.525501177,"data":"ImportError: biopython is required for the instability index: pip install biopython\n"}
+,{"stream_name":"stderr","time":82.388473356,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":82.388502939,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":82.690598079,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":82.690640898,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":83.48998335900001,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":84.492247149,"data":"[NbConvertApp] Writing 316729 bytes to __results__.html\n"}
 ]
