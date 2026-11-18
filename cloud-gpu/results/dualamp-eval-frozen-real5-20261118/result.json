@@ -1,6 +1,19 @@
 {
   "job_id": "dualamp-eval-frozen-real5-20261118",
-  "status": "failed",
-  "error": "Kaggle kernel shaohuawen/dualamp-eval-frozen-real5-20261118 ended with error; inspect logs in /tmp/private-gpu-runs/dualamp-eval-frozen-real5-20261118.",
-  "timestamp_utc": "2026-11-18T02:18:01Z"
+  "provider": "kaggle",
+  "mode": "run",
+  "accelerator": "NvidiaTeslaT4",
+  "kernel_ref": "shaohuawen/dualamp-eval-frozen-real5-20261118",
+  "kernel_url": "https://www.kaggle.com/code/shaohuawen/dualamp-eval-frozen-real5-20261118",
+  "status": "completed",
+  "copied_files": [
+    "_eval_frozen_real5_done.json",
+    "dualamp-eval-frozen-real5-20261118.log",
+    "eval_frozen_real5_metrics.csv",
+    "recon_verification.txt",
+    "summary.json",
+    "summary.md"
+  ],
+  "push_output": "Kernel version 3 successfully pushed.  Please check progress at https://www.kaggle.com/code/shaohuawen/dualamp-eval-frozen-real5-20261118",
+  "updated_at_utc": "2026-11-18T02:22:48Z"
 }

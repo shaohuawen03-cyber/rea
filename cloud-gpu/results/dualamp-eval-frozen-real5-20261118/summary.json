@@ -1,0 +1,138 @@
+{
+  "job": "dualamp-eval-frozen-real5-20261118",
+  "positives_sha256": "7b6ea12136623e85218ba78cfd4b713985a3122b24c61650e536e724b768aa1d",
+  "weights_release": "dualamp-real5-candidate_v1-pilot-weights-20261116",
+  "weights_verify": "PASS",
+  "negatives": {
+    "standard": {
+      "proteins_total": 117172,
+      "keyword_excluded": 18,
+      "fragments_raw": 351462,
+      "fragments_standard_aa": 351429,
+      "fragments_dedup": 351119,
+      "fragments_hit_positive_4mer_gt08": 1096,
+      "negatives_final": 10000,
+      "seed": 11,
+      "cap": 10000,
+      "neg_mode": "standard",
+      "seconds": 9.5
+    },
+    "matched": {
+      "proteins_total": 117172,
+      "keyword_excluded": 18,
+      "fragments_raw": 351462,
+      "fragments_standard_aa": 351429,
+      "fragments_dedup": 351119,
+      "fragments_hit_positive_4mer_gt08": 1096,
+      "negatives_final": 10000,
+      "seed": 11,
+      "cap": 10000,
+      "neg_mode": "composition-matched",
+      "compmatch_cutoff_sqdist": 0.041767388228834995,
+      "compmatch_eligible": 350023,
+      "compmatch_kept": 105007,
+      "seconds": 12.3
+    }
+  },
+  "aggregate": [
+    {
+      "model": "M1",
+      "negative_set": "matched",
+      "neg_frac_pred_positive_mean": 0.007139999999999999,
+      "neg_frac_pred_positive_sd": 0.0012340988615179905,
+      "neg_mean_score": 0.04032316505908966,
+      "pos_frac_pred_positive": 0.9075719474713606,
+      "auroc_mean": 0.9937971668063705,
+      "auroc_sd": 0.0008984089014739424,
+      "n_seeds": 5
+    },
+    {
+      "model": "M1",
+      "negative_set": "scrambled",
+      "neg_frac_pred_positive_mean": 0.6136,
+      "neg_frac_pred_positive_sd": 0.02747362371439198,
+      "neg_mean_score": 0.7100430965423584,
+      "pos_frac_pred_positive": 0.9075719474713606,
+      "auroc_mean": 0.8073982676725342,
+      "auroc_sd": 0.004551625321783607,
+      "n_seeds": 5
+    },
+    {
+      "model": "M1",
+      "negative_set": "standard",
+      "neg_frac_pred_positive_mean": 0.00588,
+      "neg_frac_pred_positive_sd": 0.0011388590782006346,
+      "neg_mean_score": 0.05421422347426415,
+      "pos_frac_pred_positive": 0.9075719474713606,
+      "auroc_mean": 0.9918156356524168,
+      "auroc_sd": 0.0010547488058591196,
+      "n_seeds": 5
+    },
+    {
+      "model": "M2",
+      "negative_set": "matched",
+      "neg_frac_pred_positive_mean": 0.0063,
+      "neg_frac_pred_positive_sd": 0.0027486360253769506,
+      "neg_mean_score": 0.010275318566709758,
+      "pos_frac_pred_positive": 0.9708857222687902,
+      "auroc_mean": 0.9982467756356523,
+      "auroc_sd": 0.00011234724576922883,
+      "n_seeds": 5
+    },
+    {
+      "model": "M2",
+      "negative_set": "scrambled",
+      "neg_frac_pred_positive_mean": 0.556,
+      "neg_frac_pred_positive_sd": 0.049517673612559744,
+      "neg_mean_score": 0.5909051537513733,
+      "pos_frac_pred_positive": 0.9708857222687902,
+      "auroc_mean": 0.859099860296172,
+      "auroc_sd": 0.008385828543338086,
+      "n_seeds": 5
+    },
+    {
+      "model": "M2",
+      "negative_set": "standard",
+      "neg_frac_pred_positive_mean": 0.002,
+      "neg_frac_pred_positive_sd": 0.0019274335267396383,
+      "neg_mean_score": 0.007646911195479333,
+      "pos_frac_pred_positive": 0.9708857222687902,
+      "auroc_mean": 0.99735145291981,
+      "auroc_sd": 0.00020378435899941894,
+      "n_seeds": 5
+    },
+    {
+      "model": "M3",
+      "negative_set": "matched",
+      "neg_frac_pred_positive_mean": 0.00498,
+      "neg_frac_pred_positive_sd": 0.001957549488518745,
+      "neg_mean_score": 0.008221852593123913,
+      "pos_frac_pred_positive": 0.9736239172953338,
+      "auroc_mean": 0.9982318832075998,
+      "auroc_sd": 0.00016036100713605935,
+      "n_seeds": 5
+    },
+    {
+      "model": "M3",
+      "negative_set": "scrambled",
+      "neg_frac_pred_positive_mean": 0.5344,
+      "neg_frac_pred_positive_sd": 0.03904868755797049,
+      "neg_mean_score": 0.5808768391609191,
+      "pos_frac_pred_positive": 0.9736239172953338,
+      "auroc_mean": 0.8564784576697402,
+      "auroc_sd": 0.008443631822634648,
+      "n_seeds": 5
+    },
+    {
+      "model": "M3",
+      "negative_set": "standard",
+      "neg_frac_pred_positive_mean": 0.0009600000000000001,
+      "neg_frac_pred_positive_sd": 0.0004929503017546495,
+      "neg_mean_score": 0.002480345405638218,
+      "pos_frac_pred_positive": 0.9736239172953338,
+      "auroc_mean": 0.9973670913663033,
+      "auroc_sd": 0.00016200553156152356,
+      "n_seeds": 5
+    }
+  ]
+}
