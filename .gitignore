@@ -91,3 +91,6 @@ DualAMP_Lite/mining/out/
 .tmp-tools/
 .tmp-mmseqs-src/
 .tmp-mmseqs.tar.gz
+
+# 论文与手册 .docx 交付物不进 git（v0.1–v0.4 论文、零基础手册等）
+/*.docx
