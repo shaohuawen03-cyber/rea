@@ -166,3 +166,39 @@ D9：M3>M0_RF 仍 FDR 显著（Δ+0.0059，q=3.2e-04）；M3 vs M1（auroc q=0.0
 - Gmail connector 2026-11-18 起返回 auth_error（连接失效）；230 条人工复核如有回执邮件，需你在 Arena 重新连接 Gmail 后我才能代查。
 - v0.4 论文（附录 H 含 H.5 real6b / H.6 real7 / H.7 四构建一致性）已在 Drive：`论文_方法与结果_candidate_v1_v0.4.docx`，id `1QaIN9jlgR9Pvaefmh1WhYRyahRP_v7aX`。
 - 本 sandbox 的 git 曾再次被重置到分支基点（工作树保留）；已复位到 `origin/arena/cac2205a-rea`（`654c97d`）并删除重复未跟踪副本；docx 未入库不变。
+
+## 11. 2026-11-18 选项 A 执行结果（冻结 real5 × 跨分布负例；T4 kernel）
+
+job `dualamp-eval-frozen-real5-20261118`（新 job id；Positives 窗#3 开窗→gdown 下载→烧窗，已复核仅 owner）：
+- **run 44220409016 (failure)**：223s；kernel 侧失败（当时日志不可取）。
+- **run 44221937068 (failure)**：热修复后（curl/UA 下载、verify 非致命化并拒绝错误权重、先建负例再校验、顶层 traceback 落盘 `_eval_failed.json`）重派（force=true）；实测根因＝kernel 环境缺 `biopython`（biophys.instability_index → Bio.SeqUtils，02:16:36~Z ImportError）；negatives 重建与权重 sha256 均已 PASS。运行后 burn 窗#2。
+- **run 44222395769 (success, T4)**：dd5844b（biopython 兜底安装）后重派；positives sha256 `7b6ea1…768aa1d` 一致；negatives 重建双模式全部 PASS（standard 10000 / matched 10000，cutoff 0.0417674，eligible 350023，kept 105007）；**权重独立校验 ON KERNEL（经 GitHub releases 私有 prerelease 下载）→ sha256 PASS**（落盘 `summary.json.weights_verify=PASS`，`_eval_frozen_real5_done.json.stage=verify`）；结果见 `cloud-gpu/results/dualamp-eval-frozen-real5-20261118/`（`eval_frozen_real5_metrics.csv` / `summary.json` / `summary.md` / `recon_verification.txt`）。Positives 窗#3 已烧（仅 owner）。
+  - 注：目录内 `_eval_failed.json` 为 run 44221937068 的失败落盘，**已被本次 done 取代**，保留不动（历史证据）。
+
+### 11.1 指标（frozen real5 candidate_v1 pilot 权重 × 5 seeds；positives n=3579）
+
+| model | neg set | FP rate @thr (mean±sd) | mean score | AUROC (mean±sd) | TPR |
+|---|---|---|---|---|---|
+| M1 | standard | 0.0059 ± 0.0011 | 0.0542 | 0.9918 ± 0.0011 | 0.908 |
+| M1 | matched | 0.0071 ± 0.0012 | 0.0403 | 0.9938 ± 0.0009 | 0.908 |
+| M1 | scrambled | 0.6136 ± 0.0275 | 0.7100 | 0.8074 ± 0.0046 | 0.908 |
+| M2 | standard | 0.0020 ± 0.0019 | 0.0076 | 0.9974 ± 0.0002 | 0.971 |
+| M2 | matched | 0.0063 ± 0.0027 | 0.0103 | 0.9982 ± 0.0001 | 0.971 |
+| M2 | scrambled | 0.5560 ± 0.0495 | 0.5909 | 0.8591 ± 0.0084 | 0.971 |
+| M3 | standard | 0.0010 ± 0.0005 | 0.0025 | 0.9974 ± 0.0002 | 0.974 |
+| M3 | matched | 0.0050 ± 0.0020 | 0.0082 | 0.9982 ± 0.0002 | 0.974 |
+| M3 | scrambled | 0.5344 ± 0.0390 | 0.5809 | 0.8565 ± 0.0084 | 0.974 |
+
+- 冻结权重对 matched 与 standard 负例判别几乎无差异（AUROC 差 ≤0.003）→ **real7 重训未见收益的结论现由冻结权重交叉验证支持**。
+- scrambled（评估期 shuffle，n=500，seed 20261118）：FP 53–61%；AUROC 降至 0.81–0.86 → 组成偏好在冻结权重上同样存在，与 §10.3 四构建表一致。
+- **PILOT 口径**：candidate_v1 pilot 冻结评估，仅作 v2 定稿的内部参考；非 v2 正式模型；不可入论文结论；scrambled 为 composition-control，非 D-split 测试集。
+- 权重 sha256 独立复核（on-kernel，非 sandbox）已关闭 §10.1 的验证缺口；M0_RF 仍不在 prerelease 中（sklearn joblib 在 kernel artifact，未入库）。
+
+## 12. 2026-11-18 Review v2：文献核验回填（NOT_SIGNED，canonical 未动）
+
+路径：`cloud-gpu/audits/2026-11-18-review-literature/`
+- `positive_core_qc_review_LIT_pass_2026-11-18_NOT_SIGNED.tsv`：230 行回填版（3 列不变；Review_Result/Review_Reason 由文献核验填写）。
+- `lit_pass_audit.tsv`：逐行 PMID→判定（on-topic / flagged / no-citation）。
+- `build_lit_review.py`：复现脚本（规则见脚本头注释；核验通道＝eutils esummary db=pubmed + web_search，2026-11-18；title/journal/year 级，未重读 full text MIC 数据）。
+结果：**CONFIRMED_CORE 73 行**（cited PMID 全部存在、主题为抗菌肽、且记录正文以 [Ref.NNN] 引用该 PMID 作为该条目的活动证据）；**UNSURE_NEEDS_LITERATURE 157 行**＝154 无引用（无具体文献支撑，按 2026-11-18 用户规则不得 CONFIRMED）+ AMP_001716（唯一引用 PMID 19028675 为抗氧化肽组学，非抗菌活性证据）+ AMP_000112（唯一引用 PMID 29266746 为猪蛔虫 CP-1 肽，与记录主条 cecropin P1 不匹配；记录正文无该 [Ref]）+ AMP_009038（记录仅声明抗原虫活性；抗菌核心资格待 user/PI 裁定，草案曾建议 REJECT_NOT_ANTIBACTERIAL）。
+无 PMID 被标记为 CONFIRMED 而未实际经 eutils/web_search 核验存在且主题一致；0 行获 full-text MIC 复测。**canonical review.tsv（Drive id `1cLGMOz7uugdRRjJj_02Q70a2mmu_bayn`）保持 0/230 未动**；本件上传 Drive 供 user/PI 签核后再回填 master。v2 闸门＝仍关闭（需 157 行×签核或替换引用后方可按 runbook 定稿）。
