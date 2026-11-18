@@ -1,0 +1,15 @@
+standard           proteins_total                         want=117172 got=117172 PASS
+standard           keyword_excluded                       want=18 got=18 PASS
+standard           fragments_raw                          want=351462 got=351462 PASS
+standard           fragments_dedup                        want=351119 got=351119 PASS
+standard           fragments_hit_positive_4mer_gt08       want=1096 got=1096 PASS
+standard           negatives_final                        want=10000 got=10000 PASS
+composition-matched proteins_total                         want=117172 got=117172 PASS
+composition-matched keyword_excluded                       want=18 got=18 PASS
+composition-matched fragments_raw                          want=351462 got=351462 PASS
+composition-matched fragments_dedup                        want=351119 got=351119 PASS
+composition-matched fragments_hit_positive_4mer_gt08       want=1096 got=1096 PASS
+composition-matched negatives_final                        want=10000 got=10000 PASS
+composition-matched compmatch_eligible                     want=350023 got=350023 PASS
+composition-matched compmatch_cutoff_sqdist                want~=0.04177 got=0.041767388228834954 PASS
+composition-matched compmatch_kept                         want~=105007 got=105007

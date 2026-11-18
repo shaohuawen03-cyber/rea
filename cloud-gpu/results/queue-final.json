@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-17T07:32:00Z",
+  "updated_at_utc": "2026-11-18T02:03:03Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -342,6 +342,28 @@
       "note": "Composition-matched hard negatives (P1/P2 fix): expect LOWER test AUROC and LOWER scrambled false-positive rate than real6/real5 — that is the intended cost, not a score chase. PILOT口径，不可入论文。DO NOT overwrite real5/real6 artifacts.",
       "error": "Kaggle kernel shaohuawen/dualamp-real7-negmatched-20261117 ended with error; inspect logs in /tmp/private-gpu-runs/dualamp-real7-negmatched-20261117.",
       "finished_at_utc": "2026-11-17T13:08:17Z"
+    },
+    {
+      "provider": "kaggle",
+      "mode": "run",
+      "accelerator": "NvidiaTeslaT4",
+      "script_path": "cloud-gpu/jobs/dualamp_eval_frozen_real5.py",
+      "script_args": [
+        "--mode",
+        "real"
+      ],
+      "extra_pip": [
+        "fair-esm"
+      ],
+      "serve_minutes": 15.0,
+      "wait": true,
+      "status": "failed",
+      "created_at_utc": "2026-11-18T02:03:03Z",
+      "id": "dualamp-eval-frozen-real5-20261118",
+      "kernel_slug": "dualamp-eval-frozen-real5-20261118",
+      "note": "Frozen-weight cross-distribution eval (P1/P2): rebuild standard + composition-matched negatives (seed 11, same recipe as real5/real7, recon stats logged), download prerelease tarball and independently sha256-verify against SHA256SUMS.txt inside the kernel, then score all 15 real5 checkpoints (M1/M2/M3 x5 seeds, embedded thresholds) on matched vs standard negatives + eval-scrambled probes + candidate_v1 positives (Auroc). NO retraining. Needs the candidate_v1 positives Drive window opened before dispatch and closed only after the relay run completes. PILOT 口径；metrics 不可入论文正文结论（附录可引）。DO NOT touch real5/6/6b/7 artifacts.",
+      "error": "Kaggle kernel shaohuawen/dualamp-eval-frozen-real5-20261118 ended with error; inspect logs in /tmp/private-gpu-runs/dualamp-eval-frozen-real5-20261118.",
+      "finished_at_utc": "2026-11-18T02:05:33Z"
     }
   ]
 }

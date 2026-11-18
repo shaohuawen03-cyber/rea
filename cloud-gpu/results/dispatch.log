@@ -1,1 +1,2 @@
-=== Running job dualamp-real7-negmatched-20261117 (kaggle / run) ===
+=== Running job dualamp-eval-frozen-real5-20261118 (kaggle / run) ===
+[ERROR] Job dualamp-eval-frozen-real5-20261118 failed: Kaggle kernel shaohuawen/dualamp-eval-frozen-real5-20261118 ended with error; inspect logs in /tmp/private-gpu-runs/dualamp-eval-frozen-real5-20261118.

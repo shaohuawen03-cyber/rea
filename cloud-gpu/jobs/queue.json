@@ -1,367 +1,369 @@
 {
- "schema_version": "1.0",
- "updated_at_utc": "2026-11-18T02:03:03Z",
- "jobs": [
-  {
-   "id": "probe-20261112",
-   "provider": "probe",
-   "mode": "probe",
-   "accelerator": "",
-   "script_path": "",
-   "script_args": [],
-   "extra_pip": [],
-   "serve_minutes": 0.0,
-   "wait": true,
-   "status": "completed",
-   "created_at_utc": "2026-11-12T03:20:00Z",
-   "note": "Round 1: validate the relay loop itself (credentials, CLIs, results return path).",
-   "finished_at_utc": "2026-11-16T00:53:56Z"
-  },
-  {
-   "id": "gpu-smoke-20261113",
-   "provider": "kaggle",
-   "mode": "run",
-   "accelerator": "NvidiaTeslaT4",
-   "script_path": "cloud-gpu/jobs/gpu_smoke.py",
-   "script_args": [],
-   "extra_pip": [
-    "fair-esm"
-   ],
-   "serve_minutes": 15.0,
-   "wait": true,
-   "status": "completed",
-   "created_at_utc": "2026-11-16T01:00:33Z",
-   "kernel_slug": "arena-gpu-smoke-20261113",
-   "finished_at_utc": "2026-11-16T01:02:16Z"
-  },
-  {
-   "id": "dualamp-dry-20261116",
-   "provider": "kaggle",
-   "mode": "run",
-   "accelerator": "NvidiaTeslaT4",
-   "script_path": "cloud-gpu/jobs/dualamp_pilot.py",
-   "script_args": [
-    "--mode",
-    "dry",
-    "--epochs",
-    "2",
-    "--seeds",
-    "1",
-    "--folds",
-    "2",
-    "--models",
-    "M1,M0_RF",
-    "--neg-cap",
-    "400"
-   ],
-   "extra_pip": [
-    "fair-esm"
-   ],
-   "serve_minutes": 15.0,
-   "wait": true,
-   "status": "failed",
-   "created_at_utc": "2026-11-16T01:16:27Z",
-   "kernel_slug": "dualamp-dry-20261116",
-   "error": "Command '['kaggle', 'kernels', 'output', 'shaohuawen/dualamp-dry-20261116', '-p', '/tmp/kag_out_qrsfldx_', '-o']' timed out after 300 seconds",
-   "finished_at_utc": "2026-11-16T01:23:32Z"
-  },
-  {
-   "id": "dualamp-dry-fetch-20261116",
-   "provider": "kaggle",
-   "mode": "output",
-   "accelerator": "NvidiaTeslaT4",
-   "script_path": "",
-   "script_args": [],
-   "extra_pip": [],
-   "serve_minutes": 15.0,
-   "wait": true,
-   "status": "completed",
-   "created_at_utc": "2026-11-16T01:24:34Z",
-   "kernel_slug": "dualamp-dry-20261116",
-   "finished_at_utc": "2026-11-16T01:40:01Z"
-  },
-  {
-   "id": "dualamp-real-20261116",
-   "provider": "kaggle",
-   "mode": "run",
-   "accelerator": "NvidiaTeslaT4",
-   "script_path": "cloud-gpu/jobs/dualamp_pilot.py",
-   "script_args": [
-    "--mode",
-    "real"
-   ],
-   "extra_pip": [
-    "fair-esm"
-   ],
-   "serve_minutes": 15.0,
-   "wait": true,
-   "status": "completed",
-   "created_at_utc": "2026-11-16T02:11:28Z",
-   "kernel_slug": "dualamp-real-20261116",
-   "finished_at_utc": "2026-11-16T03:09:19Z"
-  },
-  {
-   "id": "dualamp-real2-20261116",
-   "provider": "kaggle",
-   "mode": "run",
-   "accelerator": "NvidiaTeslaT4",
-   "script_path": "cloud-gpu/jobs/dualamp_pilot.py",
-   "script_args": [
-    "--mode",
-    "real"
-   ],
-   "extra_pip": [
-    "fair-esm"
-   ],
-   "serve_minutes": 15.0,
-   "wait": true,
-   "status": "completed",
-   "created_at_utc": "2026-11-16T03:11:27Z",
-   "kernel_slug": "dualamp-real2-20261116",
-   "finished_at_utc": "2026-11-16T04:08:21Z"
-  },
-  {
-   "id": "dualamp-real3-20261116",
-   "provider": "kaggle",
-   "mode": "run",
-   "accelerator": "NvidiaTeslaT4",
-   "script_path": "cloud-gpu/jobs/dualamp_pilot.py",
-   "script_args": [
-    "--mode",
-    "real"
-   ],
-   "extra_pip": [
-    "fair-esm"
-   ],
-   "serve_minutes": 15.0,
-   "wait": true,
-   "status": "failed",
-   "created_at_utc": "2026-11-16T04:10:35Z",
-   "kernel_slug": "dualamp-real3-20261116",
-   "error": "Kaggle kernel shaohuawen/dualamp-real3-20261116 ended with error; inspect logs in /tmp/private-gpu-runs/dualamp-real3-20261116.",
-   "finished_at_utc": "2026-11-16T04:12:57Z"
-  },
-  {
-   "id": "dualamp-real4-20261116",
-   "provider": "kaggle",
-   "mode": "run",
-   "accelerator": "NvidiaTeslaT4",
-   "script_path": "cloud-gpu/jobs/dualamp_pilot.py",
-   "script_args": [
-    "--mode",
-    "real"
-   ],
-   "extra_pip": [
-    "fair-esm"
-   ],
-   "serve_minutes": 15.0,
-   "wait": true,
-   "status": "pushed_async",
-   "created_at_utc": "2026-11-16T04:15:01Z",
-   "kernel_slug": "dualamp-real4-20261116",
-   "finished_at_utc": "2026-11-16T05:16:02Z"
-  },
-  {
-   "id": "dualamp-real4-fetch-20261116",
-   "provider": "kaggle",
-   "mode": "output",
-   "accelerator": "NvidiaTeslaT4",
-   "script_path": "",
-   "script_args": [],
-   "extra_pip": [],
-   "serve_minutes": 15.0,
-   "wait": true,
-   "status": "completed",
-   "created_at_utc": "2026-11-16T05:16:59Z",
-   "kernel_slug": "dualamp-real4-20261116",
-   "finished_at_utc": "2026-11-16T05:17:27Z"
-  },
-  {
-   "id": "dualamp-real4-fetch2-20261116",
-   "provider": "kaggle",
-   "mode": "output",
-   "accelerator": "NvidiaTeslaT4",
-   "script_path": "",
-   "script_args": [],
-   "extra_pip": [],
-   "serve_minutes": 15.0,
-   "wait": true,
-   "status": "completed",
-   "created_at_utc": "2026-11-16T05:28:00Z",
-   "kernel_slug": "dualamp-real4-20261116",
-   "finished_at_utc": "2026-11-16T05:28:34Z"
-  },
-  {
-   "id": "dualamp-real4-fetch3-20261116",
-   "provider": "kaggle",
-   "mode": "output",
-   "accelerator": "NvidiaTeslaT4",
-   "script_path": "",
-   "script_args": [],
-   "extra_pip": [],
-   "serve_minutes": 15.0,
-   "wait": true,
-   "status": "completed",
-   "created_at_utc": "2026-11-16T05:38:34Z",
-   "kernel_slug": "dualamp-real4-20261116",
-   "finished_at_utc": "2026-11-16T05:40:37Z"
-  },
-  {
-   "id": "dualamp-real4-fetch4-20261116",
-   "provider": "kaggle",
-   "mode": "output",
-   "accelerator": "NvidiaTeslaT4",
-   "script_path": "",
-   "script_args": [],
-   "extra_pip": [],
-   "serve_minutes": 15.0,
-   "wait": true,
-   "status": "completed",
-   "created_at_utc": "2026-11-16T05:43:53Z",
-   "kernel_slug": "dualamp-real4-20261116",
-   "finished_at_utc": "2026-11-16T05:44:22Z"
-  },
-  {
-   "id": "dualamp-real4-fetch5-20261116",
-   "provider": "kaggle",
-   "mode": "output",
-   "accelerator": "NvidiaTeslaT4",
-   "script_path": "",
-   "script_args": [],
-   "extra_pip": [],
-   "serve_minutes": 15.0,
-   "wait": true,
-   "status": "completed",
-   "created_at_utc": "2026-11-16T06:45:57Z",
-   "kernel_slug": "dualamp-real4-20261116",
-   "finished_at_utc": "2026-11-16T06:46:45Z"
-  },
-  {
-   "id": "dualamp-real4-fetch6-20261116",
-   "provider": "kaggle",
-   "mode": "output",
-   "accelerator": "NvidiaTeslaT4",
-   "script_path": "",
-   "script_args": [],
-   "extra_pip": [],
-   "serve_minutes": 15.0,
-   "wait": true,
-   "status": "completed",
-   "created_at_utc": "2026-11-12T00:00:00Z",
-   "kernel_slug": "dualamp-real4-20261116",
-   "note": "Fetch .pt weights (gpu_ctl now allows .pt <=2MiB); bot will NOT commit them (.gitignore); retrieved via gh workflow artifact.",
-   "finished_at_utc": "2026-11-16T07:26:27Z"
-  },
-  {
-   "id": "dualamp-real5-20261116",
-   "provider": "kaggle",
-   "mode": "run",
-   "accelerator": "NvidiaTeslaT4",
-   "script_path": "cloud-gpu/jobs/dualamp_pilot.py",
-   "script_args": [
-    "--mode",
-    "real"
-   ],
-   "extra_pip": [
-    "fair-esm"
-   ],
-   "serve_minutes": 15.0,
-   "wait": true,
-   "status": "completed",
-   "created_at_utc": "2026-11-16T00:00:00Z",
-   "kernel_slug": "dualamp-real5-20261116",
-   "note": "candidate_v1 retrain to RECOVER .pt weights (user ordered); pilot_weights ONLY; v2 waits for Review_Result. Exports handled by patched pilot (model/*.pt <=2MiB -> artifact dir -> relay artifact; not committed to git).",
-   "finished_at_utc": "2026-11-16T11:24:02Z"
-  },
-  {
-   "id": "dualamp-real6-repro-20261117",
-   "provider": "kaggle",
-   "mode": "run",
-   "accelerator": "NvidiaTeslaT4",
-   "script_path": "cloud-gpu/jobs/dualamp_pilot.py",
-   "script_args": [
-    "--mode",
-    "real",
-    "--neg-mode",
-    "standard"
-   ],
-   "extra_pip": [
-    "fair-esm"
-   ],
-   "serve_minutes": 15.0,
-   "wait": true,
-   "status": "completed",
-   "created_at_utc": "2026-11-17T02:59:16Z",
-   "kernel_slug": "dualamp-real6-repro-20261117",
-   "note": "Reproducibility replication of real5 (candidate_v1): leanrea pinned to f610dc00… (branch tip unchanged 2026-11-11→2026-11-16T10:00Z, verified via gh api); PYTHONHASHSEED=0; torch/fair-esm/mmseqs versions logged. No intended behavior change; D10/D9/D11 should match real5 within GPU-nondeterminism noise. PILOT 口径，不可入论文。DO NOT overwrite real5/real4 artifacts.",
-   "finished_at_utc": "2026-11-17T04:53:05Z"
-  },
-  {
-   "provider": "kaggle",
-   "mode": "run",
-   "accelerator": "NvidiaTeslaT4",
-   "script_path": "cloud-gpu/jobs/dualamp_pilot.py",
-   "extra_pip": [
-    "fair-esm"
-   ],
-   "serve_minutes": 15.0,
-   "wait": true,
-   "status": "completed",
-   "created_at_utc": "2026-11-17T07:32:00Z",
-   "id": "dualamp-real6b-verify-20261117",
-   "script_args": [
-    "--mode",
-    "real",
-    "--neg-mode",
-    "standard"
-   ],
-   "kernel_slug": "dualamp-real6b-verify-20261117",
-   "note": "Determinism verification rerun of real6 (PYTHONHASHSEED=0, same standard negatives, leanrea f610dc00, same positives sha256). Expect D10/D9 metrics near-identical to real6 modulo GPU/cuDNN noise. PILOT口径，不可入论文。DO NOT overwrite real5/real6 artifacts.",
-   "finished_at_utc": "2026-11-17T09:19:13Z"
-  },
-  {
-   "provider": "kaggle",
-   "mode": "run",
-   "accelerator": "NvidiaTeslaT4",
-   "script_path": "cloud-gpu/jobs/dualamp_pilot.py",
-   "extra_pip": [
-    "fair-esm"
-   ],
-   "serve_minutes": 15.0,
-   "wait": true,
-   "status": "completed",
-   "created_at_utc": "2026-11-17T07:32:00Z",
-   "id": "dualamp-real7-negmatched-20261117",
-   "script_args": [
-    "--mode",
-    "real",
-    "--neg-mode",
-    "composition-matched"
-   ],
-   "kernel_slug": "dualamp-real7-negmatched-20261117",
-   "note": "Composition-matched hard negatives (P1/P2 fix): expect LOWER test AUROC and LOWER scrambled false-positive rate than real6/real5 — that is the intended cost, not a score chase. PILOT口径，不可入论文。DO NOT overwrite real5/real6 artifacts.",
-   "error": "Kaggle kernel shaohuawen/dualamp-real7-negmatched-20261117 ended with error; inspect logs in /tmp/private-gpu-runs/dualamp-real7-negmatched-20261117.",
-   "finished_at_utc": "2026-11-17T13:08:17Z"
-  },
-  {
-   "provider": "kaggle",
-   "mode": "run",
-   "accelerator": "NvidiaTeslaT4",
-   "script_path": "cloud-gpu/jobs/dualamp_eval_frozen_real5.py",
-   "script_args": [
-    "--mode",
-    "real"
-   ],
-   "extra_pip": [
-    "fair-esm"
-   ],
-   "serve_minutes": 15.0,
-   "wait": true,
-   "status": "pending",
-   "created_at_utc": "2026-11-18T02:03:03Z",
-   "id": "dualamp-eval-frozen-real5-20261118",
-   "kernel_slug": "dualamp-eval-frozen-real5-20261118",
-   "note": "Frozen-weight cross-distribution eval (P1/P2): rebuild standard + composition-matched negatives (seed 11, same recipe as real5/real7, recon stats logged), download prerelease tarball and independently sha256-verify against SHA256SUMS.txt inside the kernel, then score all 15 real5 checkpoints (M1/M2/M3 x5 seeds, embedded thresholds) on matched vs standard negatives + eval-scrambled probes + candidate_v1 positives (Auroc). NO retraining. Needs the candidate_v1 positives Drive window opened before dispatch and closed only after the relay run completes. PILOT 口径；metrics 不可入论文正文结论（附录可引）。DO NOT touch real5/6/6b/7 artifacts."
-  }
- ]
+  "schema_version": "1.0",
+  "updated_at_utc": "2026-11-18T02:03:03Z",
+  "jobs": [
+    {
+      "id": "probe-20261112",
+      "provider": "probe",
+      "mode": "probe",
+      "accelerator": "",
+      "script_path": "",
+      "script_args": [],
+      "extra_pip": [],
+      "serve_minutes": 0.0,
+      "wait": true,
+      "status": "completed",
+      "created_at_utc": "2026-11-12T03:20:00Z",
+      "note": "Round 1: validate the relay loop itself (credentials, CLIs, results return path).",
+      "finished_at_utc": "2026-11-16T00:53:56Z"
+    },
+    {
+      "id": "gpu-smoke-20261113",
+      "provider": "kaggle",
+      "mode": "run",
+      "accelerator": "NvidiaTeslaT4",
+      "script_path": "cloud-gpu/jobs/gpu_smoke.py",
+      "script_args": [],
+      "extra_pip": [
+        "fair-esm"
+      ],
+      "serve_minutes": 15.0,
+      "wait": true,
+      "status": "completed",
+      "created_at_utc": "2026-11-16T01:00:33Z",
+      "kernel_slug": "arena-gpu-smoke-20261113",
+      "finished_at_utc": "2026-11-16T01:02:16Z"
+    },
+    {
+      "id": "dualamp-dry-20261116",
+      "provider": "kaggle",
+      "mode": "run",
+      "accelerator": "NvidiaTeslaT4",
+      "script_path": "cloud-gpu/jobs/dualamp_pilot.py",
+      "script_args": [
+        "--mode",
+        "dry",
+        "--epochs",
+        "2",
+        "--seeds",
+        "1",
+        "--folds",
+        "2",
+        "--models",
+        "M1,M0_RF",
+        "--neg-cap",
+        "400"
+      ],
+      "extra_pip": [
+        "fair-esm"
+      ],
+      "serve_minutes": 15.0,
+      "wait": true,
+      "status": "failed",
+      "created_at_utc": "2026-11-16T01:16:27Z",
+      "kernel_slug": "dualamp-dry-20261116",
+      "error": "Command '['kaggle', 'kernels', 'output', 'shaohuawen/dualamp-dry-20261116', '-p', '/tmp/kag_out_qrsfldx_', '-o']' timed out after 300 seconds",
+      "finished_at_utc": "2026-11-16T01:23:32Z"
+    },
+    {
+      "id": "dualamp-dry-fetch-20261116",
+      "provider": "kaggle",
+      "mode": "output",
+      "accelerator": "NvidiaTeslaT4",
+      "script_path": "",
+      "script_args": [],
+      "extra_pip": [],
+      "serve_minutes": 15.0,
+      "wait": true,
+      "status": "completed",
+      "created_at_utc": "2026-11-16T01:24:34Z",
+      "kernel_slug": "dualamp-dry-20261116",
+      "finished_at_utc": "2026-11-16T01:40:01Z"
+    },
+    {
+      "id": "dualamp-real-20261116",
+      "provider": "kaggle",
+      "mode": "run",
+      "accelerator": "NvidiaTeslaT4",
+      "script_path": "cloud-gpu/jobs/dualamp_pilot.py",
+      "script_args": [
+        "--mode",
+        "real"
+      ],
+      "extra_pip": [
+        "fair-esm"
+      ],
+      "serve_minutes": 15.0,
+      "wait": true,
+      "status": "completed",
+      "created_at_utc": "2026-11-16T02:11:28Z",
+      "kernel_slug": "dualamp-real-20261116",
+      "finished_at_utc": "2026-11-16T03:09:19Z"
+    },
+    {
+      "id": "dualamp-real2-20261116",
+      "provider": "kaggle",
+      "mode": "run",
+      "accelerator": "NvidiaTeslaT4",
+      "script_path": "cloud-gpu/jobs/dualamp_pilot.py",
+      "script_args": [
+        "--mode",
+        "real"
+      ],
+      "extra_pip": [
+        "fair-esm"
+      ],
+      "serve_minutes": 15.0,
+      "wait": true,
+      "status": "completed",
+      "created_at_utc": "2026-11-16T03:11:27Z",
+      "kernel_slug": "dualamp-real2-20261116",
+      "finished_at_utc": "2026-11-16T04:08:21Z"
+    },
+    {
+      "id": "dualamp-real3-20261116",
+      "provider": "kaggle",
+      "mode": "run",
+      "accelerator": "NvidiaTeslaT4",
+      "script_path": "cloud-gpu/jobs/dualamp_pilot.py",
+      "script_args": [
+        "--mode",
+        "real"
+      ],
+      "extra_pip": [
+        "fair-esm"
+      ],
+      "serve_minutes": 15.0,
+      "wait": true,
+      "status": "failed",
+      "created_at_utc": "2026-11-16T04:10:35Z",
+      "kernel_slug": "dualamp-real3-20261116",
+      "error": "Kaggle kernel shaohuawen/dualamp-real3-20261116 ended with error; inspect logs in /tmp/private-gpu-runs/dualamp-real3-20261116.",
+      "finished_at_utc": "2026-11-16T04:12:57Z"
+    },
+    {
+      "id": "dualamp-real4-20261116",
+      "provider": "kaggle",
+      "mode": "run",
+      "accelerator": "NvidiaTeslaT4",
+      "script_path": "cloud-gpu/jobs/dualamp_pilot.py",
+      "script_args": [
+        "--mode",
+        "real"
+      ],
+      "extra_pip": [
+        "fair-esm"
+      ],
+      "serve_minutes": 15.0,
+      "wait": true,
+      "status": "pushed_async",
+      "created_at_utc": "2026-11-16T04:15:01Z",
+      "kernel_slug": "dualamp-real4-20261116",
+      "finished_at_utc": "2026-11-16T05:16:02Z"
+    },
+    {
+      "id": "dualamp-real4-fetch-20261116",
+      "provider": "kaggle",
+      "mode": "output",
+      "accelerator": "NvidiaTeslaT4",
+      "script_path": "",
+      "script_args": [],
+      "extra_pip": [],
+      "serve_minutes": 15.0,
+      "wait": true,
+      "status": "completed",
+      "created_at_utc": "2026-11-16T05:16:59Z",
+      "kernel_slug": "dualamp-real4-20261116",
+      "finished_at_utc": "2026-11-16T05:17:27Z"
+    },
+    {
+      "id": "dualamp-real4-fetch2-20261116",
+      "provider": "kaggle",
+      "mode": "output",
+      "accelerator": "NvidiaTeslaT4",
+      "script_path": "",
+      "script_args": [],
+      "extra_pip": [],
+      "serve_minutes": 15.0,
+      "wait": true,
+      "status": "completed",
+      "created_at_utc": "2026-11-16T05:28:00Z",
+      "kernel_slug": "dualamp-real4-20261116",
+      "finished_at_utc": "2026-11-16T05:28:34Z"
+    },
+    {
+      "id": "dualamp-real4-fetch3-20261116",
+      "provider": "kaggle",
+      "mode": "output",
+      "accelerator": "NvidiaTeslaT4",
+      "script_path": "",
+      "script_args": [],
+      "extra_pip": [],
+      "serve_minutes": 15.0,
+      "wait": true,
+      "status": "completed",
+      "created_at_utc": "2026-11-16T05:38:34Z",
+      "kernel_slug": "dualamp-real4-20261116",
+      "finished_at_utc": "2026-11-16T05:40:37Z"
+    },
+    {
+      "id": "dualamp-real4-fetch4-20261116",
+      "provider": "kaggle",
+      "mode": "output",
+      "accelerator": "NvidiaTeslaT4",
+      "script_path": "",
+      "script_args": [],
+      "extra_pip": [],
+      "serve_minutes": 15.0,
+      "wait": true,
+      "status": "completed",
+      "created_at_utc": "2026-11-16T05:43:53Z",
+      "kernel_slug": "dualamp-real4-20261116",
+      "finished_at_utc": "2026-11-16T05:44:22Z"
+    },
+    {
+      "id": "dualamp-real4-fetch5-20261116",
+      "provider": "kaggle",
+      "mode": "output",
+      "accelerator": "NvidiaTeslaT4",
+      "script_path": "",
+      "script_args": [],
+      "extra_pip": [],
+      "serve_minutes": 15.0,
+      "wait": true,
+      "status": "completed",
+      "created_at_utc": "2026-11-16T06:45:57Z",
+      "kernel_slug": "dualamp-real4-20261116",
+      "finished_at_utc": "2026-11-16T06:46:45Z"
+    },
+    {
+      "id": "dualamp-real4-fetch6-20261116",
+      "provider": "kaggle",
+      "mode": "output",
+      "accelerator": "NvidiaTeslaT4",
+      "script_path": "",
+      "script_args": [],
+      "extra_pip": [],
+      "serve_minutes": 15.0,
+      "wait": true,
+      "status": "completed",
+      "created_at_utc": "2026-11-12T00:00:00Z",
+      "kernel_slug": "dualamp-real4-20261116",
+      "note": "Fetch .pt weights (gpu_ctl now allows .pt <=2MiB); bot will NOT commit them (.gitignore); retrieved via gh workflow artifact.",
+      "finished_at_utc": "2026-11-16T07:26:27Z"
+    },
+    {
+      "id": "dualamp-real5-20261116",
+      "provider": "kaggle",
+      "mode": "run",
+      "accelerator": "NvidiaTeslaT4",
+      "script_path": "cloud-gpu/jobs/dualamp_pilot.py",
+      "script_args": [
+        "--mode",
+        "real"
+      ],
+      "extra_pip": [
+        "fair-esm"
+      ],
+      "serve_minutes": 15.0,
+      "wait": true,
+      "status": "completed",
+      "created_at_utc": "2026-11-16T00:00:00Z",
+      "kernel_slug": "dualamp-real5-20261116",
+      "note": "candidate_v1 retrain to RECOVER .pt weights (user ordered); pilot_weights ONLY; v2 waits for Review_Result. Exports handled by patched pilot (model/*.pt <=2MiB -> artifact dir -> relay artifact; not committed to git).",
+      "finished_at_utc": "2026-11-16T11:24:02Z"
+    },
+    {
+      "id": "dualamp-real6-repro-20261117",
+      "provider": "kaggle",
+      "mode": "run",
+      "accelerator": "NvidiaTeslaT4",
+      "script_path": "cloud-gpu/jobs/dualamp_pilot.py",
+      "script_args": [
+        "--mode",
+        "real",
+        "--neg-mode",
+        "standard"
+      ],
+      "extra_pip": [
+        "fair-esm"
+      ],
+      "serve_minutes": 15.0,
+      "wait": true,
+      "status": "completed",
+      "created_at_utc": "2026-11-17T02:59:16Z",
+      "kernel_slug": "dualamp-real6-repro-20261117",
+      "note": "Reproducibility replication of real5 (candidate_v1): leanrea pinned to f610dc00… (branch tip unchanged 2026-11-11→2026-11-16T10:00Z, verified via gh api); PYTHONHASHSEED=0; torch/fair-esm/mmseqs versions logged. No intended behavior change; D10/D9/D11 should match real5 within GPU-nondeterminism noise. PILOT 口径，不可入论文。DO NOT overwrite real5/real4 artifacts.",
+      "finished_at_utc": "2026-11-17T04:53:05Z"
+    },
+    {
+      "provider": "kaggle",
+      "mode": "run",
+      "accelerator": "NvidiaTeslaT4",
+      "script_path": "cloud-gpu/jobs/dualamp_pilot.py",
+      "extra_pip": [
+        "fair-esm"
+      ],
+      "serve_minutes": 15.0,
+      "wait": true,
+      "status": "completed",
+      "created_at_utc": "2026-11-17T07:32:00Z",
+      "id": "dualamp-real6b-verify-20261117",
+      "script_args": [
+        "--mode",
+        "real",
+        "--neg-mode",
+        "standard"
+      ],
+      "kernel_slug": "dualamp-real6b-verify-20261117",
+      "note": "Determinism verification rerun of real6 (PYTHONHASHSEED=0, same standard negatives, leanrea f610dc00, same positives sha256). Expect D10/D9 metrics near-identical to real6 modulo GPU/cuDNN noise. PILOT口径，不可入论文。DO NOT overwrite real5/real6 artifacts.",
+      "finished_at_utc": "2026-11-17T09:19:13Z"
+    },
+    {
+      "provider": "kaggle",
+      "mode": "run",
+      "accelerator": "NvidiaTeslaT4",
+      "script_path": "cloud-gpu/jobs/dualamp_pilot.py",
+      "extra_pip": [
+        "fair-esm"
+      ],
+      "serve_minutes": 15.0,
+      "wait": true,
+      "status": "completed",
+      "created_at_utc": "2026-11-17T07:32:00Z",
+      "id": "dualamp-real7-negmatched-20261117",
+      "script_args": [
+        "--mode",
+        "real",
+        "--neg-mode",
+        "composition-matched"
+      ],
+      "kernel_slug": "dualamp-real7-negmatched-20261117",
+      "note": "Composition-matched hard negatives (P1/P2 fix): expect LOWER test AUROC and LOWER scrambled false-positive rate than real6/real5 — that is the intended cost, not a score chase. PILOT口径，不可入论文。DO NOT overwrite real5/real6 artifacts.",
+      "error": "Kaggle kernel shaohuawen/dualamp-real7-negmatched-20261117 ended with error; inspect logs in /tmp/private-gpu-runs/dualamp-real7-negmatched-20261117.",
+      "finished_at_utc": "2026-11-17T13:08:17Z"
+    },
+    {
+      "provider": "kaggle",
+      "mode": "run",
+      "accelerator": "NvidiaTeslaT4",
+      "script_path": "cloud-gpu/jobs/dualamp_eval_frozen_real5.py",
+      "script_args": [
+        "--mode",
+        "real"
+      ],
+      "extra_pip": [
+        "fair-esm"
+      ],
+      "serve_minutes": 15.0,
+      "wait": true,
+      "status": "failed",
+      "created_at_utc": "2026-11-18T02:03:03Z",
+      "id": "dualamp-eval-frozen-real5-20261118",
+      "kernel_slug": "dualamp-eval-frozen-real5-20261118",
+      "note": "Frozen-weight cross-distribution eval (P1/P2): rebuild standard + composition-matched negatives (seed 11, same recipe as real5/real7, recon stats logged), download prerelease tarball and independently sha256-verify against SHA256SUMS.txt inside the kernel, then score all 15 real5 checkpoints (M1/M2/M3 x5 seeds, embedded thresholds) on matched vs standard negatives + eval-scrambled probes + candidate_v1 positives (Auroc). NO retraining. Needs the candidate_v1 positives Drive window opened before dispatch and closed only after the relay run completes. PILOT 口径；metrics 不可入论文正文结论（附录可引）。DO NOT touch real5/6/6b/7 artifacts.",
+      "error": "Kaggle kernel shaohuawen/dualamp-eval-frozen-real5-20261118 ended with error; inspect logs in /tmp/private-gpu-runs/dualamp-eval-frozen-real5-20261118.",
+      "finished_at_utc": "2026-11-18T02:05:33Z"
+    }
+  ]
 }
