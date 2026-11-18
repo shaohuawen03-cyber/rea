@@ -172,7 +172,7 @@ def main():
     # ---- 2) positives via one-time Drive window ---------------------------
     pos_fasta = data / "positives.fasta"
     fid = (os.environ.get("FASTA_ID", "").strip() or args.fasta_id).strip()
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", "gdown"])
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", "gdown", "biopython"])
     import gdown
     log(f"downloading positives via gdown (Drive id {fid[:6]}…)")
     got = gdown.download(id=fid, output=str(pos_fasta), quiet=False)
