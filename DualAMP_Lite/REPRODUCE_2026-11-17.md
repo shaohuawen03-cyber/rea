@@ -132,4 +132,37 @@ D9：M3>M0_RF 仍 FDR 显著（Δ+0.0059，q=3.2e-04）；M3 vs M1（auroc q=0.0
 ## 9. 当前未闭合项
 1. **v2 正式主线**：230 条 Review_Result **0/230 已填**（见 V2_RUNBOOK_2026-11-17.md）——唯一人工闸门；完成后按 runbook 执行 build→real8→Release。
 2. P1/P2 跨分布评估（§8.3-4）——等你确认。
-3. v0.4 论文附录：real6b 三次汇总 + real7 负面结果待写入（本文件 §7–§8 已为笔）。
+3. ~~v0.4 论文附录~~（已完成：v0.4 附录 H.5–H.7 已写入并上传 Drive，见 §10.4；本节保留原始记录）
+4. P1/P2 选项 A（冻结 real5 跨分布评估）需授权；选项 B 的 scrambled 四构建证据见 §10.3。
+
+## 10. 2026-11-18 状态更新（本节由审计补记；不改写 §1–§9 的原始记录）
+
+### 10.1 权重（real5 candidate_v1 pilot）存放状态
+- GitHub **prerelease** `dualamp-real5-candidate_v1-pilot-weights-20261116`（Pre-release，2026-11-16 发布；M1/M2/M3 × seeds 1–5，15 个 .pt + README 性质说明）：资产 `dualamp-real5-candidate_v1-pilot-weights-20261116.tar.gz`（20,928,730 B）、`export_manifest.json`（5,207 B）、`SHA256SUMS.txt`（2,439 B）。发布任务完成于 2026-11-16T11:58Z（run 归档经 weights-release workflow）。
+- **本地 sha256 复核未完成**：本 sandbox 网络对 `release-assets.githubusercontent.com` 连接 EOF（2026-11-18T01:38Z 第三次尝试；此前两次亦失败）；资产主机不在可达白名单（github.com 可达、资产主机不可达）。`SHA256SUMS.txt` / `export_manifest.json` 由发布 runner 生成，与 tar.gz 自洽，但**不是独立复核**。独立复核需要：(a) GitHub-hosted runner 上的校验 job（可用 weights-release workflow 的最小只读变体，需并入 main），或 (b) Kaggle kernel（互联网可达 GitHub releases）。派发前需用户明确授权。
+- .pt 阈值与元数据内嵌于 checkpoint（`threshold`/`n_physio`/`embed_dim`）；M0_RF 为 sklearn 模型，不在 prerelease 中。
+
+### 10.2 230 条 Review_Result：AI 预填草案（非人工复核）
+- review.tsv（Drive id `1cLGMOz7uugdRRjJj_02Q70a2mmu_bayn`）本身仍 **0/230**，未改动。
+- 机器预分析识别：2 条全文无抗菌证据（AMP_009038 Leishmania 抗原虫 [CORE_GENERIC_UPGRADED]、AMP_007292 SK-MEL-28/G-361 抗肿瘤 [CORE_GENERIC_UPGRADED]）；AMP_000041 为奈瑟菌（Neisseria，MIC 20µg/ml）——**抗菌**，初版正则漏判。
+- 草案已上传 Drive：`positive_core_qc_review_AI_PREFILL_DRAFT_2026-11-18_NOT_REVIEW.tsv`，id `1im2t9u2Q6rh3TBwXp9ce2fw4AgT-BpTI`。草案结论：228/230 CONFIRMED_CORE（157 条命名细菌靶点直接证据 + 71 条仅 Activity 字段断言，其中 67 条属 TARGET_UNKNOWN 分层），2/230 REJECT_NOT_ANTIBACTERIAL。每格均带“AI草案·待人工签核”字样；**不得冒充人工复核结论**。
+- **154/230 行 Citation_Candidates 为空**：TSV 上无法做文献核实；凡写 CONFIRMED 的行（含 157 条命名靶点）都只是“记录内部一致”，不是文献复核。据此 v2 闸门不解除；正确路径＝人工逐行签核（可批量签“同意草案”），随后回填 master 并重新统计。
+
+### 10.3 P1/P2 跨分布零 GPU 评估：本 sandbox 无法执行，需授权（选择其一）
+所需输入（real7 的 split CSVs、ESM `features/*.npz`、positives FASTA）均**未持久化**到任何本 sandbox 可达位置：results 目录仅含 CSV/MD meta，原始 npz 留在 kernel workdir；positives 为私有 Drive 文件；Swiss-Prot 快照虽在库内，但精确划分受 mmseqs 多线程漂移影响无法 bit 复现；ESM 权重源 `dl.fbaipublicfiles.com` 与 prerelease 资产主机从 sandbox 均不可达（2026-11-18 实测）。
+**选项 A（完整）**：新 Kaggle kernel（新 job id，例如 `dualamp-eval-frozen-real5-20261118`，T4 ≈ 60–90 min）：拉 prerelease tar.gz → 重建 composition-matched 数据集（同 manifest、seed 11、neg_mode composition-matched；与 real7 同构建口径，划分按概率漂移属可接受误差）→ 只编码 test + scrambled → 冻结 real5 的 15 个 .pt 打分 → 产出 matched-vs-standard 判阳率/AUROC 对照表 → 烧窗即焚。**这不是零 GPU**，需你明确授权。
+**选项 B（零成本，已备证据）**：接受四次构建 scrambled 判阳率（n=500，12/12 > 0.5）作为组成偏好的直接证据：
+
+| build | M1 | M2 | M3 | M1 mean_score | M2 | M3 |
+|---|---|---|---|---|---|---|
+| real5（standard） | .670 | .586 | .574 | .7635 | .6510 | .6429 |
+| real6（repro） | .690 | .590 | .638 | .7633 | .6657 | .7258 |
+| real6b（PYTHONHASHSEED=0） | .734 | .542 | .564 | .7748 | .6389 | .6321 |
+| real7（composition-matched） | **.764** | **.656** | **.640** | .7721 | .6942 | .6829 |
+
+结论不变：组成匹配重训没有缓解组成偏好；M1>M2≈M3 的偏好幅度在四次构建间稳定存在。须继续在 limitations 中原样披露（P1–P22 不软化）。
+
+### 10.4 其他
+- Gmail connector 2026-11-18 起返回 auth_error（连接失效）；230 条人工复核如有回执邮件，需你在 Arena 重新连接 Gmail 后我才能代查。
+- v0.4 论文（附录 H 含 H.5 real6b / H.6 real7 / H.7 四构建一致性）已在 Drive：`论文_方法与结果_candidate_v1_v0.4.docx`，id `1QaIN9jlgR9Pvaefmh1WhYRyahRP_v7aX`。
+- 本 sandbox 的 git 曾再次被重置到分支基点（工作树保留）；已复位到 `origin/arena/cac2205a-rea`（`654c97d`）并删除重复未跟踪副本；docx 未入库不变。
