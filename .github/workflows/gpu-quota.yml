@@ -65,12 +65,15 @@ jobs:
           smoke="${{ inputs.run_smoke }}"
           seconds="120"
           kernels=""
+          cancel_ref=""
           if [ -f cloud-gpu/jobs/quota-request.json ]; then
             [ -n "$label" ] || label="$(jq -r '.label // ""' cloud-gpu/jobs/quota-request.json)"
             [ -n "$smoke" ] || smoke="$(jq -r '.run_smoke // false' cloud-gpu/jobs/quota-request.json)"
             seconds="$(jq -r '.seconds // 120' cloud-gpu/jobs/quota-request.json)"
             kernels="$(jq -r '(.check_kernels // []) | join(" ")' cloud-gpu/jobs/quota-request.json)"
+            cancel_ref="$(jq -r '.cancel_kernel // ""' cloud-gpu/jobs/quota-request.json)"
           fi
+          [ -n "${cancel_ref:-}" ] || cancel_ref=""
           [ -n "$label" ] || label="check"
           [ -n "$smoke" ] || smoke="false"
           {
@@ -78,6 +81,7 @@ jobs:
             echo "run_smoke=$smoke"
             echo "seconds=$seconds"
             echo "kernels=$kernels"
+            echo "cancel=$cancel_ref"
           } >> "$GITHUB_OUTPUT"
           echo "label=$label run_smoke=$smoke seconds=$seconds kernels=$kernels"
 
@@ -185,6 +189,12 @@ jobs:
           python cloud-gpu/scripts/kaggle_quota_report.py --label diag --diagnostics \
             --out cloud-gpu/results/quota-diag-${{ github.run_number }}.json || true
           ls -la ~/.gpu-relay ~/.kaggle 2>/dev/null || true
+
+      - name: Cancel a kernel session (optional)
+        if: steps.req.outputs.cancel != ''
+        run: |
+          set -euo pipefail
+          python cloud-gpu/scripts/cancel_kernel.py "${{ steps.req.outputs.cancel }}"
 
       - name: Kernel status (who holds the GPU sessions)
         run: |

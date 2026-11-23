@@ -1,7 +1,8 @@
 {
-  "label": "quota-session-audit-r2",
+  "label": "quota-cancel-retry1",
   "run_smoke": false,
   "seconds": 120,
+  "cancel_kernel": "shaohuawen/dualamp-real8-v2-retry1-20261123",
   "check_kernels": ["shaohuawen/dualamp-real8-v2-retry1-20261123"],
-  "note": "Audit every recent kernel status to find which kernels hold the two allowed GPU sessions and block new GPU pushes."
+  "note": "Cancel the stale QUEUED retry1 kernel that is holding a GPU session slot, then confirm status."
 }
