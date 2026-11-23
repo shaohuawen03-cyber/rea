@@ -137,7 +137,7 @@ jobs:
           KERNEL_REF: ${{ inputs.kernel_status }}
         run: |
           python - <<'PY'
-          import json, os, subprocess, sys, tempfile
+          import json, os, subprocess, sys, tempfile, urllib.request, urllib.error, re
           sys.path.insert(0, 'cloud-gpu/scripts')
           from gpu_ctl import resolve_kaggle_env
           env, source = resolve_kaggle_env()
@@ -152,6 +152,24 @@ jobs:
           out=subprocess.run(['kaggle','kernels','output',ref,'-p',d,'-o'],env=env,text=True,capture_output=True,timeout=180)
           print('OUTPUT_FETCH='+(out.stdout or out.stderr).strip()[:1000])
           safe={'kernel_ref':ref,'kernel_status':(st.stdout or st.stderr).strip()}
+          token=env.get('KAGGLE_API_TOKEN','').strip()
+          if token:
+              req=urllib.request.Request('https://api.kaggle.com/v1/kernels.KernelsApiService/GetAcceleratorQuotaStatistics',data=b'{}',headers={'Authorization':'Bearer '+token,'Content-Type':'application/json','Accept':'application/json'},method='POST')
+              try:
+                  with urllib.request.urlopen(req,timeout=30) as resp: quota=json.loads(resp.read().decode('utf-8'))
+                  def seconds(v):
+                      if isinstance(v,(int,float)): return float(v)
+                      m=re.fullmatch(r'([0-9]+(?:\.[0-9]+)?)s',str(v or '').strip())
+                      return float(m.group(1)) if m else None
+                  g=quota.get('gpuQuota') or {}
+                  used=seconds(g.get('timeUsed')); reserved=seconds(g.get('timeReserved')); total=seconds(g.get('totalTimeAllowed'))
+                  safe['gpu_quota']={'time_used_seconds':used,'time_reserved_seconds':reserved,'total_allowed_seconds':total,'remaining_seconds':max(0,total-(used or 0)-(reserved or 0)) if total is not None else None,'quota_refresh_time':quota.get('quotaRefreshTime')}
+              except urllib.error.HTTPError as e:
+                  safe['gpu_quota_error']='HTTP '+str(e.code)
+              except Exception as e:
+                  safe['gpu_quota_error']=type(e).__name__+': '+str(e)[:200]
+          else:
+              safe['gpu_quota_error']='KAGGLE_API_TOKEN not available in relay vault; quota endpoint not queried'
           p=os.path.join(d,'v2_training_report.json')
           if os.path.isfile(p):
               data=json.load(open(p))
