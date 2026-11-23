@@ -58,6 +58,11 @@ on:
         required: false
         type: boolean
         default: false
+      delete_kernel:
+        description: 'Delete the private kernel named in kernel_status after cancellation'
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: write   # create the release + upload assets
@@ -151,6 +156,7 @@ jobs:
         env:
           KERNEL_REF: ${{ inputs.kernel_status }}
           CANCEL_KERNEL: ${{ inputs.cancel_kernel }}
+          DELETE_KERNEL: ${{ inputs.delete_kernel }}
         run: |
           python - <<'PY'
           import json, os, subprocess, sys, tempfile, urllib.request, urllib.error, re
@@ -160,29 +166,37 @@ jobs:
           if not source:
               raise SystemExit('Kaggle credentials unavailable from relay vault')
           ref=os.environ['KERNEL_REF']
+          safe={'kernel_ref':ref}
+          owner, _, slug = ref.partition('/')
           if os.environ.get('CANCEL_KERNEL','').lower() == 'true':
               try:
                   from kaggle.api.kaggle_api_extended import KaggleApi
                   from kagglesdk.kernels.types.kernels_api_service import ApiCancelKernelSessionRequest
-                  owner, _, slug = ref.partition('/')
                   if not owner or not slug: raise ValueError('kernel ref must be owner/slug')
-                  req=ApiCancelKernelSessionRequest()
-                  if hasattr(req,'owner_slug'): req.owner_slug=owner
-                  if hasattr(req,'kernel_slug'): req.kernel_slug=slug
+                  cancel_req=ApiCancelKernelSessionRequest()
+                  if hasattr(cancel_req,'owner_slug'): cancel_req.owner_slug=owner
+                  if hasattr(cancel_req,'kernel_slug'): cancel_req.kernel_slug=slug
                   api=KaggleApi(); api.authenticate()
                   with api.build_kaggle_client() as client:
-                      response=client.kernels.kernels_api_client.cancel_kernel_session(req)
-                  print('CANCEL_KERNEL_RESULT='+str(response)[:500])
+                      response=client.kernels.kernels_api_client.cancel_kernel_session(cancel_req)
+                  safe['cancel_kernel_result']=str(response)[:500]
               except Exception as exc:
-                  print('CANCEL_KERNEL_ERROR='+type(exc).__name__+': '+str(exc)[:400])
+                  safe['cancel_kernel_error']=type(exc).__name__+': '+str(exc)[:300]
+          if os.environ.get('DELETE_KERNEL','').lower() == 'true':
+              deleted=subprocess.run(['kaggle','kernels','delete','-y',ref],env=env,text=True,capture_output=True,timeout=120)
+              safe['delete_kernel_result']=(deleted.stdout or deleted.stderr).strip()[:500]
+              safe['delete_kernel_returncode']=deleted.returncode
           st=subprocess.run(['kaggle','kernels','status',ref],env=env,text=True,capture_output=True,timeout=60)
-          print('KERNEL_STATUS='+(st.stdout or st.stderr).strip())
-          if st.returncode:
-              raise SystemExit(st.returncode)
+          status_text=(st.stdout or st.stderr).strip()
+          safe['kernel_status']=status_text
+          safe['kernel_status_returncode']=st.returncode
+          print('KERNEL_STATUS='+status_text)
           d=tempfile.mkdtemp(prefix='kernel-observe-')
-          out=subprocess.run(['kaggle','kernels','output',ref,'-p',d,'-o'],env=env,text=True,capture_output=True,timeout=180)
-          print('OUTPUT_FETCH='+(out.stdout or out.stderr).strip()[:1000])
-          safe={'kernel_ref':ref,'kernel_status':(st.stdout or st.stderr).strip()}
+          if st.returncode == 0 and any(x in status_text.upper() for x in ('COMPLETE','ERROR','CANCEL')):
+              out=subprocess.run(['kaggle','kernels','output',ref,'-p',d,'-o'],env=env,text=True,capture_output=True,timeout=180)
+              safe['output_fetch']=(out.stdout or out.stderr).strip()[:1000]
+          else:
+              safe['output_fetch']='skipped: kernel not in a terminal state or status unavailable'
           token=env.get('KAGGLE_API_TOKEN','').strip()
           if token:
               req=urllib.request.Request('https://api.kaggle.com/v1/kernels.KernelsApiService/GetAcceleratorQuotaStatistics',data=b'{}',headers={'Authorization':'Bearer '+token,'Content-Type':'application/json','Accept':'application/json'},method='POST')
