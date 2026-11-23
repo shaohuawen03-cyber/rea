@@ -1,0 +1,192 @@
+name: gpu-quota
+
+# Read-only Kaggle quota probe for the restricted Arena sandbox.
+#
+# Why a separate workflow: gpu-relay.yml serialises every job in one concurrency
+# group (`gpu-relay-${{ github.ref }}`), so while a long training kernel runs the
+# quota cannot be read for an hour. This workflow is a pure read (+ an optional
+# dependency-free GPU smoke kernel) and has its own concurrency group, so the
+# weekly GPU-hour balance can be checked at any time.
+#
+# Credentials: same model as gpu-relay.yml — repo Actions secrets
+# (KAGGLE_API_TOKEN or KAGGLE_USERNAME+KAGGLE_KEY) or one-time envelopes in
+# cloud-gpu/secrets/*.enc. No plaintext credential is ever written here.
+#
+# Outputs (committed back by the bot, commit prefix `gpu-quota:`):
+#   cloud-gpu/results/quota-<label>-<run>-before.json    quota before the smoke
+#   cloud-gpu/results/quota-<label>-<run>-after.json     quota after the smoke (+ delta)
+#   cloud-gpu/results/quota-<label>-<run>-summary.json   trimmed summary
+#   cloud-gpu/results/quota-smoke-*                      smoke kernel output (if run)
+#   cloud-gpu/results/quota-latest.json                  latest summary (stable path)
+
+on:
+  workflow_dispatch:
+    inputs:
+      label:
+        description: 'Label for this quota check (used in result file names)'
+        required: false
+        default: 'check'
+      run_smoke:
+        description: 'Also run a tiny GPU kernel (makes the balance move)'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gpu-quota-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  quota:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      LABEL: ${{ inputs.label || 'check' }}
+      RUN_SMOKE: ${{ inputs.run_smoke || 'false' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Kaggle CLI
+        run: |
+          python -m pip install --quiet --upgrade pip
+          python -m pip install --quiet kaggle six
+
+      - name: Restore persistent auth vault
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/.gpu-relay
+          key: gpu-relay-vault-${{ github.run_id }}
+          restore-keys: |
+            gpu-relay-vault-
+
+      - name: Prepare credentials (secrets and/or one-time envelopes)
+        id: creds
+        env:
+          SECRET_KAGGLE_API_TOKEN: ${{ secrets.KAGGLE_API_TOKEN }}
+          SECRET_KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+          SECRET_KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+        run: |
+          set -euo pipefail
+          mkdir -p ~/.gpu-relay ~/.kaggle
+          chmod 700 ~/.gpu-relay
+          hash_vault() {
+            find ~/.gpu-relay -maxdepth 1 -type f -print0 | sort -z | xargs -0 sha256sum 2>/dev/null | sha256sum | awk '{print $1}'
+          }
+          PRE_HASH="$(hash_vault)"
+
+          if [ -n "$SECRET_KAGGLE_API_TOKEN" ]; then
+            printf '%s\n' "$SECRET_KAGGLE_API_TOKEN" > ~/.gpu-relay/kaggle_token
+          elif [ -n "$SECRET_KAGGLE_USERNAME" ] && [ -n "$SECRET_KAGGLE_KEY" ]; then
+            printf '%s:%s\n' "$SECRET_KAGGLE_USERNAME" "$SECRET_KAGGLE_KEY" > ~/.gpu-relay/kaggle_token
+          fi
+
+          # Envelopes are optional here: the relay key lives in the other
+          # workflow's cache, so an undecryptable envelope simply stays in place.
+          shopt -s nullglob
+          for enc_file in cloud-gpu/secrets/*.enc; do
+            name="$(basename "$enc_file" .enc)"
+            tmp_plain="$(mktemp)"
+            chmod 600 "$tmp_plain"
+            if [ -f ~/.gpu-relay/key.pem ] && python cloud-gpu/scripts/encrypt_secret.py decrypt \
+                 --privkey ~/.gpu-relay/key.pem --in "$enc_file" --out "$tmp_plain" >/dev/null 2>&1; then
+              val="$(cat "$tmp_plain")"
+              if [ -n "$val" ]; then
+                echo "::add-mask::$val"
+              fi
+              case "$name" in
+                KAGGLE_API_TOKEN) printf '%s\n' "$val" > ~/.gpu-relay/kaggle_token ;;
+                *) echo "$name=$val" >> "$GITHUB_ENV" ;;
+              esac
+            fi
+            rm -f "$tmp_plain"
+          done
+
+          if [ -f ~/.gpu-relay/kaggle_token ]; then
+            raw="$(cat ~/.gpu-relay/kaggle_token)"
+            if echo "$raw" | grep -q ':'; then
+              user="${raw%%:*}"; key="${raw#*:}"
+              printf '{"username":"%s","key":"%s"}\n' "$user" "$key" > ~/.kaggle/kaggle.json
+            else
+              printf '%s\n' "$raw" > ~/.kaggle/access_token
+              echo "KAGGLE_API_TOKEN=$raw" >> "$GITHUB_ENV"
+            fi
+            chmod 600 ~/.kaggle/kaggle.json ~/.kaggle/access_token 2>/dev/null || true
+          fi
+
+          POST_HASH="$(hash_vault)"
+          if [ "$PRE_HASH" != "$POST_HASH" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Persist updated auth vault in Actions cache
+        if: steps.creds.outputs.changed == 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: ~/.gpu-relay
+          key: gpu-relay-vault-${{ github.run_id }}
+
+      - name: Quota BEFORE
+        run: |
+          set -euo pipefail
+          mkdir -p cloud-gpu/results
+          python cloud-gpu/scripts/kaggle_quota_report.py \
+            --label "${LABEL}-before" \
+            --out "cloud-gpu/results/quota-${LABEL}-${{ github.run_number }}-before.json" \
+            | tee quota-before.txt
+
+      - name: Optional GPU smoke kernel
+        if: env.RUN_SMOKE == 'true'
+        run: |
+          set -euo pipefail
+          python cloud-gpu/scripts/quota_smoke_kernel.py \
+            --slug "quota-smoke-${{ github.run_number }}" \
+            --out-dir cloud-gpu/results \
+            --prefix "quota-smoke-${{ github.run_number }}"
+
+      - name: Quota AFTER
+        run: |
+          set -euo pipefail
+          python cloud-gpu/scripts/kaggle_quota_report.py \
+            --label "${LABEL}-after" \
+            --compare "cloud-gpu/results/quota-${LABEL}-${{ github.run_number }}-before.json" \
+            --out "cloud-gpu/results/quota-${LABEL}-${{ github.run_number }}-after.json" \
+            --summary-out "cloud-gpu/results/quota-${LABEL}-${{ github.run_number }}-summary.json" \
+            | tee quota-after.txt
+          cp "cloud-gpu/results/quota-${LABEL}-${{ github.run_number }}-summary.json" cloud-gpu/results/quota-latest.json
+
+      - name: Publish quota report
+        if: always()
+        run: |
+          set -euo pipefail
+          git config user.name  "gpu-quota[bot]"
+          git config user.email "gpu-quota[bot]@users.noreply.github.com"
+          git add cloud-gpu/results
+          if git diff --cached --quiet; then
+            echo "nothing to publish"
+            exit 0
+          fi
+          git commit -m "gpu-quota: publish Kaggle accelerator quota snapshot"
+          for i in 1 2 3; do
+            git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            git fetch origin "${GITHUB_REF_NAME}"
+            git rebase "origin/${GITHUB_REF_NAME}" || { git rebase --abort; exit 1; }
+          done
+          exit 1
+
+      - name: Show summary in the job log
+        if: always()
+        run: |
+          for f in quota-before.txt quota-after.txt; do
+            if [ -f "$f" ]; then echo "--- $f"; tail -n 5 "$f"; fi
+          done
+          cat cloud-gpu/results/quota-latest.json 2>/dev/null || true
