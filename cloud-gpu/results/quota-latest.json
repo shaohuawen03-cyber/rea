@@ -1,17 +1,47 @@
 {
   "label": "bootstrap-after",
-  "captured_at_utc": "2026-11-23T11:48:33Z",
-  "refresh_at": null,
-  "source": "none",
-  "gpu": null,
-  "tpu": null,
-  "delta": {
-    "from": "2026-11-23T11:48:32Z",
-    "to": "2026-11-23T11:48:33Z",
-    "accelerators": {}
+  "captured_at_utc": "2026-11-23T11:49:28Z",
+  "refresh_at": "2026-11-28T00:00:00Z",
+  "source": "api.kaggle.com (exact seconds)",
+  "gpu": {
+    "used_seconds": 52.17,
+    "used_hours": 0.0145,
+    "reserved_seconds": 0.0,
+    "total_seconds": 108000.0,
+    "total_hours": 30.0,
+    "remaining_seconds": 107947.83,
+    "remaining_hours": 29.9855
   },
-  "errors": [
-    "direct: no KAGGLE_API_TOKEN / ~/.kaggle/access_token",
-    "cli: RuntimeError: kaggle quota failed: Authentication required to call the Kaggle API.\n\nFirst, you will need a Kaggle account. You can sign up at\n  https://www.kaggle.com/account/login\n\nRecommended: log in with OAuth via a web-based authorization flow.\nNo token to manage; credentials are cached locally for you.\n    kaggle auth login\n\nIf "
-  ]
+  "tpu": {
+    "used_seconds": 0.0,
+    "used_hours": 0.0,
+    "reserved_seconds": 0.0,
+    "total_seconds": 72000.0,
+    "total_hours": 20.0,
+    "remaining_seconds": 72000.0,
+    "remaining_hours": 20.0
+  },
+  "delta": {
+    "from": "2026-11-23T11:49:28Z",
+    "to": "2026-11-23T11:49:28Z",
+    "accelerators": {
+      "gpu": {
+        "used_seconds_delta": 0.0,
+        "used_hours_delta": 0.0,
+        "used_seconds_before": 52.17,
+        "used_seconds_after": 52.17,
+        "remaining_hours_before": 29.9855,
+        "remaining_hours_after": 29.9855
+      },
+      "tpu": {
+        "used_seconds_delta": 0.0,
+        "used_hours_delta": 0.0,
+        "used_seconds_before": 0.0,
+        "used_seconds_after": 0.0,
+        "remaining_hours_before": 20.0,
+        "remaining_hours_after": 20.0
+      }
+    }
+  },
+  "errors": null
 }
