@@ -1,0 +1,6 @@
+{
+  "label": "quota-smoke-1123",
+  "run_smoke": true,
+  "seconds": 150,
+  "note": "Verify that a real Kaggle T4 session moves the weekly GPU-hour balance: read quota, run a ~150 s CUDA kernel, read quota again."
+}

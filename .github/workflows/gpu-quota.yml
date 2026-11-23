@@ -20,6 +20,13 @@ name: gpu-quota
 #   cloud-gpu/results/quota-latest.json                  latest summary (stable path)
 
 on:
+  # Push trigger: `workflow_dispatch` is only callable from the default branch,
+  # so feature branches request a check by pushing cloud-gpu/jobs/quota-request.json.
+  push:
+    paths:
+      - 'cloud-gpu/jobs/quota-request.json'
+    branches:
+      - '**'
   workflow_dispatch:
     inputs:
       label:
@@ -39,16 +46,35 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # Skip the bot's own commits so the publish step cannot re-trigger the run.
   quota:
+    if: github.event_name != 'push' || !contains(github.event.head_commit.message, 'gpu-quota:')
     runs-on: ubuntu-latest
     timeout-minutes: 90
-    env:
-      LABEL: ${{ inputs.label || 'check' }}
-      RUN_SMOKE: ${{ inputs.run_smoke || 'false' }}
     steps:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.ref_name }}
+
+      - name: Resolve request parameters
+        id: req
+        run: |
+          set -euo pipefail
+          label="${{ inputs.label }}"
+          smoke="${{ inputs.run_smoke }}"
+          seconds="120"
+          if [ -z "$label" ] && [ -f cloud-gpu/jobs/quota-request.json ]; then
+            label="$(jq -r '.label // ""' cloud-gpu/jobs/quota-request.json)"
+            smoke="$(jq -r '.run_smoke // false' cloud-gpu/jobs/quota-request.json)"
+            seconds="$(jq -r '.seconds // 120' cloud-gpu/jobs/quota-request.json)"
+          fi
+          [ -n "$label" ] || label="check"
+          {
+            echo "label=$label"
+            echo "run_smoke=$smoke"
+            echo "seconds=$seconds"
+          } >> "$GITHUB_OUTPUT"
+          echo "label=$label run_smoke=$smoke seconds=$seconds"
 
       - uses: actions/setup-python@v5
         with:
@@ -140,29 +166,30 @@ jobs:
           set -euo pipefail
           mkdir -p cloud-gpu/results
           python cloud-gpu/scripts/kaggle_quota_report.py \
-            --label "${LABEL}-before" \
-            --out "cloud-gpu/results/quota-${LABEL}-${{ github.run_number }}-before.json" \
+            --label "${{ steps.req.outputs.label }}-before" \
+            --out "cloud-gpu/results/quota-${{ steps.req.outputs.label }}-${{ github.run_number }}-before.json" \
             | tee quota-before.txt
 
       - name: Optional GPU smoke kernel
-        if: env.RUN_SMOKE == 'true'
+        if: steps.req.outputs.run_smoke == 'true'
         run: |
           set -euo pipefail
           python cloud-gpu/scripts/quota_smoke_kernel.py \
             --slug "quota-smoke-${{ github.run_number }}" \
             --out-dir cloud-gpu/results \
-            --prefix "quota-smoke-${{ github.run_number }}"
+            --prefix "quota-smoke-${{ github.run_number }}" \
+            --seconds "${{ steps.req.outputs.seconds }}"
 
       - name: Quota AFTER
         run: |
           set -euo pipefail
           python cloud-gpu/scripts/kaggle_quota_report.py \
-            --label "${LABEL}-after" \
-            --compare "cloud-gpu/results/quota-${LABEL}-${{ github.run_number }}-before.json" \
-            --out "cloud-gpu/results/quota-${LABEL}-${{ github.run_number }}-after.json" \
-            --summary-out "cloud-gpu/results/quota-${LABEL}-${{ github.run_number }}-summary.json" \
+            --label "${{ steps.req.outputs.label }}-after" \
+            --compare "cloud-gpu/results/quota-${{ steps.req.outputs.label }}-${{ github.run_number }}-before.json" \
+            --out "cloud-gpu/results/quota-${{ steps.req.outputs.label }}-${{ github.run_number }}-after.json" \
+            --summary-out "cloud-gpu/results/quota-${{ steps.req.outputs.label }}-${{ github.run_number }}-summary.json" \
             | tee quota-after.txt
-          cp "cloud-gpu/results/quota-${LABEL}-${{ github.run_number }}-summary.json" cloud-gpu/results/quota-latest.json
+          cp "cloud-gpu/results/quota-${{ steps.req.outputs.label }}-${{ github.run_number }}-summary.json" cloud-gpu/results/quota-latest.json
 
       - name: Publish quota report
         if: always()
