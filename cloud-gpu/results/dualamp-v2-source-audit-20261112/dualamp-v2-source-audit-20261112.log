@@ -1,0 +1,133 @@
+[{"stream_name":"stdout","time":19.017751612,"data":"{\n"}
+,{"stream_name":"stdout","time":19.017796275,"data":"  \"stage\": \"source_audit_integrity\",\n"}
+,{"stream_name":"stdout","time":19.017801654,"data":"  \"status\": \"SOURCE_FILES_DOWNLOADED_AND_HASHED\",\n"}
+,{"stream_name":"stdout","time":19.017805309,"data":"  \"started_utc\": \"2026-11-23T02:51:42.211633+00:00\",\n"}
+,{"stream_name":"stdout","time":19.017808912,"data":"  \"note\": \"Private /tmp transfer; no sequences or row-level records emitted.\",\n"}
+,{"stream_name":"stdout","time":19.017814267,"data":"  \"files\": {\n"}
+,{"stream_name":"stdout","time":19.017821529,"data":"    \"positive_evidence_audit\": {\n"}
+,{"stream_name":"stdout","time":19.017826414,"data":"      \"bytes\": 4491977,\n"}
+,{"stream_name":"stdout","time":19.017828841,"data":"      \"sha256\": \"cc07c5aa84c4c972bc06b228adf190072c80de37df6aaa8718edae07aa4e447f\",\n"}
+,{"stream_name":"stdout","time":19.017831342,"data":"      \"rows\": 9314,\n"}
+,{"stream_name":"stdout","time":19.017833643,"data":"      \"columns\": [\n"}
+,{"stream_name":"stdout","time":19.017836181,"data":"        \"Sequence_ID\",\n"}
+,{"stream_name":"stdout","time":19.017838511,"data":"        \"Sequence\",\n"}
+,{"stream_name":"stdout","time":19.017841362,"data":"        \"Sequence_Length\",\n"}
+,{"stream_name":"stdout","time":19.017843751,"data":"        \"N_Records\",\n"}
+,{"stream_name":"stdout","time":19.017846104,"data":"        \"Source_DBs\",\n"}
+,{"stream_name":"stdout","time":19.017848363,"data":"        \"Source_Record_IDs\",\n"}
+,{"stream_name":"stdout","time":19.017850549,"data":"        \"Record_TIERS\",\n"}
+,{"stream_name":"stdout","time":19.017853193,"data":"        \"TIER_MERGED\",\n"}
+,{"stream_name":"stdout","time":19.017868189,"data":"        \"Activity_Types\",\n"}
+,{"stream_name":"stdout","time":19.017872218,"data":"        \"Sample_Targets\",\n"}
+,{"stream_name":"stdout","time":19.017876046,"data":"        \"Bacterial_Signal\",\n"}
+,{"stream_name":"stdout","time":19.017879991,"data":"        \"Negative_Signal\",\n"}
+,{"stream_name":"stdout","time":19.017884635,"data":"        \"Target_Placeholder_Only\",\n"}
+,{"stream_name":"stdout","time":19.017888498,"data":"        \"Bagel_Boundary\",\n"}
+,{"stream_name":"stdout","time":19.017891748,"data":"        \"Ma2022_NonAMP_Conflict\",\n"}
+,{"stream_name":"stdout","time":19.017895031,"data":"        \"Citation_Candidates\",\n"}
+,{"stream_name":"stdout","time":19.017898176,"data":"        \"Adjudication\",\n"}
+,{"stream_name":"stdout","time":19.01790146,"data":"        \"Core_Eligible\",\n"}
+,{"stream_name":"stdout","time":19.017904615,"data":"        \"Review_Status\",\n"}
+,{"stream_name":"stdout","time":19.017907853,"data":"        \"Review_Reason\"\n"}
+,{"stream_name":"stdout","time":19.017911065,"data":"      ],\n"}
+,{"stream_name":"stdout","time":19.017914182,"data":"      \"Sequence_ID_unique\": 9314,\n"}
+,{"stream_name":"stdout","time":19.017917468,"data":"      \"Sequence_ID_blank\": 0,\n"}
+,{"stream_name":"stdout","time":19.017920739,"data":"      \"Citation_Candidates_nonempty\": 3222,\n"}
+,{"stream_name":"stdout","time":19.017924065,"data":"      \"Review_Status_counts\": {\n"}
+,{"stream_name":"stdout","time":19.017927386,"data":"        \"confirmed_antibacterial_field_gram\": 756,\n"}
+,{"stream_name":"stdout","time":19.017930912,"data":"        \"confirmed_named_bacterial_target\": 2805,\n"}
+,{"stream_name":"stdout","time":19.017939197,"data":"        \"excluded_non_antibacterial\": 491,\n"}
+,{"stream_name":"stdout","time":19.017942302,"data":"        \"pending_apd_file_level\": 1002,\n"}
+,{"stream_name":"stdout","time":19.017949411,"data":"        \"pending_conflict\": 10,\n"}
+,{"stream_name":"stdout","time":19.017952255,"data":"        \"pending_generic_no_bacterial_signal\": 4161,\n"}
+,{"stream_name":"stdout","time":19.017966989,"data":"        \"pending_literature_verification\": 67,\n"}
+,{"stream_name":"stdout","time":19.017971176,"data":"        \"pending_negative\": 4,\n"}
+,{"stream_name":"stdout","time":19.017975041,"data":"        \"upgraded_from_generic_bacterial_signal\": 18\n"}
+,{"stream_name":"stdout","time":19.017979299,"data":"      }\n"}
+,{"stream_name":"stdout","time":19.017983212,"data":"    },\n"}
+,{"stream_name":"stdout","time":19.017986334,"data":"    \"apd6_natural_bacterial_mapping\": {\n"}
+,{"stream_name":"stdout","time":19.017989774,"data":"      \"bytes\": 7441,\n"}
+,{"stream_name":"stdout","time":19.017993051,"data":"      \"sha256\": \"17f48c6553359cbdcbad9bfd828af94d9a8a441b09d956e0cf46a8f6564f629b\",\n"}
+,{"stream_name":"stdout","time":19.017996631,"data":"      \"rows\": 410,\n"}
+,{"stream_name":"stdout","time":19.017999903,"data":"      \"columns\": [\n"}
+,{"stream_name":"stdout","time":19.018003148,"data":"        \"bacterial_APD_ID\",\n"}
+,{"stream_name":"stdout","time":19.018006323,"data":"        \"in_natural_by_ID\",\n"}
+,{"stream_name":"stdout","time":19.018009493,"data":"        \"seq_matches_natural_record\"\n"}
+,{"stream_name":"stdout","time":19.018012771,"data":"      ]\n"}
+,{"stream_name":"stdout","time":19.018015906,"data":"    },\n"}
+,{"stream_name":"stdout","time":19.01801899,"data":"    \"apd_1002_machine_screen\": {\n"}
+,{"stream_name":"stdout","time":19.018022215,"data":"      \"bytes\": 184345,\n"}
+,{"stream_name":"stdout","time":19.018025511,"data":"      \"sha256\": \"09027ed941fc7067ea55c805bf2ea88035af8e752848c95c1fcaa70ddefe1556\",\n"}
+,{"stream_name":"stdout","time":19.018028976,"data":"      \"rows\": 1002,\n"}
+,{"stream_name":"stdout","time":19.018032159,"data":"      \"columns\": [\n"}
+,{"stream_name":"stdout","time":19.018035367,"data":"        \"Sequence_ID\",\n"}
+,{"stream_name":"stdout","time":19.018043674,"data":"        \"Sequence\",\n"}
+,{"stream_name":"stdout","time":19.018046524,"data":"        \"Source_Record_ID\",\n"}
+,{"stream_name":"stdout","time":19.0180603,"data":"        \"APD_Bacterial_Subset\",\n"}
+,{"stream_name":"stdout","time":19.018064204,"data":"        \"Context\",\n"}
+,{"stream_name":"stdout","time":19.018068012,"data":"        \"Screen_Class\",\n"}
+,{"stream_name":"stdout","time":19.018071627,"data":"        \"Note\"\n"}
+,{"stream_name":"stdout","time":19.018075426,"data":"      ],\n"}
+,{"stream_name":"stdout","time":19.018078956,"data":"      \"Sequence_ID_unique\": 1002,\n"}
+,{"stream_name":"stdout","time":19.018082262,"data":"      \"Sequence_ID_blank\": 0,\n"}
+,{"stream_name":"stdout","time":19.018085742,"data":"      \"Source_Record_ID_unique\": 1002,\n"}
+,{"stream_name":"stdout","time":19.018089056,"data":"      \"Source_Record_ID_blank\": 0\n"}
+,{"stream_name":"stdout","time":19.018092352,"data":"    },\n"}
+,{"stream_name":"stdout","time":19.018098034,"data":"    \"dramp_file_overlap_report\": {\n"}
+,{"stream_name":"stdout","time":19.018101484,"data":"      \"bytes\": 1166,\n"}
+,{"stream_name":"stdout","time":19.018104766,"data":"      \"sha256\": \"fa5c04253d4db484dc629b7562fc9027cf67ff7b83b1a055a23ce2b3f8e5ed72\",\n"}
+,{"stream_name":"stdout","time":19.018108211,"data":"      \"rows\": 21,\n"}
+,{"stream_name":"stdout","time":19.018111447,"data":"      \"columns\": [\n"}
+,{"stream_name":"stdout","time":19.018118799,"data":"        \"file_A\",\n"}
+,{"stream_name":"stdout","time":19.018122132,"data":"        \"file_B\",\n"}
+,{"stream_name":"stdout","time":19.018125294,"data":"        \"shared_DRAMP_IDs\",\n"}
+,{"stream_name":"stdout","time":19.018128564,"data":"        \"shared_exact_sequences\",\n"}
+,{"stream_name":"stdout","time":19.018131887,"data":"        \"A_ids\",\n"}
+,{"stream_name":"stdout","time":19.018135127,"data":"        \"B_ids\"\n"}
+,{"stream_name":"stdout","time":19.018138339,"data":"      ]\n"}
+,{"stream_name":"stdout","time":19.018141417,"data":"    },\n"}
+,{"stream_name":"stdout","time":19.018144651,"data":"    \"dramp5_public_dataset_distribution\": {\n"}
+,{"stream_name":"stdout","time":19.01814853,"data":"      \"bytes\": 127,\n"}
+,{"stream_name":"stdout","time":19.018152557,"data":"      \"sha256\": \"2a0143aa78e0450ff033e114b26b3989e8565b28f164b03ccbc0fe75c0147da3\",\n"}
+,{"stream_name":"stdout","time":19.018157593,"data":"      \"rows\": 8,\n"}
+,{"stream_name":"stdout","time":19.018161504,"data":"      \"columns\": [\n"}
+,{"stream_name":"stdout","time":19.018165611,"data":"        \"Dataset_label\",\n"}
+,{"stream_name":"stdout","time":19.01816887,"data":"        \"records\"\n"}
+,{"stream_name":"stdout","time":19.018172024,"data":"      ]\n"}
+,{"stream_name":"stdout","time":19.018175128,"data":"    },\n"}
+,{"stream_name":"stdout","time":19.018178239,"data":"    \"dramp5_file_stats\": {\n"}
+,{"stream_name":"stdout","time":19.018181519,"data":"      \"bytes\": 370,\n"}
+,{"stream_name":"stdout","time":19.018184668,"data":"      \"sha256\": \"d2c303bfa3f39ce30668dfadd93d193f8d31f5489d7358b475932cf4506c1777\",\n"}
+,{"stream_name":"stdout","time":19.018188116,"data":"      \"rows\": 7,\n"}
+,{"stream_name":"stdout","time":19.018191272,"data":"      \"columns\": [\n"}
+,{"stream_name":"stdout","time":19.01819442,"data":"        \"file\",\n"}
+,{"stream_name":"stdout","time":19.018197377,"data":"        \"rows\",\n"}
+,{"stream_name":"stdout","time":19.018200537,"data":"        \"unique_ids\",\n"}
+,{"stream_name":"stdout","time":19.018203748,"data":"        \"null_ids\",\n"}
+,{"stream_name":"stdout","time":19.018207002,"data":"        \"unique_sequences\",\n"}
+,{"stream_name":"stdout","time":19.018210306,"data":"        \"empty_sequences\",\n"}
+,{"stream_name":"stdout","time":19.018213625,"data":"        \"len_min\",\n"}
+,{"stream_name":"stdout","time":19.018222387,"data":"        \"len_max\"\n"}
+,{"stream_name":"stdout","time":19.018229167,"data":"      ]\n"}
+,{"stream_name":"stdout","time":19.018242754,"data":"    },\n"}
+,{"stream_name":"stdout","time":19.01824624,"data":"    \"dramp5_specific_discrepancy_analysis\": {\n"}
+,{"stream_name":"stdout","time":19.018250294,"data":"      \"bytes\": 727,\n"}
+,{"stream_name":"stdout","time":19.018253911,"data":"      \"sha256\": \"940c1ae7ef1d2052cd2a01eefca14aa4056d721db0f90a108d4a181c76decd5d\",\n"}
+,{"stream_name":"stdout","time":19.018258189,"data":"      \"parse\": \"text/non-tabular\"\n"}
+,{"stream_name":"stdout","time":19.018261732,"data":"    },\n"}
+,{"stream_name":"stdout","time":19.018265469,"data":"    \"dramp5_public_conclusion\": {\n"}
+,{"stream_name":"stdout","time":19.018269154,"data":"      \"bytes\": 697,\n"}
+,{"stream_name":"stdout","time":19.018272453,"data":"      \"sha256\": \"7e24ee8a2b83b0079a47fc880547e703b1de1de98785fcc06a50472ed5e75977\",\n"}
+,{"stream_name":"stdout","time":19.018275934,"data":"      \"parse\": \"text/non-tabular\"\n"}
+,{"stream_name":"stdout","time":19.018279318,"data":"    }\n"}
+,{"stream_name":"stdout","time":19.018286061,"data":"  },\n"}
+,{"stream_name":"stdout","time":19.018289371,"data":"  \"finished_utc\": \"2026-11-23T02:51:56.202847+00:00\",\n"}
+,{"stream_name":"stdout","time":19.018292782,"data":"  \"training_started\": false\n"}
+,{"stream_name":"stdout","time":19.018295999,"data":"}\n"}
+,{"stream_name":"stderr","time":21.087780125,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":21.087813813,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":21.413484179,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":21.41351058,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":22.421839144,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":23.478518835,"data":"[NbConvertApp] Writing 283179 bytes to __results__.html\n"}
+]

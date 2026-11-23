@@ -1,0 +1,126 @@
+{
+  "stage": "source_audit_integrity",
+  "status": "SOURCE_FILES_DOWNLOADED_AND_HASHED",
+  "started_utc": "2026-11-23T02:51:42.211633+00:00",
+  "note": "Private /tmp transfer; no sequences or row-level records emitted.",
+  "files": {
+    "positive_evidence_audit": {
+      "bytes": 4491977,
+      "sha256": "cc07c5aa84c4c972bc06b228adf190072c80de37df6aaa8718edae07aa4e447f",
+      "rows": 9314,
+      "columns": [
+        "Sequence_ID",
+        "Sequence",
+        "Sequence_Length",
+        "N_Records",
+        "Source_DBs",
+        "Source_Record_IDs",
+        "Record_TIERS",
+        "TIER_MERGED",
+        "Activity_Types",
+        "Sample_Targets",
+        "Bacterial_Signal",
+        "Negative_Signal",
+        "Target_Placeholder_Only",
+        "Bagel_Boundary",
+        "Ma2022_NonAMP_Conflict",
+        "Citation_Candidates",
+        "Adjudication",
+        "Core_Eligible",
+        "Review_Status",
+        "Review_Reason"
+      ],
+      "Sequence_ID_unique": 9314,
+      "Sequence_ID_blank": 0,
+      "Citation_Candidates_nonempty": 3222,
+      "Review_Status_counts": {
+        "confirmed_antibacterial_field_gram": 756,
+        "confirmed_named_bacterial_target": 2805,
+        "excluded_non_antibacterial": 491,
+        "pending_apd_file_level": 1002,
+        "pending_conflict": 10,
+        "pending_generic_no_bacterial_signal": 4161,
+        "pending_literature_verification": 67,
+        "pending_negative": 4,
+        "upgraded_from_generic_bacterial_signal": 18
+      }
+    },
+    "apd6_natural_bacterial_mapping": {
+      "bytes": 7441,
+      "sha256": "17f48c6553359cbdcbad9bfd828af94d9a8a441b09d956e0cf46a8f6564f629b",
+      "rows": 410,
+      "columns": [
+        "bacterial_APD_ID",
+        "in_natural_by_ID",
+        "seq_matches_natural_record"
+      ]
+    },
+    "apd_1002_machine_screen": {
+      "bytes": 184345,
+      "sha256": "09027ed941fc7067ea55c805bf2ea88035af8e752848c95c1fcaa70ddefe1556",
+      "rows": 1002,
+      "columns": [
+        "Sequence_ID",
+        "Sequence",
+        "Source_Record_ID",
+        "APD_Bacterial_Subset",
+        "Context",
+        "Screen_Class",
+        "Note"
+      ],
+      "Sequence_ID_unique": 1002,
+      "Sequence_ID_blank": 0,
+      "Source_Record_ID_unique": 1002,
+      "Source_Record_ID_blank": 0
+    },
+    "dramp_file_overlap_report": {
+      "bytes": 1166,
+      "sha256": "fa5c04253d4db484dc629b7562fc9027cf67ff7b83b1a055a23ce2b3f8e5ed72",
+      "rows": 21,
+      "columns": [
+        "file_A",
+        "file_B",
+        "shared_DRAMP_IDs",
+        "shared_exact_sequences",
+        "A_ids",
+        "B_ids"
+      ]
+    },
+    "dramp5_public_dataset_distribution": {
+      "bytes": 127,
+      "sha256": "2a0143aa78e0450ff033e114b26b3989e8565b28f164b03ccbc0fe75c0147da3",
+      "rows": 8,
+      "columns": [
+        "Dataset_label",
+        "records"
+      ]
+    },
+    "dramp5_file_stats": {
+      "bytes": 370,
+      "sha256": "d2c303bfa3f39ce30668dfadd93d193f8d31f5489d7358b475932cf4506c1777",
+      "rows": 7,
+      "columns": [
+        "file",
+        "rows",
+        "unique_ids",
+        "null_ids",
+        "unique_sequences",
+        "empty_sequences",
+        "len_min",
+        "len_max"
+      ]
+    },
+    "dramp5_specific_discrepancy_analysis": {
+      "bytes": 727,
+      "sha256": "940c1ae7ef1d2052cd2a01eefca14aa4056d721db0f90a108d4a181c76decd5d",
+      "parse": "text/non-tabular"
+    },
+    "dramp5_public_conclusion": {
+      "bytes": 697,
+      "sha256": "7e24ee8a2b83b0079a47fc880547e703b1de1de98785fcc06a50472ed5e75977",
+      "parse": "text/non-tabular"
+    }
+  },
+  "finished_utc": "2026-11-23T02:51:56.202847+00:00",
+  "training_started": false
+}

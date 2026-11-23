@@ -394,9 +394,10 @@
       ],
       "serve_minutes": 15.0,
       "wait": true,
-      "status": "pending",
+      "status": "completed",
       "created_at_utc": "2026-11-23T02:50:34Z",
-      "kernel_slug": "dualamp-v2-source-audit-20261112"
+      "kernel_slug": "dualamp-v2-source-audit-20261112",
+      "finished_at_utc": "2026-11-23T02:52:17Z"
     }
   ]
 }
