@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-23T09:51:30Z",
+  "updated_at_utc": "2026-11-23T11:24:00Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -575,6 +575,26 @@
       "kernel_slug": "dualamp-real8-v2-20261123",
       "note": "Read-only final status check after relay timeout and empty kernel outputs; does not rerun training.",
       "finished_at_utc": "2026-11-23T11:20:45Z"
+    },
+    {
+      "id": "dualamp-real8-v2-retry1-20261123",
+      "provider": "kaggle",
+      "mode": "run",
+      "accelerator": "NvidiaTeslaT4",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_train_strict.py",
+      "script_args": [],
+      "extra_pip": [
+        "gdown",
+        "requests",
+        "fair-esm"
+      ],
+      "serve_minutes": 15.0,
+      "wait": true,
+      "timeout_sec": 10800,
+      "status": "pending",
+      "created_at_utc": "2026-11-23T11:24:00Z",
+      "kernel_slug": "dualamp-real8-v2-retry1-20261123",
+      "note": "Second strict-v2 exploratory training attempt under a new unique Kaggle kernel slug. First relay attempt failed before training because the frozen bundle link had been revoked while the kernel was still QUEUED; short-lived link access is reopened for this run and must be revoked after terminal status. Same 16 strict positives; test n=2, underpowered. M1/M2/M3, 5 seeds x 5 folds x 60 epochs. Private output archive uses a fresh Drive upload session."
     }
   ]
 }
