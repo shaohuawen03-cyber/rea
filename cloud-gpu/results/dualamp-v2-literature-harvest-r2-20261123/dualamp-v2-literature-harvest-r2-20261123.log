@@ -1,0 +1,53 @@
+[{"stream_name":"stdout","time":248.231330319,"data":"harvested candidates 1100/3579; unique citation identifiers=432\n"}
+,{"stream_name":"stdout","time":423.303552845,"data":"harvested candidates 2000/3579; unique citation identifiers=432\n"}
+,{"stream_name":"stdout","time":492.151470047,"data":"harvested candidates 2800/3579; unique citation identifiers=432\n"}
+,{"stream_name":"stdout","time":532.531347722,"data":"harvested candidates 2900/3579; unique citation identifiers=432\n"}
+,{"stream_name":"stdout","time":564.086819967,"data":"harvested candidates 3000/3579; unique citation identifiers=432\n"}
+,{"stream_name":"stdout","time":592.155234157,"data":"harvested candidates 3100/3579; unique citation identifiers=432\n"}
+,{"stream_name":"stdout","time":610.037625313,"data":"harvested candidates 3200/3579; unique citation identifiers=432\n"}
+,{"stream_name":"stdout","time":625.67129083,"data":"harvested candidates 3300/3579; unique citation identifiers=432\n"}
+,{"stream_name":"stdout","time":673.717501465,"data":"harvested candidates 3400/3579; unique citation identifiers=432\n"}
+,{"stream_name":"stdout","time":741.726603749,"data":"{\n"}
+,{"stream_name":"stdout","time":741.726639834,"data":"  \"stage\": \"full_text_evidence_harvest\",\n"}
+,{"stream_name":"stdout","time":741.726647082,"data":"  \"status\": \"LEDGER_GENERATED_AND_UPLOADED_PRIVATE\",\n"}
+,{"stream_name":"stdout","time":741.726653169,"data":"  \"rule_version\": \"auto_evidence_v2_1.0\",\n"}
+,{"stream_name":"stdout","time":741.726659096,"data":"  \"started_utc\": \"2026-11-23T03:05:04.132433+00:00\",\n"}
+,{"stream_name":"stdout","time":741.726664936,"data":"  \"training_started\": false,\n"}
+,{"stream_name":"stdout","time":741.726670949,"data":"  \"note\": \"Row-level ledger is uploaded to private Drive; no raw sequences or evidence rows are returned through relay.\",\n"}
+,{"stream_name":"stdout","time":741.726677513,"data":"  \"candidate_fasta_records\": 3579,\n"}
+,{"stream_name":"stdout","time":741.72668329,"data":"  \"metadata_rows\": 3579,\n"}
+,{"stream_name":"stdout","time":741.726689191,"data":"  \"source_audit_rows\": 9314,\n"}
+,{"stream_name":"stdout","time":741.726694854,"data":"  \"source_audit_ids_intersecting_candidates\": 3579,\n"}
+,{"stream_name":"stdout","time":741.72670067,"data":"  \"source_audit_rows_for_candidate_ids\": 3579,\n"}
+,{"stream_name":"stdout","time":741.726706321,"data":"  \"candidate_ids_with_citation_identifiers\": 1340,\n"}
+,{"stream_name":"stdout","time":741.726711949,"data":"  \"unique_citation_identifiers\": 432,\n"}
+,{"stream_name":"stdout","time":741.726718239,"data":"  \"ledger_rows\": 3661,\n"}
+,{"stream_name":"stdout","time":741.726722149,"data":"  \"ledger_candidate_coverage\": 3579,\n"}
+,{"stream_name":"stdout","time":741.726727388,"data":"  \"candidate_ids_without_ledger_coverage\": 0,\n"}
+,{"stream_name":"stdout","time":741.726733189,"data":"  \"evidence_level_counts\": {\n"}
+,{"stream_name":"stdout","time":741.726738987,"data":"    \"ABSTRACT_ONLY\": 1418,\n"}
+,{"stream_name":"stdout","time":741.726744406,"data":"    \"FULLTEXT_UNAVAILABLE\": 4,\n"}
+,{"stream_name":"stdout","time":741.726750174,"data":"    \"NONE\": 2239\n"}
+,{"stream_name":"stdout","time":741.726755289,"data":"  },\n"}
+,{"stream_name":"stdout","time":741.726760784,"data":"  \"strict_rule_candidate_ids_draft\": 0,\n"}
+,{"stream_name":"stdout","time":741.726766709,"data":"  \"ledger_sha256\": \"8591fe2755b12ab519982cf2e1c05c7cc22bfe2f067dc3d77cfa06a3e28b3a38\",\n"}
+,{"stream_name":"stdout","time":741.726772965,"data":"  \"ledger_bytes\": 853400,\n"}
+,{"stream_name":"stdout","time":741.726778569,"data":"  \"private_drive_upload\": {\n"}
+,{"stream_name":"stdout","time":741.726799544,"data":"    \"bytes\": 853400,\n"}
+,{"stream_name":"stdout","time":741.726804472,"data":"    \"sha256\": \"8591fe2755b12ab519982cf2e1c05c7cc22bfe2f067dc3d77cfa06a3e28b3a38\",\n"}
+,{"stream_name":"stdout","time":741.726809541,"data":"    \"response\": {\n"}
+,{"stream_name":"stdout","time":741.726814139,"data":"      \"kind\": \"drive#file\",\n"}
+,{"stream_name":"stdout","time":741.726818829,"data":"      \"id\": \"1eZnTkGaTeCXvNUMEgIwMbEW0_NKu2u3P\",\n"}
+,{"stream_name":"stdout","time":741.726824069,"data":"      \"name\": \"dualamp_v2_evidence_ledger_r2_2026-11-23.tsv\",\n"}
+,{"stream_name":"stdout","time":741.726828977,"data":"      \"mimeType\": \"text/tab-separated-values\"\n"}
+,{"stream_name":"stdout","time":741.726833659,"data":"    }\n"}
+,{"stream_name":"stdout","time":741.726838005,"data":"  },\n"}
+,{"stream_name":"stdout","time":741.726842434,"data":"  \"finished_utc\": \"2026-11-23T03:17:20.686671+00:00\"\n"}
+,{"stream_name":"stdout","time":741.726847067,"data":"}\n"}
+,{"stream_name":"stderr","time":744.338429485,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":744.338468395,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":744.665814582,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":744.665841593,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":745.757251952,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":747.002943241,"data":"[NbConvertApp] Writing 312188 bytes to __results__.html\n"}
+]
