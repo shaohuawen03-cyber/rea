@@ -1,6 +1,6 @@
 {
-  "label": "quota-smoke-600s",
+  "label": "quota-smoke-r2",
   "run_smoke": true,
   "seconds": 600,
-  "note": "10-minute CUDA kernel on T4 with full push/status logging: proves a real GPU session moves the weekly balance."
+  "note": "Retry after username-resolution fix: push a 10-minute CUDA kernel, poll it, fetch output, then re-read the quota to show the delta."
 }
