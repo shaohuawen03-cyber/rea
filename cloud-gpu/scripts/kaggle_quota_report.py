@@ -49,6 +49,28 @@ import urllib.request
 
 ENDPOINT = "https://api.kaggle.com/v1/kernels.KernelsApiService/GetAcceleratorQuotaStatistics"
 
+# Diagnostics only: names/suffixes, never secrets.
+def auth_diagnostics() -> dict:
+    token = (os.environ.get("KAGGLE_API_TOKEN") or "").strip()
+    access = os.path.expanduser("~/.kaggle/access_token")
+    vault = os.path.expanduser("~/.gpu-relay/kaggle_token")
+    access_raw = ""
+    if os.path.exists(access):
+        try:
+            access_raw = open(access, "r", encoding="utf-8").read().strip()
+        except OSError:
+            access_raw = ""
+    return {
+        "env_KAGGLE_API_TOKEN_len": len(token),
+        "env_suffix": token[-4:] if token else "",
+        "access_token_exists": os.path.exists(access),
+        "access_token_len": len(access_raw),
+        "access_token_suffix": access_raw[-4:] if access_raw else "",
+        "vault_token_exists": os.path.exists(vault),
+        "vault_key_exists": os.path.exists(os.path.expanduser("~/.gpu-relay/key.pem")),
+        "kaggle_dir": os.path.isdir(os.path.expanduser("~/.kaggle")),
+    }
+
 
 def utc_now() -> str:
     return dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -236,9 +258,12 @@ def main() -> int:
     parser.add_argument("--out", default="", help="write the report JSON here")
     parser.add_argument("--compare", default="", help="earlier report JSON; adds a delta block")
     parser.add_argument("--summary-out", default="", help="write a trimmed summary (latest snapshot) here")
+    parser.add_argument("--diagnostics", action="store_true", help="include non-secret auth-source diagnostics")
     args = parser.parse_args()
 
     report = collect(args.label)
+    if args.diagnostics:
+        report["auth_diagnostics"] = auth_diagnostics()
     if args.compare and os.path.exists(args.compare):
         try:
             with open(args.compare, "r", encoding="utf-8") as f:
