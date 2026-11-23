@@ -1,0 +1,2 @@
+cancel request: {}
+cancel failed: HTTPError: 403 Client Error: Forbidden for url: https://api.kaggle.com/v1/kernels.KernelsApiService/CancelKernelSession
