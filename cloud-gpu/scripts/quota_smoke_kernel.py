@@ -208,9 +208,19 @@ def main() -> int:
             log(f"pushed (no-wait); kernel URL: https://www.kaggle.com/code/{ref}")
             with open(os.path.join(args.out_dir, f"{args.prefix}-url.txt"), "w", encoding="utf-8") as f:
                 f.write(f"https://www.kaggle.com/code/{ref}\n")
-            with open(os.path.join(args.out_dir, f"{args.prefix}-status.json"), "w", encoding="utf-8") as f:
-                json.dump({"kernel_ref": ref, "final_status": "pushed_no_wait", "raw_session_status": raw_session_status(user, slug)}, f, indent=2)
-                f.write("\n")
+            status_blob = {
+                "kernel_ref": ref,
+                "final_status": "pushed_no_wait",
+                "raw_session_status": raw_session_status(user, slug),
+                "checked_at_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+            }
+            try:
+                with open(os.path.join(args.out_dir, f"{args.prefix}-status.json"), "w", encoding="utf-8") as f:
+                    json.dump(status_blob, f, indent=2)
+                    f.write("\n")
+            except OSError as exc:
+                log(f"could not write status file: {exc}")
+            log(f"status json: {json.dumps(status_blob)}")
             return 0
 
         status = "queued"

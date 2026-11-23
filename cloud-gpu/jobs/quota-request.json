@@ -1,8 +1,7 @@
 {
-  "label": "quota-smoke-60s",
-  "run_smoke": true,
+  "label": "quota-watch",
+  "run_smoke": false,
   "seconds": 60,
-  "no_wait": true,
-  "check_kernels": ["shaohuawen/quota-smoke-19"],
-  "note": "Push a short 60 s T4 kernel without waiting on Kaggle's queue, so the workflow stays fast; quota is read before and after the push."
+  "check_kernels": ["shaohuawen/quota-smoke-21", "shaohuawen/quota-smoke-19"],
+  "note": "Watch the pushed smoke kernels: if either holds a real Kaggle session, the GPU quota will start moving. Read-only, no new GPU pushes."
 }
