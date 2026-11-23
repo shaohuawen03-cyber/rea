@@ -21,21 +21,28 @@ on:
     inputs:
       run_id:
         description: 'gpu-relay run id to fetch the artifact from (e.g. 43842046392)'
-        required: true
+        required: false
+        default: ''
       artifact_name:
         description: 'Artifact name in that run (e.g. gpu-relay-run-18)'
         required: true
         default: 'gpu-relay-run-18'
       release_tag:
         description: 'Release tag to create (must not already exist)'
-        required: true
+        required: false
+        default: ''
       release_title:
         description: 'Release title'
-        required: true
+        required: false
+        default: ''
       expected_pt:
         description: 'Expected number of .pt files (safety check)'
         required: false
         default: '15'
+      kernel_status:
+        description: 'Read-only Kaggle kernel status (owner/slug); when set, no release job runs'
+        required: false
+        default: ''
 
 permissions:
   contents: write   # create the release + upload assets
@@ -47,6 +54,7 @@ concurrency:
 
 jobs:
   archive:
+    if: ${{ inputs.kernel_status == '' && inputs.run_id != '' && inputs.release_tag != '' && inputs.release_title != '' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -104,3 +112,59 @@ jobs:
             echo "- assets:"
             gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[] | "  - \(.name) (\(.size) bytes)"'
           } >> "$GITHUB_STEP_SUMMARY"
+
+  observe_kernel:
+    if: ${{ inputs.kernel_status != '' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/cache/restore@v4
+        with:
+          path: ~/.gpu-relay
+          key: gpu-relay-vault-${{ github.run_id }}
+          restore-keys: |
+            gpu-relay-vault-
+      - name: Install Kaggle CLI
+        run: python -m pip install --quiet kaggle six
+      - name: Read kernel status and safe report fields
+        env:
+          KERNEL_REF: ${{ inputs.kernel_status }}
+        run: |
+          python - <<'PY'
+          import json, os, subprocess, sys, tempfile
+          sys.path.insert(0, 'cloud-gpu/scripts')
+          from gpu_ctl import resolve_kaggle_env
+          env, source = resolve_kaggle_env()
+          if not source:
+              raise SystemExit('Kaggle credentials unavailable from relay vault')
+          ref=os.environ['KERNEL_REF']
+          st=subprocess.run(['kaggle','kernels','status',ref],env=env,text=True,capture_output=True,timeout=60)
+          print('KERNEL_STATUS='+(st.stdout or st.stderr).strip())
+          if st.returncode:
+              raise SystemExit(st.returncode)
+          d=tempfile.mkdtemp(prefix='kernel-observe-')
+          out=subprocess.run(['kaggle','kernels','output',ref,'-p',d,'-o'],env=env,text=True,capture_output=True,timeout=180)
+          print('OUTPUT_FETCH='+(out.stdout or out.stderr).strip()[:1000])
+          safe={'kernel_ref':ref,'status':(st.stdout or st.stderr).strip()}
+          p=os.path.join(d,'v2_training_report.json')
+          if os.path.isfile(p):
+              data=json.load(open(p))
+              for k in ('stage','dataset_version','training_started','status','error','started_utc','completed_utc','finished_utc','positive_records','positive_unique_sequences','test_positive_n','private_model_bundle'):
+                  if k in data: safe[k]=data[k]
+          os.makedirs('observer-output',exist_ok=True)
+          json.dump(safe,open('observer-output/kernel-status.json','w'),ensure_ascii=False,indent=2)
+          print('SAFE_SUMMARY='+json.dumps(safe,ensure_ascii=False))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: kaggle-kernel-status-${{ github.run_id }}
+          path: observer-output/
+          if-no-files-found: ignore
+          retention-days: 7
