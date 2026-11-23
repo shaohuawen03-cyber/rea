@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-23T09:48:00Z",
+  "updated_at_utc": "2026-11-23T09:50:00Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -527,6 +527,21 @@
       "kernel_slug": "dualamp-real8-v2-20261123",
       "note": "Read-only status check for the existing v2 kernel after its relay wait was cancelled by GitHub Actions timeout. Do not retrain or overwrite.",
       "finished_at_utc": "2026-11-23T09:48:34Z"
+    },
+    {
+      "id": "dualamp-real8-v2-status-followup-20261123",
+      "provider": "kaggle",
+      "mode": "status",
+      "accelerator": "CPU",
+      "script_path": "",
+      "script_args": [],
+      "extra_pip": [],
+      "serve_minutes": 0.0,
+      "wait": true,
+      "status": "pending",
+      "created_at_utc": "2026-11-23T09:50:00Z",
+      "kernel_slug": "dualamp-real8-v2-20261123",
+      "note": "Follow-up read-only status of existing strict-v2 training kernel after it appeared QUEUED at the 3-hour relay timeout. Do not restart or overwrite."
     }
   ]
 }
