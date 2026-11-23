@@ -331,7 +331,9 @@ def main():
     ap.add_argument("--neg-cap", type=int, default=10000)
     ap.add_argument("--fasta-id", default="11vvQSlOJDjt8v6qHCB4LWg6mRK3DwNis",
                     help="Drive file id of the positives FASTA (candidate_v1 default; pass the v2 file id with --fasta-sha for the v2 retrain)")
-    ap.add_argument("--fasta-sha", default=EXPECTED_POS_SHA256, help="sha256 of the positives FASTA; must match, else abort")
+    ap.add_argument("--fasta-sha", default="", help="expected sha256 of positives FASTA; required for positive_core_v2_strict")
+    ap.add_argument("--fasta-file", default="", help="use a local, pre-frozen FASTA instead of downloading candidate_v1")
+    ap.add_argument("--dataset-version", choices=["candidate_v1_pilot", "positive_core_v2_strict"], default="candidate_v1_pilot")
     ap.add_argument("--neg-mode", choices=["standard", "composition-matched"], default="standard",
                     help="standard = real4/real5 recipe; composition-matched = hard negatives (P1/P2 fix)")
     args = ap.parse_args()
@@ -349,12 +351,20 @@ def main():
 
     pos_fasta = data / "positives.fasta"
     mock = args.mode != "real"
+    if args.dataset_version == "positive_core_v2_strict":
+        if args.mode != "real" or not args.fasta_sha.strip():
+            raise RuntimeError("strict v2 requires --mode real and an explicit --fasta-sha")
+        if not (os.environ.get("EVIDENCE_LEDGER_UPLOAD_URI") or "").strip():
+            raise RuntimeError("strict v2 requires a private Drive upload session for model artifacts")
     if args.mode == "real":
-        want_sha = (os.environ.get("FASTA_SHA256", "").strip() or args.fasta_sha).strip()
+        want_sha = (os.environ.get("FASTA_SHA256", "").strip() or args.fasta_sha.strip() or EXPECTED_POS_SHA256).strip()
         raw = None
         url = os.environ.get("FASTA_URL", "").strip()
-        fid = (os.environ.get("FASTA_ID", "").strip() or args.fasta_id).strip()  # gdown 需要 anyone-with-link 只读（派发窗内开放，跑完回收）; v2 retrain: --fasta-id <v2 file id>
-        if fid:
+        fid = (os.environ.get("FASTA_ID", "").strip() or args.fasta_id).strip()  # gdown 需要 anyone-with-link 只读
+        if args.fasta_file:
+            raw = Path(args.fasta_file).read_bytes()
+            log("reading pre-frozen local v2 FASTA")
+        elif fid:
             log(f"downloading positives via gdown (Drive file id {fid[:6]}…)")
             subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", "gdown"])
             import gdown
@@ -452,7 +462,7 @@ def main():
 
     manifest = data / "sources.yaml"
     manifest.write_text(f"""sources:
-  - id: {'mock_positives' if mock else 'candidate_v1'}
+  - id: {'mock_positives' if mock else args.dataset_version}
     path: {pos_fasta}
     format: fasta
     layer: general_amp
@@ -525,8 +535,10 @@ def main():
         "positives": len(pos_seqs), "negatives_stats": neg_stats,
         "models": args.models, "seeds": args.seeds, "folds": args.folds, "epochs": args.epochs,
         "neg_mode": args.neg_mode, "leanrea_rev": LEANREA_REV,
-        "positives_file_id": (os.environ.get("FASTA_ID", "").strip() or args.fasta_id), "positives_sha256_want": (os.environ.get("FASTA_SHA256", "").strip() or args.fasta_sha),
-        "note": "PILOT on candidate_v1 (unreviewed, NOT v2 定稿). 不可入论文。" if not mock else "DRY RUN with MOCK positives; numbers are meaningless.",
+        "positives_file_id": ("private_frozen_bundle" if args.dataset_version == "positive_core_v2_strict" else (os.environ.get("FASTA_ID", "").strip() or args.fasta_id)),
+        "positives_sha256_want": (os.environ.get("FASTA_SHA256", "").strip() or args.fasta_sha or EXPECTED_POS_SHA256),
+        "dataset_version": args.dataset_version,
+        "note": ("Strict literature-gated positive_core_v2; only 16 confirmed records, test n is underpowered; report as exploratory, not a definitive performance claim." if args.dataset_version == "positive_core_v2_strict" else ("PILOT on candidate_v1 (unreviewed, NOT v2 定稿). 不可入论文。" if not mock else "DRY RUN with MOCK positives; numbers are meaningless.")),
         "artifacts_copied": copied, "artifacts_missing": missing,
     }, indent=2, ensure_ascii=False))
     log("artifacts: " + ", ".join(copied))
