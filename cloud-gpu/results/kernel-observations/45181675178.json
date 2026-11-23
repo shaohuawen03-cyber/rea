@@ -1,0 +1,13 @@
+{
+  "kernel_ref": "shaohuawen/dualamp-real8-v2-retry1-20261123",
+  "kernel_status": "Cannot access kernel 'shaohuawen/dualamp-real8-v2-retry1-20261123' (Permission 'kernels.get' was denied). The most likely cause is a wrong kernel slug. The benchmark_task_slug returned by get_benchmark_leaderboard differs from the actual kernel slug — use the slug from the notebook URL (kaggle.com/code/owner/KERNEL-SLUG), not from the leaderboard. It can also occur if the notebook is private.",
+  "kernel_status_returncode": 1,
+  "output_fetch": "skipped: kernel not in a terminal state or status unavailable",
+  "gpu_quota": {
+    "time_used_seconds": 52.17,
+    "time_reserved_seconds": 0.0,
+    "total_allowed_seconds": 108000.0,
+    "remaining_seconds": 107947.83,
+    "quota_refresh_time": "2026-11-28T00:00:00Z"
+  }
+}
