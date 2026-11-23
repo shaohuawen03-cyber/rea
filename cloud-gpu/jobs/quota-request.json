@@ -1,7 +1,7 @@
 {
-  "label": "quota-after-240s",
+  "label": "quota-final",
   "run_smoke": false,
   "seconds": 60,
   "check_kernels": ["shaohuawen/quota-smoke-24"],
-  "note": "Read the quota after the 4-minute kernel had a chance to run (queues can be long; repeat if still queued)."
+  "note": "Clean before/after record: quota snapshot only, with the 4-minute kernel's session status alongside."
 }
