@@ -1,0 +1,5 @@
+{
+  "kernel_ref": "shaohuawen/quota-smoke-16",
+  "final_status": "404 Client Error: Not Found for url: https://api.kaggle.com/v1/kernels.KernelsApiService/GetKernelSessionStatus\n\nThe resource was not found. Check the spelling of the reference you passed.\nReferences are usually '<owner>/<slug>', which you can find in the resource's URL.\nTo search for one, try 'kaggle search <query>'.",
+  "checked_at_utc": "2026-11-23T12:38:40Z"
+}
