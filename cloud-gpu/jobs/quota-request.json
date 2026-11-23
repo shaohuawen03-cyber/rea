@@ -1,7 +1,6 @@
 {
-  "label": "quota-probe",
+  "label": "quota-session-list",
   "run_smoke": false,
   "seconds": 120,
-  "probe_refs": ["shaohuawen/dualamp-real8-v2-retry1-20261123"],
-  "note": "Raw Connect-RPC probe of session status / get-kernel / quota, to see why the CLI status path and GPU pushing disagree."
+  "note": "Look for a way to enumerate active Kaggle sessions holding the two GPU slots."
 }

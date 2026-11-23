@@ -91,6 +91,9 @@ def main() -> int:
     if args.mine:
         post("ListKernels", {"group": "profile", "pageSize": 20}, args.out)
 
+    for extra in ("ListKernelSessions", "GetKernelSessions", "ListSessions"):
+        post(extra, {}, args.out)
+
     post("GetAcceleratorQuotaStatistics", {}, args.out)
     return 0
 
