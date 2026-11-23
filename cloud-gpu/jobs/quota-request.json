@@ -1,6 +1,6 @@
 {
-  "label": "quota-smoke-1123",
-  "run_smoke": true,
-  "seconds": 150,
-  "note": "Verify that a real Kaggle T4 session moves the weekly GPU-hour balance: read quota, run a ~150 s CUDA kernel, read quota again."
+  "label": "bootstrap",
+  "run_smoke": false,
+  "seconds": 120,
+  "note": "Bootstrap run: mint this branch's relay keypair and publish the public half so a one-time envelope can be sealed for it."
 }

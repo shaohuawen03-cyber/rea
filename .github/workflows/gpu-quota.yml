@@ -25,6 +25,7 @@ on:
   push:
     paths:
       - 'cloud-gpu/jobs/quota-request.json'
+      - 'cloud-gpu/secrets/**.enc'
     branches:
       - '**'
   workflow_dispatch:
@@ -108,6 +109,15 @@ jobs:
           }
           PRE_HASH="$(hash_vault)"
 
+          # Keypair per branch: Actions caches are branch-scoped, so a branch that
+          # has never run the relay has no ~/.gpu-relay/key.pem. Generate one and
+          # publish only the public half, so envelopes can be sealed for it.
+          if [ ! -f ~/.gpu-relay/key.pem ]; then
+            openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:4096 -out ~/.gpu-relay/key.pem 2>/dev/null
+            chmod 600 ~/.gpu-relay/key.pem
+          fi
+          openssl pkey -in ~/.gpu-relay/key.pem -pubout -out cloud-gpu/relay_pubkey.pem
+
           if [ -n "$SECRET_KAGGLE_API_TOKEN" ]; then
             printf '%s\n' "$SECRET_KAGGLE_API_TOKEN" > ~/.gpu-relay/kaggle_token
           elif [ -n "$SECRET_KAGGLE_USERNAME" ] && [ -n "$SECRET_KAGGLE_KEY" ]; then
@@ -128,7 +138,10 @@ jobs:
                 echo "::add-mask::$val"
               fi
               case "$name" in
-                KAGGLE_API_TOKEN) printf '%s\n' "$val" > ~/.gpu-relay/kaggle_token ;;
+                KAGGLE_API_TOKEN)
+                  printf '%s\n' "$val" > ~/.gpu-relay/kaggle_token
+                  git rm -f --ignore-unmatch "$enc_file" >/dev/null 2>&1 || rm -f "$enc_file"
+                  ;;
                 *) echo "$name=$val" >> "$GITHUB_ENV" ;;
               esac
             fi
@@ -197,7 +210,7 @@ jobs:
           set -euo pipefail
           git config user.name  "gpu-quota[bot]"
           git config user.email "gpu-quota[bot]@users.noreply.github.com"
-          git add cloud-gpu/results
+          git add -A cloud-gpu/results cloud-gpu/secrets cloud-gpu/relay_pubkey.pem
           if git diff --cached --quiet; then
             echo "nothing to publish"
             exit 0
