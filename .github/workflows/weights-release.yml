@@ -53,6 +53,11 @@ on:
         required: false
         type: boolean
         default: false
+      cancel_kernel:
+        description: 'Cancel the kernel named in kernel_status before reading status'
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: write   # create the release + upload assets
@@ -145,6 +150,7 @@ jobs:
       - name: Read kernel status and safe report fields
         env:
           KERNEL_REF: ${{ inputs.kernel_status }}
+          CANCEL_KERNEL: ${{ inputs.cancel_kernel }}
         run: |
           python - <<'PY'
           import json, os, subprocess, sys, tempfile, urllib.request, urllib.error, re
@@ -154,6 +160,21 @@ jobs:
           if not source:
               raise SystemExit('Kaggle credentials unavailable from relay vault')
           ref=os.environ['KERNEL_REF']
+          if os.environ.get('CANCEL_KERNEL','').lower() == 'true':
+              try:
+                  from kaggle.api.kaggle_api_extended import KaggleApi
+                  from kagglesdk.kernels.types.kernels_api_service import ApiCancelKernelSessionRequest
+                  owner, _, slug = ref.partition('/')
+                  if not owner or not slug: raise ValueError('kernel ref must be owner/slug')
+                  req=ApiCancelKernelSessionRequest()
+                  if hasattr(req,'owner_slug'): req.owner_slug=owner
+                  if hasattr(req,'kernel_slug'): req.kernel_slug=slug
+                  api=KaggleApi(); api.authenticate()
+                  with api.build_kaggle_client() as client:
+                      response=client.kernels.kernels_api_client.cancel_kernel_session(req)
+                  print('CANCEL_KERNEL_RESULT='+str(response)[:500])
+              except Exception as exc:
+                  print('CANCEL_KERNEL_ERROR='+type(exc).__name__+': '+str(exc)[:400])
           st=subprocess.run(['kaggle','kernels','status',ref],env=env,text=True,capture_output=True,timeout=60)
           print('KERNEL_STATUS='+(st.stdout or st.stderr).strip())
           if st.returncode:
