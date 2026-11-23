@@ -1,0 +1,42 @@
+{
+  "label": "quota-smoke-240s-before",
+  "captured_at_utc": "2026-11-23T13:28:10Z",
+  "source": "api.kaggle.com (exact seconds)",
+  "refresh_at": "2026-11-28T00:00:00Z",
+  "accelerators": {
+    "gpu": {
+      "used_seconds": 58.886,
+      "used_hours": 0.0164,
+      "reserved_seconds": 0.0,
+      "total_seconds": 108000.0,
+      "total_hours": 30.0,
+      "remaining_seconds": 107941.114,
+      "remaining_hours": 29.9836
+    },
+    "tpu": {
+      "used_seconds": 0.0,
+      "used_hours": 0.0,
+      "reserved_seconds": 0.0,
+      "total_seconds": 72000.0,
+      "total_hours": 20.0,
+      "remaining_seconds": 72000.0,
+      "remaining_hours": 20.0
+    }
+  },
+  "raw": {
+    "quotaRefreshTime": "2026-11-28T00:00:00Z",
+    "gpuQuota": {
+      "timeUsed": "58.886s",
+      "timeReserved": "0s",
+      "totalTimeAllowed": "108000s",
+      "minimumTimeAllowed": "108000s",
+      "hasEverRun": true
+    },
+    "tpuQuota": {
+      "timeUsed": "0s",
+      "timeReserved": "0s",
+      "totalTimeAllowed": "72000s",
+      "minimumTimeAllowed": "72000s"
+    }
+  }
+}
