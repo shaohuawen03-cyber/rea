@@ -1,7 +1,7 @@
 {
-  "label": "quota-smoke-600s-final",
-  "run_smoke": true,
-  "seconds": 600,
-  "check_kernels": ["shaohuawen/dualamp-real8-v2-retry1-20261123"],
-  "note": "Close any Kaggle notebook sessions in the browser first, then push this file: quota before -> 10-minute T4 kernel -> quota after. The delta is the GPU time this run consumed."
+  "label": "quota-delete-retry1",
+  "run_smoke": false,
+  "seconds": 120,
+  "delete_kernel": "shaohuawen/dualamp-real8-v2-retry1-20261123",
+  "note": "Delete the retry1 kernel that never started (no session, no quota used) to free a GPU slot, then confirm the slot is available."
 }

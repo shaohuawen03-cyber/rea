@@ -66,6 +66,7 @@ jobs:
           seconds="120"
           kernels=""
           cancel_ref=""
+          delete_ref=""
           probe_args=""
           if [ -f cloud-gpu/jobs/quota-request.json ]; then
             [ -n "$label" ] || label="$(jq -r '.label // ""' cloud-gpu/jobs/quota-request.json)"
@@ -73,6 +74,7 @@ jobs:
             seconds="$(jq -r '.seconds // 120' cloud-gpu/jobs/quota-request.json)"
             kernels="$(jq -r '(.check_kernels // []) | join(" ")' cloud-gpu/jobs/quota-request.json)"
             cancel_ref="$(jq -r '.cancel_kernel // ""' cloud-gpu/jobs/quota-request.json)"
+            delete_ref="$(jq -r '.delete_kernel // ""' cloud-gpu/jobs/quota-request.json)"
             probe_args="$(jq -r '.probe_refs // [] | map("--ref \"" + . + "\"") | join(" ")' cloud-gpu/jobs/quota-request.json)"
             [ -n "$probe_args" ] || probe_args=""
           fi
@@ -85,6 +87,7 @@ jobs:
             echo "seconds=$seconds"
             echo "kernels=$kernels"
             echo "cancel=$cancel_ref"
+            echo "delete=$delete_ref"
             echo "probe=$probe_args"
           } >> "$GITHUB_OUTPUT"
           echo "label=$label run_smoke=$smoke seconds=$seconds kernels=$kernels"
@@ -193,6 +196,14 @@ jobs:
           python cloud-gpu/scripts/kaggle_quota_report.py --label diag --diagnostics \
             --out cloud-gpu/results/quota-diag-${{ github.run_number }}.json || true
           ls -la ~/.gpu-relay ~/.kaggle 2>/dev/null || true
+
+      - name: Delete a kernel (optional)
+        if: steps.req.outputs.delete != ''
+        run: |
+          set -uo pipefail
+          mkdir -p cloud-gpu/results
+          python cloud-gpu/scripts/delete_kernel.py "${{ steps.req.outputs.delete }}" --confirm \
+            --out "cloud-gpu/results/quota-delete-${{ github.run_number }}.txt" || true
 
       - name: Cancel a kernel session (optional)
         if: steps.req.outputs.cancel != ''
