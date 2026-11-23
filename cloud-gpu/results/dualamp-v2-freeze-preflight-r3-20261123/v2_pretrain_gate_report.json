@@ -1,0 +1,93 @@
+{
+  "stage": "strict_data_freeze_and_train_preflight",
+  "rule_version": "auto_evidence_v2_1.0",
+  "started_utc": "2026-11-23T06:41:30.947432+00:00",
+  "training_started": false,
+  "privacy_note": "Raw sequences, metadata and row evidence remain in private /tmp and private Drive only.",
+  "freeze": {
+    "state": "DATASET_FROZEN_BY_RULES_NOT_PI_SIGNED",
+    "input_candidate_records": 3579,
+    "input_unique_sequences": 3579,
+    "evidence_rows": 3661,
+    "decision_counts": {
+      "AUTO_CONFIRMED_ANTIBACTERIAL": 16,
+      "AUTO_UNRESOLVED_NO_EVIDENCE": 3563
+    },
+    "strict_positive_records": 16,
+    "strict_positive_unique_sequences": 16,
+    "strict_positive_fasta_sha256": "45e237b3fa347d4279e6eb9a19ffa74bd33fb27cf13bb7943f69e635d4389ae6",
+    "source_sha256": {
+      "candidate_fasta": "7b6ea12136623e85218ba78cfd4b713985a3122b24c61650e536e724b768aa1d",
+      "metadata": "74a64a13cdcea2c508f2de1ebf75c2c5604d30731927e22cdee1c2baf43f7979",
+      "evidence": "eb5f8aeec4c179fabd28b5eecf45b4f3b06c842ea1ce478b45cf81c8a9274dd8"
+    },
+    "coverage_gate": "PASS",
+    "id_closure_gate": "PASS"
+  },
+  "negative_audit": {
+    "proteins_total": 117172,
+    "keyword_excluded": 18,
+    "fragments_raw": 351462,
+    "fragments_standard_aa": 351429,
+    "fragments_dedup": 351119,
+    "fragments_hit_positive_4mer_gt08": 0,
+    "negatives_final": 10000,
+    "seed": 11,
+    "cap": 10000,
+    "neg_mode": "standard",
+    "seconds": 11.4,
+    "label_semantics": "WEAK_NEGATIVE_BACKGROUND_NOT_EXPERIMENTAL_INACTIVITY",
+    "source": "UniProt reviewed bacterial cytoplasm Release 2026_04 snapshot, AMP-keyword screened, seed=11",
+    "gate": "PASS_WITH_WEAK_LABEL_CAVEAT"
+  },
+  "split_audit": {
+    "cluster_method": "cdhit",
+    "cluster_identity": 0.4,
+    "cluster_coverage": 0.8,
+    "clusters": 9505,
+    "records": 10032,
+    "split_counts": {
+      "scrambled": 16,
+      "test": 1502,
+      "train": 7011,
+      "val": 1503
+    },
+    "split_positive_counts": {
+      "test": 2,
+      "train": 11,
+      "val": 3
+    },
+    "split_negative_counts": {
+      "scrambled": 16,
+      "test": 1500,
+      "train": 7000,
+      "val": 1500
+    },
+    "trainable_cluster_leaks": 0,
+    "trainable_exact_sequence_leaks": 0,
+    "trainable_mixed_label_clusters": 0,
+    "cluster_split_gate": "PASS",
+    "leanrea_commit": "f610dc00b1aec3ab948a5b77574af0e644259a13"
+  },
+  "low_sample_warning": {
+    "strict_positive_unique_sequences": 16,
+    "test_positive_n": 2,
+    "warning_threshold_test_positive_n": 100,
+    "status": "UNDERPOWERED_WARNING"
+  },
+  "training_readiness": "PREFLIGHT_PASS_NOT_TRAINED",
+  "frozen_manifest_sha256": "12c08237d58bdd3cea36ee215ee3b763af978f68e76f7588d448dada29368515",
+  "dataset_summary_sha256": "564fc180573fdc349c397e74becd4a045ec23d264426621a338043080d150dd9",
+  "private_bundle_upload": {
+    "bytes": 3353754,
+    "sha256": "e09c75018c983bdf449b8e46790e357f1e943cc42809abf911dbffeb6c0099bd",
+    "drive_file": {
+      "kind": "drive#file",
+      "id": "1mrcNByKLxoyqM0Hvs1aEmhlJgrYQtZch",
+      "name": "dualamp_v2_pretrain_gate_bundle_r3.zip",
+      "mimeType": "application/zip"
+    }
+  },
+  "status": "PREFLIGHT_PASS_NOT_TRAINED",
+  "finished_utc": "2026-11-23T06:43:47.689495+00:00"
+}

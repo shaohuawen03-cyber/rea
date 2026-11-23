@@ -484,10 +484,11 @@
       "serve_minutes": 15.0,
       "wait": true,
       "timeout_sec": 10800,
-      "status": "pending",
+      "status": "completed",
       "created_at_utc": "2026-11-23T06:40:00Z",
       "kernel_slug": "dualamp-v2-freeze-preflight-r3-20261123",
-      "note": "Freeze strict positives from complete r3 ledger; audit weak negatives and MMseqs2 grouped split/leakage only. No model training in this job. Raw files and bundle stay private Drive; relay returns aggregate report only."
+      "note": "Freeze strict positives from complete r3 ledger; audit weak negatives and MMseqs2 grouped split/leakage only. No model training in this job. Raw files and bundle stay private Drive; relay returns aggregate report only.",
+      "finished_at_utc": "2026-11-23T06:44:05Z"
     }
   ]
 }

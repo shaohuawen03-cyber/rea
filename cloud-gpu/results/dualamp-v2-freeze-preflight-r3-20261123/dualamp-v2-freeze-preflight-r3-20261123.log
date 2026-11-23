@@ -1,0 +1,113 @@
+[{"stream_name":"stdout","time":85.935448885,"data":"[dualamp_pilot 06:42:50] cd-hit installed via apt: /usr/bin/cd-hit\n"}
+,{"stream_name":"stdout","time":93.063797866,"data":"[dualamp_pilot 06:42:57] installed cd-hit-\u003emmseqs shim at /usr/local/bin/cd-hit (self-test OK; native cd-hit bypassed)\n"}
+,{"stream_name":"stdout","time":116.052296196,"data":"[06:43:20] INFO    reading sources from /tmp/dualamp-v2-freeze-bquigp8j/pipeline/sources.yaml\n"}
+,{"stream_name":"stdout","time":116.0753165,"data":"[06:43:20] INFO      source positive_core_v2_strict layer=general_amp          kept=   16 (from 16 rows)\n"}
+,{"stream_name":"stdout","time":116.185996443,"data":"[06:43:20] INFO      source uniprot_a_weak_negative_background layer=negative_background  kept=10000 (from 10000 rows)\n"}
+,{"stream_name":"stdout","time":116.213574076,"data":"[06:43:20] INFO    after length/alphabet filtering: 10016 records\n"}
+,{"stream_name":"stdout","time":128.273728782,"data":"[06:43:32] INFO      dedup: 10016 records -\u003e 10016 unique sequences\n"}
+,{"stream_name":"stdout","time":128.285992144,"data":"[06:43:32] INFO      scrambled challenge set: +16 sequences\n"}
+,{"stream_name":"stdout","time":135.977643084,"data":"[06:43:40] INFO    clustering: cdhit at identity 0.40 / coverage 0.80 -\u003e 9505 clusters\n"}
+,{"stream_name":"stdout","time":139.980906089,"data":"[06:43:44] INFO      split sizes: {'train': 7011, 'val': 1503, 'test': 1502, 'scrambled': 16}\n"}
+,{"stream_name":"stdout","time":140.327653296,"data":"[06:43:45] INFO    dataset written: 10032 sequences, 9505 clusters, test=1502 (pos=2) - see /tmp/dualamp-v2-freeze-bquigp8j/pipeline/run/dataset/dataset_all.csv\n"}
+,{"stream_name":"stdout","time":140.329947994,"data":"[06:43:45] INFO    step1 build_dataset finished in 24.3s\n"}
+,{"stream_name":"stdout","time":140.329974227,"data":"sequences=10032 clusters=9505 test=1502\n"}
+,{"stream_name":"stdout","time":142.995453306,"data":"{\n"}
+,{"stream_name":"stdout","time":142.995478941,"data":"  \"stage\": \"strict_data_freeze_and_train_preflight\",\n"}
+,{"stream_name":"stdout","time":142.995484727,"data":"  \"rule_version\": \"auto_evidence_v2_1.0\",\n"}
+,{"stream_name":"stdout","time":142.995489987,"data":"  \"started_utc\": \"2026-11-23T06:41:30.947432+00:00\",\n"}
+,{"stream_name":"stdout","time":142.995495123,"data":"  \"training_started\": false,\n"}
+,{"stream_name":"stdout","time":142.995524401,"data":"  \"privacy_note\": \"Raw sequences, metadata and row evidence remain in private /tmp and private Drive only.\",\n"}
+,{"stream_name":"stdout","time":142.995531974,"data":"  \"freeze\": {\n"}
+,{"stream_name":"stdout","time":142.995536557,"data":"    \"state\": \"DATASET_FROZEN_BY_RULES_NOT_PI_SIGNED\",\n"}
+,{"stream_name":"stdout","time":142.995541864,"data":"    \"input_candidate_records\": 3579,\n"}
+,{"stream_name":"stdout","time":142.995546847,"data":"    \"input_unique_sequences\": 3579,\n"}
+,{"stream_name":"stdout","time":142.995551672,"data":"    \"evidence_rows\": 3661,\n"}
+,{"stream_name":"stdout","time":142.995556514,"data":"    \"decision_counts\": {\n"}
+,{"stream_name":"stdout","time":142.995561453,"data":"      \"AUTO_CONFIRMED_ANTIBACTERIAL\": 16,\n"}
+,{"stream_name":"stdout","time":142.995566413,"data":"      \"AUTO_UNRESOLVED_NO_EVIDENCE\": 3563\n"}
+,{"stream_name":"stdout","time":142.995571398,"data":"    },\n"}
+,{"stream_name":"stdout","time":142.99557615,"data":"    \"strict_positive_records\": 16,\n"}
+,{"stream_name":"stdout","time":142.995580938,"data":"    \"strict_positive_unique_sequences\": 16,\n"}
+,{"stream_name":"stdout","time":142.995585812,"data":"    \"strict_positive_fasta_sha256\": \"45e237b3fa347d4279e6eb9a19ffa74bd33fb27cf13bb7943f69e635d4389ae6\",\n"}
+,{"stream_name":"stdout","time":142.995605826,"data":"    \"source_sha256\": {\n"}
+,{"stream_name":"stdout","time":142.995609958,"data":"      \"candidate_fasta\": \"7b6ea12136623e85218ba78cfd4b713985a3122b24c61650e536e724b768aa1d\",\n"}
+,{"stream_name":"stdout","time":142.995614134,"data":"      \"metadata\": \"74a64a13cdcea2c508f2de1ebf75c2c5604d30731927e22cdee1c2baf43f7979\",\n"}
+,{"stream_name":"stdout","time":142.995618,"data":"      \"evidence\": \"eb5f8aeec4c179fabd28b5eecf45b4f3b06c842ea1ce478b45cf81c8a9274dd8\"\n"}
+,{"stream_name":"stdout","time":142.995622707,"data":"    },\n"}
+,{"stream_name":"stdout","time":142.995630727,"data":"    \"coverage_gate\": \"PASS\",\n"}
+,{"stream_name":"stdout","time":142.995635108,"data":"    \"id_closure_gate\": \"PASS\"\n"}
+,{"stream_name":"stdout","time":142.995638932,"data":"  },\n"}
+,{"stream_name":"stdout","time":142.995642779,"data":"  \"negative_audit\": {\n"}
+,{"stream_name":"stdout","time":142.995646925,"data":"    \"proteins_total\": 117172,\n"}
+,{"stream_name":"stdout","time":142.995650885,"data":"    \"keyword_excluded\": 18,\n"}
+,{"stream_name":"stdout","time":142.995654762,"data":"    \"fragments_raw\": 351462,\n"}
+,{"stream_name":"stdout","time":142.99565908,"data":"    \"fragments_standard_aa\": 351429,\n"}
+,{"stream_name":"stdout","time":142.995663436,"data":"    \"fragments_dedup\": 351119,\n"}
+,{"stream_name":"stdout","time":142.995667427,"data":"    \"fragments_hit_positive_4mer_gt08\": 0,\n"}
+,{"stream_name":"stdout","time":142.995671255,"data":"    \"negatives_final\": 10000,\n"}
+,{"stream_name":"stdout","time":142.995674938,"data":"    \"seed\": 11,\n"}
+,{"stream_name":"stdout","time":142.995678909,"data":"    \"cap\": 10000,\n"}
+,{"stream_name":"stdout","time":142.995682712,"data":"    \"neg_mode\": \"standard\",\n"}
+,{"stream_name":"stdout","time":142.995686529,"data":"    \"seconds\": 11.4,\n"}
+,{"stream_name":"stdout","time":142.995690527,"data":"    \"label_semantics\": \"WEAK_NEGATIVE_BACKGROUND_NOT_EXPERIMENTAL_INACTIVITY\",\n"}
+,{"stream_name":"stdout","time":142.995694892,"data":"    \"source\": \"UniProt reviewed bacterial cytoplasm Release 2026_04 snapshot, AMP-keyword screened, seed=11\",\n"}
+,{"stream_name":"stdout","time":142.995699296,"data":"    \"gate\": \"PASS_WITH_WEAK_LABEL_CAVEAT\"\n"}
+,{"stream_name":"stdout","time":142.99570329,"data":"  },\n"}
+,{"stream_name":"stdout","time":142.995706738,"data":"  \"split_audit\": {\n"}
+,{"stream_name":"stdout","time":142.995710562,"data":"    \"cluster_method\": \"cdhit\",\n"}
+,{"stream_name":"stdout","time":142.995714949,"data":"    \"cluster_identity\": 0.4,\n"}
+,{"stream_name":"stdout","time":142.995718706,"data":"    \"cluster_coverage\": 0.8,\n"}
+,{"stream_name":"stdout","time":142.995722779,"data":"    \"clusters\": 9505,\n"}
+,{"stream_name":"stdout","time":142.995726968,"data":"    \"records\": 10032,\n"}
+,{"stream_name":"stdout","time":142.995730929,"data":"    \"split_counts\": {\n"}
+,{"stream_name":"stdout","time":142.995734799,"data":"      \"scrambled\": 16,\n"}
+,{"stream_name":"stdout","time":142.995738768,"data":"      \"test\": 1502,\n"}
+,{"stream_name":"stdout","time":142.995742506,"data":"      \"train\": 7011,\n"}
+,{"stream_name":"stdout","time":142.995746462,"data":"      \"val\": 1503\n"}
+,{"stream_name":"stdout","time":142.995750088,"data":"    },\n"}
+,{"stream_name":"stdout","time":142.995753861,"data":"    \"split_positive_counts\": {\n"}
+,{"stream_name":"stdout","time":142.99575785,"data":"      \"test\": 2,\n"}
+,{"stream_name":"stdout","time":142.995767336,"data":"      \"train\": 11,\n"}
+,{"stream_name":"stdout","time":142.995771377,"data":"      \"val\": 3\n"}
+,{"stream_name":"stdout","time":142.995780187,"data":"    },\n"}
+,{"stream_name":"stdout","time":142.995785558,"data":"    \"split_negative_counts\": {\n"}
+,{"stream_name":"stdout","time":142.9957893,"data":"      \"scrambled\": 16,\n"}
+,{"stream_name":"stdout","time":142.995793171,"data":"      \"test\": 1500,\n"}
+,{"stream_name":"stdout","time":142.995797308,"data":"      \"train\": 7000,\n"}
+,{"stream_name":"stdout","time":142.995801003,"data":"      \"val\": 1500\n"}
+,{"stream_name":"stdout","time":142.99580499,"data":"    },\n"}
+,{"stream_name":"stdout","time":142.99580892,"data":"    \"trainable_cluster_leaks\": 0,\n"}
+,{"stream_name":"stdout","time":142.995812701,"data":"    \"trainable_exact_sequence_leaks\": 0,\n"}
+,{"stream_name":"stdout","time":142.995816588,"data":"    \"trainable_mixed_label_clusters\": 0,\n"}
+,{"stream_name":"stdout","time":142.995820106,"data":"    \"cluster_split_gate\": \"PASS\",\n"}
+,{"stream_name":"stdout","time":142.995824202,"data":"    \"leanrea_commit\": \"f610dc00b1aec3ab948a5b77574af0e644259a13\"\n"}
+,{"stream_name":"stdout","time":142.995828603,"data":"  },\n"}
+,{"stream_name":"stdout","time":142.995832217,"data":"  \"low_sample_warning\": {\n"}
+,{"stream_name":"stdout","time":142.995835822,"data":"    \"strict_positive_unique_sequences\": 16,\n"}
+,{"stream_name":"stdout","time":142.995839697,"data":"    \"test_positive_n\": 2,\n"}
+,{"stream_name":"stdout","time":142.995843665,"data":"    \"warning_threshold_test_positive_n\": 100,\n"}
+,{"stream_name":"stdout","time":142.995847648,"data":"    \"status\": \"UNDERPOWERED_WARNING\"\n"}
+,{"stream_name":"stdout","time":142.995851885,"data":"  },\n"}
+,{"stream_name":"stdout","time":142.995855166,"data":"  \"training_readiness\": \"PREFLIGHT_PASS_NOT_TRAINED\",\n"}
+,{"stream_name":"stdout","time":142.995859456,"data":"  \"frozen_manifest_sha256\": \"12c08237d58bdd3cea36ee215ee3b763af978f68e76f7588d448dada29368515\",\n"}
+,{"stream_name":"stdout","time":142.995863946,"data":"  \"dataset_summary_sha256\": \"564fc180573fdc349c397e74becd4a045ec23d264426621a338043080d150dd9\",\n"}
+,{"stream_name":"stdout","time":142.995868094,"data":"  \"private_bundle_upload\": {\n"}
+,{"stream_name":"stdout","time":142.99587204,"data":"    \"bytes\": 3353754,\n"}
+,{"stream_name":"stdout","time":142.995875923,"data":"    \"sha256\": \"e09c75018c983bdf449b8e46790e357f1e943cc42809abf911dbffeb6c0099bd\",\n"}
+,{"stream_name":"stdout","time":142.995880355,"data":"    \"drive_file\": {\n"}
+,{"stream_name":"stdout","time":142.995884215,"data":"      \"kind\": \"drive#file\",\n"}
+,{"stream_name":"stdout","time":142.995888078,"data":"      \"id\": \"1mrcNByKLxoyqM0Hvs1aEmhlJgrYQtZch\",\n"}
+,{"stream_name":"stdout","time":142.99589172,"data":"      \"name\": \"dualamp_v2_pretrain_gate_bundle_r3.zip\",\n"}
+,{"stream_name":"stdout","time":142.995895899,"data":"      \"mimeType\": \"application/zip\"\n"}
+,{"stream_name":"stdout","time":142.995900011,"data":"    }\n"}
+,{"stream_name":"stdout","time":142.995903624,"data":"  },\n"}
+,{"stream_name":"stdout","time":142.995907167,"data":"  \"status\": \"PREFLIGHT_PASS_NOT_TRAINED\",\n"}
+,{"stream_name":"stdout","time":142.995911318,"data":"  \"finished_utc\": \"2026-11-23T06:43:47.689495+00:00\"\n"}
+,{"stream_name":"stdout","time":142.995915521,"data":"}\n"}
+,{"stream_name":"stderr","time":147.007593129,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":147.007625943,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":147.360351982,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":147.360382715,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":148.453245316,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":149.750238231,"data":"[NbConvertApp] Writing 301683 bytes to __results__.html\n"}
+]
