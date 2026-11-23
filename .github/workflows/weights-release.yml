@@ -48,6 +48,11 @@ on:
         required: false
         type: boolean
         default: false
+      gpu_minutes_smoke:
+        description: 'Run a private, bounded 3-minute Kaggle GPU test and record quota delta'
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: write   # create the release + upload assets
@@ -244,3 +249,44 @@ jobs:
           path: cpu-smoke-output/
           if-no-files-found: ignore
           retention-days: 7
+
+  gpu_minutes_smoke:
+    if: ${{ inputs.gpu_minutes_smoke }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/cache/restore@v4
+        with:
+          path: ~/.gpu-relay
+          key: gpu-relay-vault-${{ github.run_id }}
+          restore-keys: |
+            gpu-relay-vault-
+      - name: Install Kaggle CLI
+        run: python -m pip install --quiet kaggle six
+      - name: Run bounded private GPU smoke and measure quota
+        run: python cloud-gpu/scripts/kaggle_gpu_minutes_smoke.py
+      - name: Publish sanitized GPU smoke report
+        if: always() && hashFiles('gpu-minutes-smoke-output/result.json') != ''
+        run: |
+          set -euo pipefail
+          dest="cloud-gpu/results/gpu-minutes-smoke/${GITHUB_RUN_ID}.json"
+          mkdir -p "$(dirname "$dest")"
+          cp gpu-minutes-smoke-output/result.json "$dest"
+          git config user.name "kaggle-smoke[bot]"
+          git config user.email "kaggle-smoke[bot]@users.noreply.github.com"
+          git add "$dest"
+          git commit -m "ops: record bounded Kaggle GPU smoke result"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: kaggle-gpu-minutes-smoke-${{ github.run_id }}
+          path: gpu-minutes-smoke-output/
+          if-no-files-found: ignore
+          retention-days: 14
