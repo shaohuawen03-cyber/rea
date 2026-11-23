@@ -43,6 +43,11 @@ on:
         description: 'Read-only Kaggle kernel status (owner/slug); when set, no release job runs'
         required: false
         default: ''
+      cpu_smoke:
+        description: 'Run a private CPU-only Kaggle data-access smoke test'
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: write   # create the release + upload assets
@@ -196,5 +201,46 @@ jobs:
         with:
           name: kaggle-kernel-status-${{ github.run_id }}
           path: observer-output/
+          if-no-files-found: ignore
+          retention-days: 7
+
+  cpu_smoke:
+    if: ${{ inputs.cpu_smoke }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/cache/restore@v4
+        with:
+          path: ~/.gpu-relay
+          key: gpu-relay-vault-${{ github.run_id }}
+          restore-keys: |
+            gpu-relay-vault-
+      - name: Install Kaggle CLI
+        run: python -m pip install --quiet kaggle six
+      - name: Run minimal CPU-only Kaggle smoke
+        run: python cloud-gpu/scripts/kaggle_cpu_smoke.py
+      - name: Publish smoke result to branch
+        if: always() && hashFiles('cpu-smoke-output/result.json') != ''
+        run: |
+          set -euo pipefail
+          dest="cloud-gpu/results/cpu-smoke/${GITHUB_RUN_ID}.json"
+          mkdir -p "$(dirname "$dest")"
+          cp cpu-smoke-output/result.json "$dest"
+          git config user.name "kaggle-smoke[bot]"
+          git config user.email "kaggle-smoke[bot]@users.noreply.github.com"
+          git add "$dest"
+          git commit -m "ops: record CPU-only Kaggle smoke result"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: kaggle-cpu-smoke-${{ github.run_id }}
+          path: cpu-smoke-output/
           if-no-files-found: ignore
           retention-days: 7
