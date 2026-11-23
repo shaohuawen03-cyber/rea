@@ -53,7 +53,11 @@ def main() -> int:
         request = ApiDeleteKernelRequest()
         request.user_name = owner
         request.kernel_slug = slug
-        lines.append(f"delete request: user_name={request.user_name} kernel_slug={request.kernel_slug}")
+        try:
+            payload = request.to_dict()
+        except Exception:  # noqa: BLE001 - keep the log even if dict conversion fails
+            payload = {"user_name": request.user_name, "kernel_slug": request.kernel_slug}
+        lines.append(f"delete request: {json.dumps(payload, default=str)}")
 
         with api.build_kaggle_client() as kaggle:
             response = kaggle.kernels.kernels_api_client.delete_kernel(request)
