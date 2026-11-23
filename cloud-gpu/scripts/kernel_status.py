@@ -42,6 +42,13 @@ def main() -> int:
                 rows = json.loads(text)
             except json.JSONDecodeError:
                 rows = []
+        refs = [row.get("ref") for row in rows if row.get("ref")]
+        statuses = {}
+        for ref in refs[:10]:
+            res = run(["kaggle", "kernels", "status", ref])
+            statuses[ref] = (res.stdout or res.stderr).strip()
+            print(f"{ref}: {statuses[ref][:160]}")
+        report["statuses"] = statuses
         report["mine"] = [
             {
                 "ref": row.get("ref"),
