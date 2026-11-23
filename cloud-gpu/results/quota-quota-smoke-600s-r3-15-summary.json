@@ -1,0 +1,47 @@
+{
+  "label": "quota-smoke-600s-r3-after",
+  "captured_at_utc": "2026-11-23T12:36:45Z",
+  "refresh_at": "2026-11-28T00:00:00Z",
+  "source": "api.kaggle.com (exact seconds)",
+  "gpu": {
+    "used_seconds": 52.17,
+    "used_hours": 0.0145,
+    "reserved_seconds": 0.0,
+    "total_seconds": 108000.0,
+    "total_hours": 30.0,
+    "remaining_seconds": 107947.83,
+    "remaining_hours": 29.9855
+  },
+  "tpu": {
+    "used_seconds": 0.0,
+    "used_hours": 0.0,
+    "reserved_seconds": 0.0,
+    "total_seconds": 72000.0,
+    "total_hours": 20.0,
+    "remaining_seconds": 72000.0,
+    "remaining_hours": 20.0
+  },
+  "delta": {
+    "from": "2026-11-23T12:36:21Z",
+    "to": "2026-11-23T12:36:45Z",
+    "accelerators": {
+      "gpu": {
+        "used_seconds_delta": 0.0,
+        "used_hours_delta": 0.0,
+        "used_seconds_before": 52.17,
+        "used_seconds_after": 52.17,
+        "remaining_hours_before": 29.9855,
+        "remaining_hours_after": 29.9855
+      },
+      "tpu": {
+        "used_seconds_delta": 0.0,
+        "used_hours_delta": 0.0,
+        "used_seconds_before": 0.0,
+        "used_seconds_after": 0.0,
+        "remaining_hours_before": 20.0,
+        "remaining_hours_after": 20.0
+      }
+    }
+  },
+  "errors": null
+}
