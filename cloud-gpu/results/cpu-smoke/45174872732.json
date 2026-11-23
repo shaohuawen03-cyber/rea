@@ -1,0 +1,10 @@
+{
+  "kernel_ref": "shaohuawen/dualamp-v2-cpu-smoke-45174872732",
+  "kernel_status": "shaohuawen/dualamp-v2-cpu-smoke-45174872732 has status \"KernelWorkerStatus.COMPLETE\"",
+  "push_output": "Kernel version 1 successfully pushed.  Please check progress at https://www.kaggle.com/code/shaohuawen/dualamp-v2-cpu-smoke-45174872732",
+  "kernel_smoke": "PASS",
+  "gpu_enabled": false,
+  "bundle_sha256": "e09c75018c983bdf449b8e46790e357f1e943cc42809abf911dbffeb6c0099bd",
+  "strict_fasta_sha256": "45e237b3fa347d4279e6eb9a19ffa74bd33fb27cf13bb7943f69e635d4389ae6",
+  "bundle_bytes": 3353754
+}
