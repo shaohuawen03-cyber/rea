@@ -1,6 +1,6 @@
 {
-  "label": "bootstrap",
-  "run_smoke": false,
-  "seconds": 120,
-  "note": "Bootstrap run: mint this branch's relay keypair and publish the public half so a one-time envelope can be sealed for it."
+  "label": "quota-smoke-1123",
+  "run_smoke": true,
+  "seconds": 150,
+  "note": "Read quota, run a ~150 s CUDA kernel on T4, read quota again: the used/remaining delta is the GPU time this run actually consumed."
 }
