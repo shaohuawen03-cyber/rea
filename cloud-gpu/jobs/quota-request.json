@@ -1,7 +1,7 @@
 {
-  "label": "quota-smoke-600s-r3",
+  "label": "quota-smoke-600s-final",
   "run_smoke": true,
   "seconds": 600,
   "check_kernels": ["shaohuawen/dualamp-real8-v2-retry1-20261123"],
-  "note": "Retry the 10-minute GPU kernel now that the stale queue entry is gone; raw session status decides whether a slot is actually busy."
+  "note": "Close any Kaggle notebook sessions in the browser first, then push this file: quota before -> 10-minute T4 kernel -> quota after. The delta is the GPU time this run consumed."
 }
