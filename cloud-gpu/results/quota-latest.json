@@ -1,13 +1,13 @@
 {
-  "label": "quota-smoke-1123-after",
-  "captured_at_utc": "2026-11-23T11:37:34Z",
+  "label": "bootstrap-after",
+  "captured_at_utc": "2026-11-23T11:48:33Z",
   "refresh_at": null,
   "source": "none",
   "gpu": null,
   "tpu": null,
   "delta": {
-    "from": "2026-11-23T11:37:34Z",
-    "to": "2026-11-23T11:37:34Z",
+    "from": "2026-11-23T11:48:32Z",
+    "to": "2026-11-23T11:48:33Z",
     "accelerators": {}
   },
   "errors": [
