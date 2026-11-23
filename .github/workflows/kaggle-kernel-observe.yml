@@ -1,0 +1,71 @@
+name: kaggle-kernel-observe
+
+on:
+  workflow_dispatch:
+    inputs:
+      kernel:
+        description: 'Kaggle kernel ref owner/slug'
+        required: true
+        default: 'shaohuawen/dualamp-real8-v2-retry1-20261123'
+
+permissions:
+  contents: read
+
+concurrency:
+  # Independent of gpu-relay so read-only checks can run while it waits.
+  group: kaggle-kernel-observe-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  observe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/cache/restore@v4
+        with:
+          path: ~/.gpu-relay
+          key: gpu-relay-vault-${{ github.run_id }}
+          restore-keys: |
+            gpu-relay-vault-
+      - name: Install Kaggle CLI
+        run: python -m pip install --quiet kaggle six
+      - name: Read kernel status and sanitized report
+        env:
+          KERNEL_REF: ${{ inputs.kernel }}
+        run: |
+          python - <<'PY'
+          import json, os, subprocess, sys, tempfile
+          sys.path.insert(0, 'cloud-gpu/scripts')
+          from gpu_ctl import resolve_kaggle_env
+          env, source = resolve_kaggle_env()
+          if not source:
+              raise SystemExit('Kaggle credentials unavailable from relay vault')
+          ref = os.environ['KERNEL_REF']
+          st = subprocess.run(['kaggle','kernels','status',ref],env=env,text=True,capture_output=True,timeout=60)
+          print('KERNEL_STATUS=' + (st.stdout or st.stderr).strip())
+          if st.returncode:
+              raise SystemExit(st.returncode)
+          d = tempfile.mkdtemp(prefix='kernel-output-')
+          out = subprocess.run(['kaggle','kernels','output',ref,'-p',d,'-o'],env=env,text=True,capture_output=True,timeout=180)
+          print('OUTPUT_FETCH=' + (out.stdout or out.stderr).strip()[:1000])
+          for name in ('v2_training_report.json','result.json'):
+              p=os.path.join(d,name)
+              if os.path.isfile(p):
+                  data=json.load(open(p))
+                  # Print only safe summary keys; no input rows or model data.
+                  safe={k:data.get(k) for k in ('stage','dataset_version','training_started','status','error','started_utc','completed_utc','finished_utc','positive_records','positive_unique_sequences','test_positive_n','private_model_bundle') if k in data}
+                  print('SANITIZED_REPORT='+json.dumps(safe,ensure_ascii=False))
+                  os.makedirs('observer-output',exist_ok=True)
+                  json.dump(safe,open('observer-output/v2_training_status.json','w'),ensure_ascii=False,indent=2)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: kaggle-kernel-observation-${{ github.run_id }}
+          path: observer-output/
+          if-no-files-found: ignore
+          retention-days: 7
