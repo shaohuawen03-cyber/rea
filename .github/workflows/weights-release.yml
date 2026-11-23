@@ -161,6 +161,18 @@ jobs:
           json.dump(safe,open('observer-output/kernel-status.json','w'),ensure_ascii=False,indent=2)
           print('SAFE_SUMMARY='+json.dumps(safe,ensure_ascii=False))
           PY
+      - name: Publish sanitized observation to branch
+        if: always() && hashFiles('observer-output/kernel-status.json') != ''
+        run: |
+          set -euo pipefail
+          dest="cloud-gpu/results/kernel-observations/${GITHUB_RUN_ID}.json"
+          mkdir -p "$(dirname "$dest")"
+          cp observer-output/kernel-status.json "$dest"
+          git config user.name "kernel-observer[bot]"
+          git config user.email "kernel-observer[bot]@users.noreply.github.com"
+          git add "$dest"
+          git commit -m "ops: record sanitized Kaggle kernel status"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
