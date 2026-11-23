@@ -64,18 +64,22 @@ jobs:
           label="${{ inputs.label }}"
           smoke="${{ inputs.run_smoke }}"
           seconds="120"
-          if [ -z "$label" ] && [ -f cloud-gpu/jobs/quota-request.json ]; then
-            label="$(jq -r '.label // ""' cloud-gpu/jobs/quota-request.json)"
-            smoke="$(jq -r '.run_smoke // false' cloud-gpu/jobs/quota-request.json)"
+          kernels=""
+          if [ -f cloud-gpu/jobs/quota-request.json ]; then
+            [ -n "$label" ] || label="$(jq -r '.label // ""' cloud-gpu/jobs/quota-request.json)"
+            [ -n "$smoke" ] || smoke="$(jq -r '.run_smoke // false' cloud-gpu/jobs/quota-request.json)"
             seconds="$(jq -r '.seconds // 120' cloud-gpu/jobs/quota-request.json)"
+            kernels="$(jq -r '(.check_kernels // []) | join(" ")' cloud-gpu/jobs/quota-request.json)"
           fi
           [ -n "$label" ] || label="check"
+          [ -n "$smoke" ] || smoke="false"
           {
             echo "label=$label"
             echo "run_smoke=$smoke"
             echo "seconds=$seconds"
+            echo "kernels=$kernels"
           } >> "$GITHUB_OUTPUT"
-          echo "label=$label run_smoke=$smoke seconds=$seconds"
+          echo "label=$label run_smoke=$smoke seconds=$seconds kernels=$kernels"
 
       - uses: actions/setup-python@v5
         with:
@@ -181,6 +185,13 @@ jobs:
           python cloud-gpu/scripts/kaggle_quota_report.py --label diag --diagnostics \
             --out cloud-gpu/results/quota-diag-${{ github.run_number }}.json || true
           ls -la ~/.gpu-relay ~/.kaggle 2>/dev/null || true
+
+      - name: Kernel status (who holds the GPU sessions)
+        run: |
+          set -euo pipefail
+          python cloud-gpu/scripts/kernel_status.py --mine \
+            --out cloud-gpu/results/quota-kernels-${{ github.run_number }}.json \
+            ${{ steps.req.outputs.kernels }} || true
 
       - name: Quota BEFORE
         run: |

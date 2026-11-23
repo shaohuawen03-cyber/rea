@@ -1,6 +1,11 @@
 {
-  "label": "quota-smoke-r2",
-  "run_smoke": true,
-  "seconds": 600,
-  "note": "Retry after username-resolution fix: push a 10-minute CUDA kernel, poll it, fetch output, then re-read the quota to show the delta."
+  "label": "quota-session-audit",
+  "run_smoke": false,
+  "seconds": 120,
+  "check_kernels": [
+    "shaohuawen/dualamp-real8-v2-retry1-20261123",
+    "shaohuawen/dualamp-real8-v2-20261123",
+    "shaohuawen/quota-smoke-8"
+  ],
+  "note": "Read quota and audit which kernels hold the two allowed GPU sessions."
 }

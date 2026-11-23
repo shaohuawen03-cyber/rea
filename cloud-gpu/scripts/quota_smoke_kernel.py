@@ -170,7 +170,12 @@ def main() -> int:
         log((pushed.stdout or "").strip())
         log((pushed.stderr or "").strip())
         if pushed.returncode != 0:
-            log("kaggle kernels push FAILED")
+            text = f"{pushed.stdout or ''}{pushed.stderr or ''}"
+            if "Maximum batch GPU session count" in text:
+                log("GPU_SESSION_LIMIT: the account already holds the maximum number of GPU sessions")
+                log("(quota only moves when those sessions run/finish; free a slot and retry)")
+            else:
+                log("kaggle kernels push FAILED")
             return 0
 
         status = "queued"
