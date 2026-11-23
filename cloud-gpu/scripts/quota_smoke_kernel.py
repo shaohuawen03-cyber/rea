@@ -90,6 +90,31 @@ def kaggle_username(log=print) -> str:
     return ""
 
 
+def raw_session_status(owner: str, slug: str) -> str:
+    """GetKernelSessionStatus body: `{}` means no session; a real queue has a body."""
+    try:
+        import requests
+
+        token = ""
+        for path in ("~/.kaggle/access_token", "~/.gpu-relay/kaggle_token"):
+            full = os.path.expanduser(path)
+            if not token and os.path.exists(full):
+                token = open(full, "r", encoding="utf-8").read().strip()
+        headers = {"Content-Type": "application/json"}
+        if token:
+            headers["Authorization"] = f"Bearer {token}"
+        resp = requests.post(
+            "https://api.kaggle.com/v1/kernels.KernelsApiService/GetKernelSessionStatus",
+            json={"userName": owner, "kernelSlug": slug},
+            headers=headers,
+            timeout=45,
+        )
+        body = (resp.text or "").strip()
+        return "no-session" if body in ("{}", "") else body[:300]
+    except Exception as exc:  # noqa: BLE001
+        return f"raw-error:{type(exc).__name__}"
+
+
 def run(cmd: list[str], timeout: int = 300) -> subprocess.CompletedProcess[str]:
     return subprocess.run(cmd, capture_output=True, text=True, timeout=timeout, check=False)
 
@@ -100,7 +125,7 @@ def main() -> int:
     parser.add_argument("--out-dir", default="cloud-gpu/results")
     parser.add_argument("--prefix", default="quota-smoke")
     parser.add_argument("--seconds", type=float, default=120.0)
-    parser.add_argument("--poll-timeout", type=int, default=1500)
+    parser.add_argument("--poll-timeout", type=int, default=3300, help="seconds to wait for the kernel (Kaggle GPU queues can be long)")
     parser.add_argument("--diagnose", action="store_true", help="also print kernel status + recent kernel list")
     args = parser.parse_args()
 
@@ -184,7 +209,8 @@ def main() -> int:
             time.sleep(20)
             probe = run(["kaggle", "kernels", "status", ref], timeout=60)
             status = (probe.stdout or probe.stderr).strip()
-            log(f"status: {status}")
+            raw = raw_session_status(user, slug)
+            log(f"status: {status} | raw: {raw}")
             low = status.lower()
             if "complete" in low or "error" in low or "cancel" in low:
                 break
