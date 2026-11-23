@@ -3,6 +3,6 @@
   "provider": "kaggle",
   "mode": "status",
   "kernel_ref": "shaohuawen/dualamp-real8-v2-20261123",
-  "status_output": "shaohuawen/dualamp-real8-v2-20261123 has status \"KernelWorkerStatus.QUEUED\"",
-  "checked_at_utc": "2026-11-23T09:52:00Z"
+  "status_output": "shaohuawen/dualamp-real8-v2-20261123 has status \"KernelWorkerStatus.ERROR\"",
+  "checked_at_utc": "2026-11-23T11:20:45Z"
 }
