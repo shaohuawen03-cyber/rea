@@ -71,7 +71,23 @@ def main() -> int:
     parser.add_argument("--prefix", default="quota-smoke")
     parser.add_argument("--seconds", type=float, default=120.0)
     parser.add_argument("--poll-timeout", type=int, default=1500)
+    parser.add_argument("--diagnose", action="store_true", help="also print kernel status + recent kernel list")
     args = parser.parse_args()
+
+    if args.diagnose:
+        user = kaggle_username()
+        if user:
+            ref = f"{user}/{args.slug}"
+            status = run(["kaggle", "kernels", "status", ref], timeout=120)
+            print(f"--- status {ref}\n{(status.stdout or status.stderr).strip()}", flush=True)
+            listing = run(
+                ["kaggle", "kernels", "list", "-m", "--page-size", "10", "--search", args.slug],
+                timeout=180,
+            )
+            print(f"--- list {args.slug}\n{(listing.stdout or listing.stderr).strip()}", flush=True)
+        else:
+            print("--- no username for diagnosis", flush=True)
+        return 0
 
     user = kaggle_username()
     if not user:
@@ -112,6 +128,7 @@ def main() -> int:
         pushed = run(["kaggle", "kernels", "push", "-p", stage, "--accelerator", "NvidiaTeslaT4"], timeout=180)
         print((pushed.stdout or pushed.stderr).strip(), flush=True)
         if pushed.returncode != 0:
+            print("kaggle kernels push FAILED (see output above)", file=sys.stderr)
             return 0
 
         status = "queued"

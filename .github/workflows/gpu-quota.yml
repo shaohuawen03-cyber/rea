@@ -201,6 +201,14 @@ jobs:
             --prefix "quota-smoke-${{ github.run_number }}" \
             --seconds "${{ steps.req.outputs.seconds }}"
 
+      - name: Smoke kernel health
+        if: steps.req.outputs.run_smoke == 'true'
+        run: |
+          set -euo pipefail
+          python cloud-gpu/scripts/quota_smoke_kernel.py \
+            --slug "quota-smoke-${{ github.run_number }}" \
+            --diagnose || true
+
       - name: Quota AFTER
         run: |
           set -euo pipefail

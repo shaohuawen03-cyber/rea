@@ -1,6 +1,6 @@
 {
-  "label": "diag-1123",
-  "run_smoke": false,
-  "seconds": 120,
-  "note": "Diagnostic pass: fingerprint the relay key, show non-secret credential-source state, and re-read the quota."
+  "label": "quota-smoke-600s",
+  "run_smoke": true,
+  "seconds": 600,
+  "note": "10-minute CUDA kernel on T4: proves a real GPU session moves the weekly balance (before/after delta)."
 }
