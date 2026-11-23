@@ -112,6 +112,37 @@ App to create or update workflow ... without 'workflows' permission`)。仓库�
 | `secrets/` | 一次性加密信封（提交后由中继消费删除） |
 | `results/` | 中继回传的小结果（自动生成，≤2 MiB/文件） |
 | `relay_pubkey.pem` | 中继公钥（首次运行自动提交；私钥只在 Actions 缓存里） |
+| `scripts/kaggle_quota_report.py` | 只读额度读取：`api.kaggle.com/.../GetAcceleratorQuotaStatistics`（精确秒），CLI `kaggle quota` 兜底；`--compare` 输出前后差值 |
+| `scripts/quota_smoke_kernel.py` + `jobs/quota_smoke.py` | 推送一个 2 分钟、零第三方依赖的 T4 内核（CUDA matmul），用于让额度真实下降 |
+| `jobs/quota-request.json` | 额度体检请求文件：**push 本文件即触发** `.github/workflows/gpu-quota.yml` |
+
+## 额度体检（"我想看到额度减少"）
+
+`gpu-relay.yml` 把所有任务串在 `gpu-relay-<ref>` 并发组里，长训练跑着的时候读不到额度。
+`.github/workflows/gpu-quota.yml` 是独立并发组的**只读**通道：
+
+```bash
+# 1) 写请求（seconds = 冒烟内核占用 GPU 的秒数；run_smoke=false 则只读不跑）
+cat > cloud-gpu/jobs/quota-request.json <<'JSON'
+{"label": "quota-smoke-1123", "run_smoke": true, "seconds": 150}
+JSON
+git add cloud-gpu/jobs/quota-request.json && git commit -m "chore(cloud-gpu): quota check" && git push
+
+# 2) 等 bot 提交回来，看 before/after 差值
+git pull
+cat cloud-gpu/results/quota-latest.json     # gpu.used_hours / delta.accelerators.gpu.used_hours_delta
+```
+
+产出：`results/quota-<label>-<run>-before.json`、`...-after.json`（带 `delta`）、
+`...-summary.json`、`quota-latest.json`，以及冒烟内核的 `quota-smoke-*` 日志与
+`https://www.kaggle.com/code/<user>/quota-smoke-<run>` 链接。默认分支上也可以
+`gh workflow run gpu-quota.yml -f run_smoke=true`（`workflow_dispatch` 只对默认分支可用）。
+
+**凭据前置**：这份工作流和 `gpu-relay.yml` 用同一套凭据，但 Actions cache（`~/.gpu-relay`
+金库，含解密私钥与 token）是 **分支作用域** 的。换分支后要么重新投一次
+`secrets/KAGGLE_API_TOKEN.enc` 一次性信封，要么让仓库管理员设一次 Actions secret
+`KAGGLE_API_TOKEN`（此后所有分支、包括额度体检都能直接读）。两者都没有时，工作流会
+正常跑完并在结果里写明 `"source": "none"` 与原因，不会假装成功。
 
 ## 任务（job）字段
 

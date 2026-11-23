@@ -26,6 +26,7 @@ PAYLOAD = os.path.join("cloud-gpu", "jobs", "quota_smoke.py")
 
 
 def kaggle_username() -> str:
+    """Username for the kernel id: kaggle.json, env, or the CLI's own auth resolution."""
     path = os.path.expanduser("~/.kaggle/kaggle.json")
     if os.path.exists(path):
         try:
@@ -35,7 +36,28 @@ def kaggle_username() -> str:
                 return name
         except (OSError, json.JSONDecodeError):
             pass
-    return (os.environ.get("KAGGLE_USERNAME") or "").strip()
+    name = (os.environ.get("KAGGLE_USERNAME") or "").strip()
+    if name:
+        return name
+    # Bare API tokens (KGAT_...) carry no username; the CLI introspects them.
+    probe = run(
+        [
+            sys.executable,
+            "-c",
+            "import json;from kaggle.api.kaggle_api_extended import KaggleApi;"
+            "a=KaggleApi();a.authenticate();print(json.dumps(a.config_values.get('username','')))",
+        ],
+        timeout=90,
+    )
+    if probe.returncode == 0:
+        for line in reversed((probe.stdout or "").splitlines()):
+            line = line.strip()
+            if line.startswith("{"):
+                try:
+                    return (json.loads(line).get("username") or "").strip()
+                except json.JSONDecodeError:
+                    break
+    return ""
 
 
 def run(cmd: list[str], timeout: int = 300) -> subprocess.CompletedProcess[str]:
@@ -59,7 +81,17 @@ def main() -> int:
     ref = f"{user}/{args.slug}"
     stage = tempfile.mkdtemp(prefix="quota_smoke_")
     try:
-        shutil.copy2(PAYLOAD, os.path.join(stage, "entry_main.py"))
+        # Kernel has no CLI args, so stage a wrapper that runs the payload with
+        # the requested duration instead of appending a comment that does nothing.
+        shutil.copy2(PAYLOAD, os.path.join(stage, "payload.py"))
+        payload_args = ["--seconds", str(args.seconds)]
+        wrapper = (
+            "import runpy, sys\n"
+            f"sys.argv = ['payload.py', *{payload_args!r}]\n"
+            "runpy.run_path('payload.py', run_name='__main__')\n"
+        )
+        with open(os.path.join(stage, "entry_main.py"), "w", encoding="utf-8") as f:
+            f.write(wrapper)
         metadata = {
             "id": ref,
             "title": " ".join(args.slug.split("-")),
@@ -77,9 +109,6 @@ def main() -> int:
         }
         with open(os.path.join(stage, "kernel-metadata.json"), "w", encoding="utf-8") as f:
             json.dump(metadata, f, indent=2)
-        # The payload takes --seconds; kernels run it bare, so bake the value in.
-        with open(os.path.join(stage, "entry_main.py"), "a", encoding="utf-8") as f:
-            f.write(f"\n# quota-smoke hint: --seconds {args.seconds}\n")
         pushed = run(["kaggle", "kernels", "push", "-p", stage, "--accelerator", "NvidiaTeslaT4"], timeout=180)
         print((pushed.stdout or pushed.stderr).strip(), flush=True)
         if pushed.returncode != 0:

@@ -47,6 +47,26 @@ git add cloud-gpu/jobs/queue.json cloud-gpu/jobs/my_job.py && git commit -m "cho
 触发后：Actions 起 `gpu-relay` → 解密信封 → `kaggle kernels push` → 轮询 `kaggle kernels status` → `kernels output` 取回
 → 小文件拷入 `cloud-gpu/results/<job-id>/` → artifact 上传 → bot 以 **`gpu-relay:` 开头的固定信息**提交回分支。
 
+## 额度（GPU 小时）怎么查
+
+不要靠猜。两条路，都不需要你碰凭据：
+
+- **只读体检（推荐，任何分支）**：写 `cloud-gpu/jobs/quota-request.json`
+  （`{"label": "...", "run_smoke": true, "seconds": 150}`）→ push → 等 bot 提交回来 →
+  读 `cloud-gpu/results/quota-latest.json` 的 `gpu.used_hours / remaining_hours` 与
+  `delta.accelerators.gpu.used_hours_delta`。工作流 `gpu-quota.yml` 用独立并发组，
+  不会被跑着的训练任务挡住。`run_smoke: false` 就是纯读数。
+- **证明额度真的会降**：`run_smoke: true` 会推一个 2 分钟、零依赖的 CUDA matmul 内核
+  （`jobs/quota_smoke.py`），前后两次读数之差就是它吃掉的 GPU 小时。
+
+额度数据来源：`POST https://api.kaggle.com/v1/kernels.KernelsApiService/GetAcceleratorQuotaStatistics`
+（`Authorization: Bearer <KGAT token>`，返回 `gpuQuota.timeUsed` 等 protobuf duration 字符串），
+CLI `kaggle quota --format json` 兜底。免费档 `totalTimeAllowed` 目前是 `108000s` = 30 h/周。
+
+**坑**：Actions cache 金库是分支作用域的（`gh api repos/<owner>/<repo>/actions/caches` 可见
+`ref`），换分支后旧分支的私钥/token 拿不到；一次性信封用后即焚。要么重投信封，要么让管理员设
+Actions secret `KAGGLE_API_TOKEN`。
+
 ## 收货
 
 ```bash
