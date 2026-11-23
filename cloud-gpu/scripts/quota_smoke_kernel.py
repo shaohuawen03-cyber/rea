@@ -89,9 +89,19 @@ def main() -> int:
             print("--- no username for diagnosis", flush=True)
         return 0
 
+    os.makedirs(args.out_dir, exist_ok=True)
+    log_path = os.path.join(args.out_dir, f"{args.prefix}-push.txt")
+
+    def log(line: str) -> None:
+        print(line, flush=True)
+        with open(log_path, "a", encoding="utf-8") as f:
+            f.write(line.rstrip() + "\n")
+
+    open(log_path, "w", encoding="utf-8").close()
     user = kaggle_username()
+    log(f"username={user!r} payload={PAYLOAD} seconds={args.seconds}")
     if not user:
-        print("no Kaggle username available; skipping smoke kernel", file=sys.stderr)
+        log("no Kaggle username available; skipping smoke kernel")
         return 0
 
     ref = f"{user}/{args.slug}"
@@ -125,10 +135,12 @@ def main() -> int:
         }
         with open(os.path.join(stage, "kernel-metadata.json"), "w", encoding="utf-8") as f:
             json.dump(metadata, f, indent=2)
-        pushed = run(["kaggle", "kernels", "push", "-p", stage, "--accelerator", "NvidiaTeslaT4"], timeout=180)
-        print((pushed.stdout or pushed.stderr).strip(), flush=True)
+        pushed = run(["kaggle", "kernels", "push", "-p", stage, "--accelerator", "NvidiaTeslaT4"], timeout=300)
+        log(f"push rc={pushed.returncode}")
+        log((pushed.stdout or "").strip())
+        log((pushed.stderr or "").strip())
         if pushed.returncode != 0:
-            print("kaggle kernels push FAILED (see output above)", file=sys.stderr)
+            log("kaggle kernels push FAILED")
             return 0
 
         status = "queued"
@@ -137,7 +149,7 @@ def main() -> int:
             time.sleep(20)
             probe = run(["kaggle", "kernels", "status", ref], timeout=60)
             status = (probe.stdout or probe.stderr).strip()
-            print(f"status: {status}", flush=True)
+            log(f"status: {status}")
             low = status.lower()
             if "complete" in low or "error" in low or "cancel" in low:
                 break
@@ -145,7 +157,9 @@ def main() -> int:
         os.makedirs(args.out_dir, exist_ok=True)
         fetched = tempfile.mkdtemp(prefix="quota_out_")
         try:
-            run(["kaggle", "kernels", "output", ref, "-p", fetched, "-o"], timeout=900)
+            got = run(["kaggle", "kernels", "output", ref, "-p", fetched, "-o"], timeout=900)
+            log(f"output rc={got.returncode} {(got.stdout or got.stderr).strip()[:800]}")
+            log(f"files: {sorted(os.listdir(fetched)) if os.path.isdir(fetched) else 'none'}")
             for path in sorted(glob.glob(os.path.join(fetched, "**", "*"), recursive=True)):
                 if not os.path.isfile(path):
                     continue

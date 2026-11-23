@@ -2,5 +2,5 @@
   "label": "quota-smoke-600s",
   "run_smoke": true,
   "seconds": 600,
-  "note": "10-minute CUDA kernel on T4: proves a real GPU session moves the weekly balance (before/after delta)."
+  "note": "10-minute CUDA kernel on T4 with full push/status logging: proves a real GPU session moves the weekly balance."
 }

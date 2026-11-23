@@ -220,6 +220,18 @@ jobs:
             | tee quota-after.txt
           cp "cloud-gpu/results/quota-${{ steps.req.outputs.label }}-${{ github.run_number }}-summary.json" cloud-gpu/results/quota-latest.json
 
+      - name: Upload run bundle as workflow artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gpu-quota-run-${{ github.run_number }}
+          path: |
+            quota-before.txt
+            quota-after.txt
+            cloud-gpu/results
+          retention-days: 14
+          if-no-files-found: ignore
+
       - name: Publish quota report
         if: always()
         run: |
