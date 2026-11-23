@@ -193,8 +193,10 @@ jobs:
       - name: Cancel a kernel session (optional)
         if: steps.req.outputs.cancel != ''
         run: |
-          set -euo pipefail
-          python cloud-gpu/scripts/cancel_kernel.py "${{ steps.req.outputs.cancel }}"
+          set -uo pipefail
+          mkdir -p cloud-gpu/results
+          python cloud-gpu/scripts/cancel_kernel.py "${{ steps.req.outputs.cancel }}" \
+            --out "cloud-gpu/results/quota-cancel-${{ github.run_number }}.txt" || true
 
       - name: Kernel status (who holds the GPU sessions)
         run: |

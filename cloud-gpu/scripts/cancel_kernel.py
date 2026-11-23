@@ -23,6 +23,7 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("ref", help="kernel ref '<owner>/<slug>'")
     parser.add_argument("--dry-run", action="store_true", help="only print the resolved request")
+    parser.add_argument("--out", default="", help="write the request/response log here")
     args = parser.parse_args()
 
     try:
@@ -46,14 +47,25 @@ def main() -> int:
             setattr(request, attr, value)
 
     payload = {k: v for k, v in vars(request).items() if not k.startswith("_")}
-    print(f"cancel request: {json.dumps(payload, default=str)[:400]}", flush=True)
+    lines = [f"cancel request: {json.dumps(payload, default=str)[:400]}"]
     if args.dry_run:
+        print("\n".join(lines), flush=True)
         return 0
 
-    with api.build_kaggle_client() as kaggle:
-        response = kaggle.kernels.kernels_api_client.cancel_kernel_session(request)
-    print(f"cancel response: {response}", flush=True)
-    return 0
+    try:
+        with api.build_kaggle_client() as kaggle:
+            response = kaggle.kernels.kernels_api_client.cancel_kernel_session(request)
+        lines.append(f"cancel response: {response}")
+        rc = 0
+    except Exception as exc:  # noqa: BLE001 - surface the API's own message
+        lines.append(f"cancel failed: {type(exc).__name__}: {exc}"[:1500])
+        rc = 1
+
+    if args.out:
+        with open(args.out, "w", encoding="utf-8") as f:
+            f.write("\n".join(lines) + "\n")
+    print("\n".join(lines), flush=True)
+    return rc
 
 
 if __name__ == "__main__":
