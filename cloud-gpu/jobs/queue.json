@@ -570,10 +570,11 @@
       "extra_pip": [],
       "serve_minutes": 0.0,
       "wait": true,
-      "status": "pending",
+      "status": "completed",
       "created_at_utc": "2026-11-23T09:51:30Z",
       "kernel_slug": "dualamp-real8-v2-20261123",
-      "note": "Read-only final status check after relay timeout and empty kernel outputs; does not rerun training."
+      "note": "Read-only final status check after relay timeout and empty kernel outputs; does not rerun training.",
+      "finished_at_utc": "2026-11-23T09:52:00Z"
     }
   ]
 }
