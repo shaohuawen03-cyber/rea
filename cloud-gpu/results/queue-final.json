@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-23T06:40:00Z",
+  "updated_at_utc": "2026-11-23T06:47:00Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -489,6 +489,26 @@
       "kernel_slug": "dualamp-v2-freeze-preflight-r3-20261123",
       "note": "Freeze strict positives from complete r3 ledger; audit weak negatives and MMseqs2 grouped split/leakage only. No model training in this job. Raw files and bundle stay private Drive; relay returns aggregate report only.",
       "finished_at_utc": "2026-11-23T06:44:05Z"
+    },
+    {
+      "id": "dualamp-real8-v2-20261123",
+      "provider": "kaggle",
+      "mode": "run",
+      "accelerator": "NvidiaTeslaT4",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_train_strict.py",
+      "script_args": [],
+      "extra_pip": [
+        "gdown",
+        "requests",
+        "fair-esm"
+      ],
+      "serve_minutes": 15.0,
+      "wait": true,
+      "timeout_sec": 10800,
+      "status": "pending",
+      "created_at_utc": "2026-11-23T06:47:00Z",
+      "kernel_slug": "dualamp-real8-v2-20261123",
+      "note": "First strict-literature positive_core_v2 training run after full 3,579-ID evidence ledger/freeze, exact ID closure, MMseqs2-grouped split leakage audit (0 leaks), and UniProt weak-negative audit. 16 strict positives only (test n=2): explicitly exploratory/underpowered, not publication-ready or definitive. M1/M2 primary, M3 control; 5 seeds × 5 folds × 60 epochs. Model binaries/scaler uploaded only to private Drive; no weights or peptide rows in Git."
     }
   ]
 }
