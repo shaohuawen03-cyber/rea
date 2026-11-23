@@ -126,6 +126,7 @@ def main() -> int:
     parser.add_argument("--prefix", default="quota-smoke")
     parser.add_argument("--seconds", type=float, default=120.0)
     parser.add_argument("--poll-timeout", type=int, default=3300, help="seconds to wait for the kernel (Kaggle GPU queues can be long)")
+    parser.add_argument("--no-wait", action="store_true", help="push only; do not poll (keeps the workflow short)")
     parser.add_argument("--diagnose", action="store_true", help="also print kernel status + recent kernel list")
     args = parser.parse_args()
 
@@ -201,6 +202,15 @@ def main() -> int:
                 log("(quota only moves when those sessions run/finish; free a slot and retry)")
             else:
                 log("kaggle kernels push FAILED")
+            return 0
+
+        if args.no_wait:
+            log(f"pushed (no-wait); kernel URL: https://www.kaggle.com/code/{ref}")
+            with open(os.path.join(args.out_dir, f"{args.prefix}-url.txt"), "w", encoding="utf-8") as f:
+                f.write(f"https://www.kaggle.com/code/{ref}\n")
+            with open(os.path.join(args.out_dir, f"{args.prefix}-status.json"), "w", encoding="utf-8") as f:
+                json.dump({"kernel_ref": ref, "final_status": "pushed_no_wait", "raw_session_status": raw_session_status(user, slug)}, f, indent=2)
+                f.write("\n")
             return 0
 
         status = "queued"

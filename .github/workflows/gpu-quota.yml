@@ -68,10 +68,12 @@ jobs:
           cancel_ref=""
           delete_ref=""
           probe_args=""
+          no_wait="false"
           if [ -f cloud-gpu/jobs/quota-request.json ]; then
             [ -n "$label" ] || label="$(jq -r '.label // ""' cloud-gpu/jobs/quota-request.json)"
             [ -n "$smoke" ] || smoke="$(jq -r '.run_smoke // false' cloud-gpu/jobs/quota-request.json)"
             seconds="$(jq -r '.seconds // 120' cloud-gpu/jobs/quota-request.json)"
+            no_wait="$(jq -r '.no_wait // false' cloud-gpu/jobs/quota-request.json)"
             kernels="$(jq -r '(.check_kernels // []) | join(" ")' cloud-gpu/jobs/quota-request.json)"
             cancel_ref="$(jq -r '.cancel_kernel // ""' cloud-gpu/jobs/quota-request.json)"
             delete_ref="$(jq -r '.delete_kernel // ""' cloud-gpu/jobs/quota-request.json)"
@@ -85,12 +87,13 @@ jobs:
             echo "label=$label"
             echo "run_smoke=$smoke"
             echo "seconds=$seconds"
+            echo "no_wait=$no_wait"
             echo "kernels=$kernels"
             echo "cancel=$cancel_ref"
             echo "delete=$delete_ref"
             echo "probe=$probe_args"
           } >> "$GITHUB_OUTPUT"
-          echo "label=$label run_smoke=$smoke seconds=$seconds kernels=$kernels"
+          echo "label=$label run_smoke=$smoke seconds=$seconds no_wait=$no_wait kernels=$kernels"
 
       - uses: actions/setup-python@v5
         with:
@@ -245,7 +248,8 @@ jobs:
             --slug "quota-smoke-${{ github.run_number }}" \
             --out-dir cloud-gpu/results \
             --prefix "quota-smoke-${{ github.run_number }}" \
-            --seconds "${{ steps.req.outputs.seconds }}"
+            --seconds "${{ steps.req.outputs.seconds }}" \
+            ${{ steps.req.outputs.no_wait == 'true' && '--no-wait' || '' }}
 
       - name: Smoke kernel health
         if: steps.req.outputs.run_smoke == 'true'
