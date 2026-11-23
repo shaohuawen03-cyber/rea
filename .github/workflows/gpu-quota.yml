@@ -66,12 +66,15 @@ jobs:
           seconds="120"
           kernels=""
           cancel_ref=""
+          probe_args=""
           if [ -f cloud-gpu/jobs/quota-request.json ]; then
             [ -n "$label" ] || label="$(jq -r '.label // ""' cloud-gpu/jobs/quota-request.json)"
             [ -n "$smoke" ] || smoke="$(jq -r '.run_smoke // false' cloud-gpu/jobs/quota-request.json)"
             seconds="$(jq -r '.seconds // 120' cloud-gpu/jobs/quota-request.json)"
             kernels="$(jq -r '(.check_kernels // []) | join(" ")' cloud-gpu/jobs/quota-request.json)"
             cancel_ref="$(jq -r '.cancel_kernel // ""' cloud-gpu/jobs/quota-request.json)"
+            probe_args="$(jq -r '.probe_refs // [] | map("--ref \"" + . + "\"") | join(" ")' cloud-gpu/jobs/quota-request.json)"
+            [ -n "$probe_args" ] || probe_args=""
           fi
           [ -n "${cancel_ref:-}" ] || cancel_ref=""
           [ -n "$label" ] || label="check"
@@ -82,6 +85,7 @@ jobs:
             echo "seconds=$seconds"
             echo "kernels=$kernels"
             echo "cancel=$cancel_ref"
+            echo "probe=$probe_args"
           } >> "$GITHUB_OUTPUT"
           echo "label=$label run_smoke=$smoke seconds=$seconds kernels=$kernels"
 
@@ -197,6 +201,14 @@ jobs:
           mkdir -p cloud-gpu/results
           python cloud-gpu/scripts/cancel_kernel.py "${{ steps.req.outputs.cancel }}" \
             --out "cloud-gpu/results/quota-cancel-${{ github.run_number }}.txt" || true
+
+      - name: Raw API probe (optional)
+        if: steps.req.outputs.probe != ''
+        run: |
+          set -uo pipefail
+          python cloud-gpu/scripts/kaggle_probe.py \
+            ${{ steps.req.outputs.probe }} \
+            --out "cloud-gpu/results/quota-probe-${{ github.run_number }}.jsonl" || true
 
       - name: Kernel status (who holds the GPU sessions)
         run: |

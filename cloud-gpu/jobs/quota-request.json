@@ -1,8 +1,7 @@
 {
-  "label": "quota-cancel-retry1-v2",
+  "label": "quota-probe",
   "run_smoke": false,
   "seconds": 120,
-  "cancel_kernel": "shaohuawen/dualamp-real8-v2-retry1-20261123",
-  "check_kernels": ["shaohuawen/dualamp-real8-v2-retry1-20261123"],
-  "note": "Cancel the stale QUEUED retry1 kernel that is holding a GPU session slot, log the API response, then read quota."
+  "probe_refs": ["shaohuawen/dualamp-real8-v2-retry1-20261123"],
+  "note": "Raw Connect-RPC probe of session status / get-kernel / quota, to see why the CLI status path and GPU pushing disagree."
 }
