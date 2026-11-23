@@ -1,7 +1,7 @@
 {
-  "label": "quota-smoke-240s",
-  "run_smoke": true,
-  "seconds": 240,
-  "no_wait": true,
-  "note": "4-minute bounded fp16 matmul on T4 (fixed operands, no overflow). Quota moved 52.17s -> 58.89s on the previous attempt, so a clean run should move it by ~4 minutes."
+  "label": "quota-after-240s",
+  "run_smoke": false,
+  "seconds": 60,
+  "check_kernels": ["shaohuawen/quota-smoke-24"],
+  "note": "Read the quota after the 4-minute kernel had a chance to run (queues can be long; repeat if still queued)."
 }
