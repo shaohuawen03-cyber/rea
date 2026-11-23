@@ -1,0 +1,25 @@
+{
+  "kernel_ref": "shaohuawen/dualamp-v2-gpu-minutes-45177559303",
+  "credential_source": "vault:KAGGLE_API_TOKEN",
+  "started_utc": "2026-11-23T12:47:15Z",
+  "gpu_quota_before": {
+    "time_used_seconds": 52.17,
+    "time_reserved_seconds": 0.0,
+    "total_allowed_seconds": 108000.0,
+    "remaining_seconds": 107947.83,
+    "quota_refresh_time": "2026-11-28T00:00:00Z"
+  },
+  "push": "Kernel version 1 successfully pushed.  Please check progress at https://www.kaggle.com/code/shaohuawen/dualamp-v2-gpu-minutes-45177559303",
+  "kernel_status": "shaohuawen/dualamp-v2-gpu-minutes-45177559303 has status \"KernelWorkerStatus.QUEUED\"",
+  "cancel_requested": true,
+  "output_fetch": "",
+  "gpu_quota_after": {
+    "time_used_seconds": 52.17,
+    "time_reserved_seconds": 0.0,
+    "total_allowed_seconds": 108000.0,
+    "remaining_seconds": 107947.83,
+    "quota_refresh_time": "2026-11-28T00:00:00Z"
+  },
+  "finished_utc": "2026-11-23T13:07:35Z",
+  "gpu_quota_delta_seconds": 0.0
+}
