@@ -1,0 +1,9 @@
+{
+  "job_id": "dualamp-real8-v2-read-output-20261123",
+  "provider": "kaggle",
+  "mode": "output",
+  "kernel_ref": "shaohuawen/dualamp-real8-v2-20261123",
+  "copied_files": [],
+  "cli_output": "",
+  "fetched_at_utc": "2026-11-23T09:50:52Z"
+}
