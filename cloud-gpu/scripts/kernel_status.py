@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 
@@ -24,14 +25,45 @@ def main() -> int:
     parser.add_argument("refs", nargs="*", help="kernel refs '<owner>/<slug>'")
     parser.add_argument("--mine", action="store_true", help="also list my recent kernels")
     parser.add_argument("--out", default="", help="write the report JSON here")
+    parser.add_argument(
+        "--raw",
+        action="store_true",
+        help="also call GetKernelSessionStatus directly: an empty {} means NO active session "
+        "(the CLI then prints its default QUEUED, which looks like a queue but is not one)",
+    )
     args = parser.parse_args()
 
-    report: dict = {"kernels": {}, "mine": []}
+    report: dict = {"kernels": {}, "mine": [], "raw_session_status": {}}
     for ref in args.refs:
         res = run(["kaggle", "kernels", "status", ref])
         status = (res.stdout or res.stderr).strip()
         report["kernels"][ref] = status
         print(f"{ref}: {status}")
+        if args.raw:
+            owner, _, slug = ref.partition("/")
+            try:
+                import requests
+
+                token = ""
+                for path in ("~/.kaggle/access_token", "~/.gpu-relay/kaggle_token"):
+                    full = os.path.expanduser(path)
+                    if not token and os.path.exists(full):
+                        token = open(full, "r", encoding="utf-8").read().strip()
+                headers = {"Content-Type": "application/json"}
+                if token:
+                    headers["Authorization"] = f"Bearer {token}"
+                resp = requests.post(
+                    "https://api.kaggle.com/v1/kernels.KernelsApiService/GetKernelSessionStatus",
+                    json={"userName": owner, "kernelSlug": slug},
+                    headers=headers,
+                    timeout=60,
+                )
+                body = resp.text.strip()
+                report["raw_session_status"][ref] = {"status_code": resp.status_code, "body": body}
+                note = "NO ACTIVE SESSION (CLI's QUEUED is the default enum value)" if body in ("{}", "") else body[:300]
+                print(f"  raw GetKernelSessionStatus: HTTP {resp.status_code} {note}")
+            except Exception as exc:  # noqa: BLE001
+                report["raw_session_status"][ref] = {"error": f"{type(exc).__name__}: {exc}"}
 
     if args.mine:
         res = run(["kaggle", "kernels", "list", "-m", "--page-size", "15", "--format", "json"])

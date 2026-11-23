@@ -213,7 +213,7 @@ jobs:
       - name: Kernel status (who holds the GPU sessions)
         run: |
           set -euo pipefail
-          python cloud-gpu/scripts/kernel_status.py --mine \
+          python cloud-gpu/scripts/kernel_status.py --mine --raw \
             --out cloud-gpu/results/quota-kernels-${{ github.run_number }}.json \
             ${{ steps.req.outputs.kernels }} || true
 

@@ -1,6 +1,7 @@
 {
-  "label": "quota-session-list",
-  "run_smoke": false,
-  "seconds": 120,
-  "note": "Look for a way to enumerate active Kaggle sessions holding the two GPU slots."
+  "label": "quota-smoke-600s-r3",
+  "run_smoke": true,
+  "seconds": 600,
+  "check_kernels": ["shaohuawen/dualamp-real8-v2-retry1-20261123"],
+  "note": "Retry the 10-minute GPU kernel now that the stale queue entry is gone; raw session status decides whether a slot is actually busy."
 }
