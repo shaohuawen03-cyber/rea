@@ -1,10 +1,7 @@
 {
-  "label": "quota-smoke-diag",
-  "run_smoke": false,
-  "seconds": 60,
-  "probe_refs": [
-    "shaohuawen/quota-smoke-21"
-  ],
-  "note": "quota-smoke-21 ended in ERROR before starting; fetch its logs via the API probe to see why.",
-  "logs_ref": "shaohuawen/quota-smoke-21"
+  "label": "quota-smoke-240s",
+  "run_smoke": true,
+  "seconds": 240,
+  "no_wait": true,
+  "note": "4-minute bounded fp16 matmul on T4 (fixed operands, no overflow). Quota moved 52.17s -> 58.89s on the previous attempt, so a clean run should move it by ~4 minutes."
 }
