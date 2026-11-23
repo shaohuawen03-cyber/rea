@@ -33,21 +33,40 @@ def main() -> int:
 
     try:
         from kaggle.api.kaggle_api_extended import KaggleApi
-        from kagglesdk.kernels.types.kernels_api_service import ApiDeleteKernelRequest
+        from kagglesdk.kernels.types.kernels_api_service import (
+            ApiDeleteKernelRequest,
+            ApiGetKernelRequest,
+        )
 
         api = KaggleApi()
         api.authenticate()
 
+        # KaggleObject freezes after __init__, so build via the property setters.
+        get_request = ApiGetKernelRequest()
+        get_request.user_name = owner
+        get_request.kernel_slug = slug
+        with api.build_kaggle_client() as kaggle:
+            before = kaggle.kernels.kernels_api_client.get_kernel(get_request)
+        meta = getattr(before, "metadata", None)
+        lines.append(f"before: ref={getattr(meta, 'ref', '?')} id={getattr(meta, 'id', '?')}")
+
         request = ApiDeleteKernelRequest()
-        for attr, value in (("user_name", owner), ("kernel_slug", slug)):
-            if hasattr(request, attr):
-                setattr(request, attr, value)
-        lines.append(f"delete request: {json.dumps({k: v for k, v in vars(request).items() if not k.startswith('_')}, default=str)}")
+        request.user_name = owner
+        request.kernel_slug = slug
+        lines.append(f"delete request: user_name={request.user_name} kernel_slug={request.kernel_slug}")
 
         with api.build_kaggle_client() as kaggle:
             response = kaggle.kernels.kernels_api_client.delete_kernel(request)
-        lines.append(f"delete response: {response}")
-        rc = 0
+        lines.append(f"delete response: errorMessage={getattr(response, 'error_message', None)!r}")
+
+        with api.build_kaggle_client() as kaggle:
+            try:
+                kaggle.kernels.kernels_api_client.get_kernel(get_request)
+                lines.append("after: kernel STILL EXISTS")
+                rc = 1
+            except Exception as exc:  # noqa: BLE001 - 404 means gone
+                lines.append(f"after: kernel gone ({type(exc).__name__}: {str(exc)[:200]})")
+                rc = 0
     except Exception as exc:  # noqa: BLE001
         lines.append(f"delete failed: {type(exc).__name__}: {exc}"[:1500])
         rc = 1

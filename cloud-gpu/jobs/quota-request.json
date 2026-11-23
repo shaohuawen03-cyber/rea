@@ -1,7 +1,8 @@
 {
-  "label": "quota-delete-retry1",
+  "label": "quota-delete-retry1-v2",
   "run_smoke": false,
   "seconds": 120,
   "delete_kernel": "shaohuawen/dualamp-real8-v2-retry1-20261123",
-  "note": "Delete the retry1 kernel that never started (no session, no quota used) to free a GPU slot, then confirm the slot is available."
+  "check_kernels": ["shaohuawen/dualamp-real8-v2-retry1-20261123"],
+  "note": "Second attempt: build the delete request through property setters (KaggleObject freezes in __init__) and verify the kernel is gone."
 }
