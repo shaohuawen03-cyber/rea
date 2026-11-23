@@ -1,7 +1,10 @@
 {
-  "label": "quota-watch",
+  "label": "quota-smoke-diag",
   "run_smoke": false,
   "seconds": 60,
-  "check_kernels": ["shaohuawen/quota-smoke-21", "shaohuawen/quota-smoke-19"],
-  "note": "Watch the pushed smoke kernels: if either holds a real Kaggle session, the GPU quota will start moving. Read-only, no new GPU pushes."
+  "probe_refs": [
+    "shaohuawen/quota-smoke-21"
+  ],
+  "note": "quota-smoke-21 ended in ERROR before starting; fetch its logs via the API probe to see why.",
+  "logs_ref": "shaohuawen/quota-smoke-21"
 }

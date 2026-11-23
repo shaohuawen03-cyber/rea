@@ -74,6 +74,7 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--ref", default="", help="'<owner>/<slug>' for status/get-kernel")
     parser.add_argument("--mine", action="store_true", help="also call ListKernels for my profile")
+    parser.add_argument("--logs", default="", help="fetch the session log stream for '<owner>/<slug>'")
     parser.add_argument("--out", default="")
     args = parser.parse_args()
 
@@ -87,6 +88,32 @@ def main() -> int:
         owner, _, slug = args.ref.partition("/")
         post("GetKernelSessionStatus", {"userName": owner, "kernelSlug": slug}, args.out)
         post("GetKernel", {"userName": owner, "kernelSlug": slug}, args.out)
+
+    if args.logs:
+        owner, _, slug = args.logs.partition("/")
+        from kaggle.api.kaggle_api_extended import KaggleApi
+        from kagglesdk.kernels.types.kernels_api_service import ApiGetKernelSessionLogsStreamRequest
+
+        api = KaggleApi()
+        api.authenticate()
+        req = ApiGetKernelSessionLogsStreamRequest()
+        for attr, value in (("user_name", owner), ("kernel_slug", slug)):
+            if hasattr(req, attr):
+                setattr(req, attr, value)
+        try:
+            with api.build_kaggle_client() as kaggle:
+                stream = kaggle.kernels.kernels_api_client.get_kernel_session_logs_stream(req)
+            text = ""
+            try:
+                text = stream.read().decode("utf-8", "replace")[:6000] if hasattr(stream, "read") else str(stream)[:6000]
+            except Exception:  # noqa: BLE001
+                text = str(stream)[:6000]
+            print(f"--- logs for {args.logs} ---\n{text}", flush=True)
+            if args.out:
+                with open(args.out, "a", encoding="utf-8") as f:
+                    f.write(json.dumps({"logs_ref": args.logs, "body": text}, ensure_ascii=False) + "\n")
+        except Exception as exc:  # noqa: BLE001
+            print(f"logs failed: {type(exc).__name__}: {exc}", flush=True)
 
     if args.mine:
         post("ListKernels", {"group": "profile", "pageSize": 20}, args.out)
