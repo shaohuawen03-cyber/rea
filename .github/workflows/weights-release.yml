@@ -151,7 +151,7 @@ jobs:
           d=tempfile.mkdtemp(prefix='kernel-observe-')
           out=subprocess.run(['kaggle','kernels','output',ref,'-p',d,'-o'],env=env,text=True,capture_output=True,timeout=180)
           print('OUTPUT_FETCH='+(out.stdout or out.stderr).strip()[:1000])
-          safe={'kernel_ref':ref,'status':(st.stdout or st.stderr).strip()}
+          safe={'kernel_ref':ref,'kernel_status':(st.stdout or st.stderr).strip()}
           p=os.path.join(d,'v2_training_report.json')
           if os.path.isfile(p):
               data=json.load(open(p))
