@@ -1,0 +1,42 @@
+[{"stream_name":"stdout","time":12.962962303,"data":"{\n"}
+,{"stream_name":"stdout","time":12.963015874,"data":"  \"stage\": \"full_text_evidence_harvest\",\n"}
+,{"stream_name":"stdout","time":12.963021653,"data":"  \"status\": \"LEDGER_GENERATED_AND_UPLOADED_PRIVATE\",\n"}
+,{"stream_name":"stdout","time":12.963024815,"data":"  \"rule_version\": \"auto_evidence_v2_1.0\",\n"}
+,{"stream_name":"stdout","time":12.963027776,"data":"  \"started_utc\": \"2026-11-23T02:58:47.857519+00:00\",\n"}
+,{"stream_name":"stdout","time":12.963030627,"data":"  \"training_started\": false,\n"}
+,{"stream_name":"stdout","time":12.963033515,"data":"  \"note\": \"Row-level ledger is uploaded to private Drive; no raw sequences or evidence rows are returned through relay.\",\n"}
+,{"stream_name":"stdout","time":12.963036665,"data":"  \"candidate_fasta_records\": 3579,\n"}
+,{"stream_name":"stdout","time":12.96303955,"data":"  \"metadata_rows\": 3579,\n"}
+,{"stream_name":"stdout","time":12.963042226,"data":"  \"source_audit_rows\": 9314,\n"}
+,{"stream_name":"stdout","time":12.963044831,"data":"  \"source_audit_ids_intersecting_candidates\": 3579,\n"}
+,{"stream_name":"stdout","time":12.963047516,"data":"  \"source_audit_rows_for_candidate_ids\": 3579,\n"}
+,{"stream_name":"stdout","time":12.963050234,"data":"  \"candidate_ids_with_citation_identifiers\": 0,\n"}
+,{"stream_name":"stdout","time":12.96305294,"data":"  \"unique_citation_identifiers\": 0,\n"}
+,{"stream_name":"stdout","time":12.963055744,"data":"  \"ledger_rows\": 3579,\n"}
+,{"stream_name":"stdout","time":12.96305837,"data":"  \"ledger_candidate_coverage\": 3579,\n"}
+,{"stream_name":"stdout","time":12.963061179,"data":"  \"candidate_ids_without_ledger_coverage\": 0,\n"}
+,{"stream_name":"stdout","time":12.963063879,"data":"  \"evidence_level_counts\": {\n"}
+,{"stream_name":"stdout","time":12.963066623,"data":"    \"NONE\": 3579\n"}
+,{"stream_name":"stdout","time":12.963069355,"data":"  },\n"}
+,{"stream_name":"stdout","time":12.9630719,"data":"  \"strict_rule_candidate_ids_draft\": 0,\n"}
+,{"stream_name":"stdout","time":12.963074621,"data":"  \"ledger_sha256\": \"cf11e251dbb180d506702c7296789d77fa45f22f23e7cdf9782cf47d18a73de7\",\n"}
+,{"stream_name":"stdout","time":12.963077458,"data":"  \"ledger_bytes\": 694592,\n"}
+,{"stream_name":"stdout","time":12.963080121,"data":"  \"private_drive_upload\": {\n"}
+,{"stream_name":"stdout","time":12.963082726,"data":"    \"bytes\": 694592,\n"}
+,{"stream_name":"stdout","time":12.963085427,"data":"    \"sha256\": \"cf11e251dbb180d506702c7296789d77fa45f22f23e7cdf9782cf47d18a73de7\",\n"}
+,{"stream_name":"stdout","time":12.963088176,"data":"    \"response\": {\n"}
+,{"stream_name":"stdout","time":12.963090807,"data":"      \"kind\": \"drive#file\",\n"}
+,{"stream_name":"stdout","time":12.963093566,"data":"      \"id\": \"1GTIXW5JJWHkxTpDGrvsVXu_iqLHE8AZh\",\n"}
+,{"stream_name":"stdout","time":12.963096274,"data":"      \"name\": \"dualamp_v2_evidence_ledger_2026-11-23.tsv\",\n"}
+,{"stream_name":"stdout","time":12.963098938,"data":"      \"mimeType\": \"text/tab-separated-values\"\n"}
+,{"stream_name":"stdout","time":12.963101697,"data":"    }\n"}
+,{"stream_name":"stdout","time":12.963104253000001,"data":"  },\n"}
+,{"stream_name":"stdout","time":12.963106813,"data":"  \"finished_utc\": \"2026-11-23T02:58:54.689679+00:00\"\n"}
+,{"stream_name":"stdout","time":12.963109569,"data":"}\n"}
+,{"stream_name":"stderr","time":15.49122731,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":15.491271265,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":15.838705535999999,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":15.838740131,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":16.92456222,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":18.16397225,"data":"[NbConvertApp] Writing 310395 bytes to __results__.html\n"}
+]

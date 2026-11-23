@@ -1,0 +1,35 @@
+{
+  "stage": "full_text_evidence_harvest",
+  "status": "LEDGER_GENERATED_AND_UPLOADED_PRIVATE",
+  "rule_version": "auto_evidence_v2_1.0",
+  "started_utc": "2026-11-23T02:58:47.857519+00:00",
+  "training_started": false,
+  "note": "Row-level ledger is uploaded to private Drive; no raw sequences or evidence rows are returned through relay.",
+  "candidate_fasta_records": 3579,
+  "metadata_rows": 3579,
+  "source_audit_rows": 9314,
+  "source_audit_ids_intersecting_candidates": 3579,
+  "source_audit_rows_for_candidate_ids": 3579,
+  "candidate_ids_with_citation_identifiers": 0,
+  "unique_citation_identifiers": 0,
+  "ledger_rows": 3579,
+  "ledger_candidate_coverage": 3579,
+  "candidate_ids_without_ledger_coverage": 0,
+  "evidence_level_counts": {
+    "NONE": 3579
+  },
+  "strict_rule_candidate_ids_draft": 0,
+  "ledger_sha256": "cf11e251dbb180d506702c7296789d77fa45f22f23e7cdf9782cf47d18a73de7",
+  "ledger_bytes": 694592,
+  "private_drive_upload": {
+    "bytes": 694592,
+    "sha256": "cf11e251dbb180d506702c7296789d77fa45f22f23e7cdf9782cf47d18a73de7",
+    "response": {
+      "kind": "drive#file",
+      "id": "1GTIXW5JJWHkxTpDGrvsVXu_iqLHE8AZh",
+      "name": "dualamp_v2_evidence_ledger_2026-11-23.tsv",
+      "mimeType": "text/tab-separated-values"
+    }
+  },
+  "finished_utc": "2026-11-23T02:58:54.689679+00:00"
+}
