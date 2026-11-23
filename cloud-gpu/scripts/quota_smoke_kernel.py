@@ -25,21 +25,46 @@ import time
 PAYLOAD = os.path.join("cloud-gpu", "jobs", "quota_smoke.py")
 
 
-def kaggle_username() -> str:
-    """Username for the kernel id: kaggle.json, env, or the CLI's own auth resolution."""
+def kaggle_username(log=print) -> str:
+    """Username for the kernel id, with every fallback logged (no secrets)."""
     path = os.path.expanduser("~/.kaggle/kaggle.json")
     if os.path.exists(path):
         try:
             with open(path, "r", encoding="utf-8") as f:
                 name = (json.load(f).get("username") or "").strip()
             if name:
+                log(f"username from kaggle.json: {name}")
                 return name
-        except (OSError, json.JSONDecodeError):
-            pass
+        except (OSError, json.JSONDecodeError) as exc:
+            log(f"kaggle.json unreadable: {type(exc).__name__}")
+    else:
+        log("no ~/.kaggle/kaggle.json (bare API token mode)")
+
     name = (os.environ.get("KAGGLE_USERNAME") or "").strip()
     if name:
+        log(f"username from env: {name}")
         return name
-    # Bare API tokens (KGAT_...) carry no username; the CLI introspects them.
+
+    # `kernels list -m` returns rows whose `ref` is "<username>/<slug>".
+    listing = run(["kaggle", "kernels", "list", "-m", "--page-size", "5", "--format", "json"], timeout=180)
+    if listing.returncode == 0:
+        text = (listing.stdout or "").strip()
+        try:
+            rows = json.loads(text) if text.startswith("[") else []
+        except json.JSONDecodeError:
+            rows = []
+        for row in rows:
+            ref = str(row.get("ref") or "")
+            if "/" in ref:
+                name = ref.split("/", 1)[0].strip()
+                if name:
+                    log(f"username from kernels list: {name}")
+                    return name
+        log(f"kernels list gave no refs ({len(rows)} rows)")
+    else:
+        log(f"kernels list failed rc={listing.returncode}: {(listing.stderr or listing.stdout).strip()[:300]}")
+
+    # Last resort: let the CLI introspect the access token.
     probe = run(
         [
             sys.executable,
@@ -47,16 +72,21 @@ def kaggle_username() -> str:
             "import json;from kaggle.api.kaggle_api_extended import KaggleApi;"
             "a=KaggleApi();a.authenticate();print(json.dumps(a.config_values.get('username','')))",
         ],
-        timeout=90,
+        timeout=120,
     )
     if probe.returncode == 0:
         for line in reversed((probe.stdout or "").splitlines()):
             line = line.strip()
             if line.startswith("{"):
                 try:
-                    return (json.loads(line).get("username") or "").strip()
+                    name = (json.loads(line).get("username") or "").strip()
                 except json.JSONDecodeError:
-                    break
+                    name = ""
+                if name:
+                    log(f"username from token introspection: {name}")
+                    return name
+    else:
+        log(f"token introspection failed rc={probe.returncode}: {(probe.stderr or '')[-300:]}")
     return ""
 
 
@@ -75,7 +105,7 @@ def main() -> int:
     args = parser.parse_args()
 
     if args.diagnose:
-        user = kaggle_username()
+        user = kaggle_username(log=print)
         if user:
             ref = f"{user}/{args.slug}"
             status = run(["kaggle", "kernels", "status", ref], timeout=120)
@@ -98,7 +128,7 @@ def main() -> int:
             f.write(line.rstrip() + "\n")
 
     open(log_path, "w", encoding="utf-8").close()
-    user = kaggle_username()
+    user = kaggle_username(log)
     log(f"username={user!r} payload={PAYLOAD} seconds={args.seconds}")
     if not user:
         log("no Kaggle username available; skipping smoke kernel")
