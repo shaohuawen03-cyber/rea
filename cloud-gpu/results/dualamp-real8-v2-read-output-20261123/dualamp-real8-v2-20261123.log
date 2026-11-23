@@ -1,0 +1,57 @@
+[{"stream_name":"stderr","time":7.56001863,"data":"{\n"}
+,{"stream_name":"stderr","time":7.560051752,"data":"  \"stage\": \"dualamp_v2_strict_training\",\n"}
+,{"stream_name":"stderr","time":7.560056936,"data":"  \"started_utc\": \"2026-11-23T11:15:54.591161+00:00\",\n"}
+,{"stream_name":"stderr","time":7.560060577,"data":"  \"dataset_version\": \"positive_core_v2_strict\",\n"}
+,{"stream_name":"stderr","time":7.560064077,"data":"  \"training_started\": false,\n"}
+,{"stream_name":"stderr","time":7.560067475,"data":"  \"positive_records\": 16,\n"}
+,{"stream_name":"stderr","time":7.560071046,"data":"  \"positive_unique_sequences\": 16,\n"}
+,{"stream_name":"stderr","time":7.560074485,"data":"  \"test_positive_n\": 2,\n"}
+,{"stream_name":"stderr","time":7.560078097,"data":"  \"warning\": \"Severely underpowered evaluation cohort. Metrics are exploratory/descriptive, not definitive or publication-ready.\",\n"}
+,{"stream_name":"stderr","time":7.560081767,"data":"  \"status\": \"FAILED_NOT_COMPLETED\",\n"}
+,{"stream_name":"stderr","time":7.560085916,"data":"  \"error\": \"Failed to retrieve file url:\\n\\n\\tCannot retrieve the public link of the file. You may need to change\\n\\tthe permission to 'Anyone with the link', or have had many accesses.\\n\\tCheck FAQ in https://github.com/wkentaro/gdown?tab=readme-ov-file#faq.\\n\\nYou may still be able to access the file from the browser:\\n\\n\\thttps://drive.google.com/uc?id=1mrcNByKLxoyqM0Hvs1aEmhlJgrYQtZch\\n\\nbut Gdown can't. Please check connections and permissions.\",\n"}
+,{"stream_name":"stderr","time":7.560097293,"data":"  \"traceback\": \"Traceback (most recent call last):\\n  File \\\"/usr/local/lib/python3.13/dist-packages/gdown/download.py\\\", line 273, in download\\n    url = get_url_from_gdrive_confirmation(res.text)\\n  File \\\"/usr/local/lib/python3.13/dist-packages/gdown/download.py\\\", line 55, in get_url_from_gdrive_confirmation\\n    raise FileURLRetrievalError(\\n    ...\u003c4 lines\u003e...\\n    )\\ngdown.exceptions.FileURLRetrievalError: Cannot retrieve the public link of the file. You may need to change the permission to 'Anyone with the link', or have had many accesses. Check FAQ in https://github.com/wkentaro/gdown?tab=readme-ov-file#faq.\\n\\nDuring handling of the above exception, another exception occurred:\\n\\nTraceback (most recent call last):\\n  File \\\"/tmp/_payload.py\\\", line 59, in main\\n    got = gdown.download(id=bundle_id, output=str(bundle), quiet=True)\\n  File \\\"/usr/local/lib/python3.13/dist-packages/gdown/download.py\\\", line 284, in download\\n    raise FileURLRetrievalError(message)\\ngdown.exceptions.FileURLRetrievalError: Failed to retrieve file url:\\n\\n\\tCannot retrieve the public link of the file. You may need to change\\n\\tthe permission to 'Anyone with the link', or have had many accesses.\\n\\tCheck FAQ in https://github.com/wkentaro/gdown?tab=readme-ov-file#faq.\\n\\nYou may still be able to access the file from the browser:\\n\\n\\thttps://drive.google.com/uc?id=1mrcNByKLxoyqM0Hvs1aEmhlJgrYQtZch\\n\\nbut Gdown can't. Please check connections and permissions.\\n\",\n"}
+,{"stream_name":"stderr","time":7.5601080849999995,"data":"  \"finished_utc\": \"2026-11-23T11:15:55.695504+00:00\"\n"}
+,{"stream_name":"stderr","time":7.560111802,"data":"}\n"}
+,{"stream_name":"stderr","time":7.561109953,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":7.561498457,"data":"  File \"/usr/local/lib/python3.13/dist-packages/gdown/download.py\", line 273, in download\n"}
+,{"stream_name":"stderr","time":7.56151601,"data":"    url = get_url_from_gdrive_confirmation(res.text)\n"}
+,{"stream_name":"stderr","time":7.561521064,"data":"  File \"/usr/local/lib/python3.13/dist-packages/gdown/download.py\", line 55, in get_url_from_gdrive_confirmation\n"}
+,{"stream_name":"stderr","time":7.561525804,"data":"    raise FileURLRetrievalError(\n"}
+,{"stream_name":"stderr","time":7.561541374,"data":"    ...\u003c4 lines\u003e...\n"}
+,{"stream_name":"stderr","time":7.5615461029999995,"data":"    )\n"}
+,{"stream_name":"stderr","time":7.561550141,"data":"gdown.exceptions.FileURLRetrievalError: Cannot retrieve the public link of the file. You may need to change the permission to 'Anyone with the link', or have had many accesses. Check FAQ in https://github.com/wkentaro/gdown?tab=readme-ov-file#faq.\n"}
+,{"stream_name":"stderr","time":7.561555943,"data":"\n"}
+,{"stream_name":"stderr","time":7.561559645,"data":"During handling of the above exception, another exception occurred:\n"}
+,{"stream_name":"stderr","time":7.561563933,"data":"\n"}
+,{"stream_name":"stderr","time":7.561568044,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":7.562072748,"data":"  File \"/kaggle/src/script.py\", line 8, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":7.56208406,"data":"    runpy.run_path('/tmp/_payload.py', run_name='__main__')\n"}
+,{"stream_name":"stderr","time":7.562088488,"data":"    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":7.5620925549999995,"data":"  File \"\u003cfrozen runpy\u003e\", line 294, in run_path\n"}
+,{"stream_name":"stderr","time":7.562096588,"data":"  File \"\u003cfrozen runpy\u003e\", line 98, in _run_module_code\n"}
+,{"stream_name":"stderr","time":7.562100716,"data":"  File \"\u003cfrozen runpy\u003e\", line 88, in _run_code\n"}
+,{"stream_name":"stderr","time":7.562104638,"data":"  File \"/tmp/_payload.py\", line 141, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":7.56210877,"data":"    if __name__ == \"__main__\": main()\n"}
+,{"stream_name":"stderr","time":7.562112725,"data":"                               ~~~~^^\n"}
+,{"stream_name":"stderr","time":7.562116788,"data":"  File \"/tmp/_payload.py\", line 59, in main\n"}
+,{"stream_name":"stderr","time":7.5621282260000005,"data":"    got = gdown.download(id=bundle_id, output=str(bundle), quiet=True)\n"}
+,{"stream_name":"stderr","time":7.562132068,"data":"  File \"/usr/local/lib/python3.13/dist-packages/gdown/download.py\", line 284, in download\n"}
+,{"stream_name":"stderr","time":7.56213622,"data":"    raise FileURLRetrievalError(message)\n"}
+,{"stream_name":"stderr","time":7.562140119,"data":"gdown.exceptions.FileURLRetrievalError: Failed to retrieve file url:\n"}
+,{"stream_name":"stderr","time":7.562144323,"data":"\n"}
+,{"stream_name":"stderr","time":7.562147993,"data":"\tCannot retrieve the public link of the file. You may need to change\n"}
+,{"stream_name":"stderr","time":7.562151991,"data":"\tthe permission to 'Anyone with the link', or have had many accesses.\n"}
+,{"stream_name":"stderr","time":7.5621559739999995,"data":"\tCheck FAQ in https://github.com/wkentaro/gdown?tab=readme-ov-file#faq.\n"}
+,{"stream_name":"stderr","time":7.562160443,"data":"\n"}
+,{"stream_name":"stderr","time":7.562164494,"data":"You may still be able to access the file from the browser:\n"}
+,{"stream_name":"stderr","time":7.5621685020000005,"data":"\n"}
+,{"stream_name":"stderr","time":7.562172862,"data":"\thttps://drive.google.com/uc?id=1mrcNByKLxoyqM0Hvs1aEmhlJgrYQtZch\n"}
+,{"stream_name":"stderr","time":7.562177155,"data":"\n"}
+,{"stream_name":"stderr","time":7.562180797,"data":"but Gdown can't. Please check connections and permissions.\n"}
+,{"stream_name":"stderr","time":9.631760975,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":9.631789026,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":9.939892745,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":9.939939073,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":10.984344552,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":12.075693817,"data":"[NbConvertApp] Writing 291381 bytes to __results__.html\n"}
+]
