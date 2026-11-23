@@ -1,6 +1,6 @@
 {
-  "label": "quota-smoke-1123",
-  "run_smoke": true,
-  "seconds": 150,
-  "note": "Read quota, run a ~150 s CUDA kernel on T4, read quota again: the used/remaining delta is the GPU time this run actually consumed."
+  "label": "diag-1123",
+  "run_smoke": false,
+  "seconds": 120,
+  "note": "Diagnostic pass: fingerprint the relay key, show non-secret credential-source state, and re-read the quota."
 }
