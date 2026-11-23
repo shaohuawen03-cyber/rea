@@ -1,0 +1,100 @@
+{
+  "kernels": {
+    "shaohuawen/dualamp-real8-v2-retry1-20261123": "Cannot access kernel 'shaohuawen/dualamp-real8-v2-retry1-20261123' (Permission 'kernels.get' was denied). The most likely cause is a wrong kernel slug. The benchmark_task_slug returned by get_benchmark_leaderboard differs from the actual kernel slug — use the slug from the notebook URL (kaggle.com/code/owner/KERNEL-SLUG), not from the leaderboard. It can also occur if the notebook is private."
+  },
+  "mine": [
+    {
+      "ref": "shaohuawen/vcl-zhaozhaomumu-ltx",
+      "lastRunTime": "2026-11-09T01:15:38.487000",
+      "totalVotes": 0
+    },
+    {
+      "ref": "shaohuawen/vcl-shanhai-60s-ltx",
+      "lastRunTime": "2026-11-09T06:34:57.093000",
+      "totalVotes": 0
+    },
+    {
+      "ref": "shaohuawen/notebook921b74d2b4",
+      "lastRunTime": "2026-01-22T01:45:50.593000",
+      "totalVotes": 0
+    },
+    {
+      "ref": "shaohuawen/notebookad0bb43cc6",
+      "lastRunTime": "2026-03-04T12:10:47.770000",
+      "totalVotes": 0
+    },
+    {
+      "ref": "",
+      "lastRunTime": "2010-04-01T00:00:00",
+      "totalVotes": 0
+    },
+    {
+      "ref": "",
+      "lastRunTime": "2010-04-01T00:00:00",
+      "totalVotes": 0
+    },
+    {
+      "ref": "shaohuawen/dualamp-v2-cpu-smoke-45174872732",
+      "lastRunTime": "2026-11-23T12:30:17.143000",
+      "totalVotes": 0
+    },
+    {
+      "ref": "",
+      "lastRunTime": "2010-04-01T00:00:00",
+      "totalVotes": 0
+    },
+    {
+      "ref": "shaohuawen/dualamp-real8-v2-20261123",
+      "lastRunTime": "2026-11-23T11:15:45.967000",
+      "totalVotes": 0
+    },
+    {
+      "ref": "shaohuawen/dualamp-v2-freeze-preflight-r3-20261123",
+      "lastRunTime": "2026-11-23T06:41:22.537000",
+      "totalVotes": 0
+    },
+    {
+      "ref": "shaohuawen/dualamp-v2-literature-harvest-r3-20261123",
+      "lastRunTime": "2026-11-23T03:19:30.257000",
+      "totalVotes": 0
+    },
+    {
+      "ref": "shaohuawen/dualamp-v2-literature-harvest-r2-20261123",
+      "lastRunTime": "2026-11-23T03:04:56.677000",
+      "totalVotes": 0
+    },
+    {
+      "ref": "shaohuawen/dualamp-v2-citation-diagnostics-20261123",
+      "lastRunTime": "2026-11-23T03:01:41.287000",
+      "totalVotes": 0
+    },
+    {
+      "ref": "shaohuawen/dualamp-v2-literature-harvest-20261123",
+      "lastRunTime": "2026-11-23T02:58:39.823000",
+      "totalVotes": 0
+    },
+    {
+      "ref": "shaohuawen/dualamp-v2-source-audit-20261112",
+      "lastRunTime": "2026-11-23T02:51:35.263000",
+      "totalVotes": 0
+    }
+  ],
+  "raw_session_status": {
+    "shaohuawen/dualamp-real8-v2-retry1-20261123": {
+      "status_code": 403,
+      "body": "{\"error\":{\"code\":403,\"message\":\"Permission \\u0027kernels.get\\u0027 was denied\",\"status\":\"PERMISSION_DENIED\"}}"
+    }
+  },
+  "statuses": {
+    "shaohuawen/vcl-zhaozhaomumu-ltx": "shaohuawen/vcl-zhaozhaomumu-ltx has status \"KernelWorkerStatus.COMPLETE\"",
+    "shaohuawen/vcl-shanhai-60s-ltx": "shaohuawen/vcl-shanhai-60s-ltx has status \"KernelWorkerStatus.COMPLETE\"",
+    "shaohuawen/notebook921b74d2b4": "shaohuawen/notebook921b74d2b4 has status \"KernelWorkerStatus.COMPLETE\"",
+    "shaohuawen/notebookad0bb43cc6": "shaohuawen/notebookad0bb43cc6 has status \"KernelWorkerStatus.COMPLETE\"",
+    "shaohuawen/dualamp-v2-cpu-smoke-45174872732": "shaohuawen/dualamp-v2-cpu-smoke-45174872732 has status \"KernelWorkerStatus.COMPLETE\"",
+    "shaohuawen/dualamp-real8-v2-20261123": "shaohuawen/dualamp-real8-v2-20261123 has status \"KernelWorkerStatus.ERROR\"",
+    "shaohuawen/dualamp-v2-freeze-preflight-r3-20261123": "shaohuawen/dualamp-v2-freeze-preflight-r3-20261123 has status \"KernelWorkerStatus.COMPLETE\"",
+    "shaohuawen/dualamp-v2-literature-harvest-r3-20261123": "shaohuawen/dualamp-v2-literature-harvest-r3-20261123 has status \"KernelWorkerStatus.COMPLETE\"",
+    "shaohuawen/dualamp-v2-literature-harvest-r2-20261123": "shaohuawen/dualamp-v2-literature-harvest-r2-20261123 has status \"KernelWorkerStatus.COMPLETE\"",
+    "shaohuawen/dualamp-v2-citation-diagnostics-20261123": "shaohuawen/dualamp-v2-citation-diagnostics-20261123 has status \"KernelWorkerStatus.COMPLETE\""
+  }
+}
