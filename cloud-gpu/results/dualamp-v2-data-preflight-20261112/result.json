@@ -1,0 +1,15 @@
+{
+  "job_id": "dualamp-v2-data-preflight-20261112",
+  "provider": "kaggle",
+  "mode": "run",
+  "accelerator": "NvidiaTeslaT4",
+  "kernel_ref": "shaohuawen/dualamp-v2-data-preflight-20261112",
+  "kernel_url": "https://www.kaggle.com/code/shaohuawen/dualamp-v2-data-preflight-20261112",
+  "status": "completed",
+  "copied_files": [
+    "dualamp-v2-data-preflight-20261112.log",
+    "preflight_report.json"
+  ],
+  "push_output": "Kernel version 1 successfully pushed.  Please check progress at https://www.kaggle.com/code/shaohuawen/dualamp-v2-data-preflight-20261112",
+  "updated_at_utc": "2026-11-23T02:48:21Z"
+}

@@ -377,9 +377,10 @@
       ],
       "serve_minutes": 15.0,
       "wait": true,
-      "status": "pending",
+      "status": "completed",
       "created_at_utc": "2026-11-23T02:44:59Z",
-      "kernel_slug": "dualamp-v2-data-preflight-20261112"
+      "kernel_slug": "dualamp-v2-data-preflight-20261112",
+      "finished_at_utc": "2026-11-23T02:48:21Z"
     }
   ]
 }
