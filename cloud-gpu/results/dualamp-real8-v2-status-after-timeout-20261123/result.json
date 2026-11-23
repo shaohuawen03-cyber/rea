@@ -1,0 +1,8 @@
+{
+  "job_id": "dualamp-real8-v2-status-after-timeout-20261123",
+  "provider": "kaggle",
+  "mode": "status",
+  "kernel_ref": "shaohuawen/dualamp-real8-v2-20261123",
+  "status_output": "shaohuawen/dualamp-real8-v2-20261123 has status \"KernelWorkerStatus.QUEUED\"",
+  "checked_at_utc": "2026-11-23T09:48:34Z"
+}

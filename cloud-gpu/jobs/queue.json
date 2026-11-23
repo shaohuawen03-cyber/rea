@@ -522,10 +522,11 @@
       "extra_pip": [],
       "serve_minutes": 0.0,
       "wait": true,
-      "status": "pending",
+      "status": "completed",
       "created_at_utc": "2026-11-23T09:48:00Z",
       "kernel_slug": "dualamp-real8-v2-20261123",
-      "note": "Read-only status check for the existing v2 kernel after its relay wait was cancelled by GitHub Actions timeout. Do not retrain or overwrite."
+      "note": "Read-only status check for the existing v2 kernel after its relay wait was cancelled by GitHub Actions timeout. Do not retrain or overwrite.",
+      "finished_at_utc": "2026-11-23T09:48:34Z"
     }
   ]
 }
