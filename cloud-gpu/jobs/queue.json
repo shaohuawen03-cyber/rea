@@ -381,6 +381,22 @@
       "created_at_utc": "2026-11-23T02:44:59Z",
       "kernel_slug": "dualamp-v2-data-preflight-20261112",
       "finished_at_utc": "2026-11-23T02:48:21Z"
+    },
+    {
+      "id": "dualamp-v2-source-audit-20261112",
+      "provider": "kaggle",
+      "mode": "run",
+      "accelerator": "NvidiaTeslaT4",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_source_audit_download.py",
+      "script_args": [],
+      "extra_pip": [
+        "gdown"
+      ],
+      "serve_minutes": 15.0,
+      "wait": true,
+      "status": "pending",
+      "created_at_utc": "2026-11-23T02:50:34Z",
+      "kernel_slug": "dualamp-v2-source-audit-20261112"
     }
   ]
 }
