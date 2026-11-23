@@ -65,7 +65,12 @@ def citations(row):
  for d in DOI_RE.findall(blob):
   d=d.rstrip(".,;:)]}")
   if d not in dois:dois.append(d)
- pmids=list(dict.fromkeys(PMID_RE.findall(blob)))
+ pmids=PMID_RE.findall(blob)
+ # Citation_Candidates is a project-generated field whose source values are numeric
+ # literature identifiers. Accept 7-9 digit tokens from this field only; validate
+ # each against PubMed before using it as a traceable PMID.
+ pmids.extend(re.findall(r"(?<![A-Z0-9])(\d{7,9})(?!\d)",row.get("Citation_Candidates") or "",flags=re.I))
+ pmids=list(dict.fromkeys(pmids))
  pmcids=list(dict.fromkeys(re.sub(r"\s+","",x).upper() for x in PMCID_RE.findall(blob)))
  return dois,pmids,pmcids
 def norm_mic(text):
@@ -115,6 +120,16 @@ class NCBI:
     if attempt==3:return None
     time.sleep(0.8*(attempt+1))
   return None
+ def valid_pmid(self,pmid):
+  key=("valid_pmid",pmid)
+  if key in self.cache:return self.cache[key]
+  r=self.get("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi",{"db":"pubmed","id":pmid,"retmode":"json"})
+  valid=False
+  if r:
+   try:
+    data=r.json().get("result",{});valid=pmid in data.get("uids",[]) and data.get(pmid,{}).get("uid")==pmid
+   except Exception:pass
+  self.cache[key]=valid;return valid
  def pmid_for_doi(self,doi):
   key=("doi",doi.lower())
   if key in self.cache:return self.cache[key]
@@ -161,6 +176,7 @@ class NCBI:
   if key in self.cache:return self.cache[key]
   doi=ident if kind=="doi" else "";pmid=ident if kind=="pmid" else "";pmcid=ident if kind=="pmcid" else ""
   if doi and not pmid:pmid=self.pmid_for_doi(doi)
+  if pmid and not self.valid_pmid(pmid):pmid=""
   if pmid and not pmcid:pmcid=self.pmcid_for_pmid(pmid)
   value=(doi,pmid,pmcid);self.cache[key]=value;return value
 
