@@ -1,0 +1,111 @@
+{
+  "stage": "candidate_citation_field_diagnostics",
+  "status": "DIAGNOSTIC_COMPLETE_NO_ROW_DATA",
+  "started_utc": "2026-11-23T03:01:49.847319+00:00",
+  "raw_rows_or_sequences_emitted": false,
+  "candidate_fasta_ids": 3579,
+  "candidate_metadata_rows": 3579,
+  "source_audit_rows": 9314,
+  "candidate_metadata_id_set_matches_fasta": true,
+  "candidate_ids_in_source_audit": 3579,
+  "source_audit_rows_for_candidates": 3579,
+  "source_audit_columns": [
+    "Sequence_ID",
+    "Sequence",
+    "Sequence_Length",
+    "N_Records",
+    "Source_DBs",
+    "Source_Record_IDs",
+    "Record_TIERS",
+    "TIER_MERGED",
+    "Activity_Types",
+    "Sample_Targets",
+    "Bacterial_Signal",
+    "Negative_Signal",
+    "Target_Placeholder_Only",
+    "Bagel_Boundary",
+    "Ma2022_NonAMP_Conflict",
+    "Citation_Candidates",
+    "Adjudication",
+    "Core_Eligible",
+    "Review_Status",
+    "Review_Reason"
+  ],
+  "candidate_field_diagnostics": {
+    "Citation_Candidates": {
+      "rows_nonempty": 1340,
+      "unique_nonempty_values": 430,
+      "total_characters": 11392,
+      "median_value_characters": 8,
+      "rows_with_doi_pattern": 0,
+      "rows_with_explicit_pmid_pattern": 0,
+      "rows_with_pmcid_pattern": 0,
+      "rows_with_reference_number_pattern": 0,
+      "rows_with_7plus_digit_token": 1340
+    },
+    "Source_Record_IDs": {
+      "rows_nonempty": 3579,
+      "unique_nonempty_values": 3579,
+      "total_characters": 81058,
+      "median_value_characters": 16,
+      "rows_with_doi_pattern": 0,
+      "rows_with_explicit_pmid_pattern": 0,
+      "rows_with_pmcid_pattern": 0,
+      "rows_with_reference_number_pattern": 0,
+      "rows_with_7plus_digit_token": 0
+    },
+    "Source_DBs": {
+      "rows_nonempty": 3579,
+      "unique_nonempty_values": 3,
+      "total_characters": 28943,
+      "median_value_characters": 6
+    },
+    "Record_TIERS": {
+      "rows_nonempty": 3579,
+      "unique_nonempty_values": 35,
+      "total_characters": 108363,
+      "median_value_characters": 22
+    },
+    "Activity_Types": {
+      "rows_nonempty": 3579,
+      "unique_nonempty_values": 234,
+      "total_characters": 220003,
+      "median_value_characters": 55
+    },
+    "Sample_Targets": {
+      "rows_nonempty": 3579,
+      "unique_nonempty_values": 2559,
+      "total_characters": 687146,
+      "median_value_characters": 165
+    },
+    "Review_Status": {
+      "rows_nonempty": 3579,
+      "unique_nonempty_values": 3,
+      "total_characters": 116148,
+      "median_value_characters": 32
+    },
+    "Review_Reason": {
+      "rows_nonempty": 3579,
+      "unique_nonempty_values": 2,
+      "total_characters": 257436,
+      "median_value_characters": 72,
+      "rows_with_doi_pattern": 0,
+      "rows_with_explicit_pmid_pattern": 0,
+      "rows_with_pmcid_pattern": 0,
+      "rows_with_reference_number_pattern": 0,
+      "rows_with_7plus_digit_token": 0
+    },
+    "Adjudication": {
+      "rows_nonempty": 3579,
+      "unique_nonempty_values": 2,
+      "total_characters": 75159,
+      "median_value_characters": 21
+    }
+  },
+  "candidate_review_status_counts": {
+    "confirmed_antibacterial_field_gram": 756,
+    "confirmed_named_bacterial_target": 2805,
+    "upgraded_from_generic_bacterial_signal": 18
+  },
+  "finished_utc": "2026-11-23T03:02:02.128608+00:00"
+}

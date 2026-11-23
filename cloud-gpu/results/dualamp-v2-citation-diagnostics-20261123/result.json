@@ -1,0 +1,15 @@
+{
+  "job_id": "dualamp-v2-citation-diagnostics-20261123",
+  "provider": "kaggle",
+  "mode": "run",
+  "accelerator": "CPU",
+  "kernel_ref": "shaohuawen/dualamp-v2-citation-diagnostics-20261123",
+  "kernel_url": "https://www.kaggle.com/code/shaohuawen/dualamp-v2-citation-diagnostics-20261123",
+  "status": "completed",
+  "copied_files": [
+    "citation_diagnostics.json",
+    "dualamp-v2-citation-diagnostics-20261123.log"
+  ],
+  "push_output": "Kernel version 1 successfully pushed.  Please check progress at https://www.kaggle.com/code/shaohuawen/dualamp-v2-citation-diagnostics-20261123",
+  "updated_at_utc": "2026-11-23T03:02:21Z"
+}

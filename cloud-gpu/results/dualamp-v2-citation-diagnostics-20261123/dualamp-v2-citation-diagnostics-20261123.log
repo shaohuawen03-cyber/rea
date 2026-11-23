@@ -1,0 +1,118 @@
+[{"stream_name":"stdout","time":18.396283506,"data":"{\n"}
+,{"stream_name":"stdout","time":18.396327791,"data":"  \"stage\": \"candidate_citation_field_diagnostics\",\n"}
+,{"stream_name":"stdout","time":18.396332402,"data":"  \"status\": \"DIAGNOSTIC_COMPLETE_NO_ROW_DATA\",\n"}
+,{"stream_name":"stdout","time":18.396334852,"data":"  \"started_utc\": \"2026-11-23T03:01:49.847319+00:00\",\n"}
+,{"stream_name":"stdout","time":18.396337154,"data":"  \"raw_rows_or_sequences_emitted\": false,\n"}
+,{"stream_name":"stdout","time":18.396339193,"data":"  \"candidate_fasta_ids\": 3579,\n"}
+,{"stream_name":"stdout","time":18.396341308,"data":"  \"candidate_metadata_rows\": 3579,\n"}
+,{"stream_name":"stdout","time":18.396344424,"data":"  \"source_audit_rows\": 9314,\n"}
+,{"stream_name":"stdout","time":18.396347322,"data":"  \"candidate_metadata_id_set_matches_fasta\": true,\n"}
+,{"stream_name":"stdout","time":18.396350382,"data":"  \"candidate_ids_in_source_audit\": 3579,\n"}
+,{"stream_name":"stdout","time":18.39635333,"data":"  \"source_audit_rows_for_candidates\": 3579,\n"}
+,{"stream_name":"stdout","time":18.396356311,"data":"  \"source_audit_columns\": [\n"}
+,{"stream_name":"stdout","time":18.396359311,"data":"    \"Sequence_ID\",\n"}
+,{"stream_name":"stdout","time":18.396362299,"data":"    \"Sequence\",\n"}
+,{"stream_name":"stdout","time":18.396365474,"data":"    \"Sequence_Length\",\n"}
+,{"stream_name":"stdout","time":18.396368644,"data":"    \"N_Records\",\n"}
+,{"stream_name":"stdout","time":18.396371393,"data":"    \"Source_DBs\",\n"}
+,{"stream_name":"stdout","time":18.396374289,"data":"    \"Source_Record_IDs\",\n"}
+,{"stream_name":"stdout","time":18.396377084,"data":"    \"Record_TIERS\",\n"}
+,{"stream_name":"stdout","time":18.396380169,"data":"    \"TIER_MERGED\",\n"}
+,{"stream_name":"stdout","time":18.396383071,"data":"    \"Activity_Types\",\n"}
+,{"stream_name":"stdout","time":18.396385894,"data":"    \"Sample_Targets\",\n"}
+,{"stream_name":"stdout","time":18.396388776,"data":"    \"Bacterial_Signal\",\n"}
+,{"stream_name":"stdout","time":18.396391552,"data":"    \"Negative_Signal\",\n"}
+,{"stream_name":"stdout","time":18.396394265,"data":"    \"Target_Placeholder_Only\",\n"}
+,{"stream_name":"stdout","time":18.396397394,"data":"    \"Bagel_Boundary\",\n"}
+,{"stream_name":"stdout","time":18.396399871,"data":"    \"Ma2022_NonAMP_Conflict\",\n"}
+,{"stream_name":"stdout","time":18.396402143,"data":"    \"Citation_Candidates\",\n"}
+,{"stream_name":"stdout","time":18.396404177,"data":"    \"Adjudication\",\n"}
+,{"stream_name":"stdout","time":18.396406163,"data":"    \"Core_Eligible\",\n"}
+,{"stream_name":"stdout","time":18.396408104,"data":"    \"Review_Status\",\n"}
+,{"stream_name":"stdout","time":18.396410162,"data":"    \"Review_Reason\"\n"}
+,{"stream_name":"stdout","time":18.396412071,"data":"  ],\n"}
+,{"stream_name":"stdout","time":18.396413947,"data":"  \"candidate_field_diagnostics\": {\n"}
+,{"stream_name":"stdout","time":18.396416383,"data":"    \"Citation_Candidates\": {\n"}
+,{"stream_name":"stdout","time":18.396419868,"data":"      \"rows_nonempty\": 1340,\n"}
+,{"stream_name":"stdout","time":18.396422479,"data":"      \"unique_nonempty_values\": 430,\n"}
+,{"stream_name":"stdout","time":18.396424556,"data":"      \"total_characters\": 11392,\n"}
+,{"stream_name":"stdout","time":18.396427002,"data":"      \"median_value_characters\": 8,\n"}
+,{"stream_name":"stdout","time":18.396429413,"data":"      \"rows_with_doi_pattern\": 0,\n"}
+,{"stream_name":"stdout","time":18.396431326,"data":"      \"rows_with_explicit_pmid_pattern\": 0,\n"}
+,{"stream_name":"stdout","time":18.396439017,"data":"      \"rows_with_pmcid_pattern\": 0,\n"}
+,{"stream_name":"stdout","time":18.39644117,"data":"      \"rows_with_reference_number_pattern\": 0,\n"}
+,{"stream_name":"stdout","time":18.39644339,"data":"      \"rows_with_7plus_digit_token\": 1340\n"}
+,{"stream_name":"stdout","time":18.396445472,"data":"    },\n"}
+,{"stream_name":"stdout","time":18.396447451,"data":"    \"Source_Record_IDs\": {\n"}
+,{"stream_name":"stdout","time":18.396449421,"data":"      \"rows_nonempty\": 3579,\n"}
+,{"stream_name":"stdout","time":18.39645152,"data":"      \"unique_nonempty_values\": 3579,\n"}
+,{"stream_name":"stdout","time":18.396453561,"data":"      \"total_characters\": 81058,\n"}
+,{"stream_name":"stdout","time":18.396455488,"data":"      \"median_value_characters\": 16,\n"}
+,{"stream_name":"stdout","time":18.3964575,"data":"      \"rows_with_doi_pattern\": 0,\n"}
+,{"stream_name":"stdout","time":18.396459613,"data":"      \"rows_with_explicit_pmid_pattern\": 0,\n"}
+,{"stream_name":"stdout","time":18.396461678,"data":"      \"rows_with_pmcid_pattern\": 0,\n"}
+,{"stream_name":"stdout","time":18.396463641,"data":"      \"rows_with_reference_number_pattern\": 0,\n"}
+,{"stream_name":"stdout","time":18.396465621,"data":"      \"rows_with_7plus_digit_token\": 0\n"}
+,{"stream_name":"stdout","time":18.396467578,"data":"    },\n"}
+,{"stream_name":"stdout","time":18.396469568,"data":"    \"Source_DBs\": {\n"}
+,{"stream_name":"stdout","time":18.396471582,"data":"      \"rows_nonempty\": 3579,\n"}
+,{"stream_name":"stdout","time":18.396473487,"data":"      \"unique_nonempty_values\": 3,\n"}
+,{"stream_name":"stdout","time":18.39647565,"data":"      \"total_characters\": 28943,\n"}
+,{"stream_name":"stdout","time":18.396477715,"data":"      \"median_value_characters\": 6\n"}
+,{"stream_name":"stdout","time":18.396479821,"data":"    },\n"}
+,{"stream_name":"stdout","time":18.39648172,"data":"    \"Record_TIERS\": {\n"}
+,{"stream_name":"stdout","time":18.396483637,"data":"      \"rows_nonempty\": 3579,\n"}
+,{"stream_name":"stdout","time":18.396485568,"data":"      \"unique_nonempty_values\": 35,\n"}
+,{"stream_name":"stdout","time":18.396514624,"data":"      \"total_characters\": 108363,\n"}
+,{"stream_name":"stdout","time":18.396522412,"data":"      \"median_value_characters\": 22\n"}
+,{"stream_name":"stdout","time":18.396525671,"data":"    },\n"}
+,{"stream_name":"stdout","time":18.39652854,"data":"    \"Activity_Types\": {\n"}
+,{"stream_name":"stdout","time":18.396533167,"data":"      \"rows_nonempty\": 3579,\n"}
+,{"stream_name":"stdout","time":18.396536251,"data":"      \"unique_nonempty_values\": 234,\n"}
+,{"stream_name":"stdout","time":18.396539149,"data":"      \"total_characters\": 220003,\n"}
+,{"stream_name":"stdout","time":18.396541941,"data":"      \"median_value_characters\": 55\n"}
+,{"stream_name":"stdout","time":18.396545874,"data":"    },\n"}
+,{"stream_name":"stdout","time":18.39654887,"data":"    \"Sample_Targets\": {\n"}
+,{"stream_name":"stdout","time":18.396551892,"data":"      \"rows_nonempty\": 3579,\n"}
+,{"stream_name":"stdout","time":18.396555088,"data":"      \"unique_nonempty_values\": 2559,\n"}
+,{"stream_name":"stdout","time":18.396558444,"data":"      \"total_characters\": 687146,\n"}
+,{"stream_name":"stdout","time":18.396561854,"data":"      \"median_value_characters\": 165\n"}
+,{"stream_name":"stdout","time":18.396564995,"data":"    },\n"}
+,{"stream_name":"stdout","time":18.396568015,"data":"    \"Review_Status\": {\n"}
+,{"stream_name":"stdout","time":18.396571375,"data":"      \"rows_nonempty\": 3579,\n"}
+,{"stream_name":"stdout","time":18.396578094,"data":"      \"unique_nonempty_values\": 3,\n"}
+,{"stream_name":"stdout","time":18.396580288,"data":"      \"total_characters\": 116148,\n"}
+,{"stream_name":"stdout","time":18.396582541,"data":"      \"median_value_characters\": 32\n"}
+,{"stream_name":"stdout","time":18.396584488,"data":"    },\n"}
+,{"stream_name":"stdout","time":18.39658651,"data":"    \"Review_Reason\": {\n"}
+,{"stream_name":"stdout","time":18.39658863,"data":"      \"rows_nonempty\": 3579,\n"}
+,{"stream_name":"stdout","time":18.396590517,"data":"      \"unique_nonempty_values\": 2,\n"}
+,{"stream_name":"stdout","time":18.3965926,"data":"      \"total_characters\": 257436,\n"}
+,{"stream_name":"stdout","time":18.396594572,"data":"      \"median_value_characters\": 72,\n"}
+,{"stream_name":"stdout","time":18.39659688,"data":"      \"rows_with_doi_pattern\": 0,\n"}
+,{"stream_name":"stdout","time":18.39659883,"data":"      \"rows_with_explicit_pmid_pattern\": 0,\n"}
+,{"stream_name":"stdout","time":18.396600967,"data":"      \"rows_with_pmcid_pattern\": 0,\n"}
+,{"stream_name":"stdout","time":18.396602881,"data":"      \"rows_with_reference_number_pattern\": 0,\n"}
+,{"stream_name":"stdout","time":18.396605002,"data":"      \"rows_with_7plus_digit_token\": 0\n"}
+,{"stream_name":"stdout","time":18.396606957,"data":"    },\n"}
+,{"stream_name":"stdout","time":18.396612116,"data":"    \"Adjudication\": {\n"}
+,{"stream_name":"stdout","time":18.396614148,"data":"      \"rows_nonempty\": 3579,\n"}
+,{"stream_name":"stdout","time":18.39661615,"data":"      \"unique_nonempty_values\": 2,\n"}
+,{"stream_name":"stdout","time":18.396618188,"data":"      \"total_characters\": 75159,\n"}
+,{"stream_name":"stdout","time":18.396620188,"data":"      \"median_value_characters\": 21\n"}
+,{"stream_name":"stdout","time":18.396622142,"data":"    }\n"}
+,{"stream_name":"stdout","time":18.396624085,"data":"  },\n"}
+,{"stream_name":"stdout","time":18.396625943,"data":"  \"candidate_review_status_counts\": {\n"}
+,{"stream_name":"stdout","time":18.396628038,"data":"    \"confirmed_antibacterial_field_gram\": 756,\n"}
+,{"stream_name":"stdout","time":18.396633324,"data":"    \"confirmed_named_bacterial_target\": 2805,\n"}
+,{"stream_name":"stdout","time":18.396635461,"data":"    \"upgraded_from_generic_bacterial_signal\": 18\n"}
+,{"stream_name":"stdout","time":18.396637493,"data":"  },\n"}
+,{"stream_name":"stdout","time":18.396639365,"data":"  \"finished_utc\": \"2026-11-23T03:02:02.128608+00:00\"\n"}
+,{"stream_name":"stdout","time":18.396641438,"data":"}\n"}
+,{"stream_name":"stderr","time":20.699079849,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":20.699119455,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":21.08874209,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":21.08876902,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":22.14624149,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":23.51754643,"data":"[NbConvertApp] Writing 283557 bytes to __results__.html\n"}
+]
