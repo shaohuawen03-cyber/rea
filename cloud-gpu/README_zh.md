@@ -138,6 +138,18 @@ cat cloud-gpu/results/quota-latest.json     # gpu.used_hours / delta.accelerator
 `https://www.kaggle.com/code/<user>/quota-smoke-<run>` 链接。默认分支上也可以
 `gh workflow run gpu-quota.yml -f run_smoke=true`（`workflow_dispatch` 只对默认分支可用）。
 
+**实测坑（2026-11-23）**：
+
+1. `kaggle kernels push` 若报 `Maximum batch GPU session count of 2 reached`，说明账号已有 2 个
+   GPU 会话被占（**浏览器里开着的 Kaggle notebook 会话也算**，且对 API 不可见）。此时任何推送
+   都不会开始运行，额度也不会动。先在浏览器关掉这些会话。
+2. `kaggle kernels status` 对**没有活动会话**的内核会打印 `KernelWorkerStatus.QUEUED`——这只是
+   枚举默认值。要判真伪，看 `GetKernelSessionStatus` 的原始返回：`{}` = 没有会话
+   （`python cloud-gpu/scripts/kernel_status.py <ref> --raw`）。
+3. 裸 `KGAT_` token 走 env/file 认证时，`kaggle kernels list` 可用但 `kernels push` 仍会被
+   会话数限制挡住；用户名解析顺序是 kaggle.json → `KAGGLE_USERNAME` → `kernels list` 的 ref →
+   token introspection。
+
 **凭据前置**：这份工作流和 `gpu-relay.yml` 用同一套凭据，但 Actions cache（`~/.gpu-relay`
 金库，含解密私钥与 token）是 **分支作用域** 的。换分支后要么重新投一次
 `secrets/KAGGLE_API_TOKEN.enc` 一次性信封，要么让仓库管理员设一次 Actions secret
