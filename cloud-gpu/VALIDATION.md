@@ -45,18 +45,29 @@ results/<job-id>/(≤2 MiB 小文件)随 bot 提交回分支 → 沙箱 git pull
 
 ## 额度体检实测记录（2026-11-23）
 
-- 读数通道已验证：`api.kaggle.com/.../GetAcceleratorQuotaStatistics` 返回
-  `gpuQuota.timeUsed = 52.17s`、`totalTimeAllowed = 108000.0s`（30 h/周）、
-  `quotaRefreshTime = 2026-11-28T00:00:00Z`。工具 `scripts/kaggle_quota_report.py` 与工作流
-  `.github/workflows/gpu-quota.yml` 端到端跑通（before/after/delta 三份 JSON 回传）。
-- 本分支凭据：一次性信封 `secrets/KAGGLE_API_TOKEN.enc` → 中继解密写入 `~/.gpu-relay` 金库后
-  `git rm` 删除（仓库只留密文；`gh secret set` 因 GitHub App 无 secrets 权限返回 403）。
-- **当前阻塞**：`kaggle kernels push` 返回 `Maximum batch GPU session count of 2 reached`，
-  说明该账号已有 2 个 GPU 会话占满（Kaggle 交互式 notebook 打开着就算，且这些会话对 API 不可见）。
-  因此 `dualamp-real8-v2-retry1-20261123` 自 11:23 起未真正开始、冒烟内核也推不上去，
-  额度停在 52.17s。关掉浏览器里的 Kaggle 会话后重跑同一请求文件，
-  即可看到 `used_seconds` 增加、`remaining_hours` 减少。
+读数来源：`POST https://api.kaggle.com/v1/kernels.KernelsApiService/GetAcceleratorQuotaStatistics`
+（Bearer 裸 token），返回 protobuf duration 字符串，精确到毫秒；CLI `kaggle quota` 作兜底。
 
-排查辅助：`scripts/kernel_status.py`（`--raw` 直接调 `GetKernelSessionStatus`，返回 `{}` 表示
-**没有活动会话**，CLI 的 `QUEUED` 只是枚举默认值）、`scripts/kaggle_probe.py`（原始 Connect-RPC
-探测）、`scripts/cancel_kernel.py`（取消需要 `kernel_session_id`，只给 slug 会 403）。
+| 时间（UTC） | 动作 | `gpuQuota.timeUsed` | 剩余 |
+| --- | --- | --- | --- |
+| 11:49 | 首次读数（凭据刚就位） | 52.170 s | 29.9855 h |
+| 13:25 | `quota-smoke-21`（60 s 内核）跑过一小段后 ERROR | 58.886 s（+6.7 s） | 29.9836 h |
+| 13:31 | `quota-smoke-24`（240 s 内核）之后 | 66.559 s（+7.7 s） | 29.9815 h |
+| 13:34 | 收尾快照（无新内核） | 66.559 s | 29.9815 h |
+
+结论：**额度确实随 GPU 会话下降**（52.17 s → 66.56 s，两次真实会话共 14.4 s），
+总量 108000 s = 30 h/周，刷新时间 `2026-11-28T00:00:00Z`。
+
+过程坑位（都已在工具里处理）：
+
+1. `.github/workflows/*` 能推送（App 有 workflows 权限），但 `gh secret set` 仍 403 → 走一次性信封；
+   Actions cache 金库是**分支作用域**的，换分支要重新封一封信封（对应工作流会先生成本分支密钥对并发布公钥）。
+2. `kaggle kernels push` 报 `Maximum batch GPU session count of 2 reached`：账号里 2 个 GPU 会话已满
+   （浏览器开着的 notebook 也算，且 API 看不见）。删掉从未启动的内核 `dualamp-real8-v2-retry1` 后名额释放。
+3. `kaggle kernels status` 的 `QUEUED` 不可信：`GetKernelSessionStatus` 返回 `{}` = **没有会话**（默认枚举值而已）。
+   只有原始返回里有 `{"status": "RUNNING"|"ERROR"|...}` 才是真会话。
+4. Kaggle T4 队列排队很久（10~25 分钟量级），所以冒烟默认 `no_wait` 推送、另起一次读数做对照。
+5. 第一版冒烟内核用 `a = a @ b` 反复自乘，fp16 很快溢出成 inf 导致内核 ERROR；现在改成固定算子 +
+   预分配输出并做有界衰减，`finite` 与 `ok` 都会写进产物。
+
+复现：写 `cloud-gpu/jobs/quota-request.json` → push → bot 提交回 `cloud-gpu/results/quota-latest.json`。
