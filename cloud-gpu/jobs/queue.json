@@ -416,6 +416,22 @@
       "created_at_utc": "2026-11-23T02:57:36Z",
       "kernel_slug": "dualamp-v2-literature-harvest-20261123",
       "finished_at_utc": "2026-11-23T02:59:21Z"
+    },
+    {
+      "id": "dualamp-v2-citation-diagnostics-20261123",
+      "provider": "kaggle",
+      "mode": "run",
+      "accelerator": "CPU",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_citation_diagnostics.py",
+      "script_args": [],
+      "extra_pip": [
+        "gdown"
+      ],
+      "serve_minutes": 15.0,
+      "wait": true,
+      "status": "pending",
+      "created_at_utc": "2026-11-23T03:00:23Z",
+      "kernel_slug": "dualamp-v2-citation-diagnostics-20261123"
     }
   ]
 }
