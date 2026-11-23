@@ -451,6 +451,23 @@
       "created_at_utc": "2026-11-23T03:03:26Z",
       "kernel_slug": "dualamp-v2-literature-harvest-r2-20261123",
       "finished_at_utc": "2026-11-23T03:17:38Z"
+    },
+    {
+      "id": "dualamp-v2-literature-harvest-r3-20261123",
+      "provider": "kaggle",
+      "mode": "run",
+      "accelerator": "CPU",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_literature_harvest.py",
+      "script_args": [],
+      "extra_pip": [
+        "gdown",
+        "requests"
+      ],
+      "serve_minutes": 15.0,
+      "wait": true,
+      "status": "pending",
+      "created_at_utc": "2026-11-23T03:18:43Z",
+      "kernel_slug": "dualamp-v2-literature-harvest-r3-20261123"
     }
   ]
 }

@@ -171,6 +171,41 @@ class NCBI:
    try:passages=parse_bioc(r.json())
    except Exception:pass
   self.cache[key]=passages;return passages
+ def europe_fulltext(self,pmid):
+  key=("europe_fulltext",pmid)
+  if key in self.cache:return self.cache[key]
+  r=self.get("https://www.ebi.ac.uk/europepmc/webservices/rest/search",{"query":f"EXT_ID:{pmid}","format":"json","pageSize":1})
+  passages=[];pmcid=""
+  if r:
+   try:
+    results=r.json().get("resultList",{}).get("result",[])
+    if results:pmcid=results[0].get("pmcid","") or ""
+   except Exception:pass
+  if pmcid:
+   url=f"https://www.ebi.ac.uk/europepmc/webservices/rest/{pmcid}/fullTextXML"
+   x=self.get(url)
+   if x:
+    try:
+     import xml.etree.ElementTree as ET
+     root=ET.fromstring(x.text);parents={child:parent for parent in root.iter() for child in parent}
+     def tag(e):return e.tag.rsplit("}",1)[-1].lower()
+     def in_abstract(e):
+      p=e
+      while p in parents:
+       p=parents[p]
+       if tag(p)=="abstract":return True
+      return False
+     seen=set()
+     for e in root.iter():
+      t=tag(e)
+      if t=="table-wrap":
+       text=" ".join("".join(e.itertext()).split())
+       if text:passages.append({"docid":pmcid,"text":text,"infons":{"type":"table","section_type":"table"},"offset":""})
+      elif t=="p" and not in_abstract(e):
+       text=" ".join("".join(e.itertext()).split())
+       if text and text not in seen:seen.add(text);passages.append({"docid":pmcid,"text":text,"infons":{"type":"paragraph","section_type":"body"},"offset":""})
+    except Exception:pass
+  self.cache[key]=(pmcid,passages);return pmcid,passages
  def resolve(self,kind,ident):
   key=("resolve",kind,ident)
   if key in self.cache:return self.cache[key]
@@ -187,6 +222,10 @@ def extract_ref(sid,seq,doi,pmid,pmcid,ncbi):
  if not pmcid and pmid:pmcid=ncbi.pmcid_for_pmid(pmid)
  url=f"https://pmc.ncbi.nlm.nih.gov/articles/{pmcid}/" if pmcid else (f"https://pubmed.ncbi.nlm.nih.gov/{pmid}/" if pmid else (f"https://doi.org/{doi}" if doi else ""))
  passages=ncbi.fulltext(pmcid) if pmcid else []
+ if not passages and pmid:
+  e_pmcid,e_passages=ncbi.europe_fulltext(pmid)
+  if e_passages:
+   pmcid=e_pmcid or pmcid;passages=e_passages;url=f"https://europepmc.org/articles/{pmcid}"
  hits=[]
  for p in passages:
   text=p["text"];inf=p["infons"] or {}; typ=str(inf.get("type", "")); sec=str(inf.get("section_type",inf.get("section", "")))
@@ -194,7 +233,8 @@ def extract_ref(sid,seq,doi,pmid,pmcid,ncbi):
   targets=target_in(text)
   assay=next((name for name,rx in ASSAY_PATTERNS if rx.search(text)),"")
   mic,unit=norm_mic(text)
-  positive=bool(assay and targets and (mic or re.search(r"(?i)\b(?:inhibit(?:ed|ion|s)?|antibacterial|bactericidal|killing|susceptible)\b",text)))
+  abstract_only="abstract" in typ.lower() or "abstract" in sec.lower() or typ.lower()=="title"
+  positive=bool(not abstract_only and assay and targets and (mic or re.search(r"(?i)\b(?:inhibit(?:ed|ion|s)?|antibacterial|bactericidal|killing|susceptible)\b",text)))
   table="table" in typ.lower() or "table" in sec.lower()
   access="FULLTEXT_TABLE" if table else "FULLTEXT"
   level="FULLTEXT_EXPERIMENTAL_TABLE" if table and assay else "FULLTEXT_EXPERIMENTAL" if assay else "FULLTEXT_EXPERIMENTAL"
