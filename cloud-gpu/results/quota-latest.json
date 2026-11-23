@@ -1,6 +1,6 @@
 {
   "label": "quota-smoke-600s-after",
-  "captured_at_utc": "2026-11-23T11:58:48Z",
+  "captured_at_utc": "2026-11-23T12:00:33Z",
   "refresh_at": "2026-11-28T00:00:00Z",
   "source": "api.kaggle.com (exact seconds)",
   "gpu": {
@@ -22,8 +22,8 @@
     "remaining_hours": 20.0
   },
   "delta": {
-    "from": "2026-11-23T11:58:46Z",
-    "to": "2026-11-23T11:58:48Z",
+    "from": "2026-11-23T12:00:31Z",
+    "to": "2026-11-23T12:00:33Z",
     "accelerators": {
       "gpu": {
         "used_seconds_delta": 0.0,

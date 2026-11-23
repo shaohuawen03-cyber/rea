@@ -1,0 +1,2 @@
+username='' payload=cloud-gpu/jobs/quota_smoke.py seconds=600.0
+no Kaggle username available; skipping smoke kernel
