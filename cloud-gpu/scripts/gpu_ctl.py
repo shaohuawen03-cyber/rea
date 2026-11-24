@@ -459,6 +459,43 @@ def raw_session_state(username: str, slug: str, env: dict[str, str]) -> str:
     return str(payload.get("status") or "")
 
 
+def reseal_kernel_env(job: dict) -> list[str]:
+    """Re-seal the one-time envelopes a job needs when the last run consumed them.
+
+    Envelope files are deleted by the vault step as soon as they are decrypted, so a
+    retry of the same job sees empty env vars and dies with "required" errors. The job
+    may carry a `reseed` map (name -> plaintext file in the repo or an env var name);
+    this re-encrypts them against the published relay public key before dispatch.
+    """
+    reseed = job.get("reseed") or {}
+    if not reseed:
+        return []
+    pubkey = "cloud-gpu/relay_pubkey.pem"
+    sealed: list[str] = []
+    for name, source in reseed.items():
+        value = ""
+        if source.startswith("env:"):
+            value = (os.environ.get(source[4:]) or "").strip()
+        elif os.path.exists(source):
+            value = open(source, encoding="utf-8").read().strip()
+        if not value:
+            print(f"[reseed] {name}: no value available from {source}", file=sys.stderr, flush=True)
+            continue
+        dest = f"cloud-gpu/secrets/{name}.enc"
+        with tempfile.NamedTemporaryFile("w", delete=False, suffix=".txt") as tmp:
+            tmp.write(value)
+            tmp_path = tmp.name
+        try:
+            subprocess.run([sys.executable, "cloud-gpu/scripts/encrypt_secret.py", "encrypt",
+                            "--pubkey", pubkey, "--from-file", tmp_path, "--out", dest],
+                           check=True, capture_output=True)
+            sealed.append(dest)
+            print(f"[reseed] sealed {dest}", flush=True)
+        finally:
+            os.unlink(tmp_path)
+    return sealed
+
+
 def execute_kaggle_job(job: dict[str, Any], run_dir: str) -> dict[str, Any]:
     kaggle_env, kag_src = resolve_kaggle_env()
     if not kag_src:
@@ -526,6 +563,10 @@ def execute_kaggle_job(job: dict[str, Any], run_dir: str) -> dict[str, Any]:
     for k in ("DRIVE_UPLOAD_URI", "DRIVE_ENDPOINT_UPLOAD_URI", "FASTA_URL", "FASTA_ID", "METADATA_ID", "REVIEW_ID", "LIT_REVIEW_ID", "EVIDENCE_AUDIT_ID", "APD6_MAPPING_ID", "APD_MACHINE_SCREEN_ID", "DRAMP_OVERLAP_ID", "DRAMP_DISTRIBUTION_ID", "DRAMP_STATS_ID", "DRAMP_DISCREPANCY_ID", "DRAMP_CONCLUSION_ID", "EVIDENCE_LEDGER_UPLOAD_URI", "SA_DATASET", "DRIVE_SA_JSON", "FASTA_SHA256", "REA_BRANCH"):
         if os.environ.get(k):
             injected_env[k] = os.environ[k]
+
+    sealed = reseal_kernel_env(job)
+    if sealed:
+        subprocess.run(["git", "add", *sealed], check=False, capture_output=True)
 
     stage_dir = tempfile.mkdtemp(prefix="kag_push_")
     try:

@@ -164,13 +164,23 @@ def main() -> int:
         "training_started": False,
     }
     try:
-        bundle_id = (os.environ.get("EVIDENCE_AUDIT_ID") or "").strip()
+        # Inputs come from the committed, non-secret descriptor first; envelopes are only
+        # needed for the single-use upload session. That keeps a consumed envelope from
+        # blocking a retry (it used to, twice).
+        inputs_path = Path(os.environ.get("REA_REPO_DIR", ".")) / "cloud-gpu/jobs/v21_inputs.json"
+        if not inputs_path.exists():
+            inputs_path = Path(__file__).parent / "v21_inputs.json"
+        inputs = json.loads(inputs_path.read_text()) if inputs_path.exists() else {}
+        bundle_id = ((os.environ.get("EVIDENCE_AUDIT_ID") or "").strip()
+                     or str(inputs.get("private_bundle_drive_id", "")))
+        want_sha = ((os.environ.get("FASTA_SHA256") or "").strip()
+                    or str(inputs.get("positive_fasta_sha256", "")))
         uri = (os.environ.get("EVIDENCE_LEDGER_UPLOAD_URI") or "").strip()
-        want_sha = (os.environ.get("FASTA_SHA256") or "").strip()
-        if not bundle_id or not uri:
-            raise RuntimeError("private v2.1 bundle id and model-upload session are required")
+        if not bundle_id:
+            raise RuntimeError("no private v2.1 bundle id (env or v21_inputs.json)")
         if want_sha != POSITIVE_SHA:
             raise RuntimeError("v2.1 positive FASTA hash does not match the frozen manifest")
+        report["upload_session_present"] = bool(uri)
 
         import gdown
         bundle = tmp / "v21_bundle.zip"
@@ -361,7 +371,14 @@ def main() -> int:
                 "negative_semantics": "weak UniProt background, not experimental inactivity",
                 "evidence_tier": "TIER_B_LABEL",
             }, indent=2))
-        report["private_model_bundle"] = upload(uri, private_zip)
+        if uri:
+            report["private_model_bundle"] = upload(uri, private_zip)
+        else:
+            report["private_model_bundle"] = {
+                "skipped": "no upload session in env",
+                "local_bytes": private_zip.stat().st_size,
+                "local_sha256": sha(private_zip),
+            }
 
         (out / "v2_1_training_report.json").write_text(
             json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
