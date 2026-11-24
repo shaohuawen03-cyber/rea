@@ -1,0 +1,93 @@
+{
+  "kernels": {},
+  "mine": [
+    {
+      "ref": "shaohuawen/dualamp-v2-gpu-minutes-45302641821",
+      "lastRunTime": "2026-11-24T01:07:56.813000",
+      "totalVotes": 0
+    },
+    {
+      "ref": "shaohuawen/dualamp-v2-cpu-smoke-45174872732",
+      "lastRunTime": "2026-11-23T12:30:17.143000",
+      "totalVotes": 0
+    },
+    {
+      "ref": "shaohuawen/vcl-zhaozhaomumu-ltx",
+      "lastRunTime": "2026-11-09T01:15:38.487000",
+      "totalVotes": 0
+    },
+    {
+      "ref": "shaohuawen/vcl-shanhai-60s-ltx",
+      "lastRunTime": "2026-11-09T06:34:57.093000",
+      "totalVotes": 0
+    },
+    {
+      "ref": "shaohuawen/notebook921b74d2b4",
+      "lastRunTime": "2026-01-22T01:45:50.593000",
+      "totalVotes": 0
+    },
+    {
+      "ref": "shaohuawen/notebookad0bb43cc6",
+      "lastRunTime": "2026-03-04T12:10:47.770000",
+      "totalVotes": 0
+    },
+    {
+      "ref": "shaohuawen/dualamp-v2-1-smoke-20261124",
+      "lastRunTime": "2026-11-24T10:16:06.367000",
+      "totalVotes": 0
+    },
+    {
+      "ref": "shaohuawen/dualamp-v2-1-probe4-20261124",
+      "lastRunTime": "2026-11-24T07:13:25.787000",
+      "totalVotes": 0
+    },
+    {
+      "ref": "shaohuawen/dualamp-v2-1-probe3-20261124",
+      "lastRunTime": "2026-11-24T07:05:02.450000",
+      "totalVotes": 0
+    },
+    {
+      "ref": "shaohuawen/dualamp-v2-1-build-20261124",
+      "lastRunTime": "2026-11-24T07:18:56.313000",
+      "totalVotes": 0
+    },
+    {
+      "ref": "shaohuawen/dualamp-v2-1-probe2-20261124",
+      "lastRunTime": "2026-11-24T06:57:22.517000",
+      "totalVotes": 0
+    },
+    {
+      "ref": "shaohuawen/dualamp-v2-1-probe-20261124",
+      "lastRunTime": "2026-11-24T06:54:43.820000",
+      "totalVotes": 0
+    },
+    {
+      "ref": "shaohuawen/dualamp-real8-v2-retry2-20261124",
+      "lastRunTime": "2026-11-24T02:49:44.720000",
+      "totalVotes": 0
+    },
+    {
+      "ref": "shaohuawen/dualamp-real8-v2-retry3-20261124",
+      "lastRunTime": "2026-11-24T01:42:17.373000",
+      "totalVotes": 0
+    },
+    {
+      "ref": "shaohuawen/quota-smoke-32",
+      "lastRunTime": "2026-11-24T01:11:47.650000",
+      "totalVotes": 0
+    }
+  ],
+  "raw_session_status": {},
+  "statuses": {
+    "shaohuawen/dualamp-v2-gpu-minutes-45302641821": "shaohuawen/dualamp-v2-gpu-minutes-45302641821 has status \"KernelWorkerStatus.COMPLETE\"",
+    "shaohuawen/dualamp-v2-cpu-smoke-45174872732": "shaohuawen/dualamp-v2-cpu-smoke-45174872732 has status \"KernelWorkerStatus.COMPLETE\"",
+    "shaohuawen/vcl-zhaozhaomumu-ltx": "shaohuawen/vcl-zhaozhaomumu-ltx has status \"KernelWorkerStatus.COMPLETE\"",
+    "shaohuawen/vcl-shanhai-60s-ltx": "shaohuawen/vcl-shanhai-60s-ltx has status \"KernelWorkerStatus.COMPLETE\"",
+    "shaohuawen/notebook921b74d2b4": "shaohuawen/notebook921b74d2b4 has status \"KernelWorkerStatus.COMPLETE\"",
+    "shaohuawen/notebookad0bb43cc6": "shaohuawen/notebookad0bb43cc6 has status \"KernelWorkerStatus.COMPLETE\"",
+    "shaohuawen/dualamp-v2-1-smoke-20261124": "shaohuawen/dualamp-v2-1-smoke-20261124 has status \"KernelWorkerStatus.QUEUED\"",
+    "shaohuawen/dualamp-v2-1-probe4-20261124": "shaohuawen/dualamp-v2-1-probe4-20261124 has status \"KernelWorkerStatus.COMPLETE\"",
+    "shaohuawen/dualamp-v2-1-probe3-20261124": "shaohuawen/dualamp-v2-1-probe3-20261124 has status \"KernelWorkerStatus.COMPLETE\"",
+    "shaohuawen/dualamp-v2-1-build-20261124": "shaohuawen/dualamp-v2-1-build-20261124 has status \"KernelWorkerStatus.COMPLETE\""
+  }
+}
