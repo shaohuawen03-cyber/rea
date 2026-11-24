@@ -1,7 +1,8 @@
 {
-  "label": "quota-v2-progress",
+  "label": "quota-v2-log",
   "run_smoke": false,
   "seconds": 60,
   "check_kernels": ["shaohuawen/dualamp-real8-v2-retry2-20261124"],
-  "note": "Progress check: raw session status + quota while the v2 retry trains."
+  "fetch_output": "shaohuawen/dualamp-real8-v2-retry2-20261124",
+  "note": "Pull the live kernel log to confirm training progress (not a hung session)."
 }
