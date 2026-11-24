@@ -890,7 +890,7 @@
       "serve_minutes": 15.0,
       "wait": false,
       "timeout_sec": 5400,
-      "status": "pending",
+      "status": "pushed_async",
       "created_at_utc": "2026-11-24T12:36:55Z",
       "kernel_slug": "dualamp-v2-1-smoke-cpu-r2-20261124",
       "env": {
@@ -899,7 +899,8 @@
       "inline_json": {
         "V21_INPUTS_JSON": "cloud-gpu/jobs/v21_inputs.json"
       },
-      "note": "CPU smoke r2. r1 proved all four stages run (build/features/train/report, scrambled headline frac 0.53/0.11/0.22); it only failed reading the metrics file, now fixed, plus corrected fixed-specificity selection and composition-verdict scoping."
+      "note": "CPU smoke r2. r1 proved all four stages run (build/features/train/report, scrambled headline frac 0.53/0.11/0.22); it only failed reading the metrics file, now fixed, plus corrected fixed-specificity selection and composition-verdict scoping.",
+      "finished_at_utc": "2026-11-24T12:37:26Z"
     }
   ]
 }
