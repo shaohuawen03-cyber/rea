@@ -810,7 +810,7 @@
       "serve_minutes": 15.0,
       "wait": false,
       "timeout_sec": 5400,
-      "status": "pending",
+      "status": "pushed_async",
       "created_at_utc": "2026-11-24T12:12:10Z",
       "kernel_slug": "dualamp-v2-1-smoke-cpu-20261124",
       "env": {
@@ -819,7 +819,8 @@
       "inline_json": {
         "V21_INPUTS_JSON": "cloud-gpu/jobs/v21_inputs.json"
       },
-      "note": "CPU smoke: the T4 kernel has sat in Kaggle's QUEUED state for over an hour. esm2_t12_35M on 2.8k peptides is cheap on CPU and validates the same plumbing (build/features/train/report)."
+      "note": "CPU smoke: the T4 kernel has sat in Kaggle's QUEUED state for over an hour. esm2_t12_35M on 2.8k peptides is cheap on CPU and validates the same plumbing (build/features/train/report).",
+      "finished_at_utc": "2026-11-24T12:12:45Z"
     }
   ]
 }
