@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-24T07:18:21Z",
+  "updated_at_utc": "2026-11-24T07:23:46Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -685,6 +685,30 @@
       "kernel_slug": "dualamp-v2-1-probe4-20261124",
       "note": "CPU probe 4: per-filter-stage survival counts + redacted Activity/Pubmed_ID shapes from DRAMP 3.0.",
       "finished_at_utc": "2026-11-24T07:16:27Z"
+    },
+    {
+      "id": "dualamp-v2-1-smoke-20261124",
+      "provider": "kaggle",
+      "mode": "run",
+      "accelerator": "CPU",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
+      "script_args": [],
+      "extra_pip": [
+        "gdown",
+        "requests",
+        "fair-esm",
+        "pyyaml"
+      ],
+      "serve_minutes": 15.0,
+      "wait": true,
+      "timeout_sec": 5400,
+      "status": "pending",
+      "created_at_utc": "2026-11-24T07:23:46Z",
+      "kernel_slug": "dualamp-v2-1-smoke-20261124",
+      "env": {
+        "V21_SMOKE": "1"
+      },
+      "note": "CPU smoke of the v2.1 pipeline wiring: 400 positives + decoys, 1 seed x 2 folds x 2 epochs, fair-esm on CPU. Validates manifest -> build -> features -> train -> report before any GPU run."
     }
   ]
 }
