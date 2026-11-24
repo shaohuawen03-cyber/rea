@@ -1,0 +1,87 @@
+{
+  "release_candidate": "v2.1.0-not-releasable",
+  "tier": "NOT_RELEASABLE",
+  "release_blockers": [
+    "training did not complete",
+    "smoke configuration (downsampled cohort), not the frozen protocol",
+    "internal test has 0 positives (<100)",
+    "only 0 seeds",
+    "no calibration table (Brier/ECE) in the report",
+    "composition challenge verdict = None"
+  ],
+  "generated_utc": "2026-11-24T12:07:55Z",
+  "source_report": "cloud-gpu/results/dualamp-v2-1-smoke-20261124/v2_1_training_report.json",
+  "source_report_sha256": "226f130391f3c025d428d55f5c14b2de6670de9960510826b17072caa1a90aaa",
+  "kernel": "shaohuawen/dualamp-v2-1-smoke-20261124",
+  "kernel_url": "https://www.kaggle.com/code/shaohuawen/dualamp-v2-1-smoke-20261124",
+  "code_commit": null,
+  "leanrea_commit": "f610dc00b1aec3ab948a5b77574af0e644259a13",
+  "dataset": {
+    "version": "positive_core_v2_1_dramp",
+    "rule_version": "auto_evidence_v2_2.0",
+    "cohort": {
+      "positives": 14577,
+      "composition_decoys": 14572,
+      "positive_fasta_sha256": "9ca0d4076f6d61c16ad31b920afc9029ae463d3df3510049c9b6ac4366a8e40c"
+    },
+    "negative_semantics": {
+      "proteins_total": 117172,
+      "keyword_excluded": 18,
+      "fragments_raw": 351462,
+      "fragments_standard_aa": 351429,
+      "fragments_dedup": 351119,
+      "fragments_hit_positive_4mer_gt08": 5,
+      "negatives_final": 2000,
+      "seed": 11,
+      "cap": 2000,
+      "neg_mode": "standard",
+      "seconds": 10.1
+    },
+    "smoke_mode": true
+  },
+  "protocol": {},
+  "encoder": {
+    "encoder": "fair-esm",
+    "is_mock": false,
+    "embed_dim": 480,
+    "probe_shapes": [
+      [
+        2,
+        23,
+        480
+      ],
+      [
+        2,
+        480
+      ]
+    ],
+    "finite": true
+  },
+  "calibration": {
+    "rows": 0,
+    "note": "Brier / ECE / Platt(dev OOF) come from leanrea calibration_metrics.csv"
+  },
+  "composition_challenge": {
+    "verdict": null,
+    "max_frac_predicted_positive": null
+  },
+  "fixed_specificity_operating_points": [],
+  "caveats": [],
+  "steps": {
+    "build": {
+      "returncode": 0,
+      "seconds": 9.2
+    },
+    "features": {
+      "returncode": 1,
+      "seconds": 7.6
+    }
+  },
+  "files": [
+    "v2_1_calibration.csv",
+    "v2_1_challenge_sets.csv",
+    "v2_1_metrics_summary.csv",
+    "v2_1_operating_points.csv",
+    "v2_1_test_metrics.csv"
+  ]
+}
