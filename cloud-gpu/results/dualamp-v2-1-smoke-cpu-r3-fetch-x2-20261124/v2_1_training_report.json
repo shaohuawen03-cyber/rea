@@ -1,0 +1,254 @@
+{
+  "stage": "dualamp_v2_1_training",
+  "dataset_version": "positive_core_v2_1_dramp",
+  "rule_version": "auto_evidence_v2_2.0",
+  "leanrea_commit": "f610dc00b1aec3ab948a5b77574af0e644259a13",
+  "started_utc": "2026-11-24T12:54:48.036707+00:00",
+  "training_started": true,
+  "upload_session_present": false,
+  "cohort": {
+    "positives": 14577,
+    "composition_decoys": 14572,
+    "positive_fasta_sha256": "9ca0d4076f6d61c16ad31b920afc9029ae463d3df3510049c9b6ac4366a8e40c"
+  },
+  "negatives": {
+    "proteins_total": 117172,
+    "keyword_excluded": 18,
+    "fragments_raw": 351462,
+    "fragments_standard_aa": 351429,
+    "fragments_dedup": 351119,
+    "fragments_hit_positive_4mer_gt08": 5,
+    "negatives_final": 2000,
+    "seed": 11,
+    "cap": 2000,
+    "neg_mode": "standard",
+    "seconds": 12.1
+  },
+  "manifest_sha256": "ce8971e16a45cd1a1bd7a37319989937d36f4074dce3e3417ea8e95a5d3355ed",
+  "smoke_mode": true,
+  "encoder_preflight": {
+    "encoder": "fair-esm",
+    "is_mock": false,
+    "embed_dim": 480,
+    "probe_shapes": [
+      [
+        2,
+        23,
+        480
+      ],
+      [
+        2,
+        480
+      ]
+    ],
+    "finite": true
+  },
+  "steps": {
+    "build": {
+      "returncode": 0,
+      "seconds": 10.3
+    },
+    "features": {
+      "returncode": 0,
+      "seconds": 86.9
+    },
+    "train": {
+      "returncode": 0,
+      "seconds": 551.4
+    },
+    "report": {
+      "returncode": 0,
+      "seconds": 19.9
+    }
+  },
+  "status": "COMPLETED_V2_1_TRAINING",
+  "completed_utc": "2026-11-24T13:06:40.634793+00:00",
+  "code_commit": "8e48e368b6ad01b3415d258ef8bc25cdbbc54d77",
+  "dataset_summary": {
+    "cluster_method": "kmer_fallback(k=3)",
+    "cluster_identity": 0.4,
+    "cluster_coverage": 0.8,
+    "n_clusters": 1558,
+    "n_sequences": 3200,
+    "layer_counts": {
+      "negative_background": 2000,
+      "scrambled": 800,
+      "bacterial_amp": 400
+    },
+    "split_counts": {
+      "train": 1351,
+      "scrambled": 800,
+      "review": 469,
+      "test": 290,
+      "val": 290,
+      "dev": 1641
+    },
+    "split_positives": {
+      "train": 120,
+      "val": 26,
+      "test": 26,
+      "dev": 0,
+      "external": 0,
+      "external_homolog": 0,
+      "scrambled": 157,
+      "review": 228
+    },
+    "split_negatives": {
+      "train": 1231,
+      "val": 264,
+      "test": 264,
+      "dev": 0,
+      "external": 0,
+      "external_homolog": 0,
+      "scrambled": 643,
+      "review": 241
+    },
+    "external_homolog_overlap": 0,
+    "dropped_records": 0,
+    "drop_reasons": {},
+    "inputs": {
+      "manifest": "/tmp/v21-g0dkpzfe/work/data/sources.yaml",
+      "sha256": "ce8971e16a45cd1a1bd7a37319989937d36f4074dce3e3417ea8e95a5d3355ed"
+    },
+    "min_len": 5,
+    "max_len": 50,
+    "demo_mode": false
+  },
+  "metrics": [
+    {
+      "model": "M3",
+      "family": "torch",
+      "n_test": "290",
+      "threshold": "0.793189",
+      "seconds": "152.1",
+      "n_pos": "26",
+      "auroc": "0.9988344988344988",
+      "auroc_ci_low": "0.9964721452868005",
+      "auroc_ci_high": "1.0",
+      "auprc": "0.9889417611566153",
+      "auprc_ci_low": "0.9663118022328547",
+      "auprc_ci_high": "1.0",
+      "mcc": "0.9414688716912718",
+      "mcc_ci_low": "0.8646800455161834",
+      "mcc_ci_high": "1.0",
+      "f1": "0.9454545454545454",
+      "f1_ci_low": "0.8679245283018868",
+      "f1_ci_high": "1.0",
+      "precision": "0.896551724137931",
+      "precision_ci_low": "0.7666666666666667",
+      "precision_ci_high": "1.0",
+      "sensitivity": "1.0",
+      "sensitivity_ci_low": "1.0",
+      "sensitivity_ci_high": "1.0",
+      "specificity": "0.9886363636363636",
+      "specificity_ci_low": "0.9736842105263158",
+      "specificity_ci_high": "1.0",
+      "accuracy": "0.9896551724137931",
+      "accuracy_ci_low": "0.9759450171821306",
+      "accuracy_ci_high": "1.0",
+      "mean_score": "0.12952903292892282",
+      "frac_predicted_positive": "0.1",
+      "auroc_delong_ci_low": "0.9969804435323939",
+      "auroc_delong_ci_high": "1.0",
+      "test_auroc_seed_mean": "0.9988344988344988",
+      "test_auroc_seed_sd": "0.0"
+    },
+    {
+      "model": "M2",
+      "family": "torch",
+      "n_test": "290",
+      "threshold": "0.762586",
+      "seconds": "155.9",
+      "n_pos": "26",
+      "auroc": "0.9986888111888113",
+      "auroc_ci_low": "0.995909897570383",
+      "auroc_ci_high": "1.0",
+      "auprc": "0.9876268367647678",
+      "auprc_ci_low": "0.9615834613415258",
+      "auprc_ci_high": "1.0",
+      "mcc": "0.9129757303844133",
+      "mcc_ci_low": "0.8198458852188247",
+      "mcc_ci_high": "0.9807573581624952",
+      "f1": "0.9166666666666666",
+      "f1_ci_low": "0.8181818181818182",
+      "f1_ci_high": "0.9824710080285458",
+      "precision": "1.0",
+      "precision_ci_low": "1.0",
+      "precision_ci_high": "1.0",
+      "sensitivity": "0.8461538461538461",
+      "sensitivity_ci_low": "0.6923076923076923",
+      "sensitivity_ci_high": "0.9655459770114941",
+      "specificity": "1.0",
+      "specificity_ci_low": "1.0",
+      "specificity_ci_high": "1.0",
+      "accuracy": "0.9862068965517241",
+      "accuracy_ci_low": "0.9717314487632509",
+      "accuracy_ci_high": "0.9966555183946488",
+      "mean_score": "0.09721465021485245",
+      "frac_predicted_positive": "0.07586206896551724",
+      "auroc_delong_ci_low": "0.9966369803747859",
+      "auroc_delong_ci_high": "1.0",
+      "test_auroc_seed_mean": "0.9986888111888113",
+      "test_auroc_seed_sd": "0.0"
+    },
+    {
+      "model": "M1",
+      "family": "torch",
+      "n_test": "290",
+      "threshold": "0.650716",
+      "seconds": "143.7",
+      "n_pos": "26",
+      "auroc": "0.9520687645687645",
+      "auroc_ci_low": "0.9143085869559254",
+      "auroc_ci_high": "0.982096763833992",
+      "auprc": "0.790860106327847",
+      "auprc_ci_low": "0.6476253184806008",
+      "auprc_ci_high": "0.9044428480328586",
+      "mcc": "0.6360097825160033",
+      "mcc_ci_low": "0.476774207958317",
+      "mcc_ci_high": "0.7701637084235283",
+      "f1": "0.6666666666666666",
+      "f1_ci_low": "0.5097860962566845",
+      "f1_ci_high": "0.7931034482758621",
+      "precision": "0.5882352941176471",
+      "precision_ci_low": "0.41379310344827586",
+      "precision_ci_high": "0.7501524390243894",
+      "sensitivity": "0.7692307692307693",
+      "sensitivity_ci_low": "0.6",
+      "sensitivity_ci_high": "0.92",
+      "specificity": "0.946969696969697",
+      "specificity_ci_low": "0.91796875",
+      "specificity_ci_high": "0.972972972972973",
+      "accuracy": "0.9310344827586207",
+      "accuracy_ci_low": "0.9007003861588552",
+      "accuracy_ci_high": "0.9581881533101045",
+      "mean_score": "0.31868403304753634",
+      "frac_predicted_positive": "0.11724137931034483",
+      "auroc_delong_ci_low": "0.9179688800143306",
+      "auroc_delong_ci_high": "0.9861686491231985",
+      "test_auroc_seed_mean": "0.9520687645687645",
+      "test_auroc_seed_sd": "0.0"
+    }
+  ],
+  "metrics_summary": [],
+  "calibration_metrics": [],
+  "calibration_bins": [],
+  "fixed_specificity_operating_points": [],
+  "fixed_specificity_source": "unavailable (no OOF table)",
+  "composition_challenge": {
+    "rows": [],
+    "max_frac_predicted_positive": null,
+    "verdict": "NOT_EVALUATED"
+  },
+  "calibration_bins_count": 0,
+  "caveats": [
+    "Positives are DRAMP-curated bacterial actives (TIER_B_LABEL: bacterial activity label + named target + PubMed reference). The bulk dumps do not carry per-record MIC values, so this is not a MIC-quantitative cohort.",
+    "Negatives are UniProt bacterial-cytoplasm fragments: a weak negative label, not experimentally verified inactivity.",
+    "The composition-matched challenge is reported as a challenge; a high flag rate is published as a failure mode, not hidden."
+  ],
+  "private_model_bundle": {
+    "skipped": "no upload session in env",
+    "local_bytes": 76968477,
+    "local_sha256": "c36144bc30298d314be970365f4d0a761d1306c2903f6e6b9afb11e4536e1019"
+  }
+}
