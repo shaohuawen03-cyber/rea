@@ -1,0 +1,98 @@
+[{"stream_name":"stdout","time":5.515639526,"data":"[pip] gdown: rc=0\n"}
+,{"stream_name":"stdout","time":7.393399148,"data":"[pip] requests: rc=0\n"}
+,{"stream_name":"stdout","time":9.712396034,"data":"[pip] fair-esm: rc=0\n"}
+,{"stream_name":"stdout","time":11.654322958,"data":"[pip] pyyaml: rc=0\n"}
+,{"stream_name":"stdout","time":15.679800126,"data":"[pip] biopython: rc=0\n"}
+,{"stream_name":"stdout","time":17.558270367,"data":"[pip] pandas: rc=0\n"}
+,{"stream_name":"stdout","time":19.433881293,"data":"[pip] scikit-learn: rc=0\n"}
+,{"stream_name":"stdout","time":21.383618117,"data":"[pip] matplotlib: rc=0\n"}
+,{"stream_name":"stdout","time":56.99035293,"data":"Downloading: \"https://dl.fbaipublicfiles.com/fair-esm/models/esm2_t12_35M_UR50D.pt\" to /root/.cache/torch/hub/checkpoints/esm2_t12_35M_UR50D.pt\n"}
+,{"stream_name":"stdout","time":57.424920796,"data":"Downloading: \"https://dl.fbaipublicfiles.com/fair-esm/regression/esm2_t12_35M_UR50D-contact-regression.pt\" to /root/.cache/torch/hub/checkpoints/esm2_t12_35M_UR50D-contact-regression.pt\n"}
+,{"stream_name":"stderr","time":679.41505972,"data":"{\n"}
+,{"stream_name":"stderr","time":679.415387136,"data":"  \"stage\": \"dualamp_v2_1_training\",\n"}
+,{"stream_name":"stderr","time":679.415397279,"data":"  \"dataset_version\": \"positive_core_v2_1_dramp\",\n"}
+,{"stream_name":"stderr","time":679.415402342,"data":"  \"rule_version\": \"auto_evidence_v2_2.0\",\n"}
+,{"stream_name":"stderr","time":679.415407592,"data":"  \"leanrea_commit\": \"f610dc00b1aec3ab948a5b77574af0e644259a13\",\n"}
+,{"stream_name":"stderr","time":679.415412219,"data":"  \"started_utc\": \"2026-11-24T12:13:09.446411+00:00\",\n"}
+,{"stream_name":"stderr","time":679.415417066,"data":"  \"training_started\": true,\n"}
+,{"stream_name":"stderr","time":679.415421482,"data":"  \"upload_session_present\": false,\n"}
+,{"stream_name":"stderr","time":679.41542619,"data":"  \"cohort\": {\n"}
+,{"stream_name":"stderr","time":679.415430793,"data":"    \"positives\": 14577,\n"}
+,{"stream_name":"stderr","time":679.415435822,"data":"    \"composition_decoys\": 14572,\n"}
+,{"stream_name":"stderr","time":679.415440768,"data":"    \"positive_fasta_sha256\": \"9ca0d4076f6d61c16ad31b920afc9029ae463d3df3510049c9b6ac4366a8e40c\"\n"}
+,{"stream_name":"stderr","time":679.415446123,"data":"  },\n"}
+,{"stream_name":"stderr","time":679.415450758,"data":"  \"negatives\": {\n"}
+,{"stream_name":"stderr","time":679.415455709,"data":"    \"proteins_total\": 117172,\n"}
+,{"stream_name":"stderr","time":679.41546059,"data":"    \"keyword_excluded\": 18,\n"}
+,{"stream_name":"stderr","time":679.415465223,"data":"    \"fragments_raw\": 351462,\n"}
+,{"stream_name":"stderr","time":679.41547034,"data":"    \"fragments_standard_aa\": 351429,\n"}
+,{"stream_name":"stderr","time":679.41547493,"data":"    \"fragments_dedup\": 351119,\n"}
+,{"stream_name":"stderr","time":679.415479789,"data":"    \"fragments_hit_positive_4mer_gt08\": 5,\n"}
+,{"stream_name":"stderr","time":679.415485191,"data":"    \"negatives_final\": 2000,\n"}
+,{"stream_name":"stderr","time":679.415490107,"data":"    \"seed\": 11,\n"}
+,{"stream_name":"stderr","time":679.415495058,"data":"    \"cap\": 2000,\n"}
+,{"stream_name":"stderr","time":679.415499358,"data":"    \"neg_mode\": \"standard\",\n"}
+,{"stream_name":"stderr","time":679.415503736,"data":"    \"seconds\": 11.4\n"}
+,{"stream_name":"stderr","time":679.415508174,"data":"  },\n"}
+,{"stream_name":"stderr","time":679.41551275,"data":"  \"manifest_sha256\": \"d9beb2a176ed243ff1c1eef8a1838c896dce139e3a74c369800f1be9ac6af426\",\n"}
+,{"stream_name":"stderr","time":679.415518006,"data":"  \"smoke_mode\": true,\n"}
+,{"stream_name":"stderr","time":679.415533144,"data":"  \"encoder_preflight\": {\n"}
+,{"stream_name":"stderr","time":679.415537326,"data":"    \"encoder\": \"fair-esm\",\n"}
+,{"stream_name":"stderr","time":679.415541448,"data":"    \"is_mock\": false,\n"}
+,{"stream_name":"stderr","time":679.415545206,"data":"    \"embed_dim\": 480,\n"}
+,{"stream_name":"stderr","time":679.415548822,"data":"    \"probe_shapes\": [\n"}
+,{"stream_name":"stderr","time":679.415552493,"data":"      [\n"}
+,{"stream_name":"stderr","time":679.41555617,"data":"        2,\n"}
+,{"stream_name":"stderr","time":679.415559723,"data":"        23,\n"}
+,{"stream_name":"stderr","time":679.41556309,"data":"        480\n"}
+,{"stream_name":"stderr","time":679.41556685,"data":"      ],\n"}
+,{"stream_name":"stderr","time":679.415570519,"data":"      [\n"}
+,{"stream_name":"stderr","time":679.415574326,"data":"        2,\n"}
+,{"stream_name":"stderr","time":679.415577766,"data":"        480\n"}
+,{"stream_name":"stderr","time":679.415581124,"data":"      ]\n"}
+,{"stream_name":"stderr","time":679.415585071,"data":"    ],\n"}
+,{"stream_name":"stderr","time":679.415588693,"data":"    \"finite\": true\n"}
+,{"stream_name":"stderr","time":679.415592444,"data":"  },\n"}
+,{"stream_name":"stderr","time":679.415595772,"data":"  \"steps\": {\n"}
+,{"stream_name":"stderr","time":679.415599756,"data":"    \"build\": {\n"}
+,{"stream_name":"stderr","time":679.415603462,"data":"      \"returncode\": 0,\n"}
+,{"stream_name":"stderr","time":679.41561329,"data":"      \"seconds\": 11.0\n"}
+,{"stream_name":"stderr","time":679.415617657,"data":"    },\n"}
+,{"stream_name":"stderr","time":679.415621386,"data":"    \"features\": {\n"}
+,{"stream_name":"stderr","time":679.41562525,"data":"      \"returncode\": 0,\n"}
+,{"stream_name":"stderr","time":679.415628822,"data":"      \"seconds\": 81.9\n"}
+,{"stream_name":"stderr","time":679.415632551,"data":"    },\n"}
+,{"stream_name":"stderr","time":679.415636264,"data":"    \"train\": {\n"}
+,{"stream_name":"stderr","time":679.415639812,"data":"      \"returncode\": 0,\n"}
+,{"stream_name":"stderr","time":679.415643422,"data":"      \"seconds\": 509.5\n"}
+,{"stream_name":"stderr","time":679.415646615,"data":"    },\n"}
+,{"stream_name":"stderr","time":679.415649819,"data":"    \"report\": {\n"}
+,{"stream_name":"stderr","time":679.415653192,"data":"      \"returncode\": 0,\n"}
+,{"stream_name":"stderr","time":679.415657785,"data":"      \"seconds\": 18.7\n"}
+,{"stream_name":"stderr","time":679.415661234,"data":"    }\n"}
+,{"stream_name":"stderr","time":679.415664959,"data":"  },\n"}
+,{"stream_name":"stderr","time":679.415668684,"data":"  \"status\": \"FAILED_NOT_COMPLETED\",\n"}
+,{"stream_name":"stderr","time":679.415672566,"data":"  \"error\": \"no test-metrics table produced by the pipeline\",\n"}
+,{"stream_name":"stderr","time":679.41567662,"data":"  \"traceback\": \"Traceback (most recent call last):\\n  File \\\"/tmp/_payload.py\\\", line 360, in main\\n    raise RuntimeError(\\\"no test-metrics table produced by the pipeline\\\")\\nRuntimeError: no test-metrics table produced by the pipeline\\n\",\n"}
+,{"stream_name":"stderr","time":679.415689566,"data":"  \"finished_utc\": \"2026-11-24T12:24:07.466516+00:00\"\n"}
+,{"stream_name":"stderr","time":679.415693262,"data":"}\n"}
+,{"stream_name":"stderr","time":679.676693175,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":679.677237678,"data":"  File \"/kaggle/src/script.py\", line 15, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":679.677257638,"data":"    runpy.run_path('/tmp/_payload.py', run_name='__main__')\n"}
+,{"stream_name":"stderr","time":679.677290618,"data":"    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":679.677296057,"data":"  File \"\u003cfrozen runpy\u003e\", line 294, in run_path\n"}
+,{"stream_name":"stderr","time":679.677300537,"data":"  File \"\u003cfrozen runpy\u003e\", line 98, in _run_module_code\n"}
+,{"stream_name":"stderr","time":679.677304729,"data":"  File \"\u003cfrozen runpy\u003e\", line 88, in _run_code\n"}
+,{"stream_name":"stderr","time":679.677308966,"data":"  File \"/tmp/_payload.py\", line 460, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":679.677313252,"data":"    sys.exit(main())\n"}
+,{"stream_name":"stderr","time":679.677321264,"data":"             ~~~~^^\n"}
+,{"stream_name":"stderr","time":679.677324761,"data":"  File \"/tmp/_payload.py\", line 360, in main\n"}
+,{"stream_name":"stderr","time":679.677328687,"data":"    raise RuntimeError(\"no test-metrics table produced by the pipeline\")\n"}
+,{"stream_name":"stderr","time":679.677332751,"data":"RuntimeError: no test-metrics table produced by the pipeline\n"}
+,{"stream_name":"stderr","time":682.536995055,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":682.537028374,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":682.801460103,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":682.801488803,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":683.680967896,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":684.922822522,"data":"[NbConvertApp] Writing 323793 bytes to __results__.html\n"}
+]

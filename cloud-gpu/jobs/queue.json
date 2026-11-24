@@ -864,10 +864,11 @@
       "mode": "output",
       "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
       "kernel_slug": "dualamp-v2-1-smoke-cpu-20261124",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-24T12:33:48Z",
-      "note": "Fetch the errored cpu smoke output."
+      "note": "Fetch the errored cpu smoke output.",
+      "finished_at_utc": "2026-11-24T12:34:31Z"
     }
   ]
 }
