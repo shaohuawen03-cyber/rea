@@ -1,0 +1,15 @@
+{
+  "job_id": "dualamp-v2-1-probe4-20261124",
+  "provider": "kaggle",
+  "mode": "run",
+  "accelerator": "CPU",
+  "kernel_ref": "shaohuawen/dualamp-v2-1-probe4-20261124",
+  "kernel_url": "https://www.kaggle.com/code/shaohuawen/dualamp-v2-1-probe4-20261124",
+  "status": "completed",
+  "copied_files": [
+    "dualamp-v2-1-probe4-20261124.log",
+    "v2_1_filter_diag.json"
+  ],
+  "push_output": "Kernel version 1 successfully pushed.  Please check progress at https://www.kaggle.com/code/shaohuawen/dualamp-v2-1-probe4-20261124",
+  "updated_at_utc": "2026-11-24T07:16:27Z"
+}

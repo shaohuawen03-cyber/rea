@@ -680,10 +680,11 @@
       "serve_minutes": 15.0,
       "wait": true,
       "timeout_sec": 2400,
-      "status": "pending",
+      "status": "completed",
       "created_at_utc": "2026-11-24T07:12:51Z",
       "kernel_slug": "dualamp-v2-1-probe4-20261124",
-      "note": "CPU probe 4: per-filter-stage survival counts + redacted Activity/Pubmed_ID shapes from DRAMP 3.0."
+      "note": "CPU probe 4: per-filter-stage survival counts + redacted Activity/Pubmed_ID shapes from DRAMP 3.0.",
+      "finished_at_utc": "2026-11-24T07:16:27Z"
     }
   ]
 }
