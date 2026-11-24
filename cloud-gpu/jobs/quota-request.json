@@ -1,7 +1,8 @@
 {
-  "label": "quota-diag-output",
-  "run_smoke": false,
-  "seconds": 60,
-  "fetch_output": "shaohuawen/quota-smoke-28",
-  "note": "Download the finished smoke kernel's output files (kernel.log / quota_smoke_result.json) to see why it errors after a few seconds."
+  "label": "quota-real-300s",
+  "run_smoke": true,
+  "seconds": 300,
+  "poll_timeout": 7200,
+  "keep_kernels": [],
+  "note": "FIXED: the kernel entry now inlines the payload (a sibling payload.py was never uploaded, which is why every earlier smoke died in ~7 s). 5-minute T4 run, wait for the real COMPLETE, then quota before/after."
 }

@@ -166,12 +166,19 @@ def main() -> int:
     try:
         # Kernel has no CLI args, so stage a wrapper that runs the payload with
         # the requested duration instead of appending a comment that does nothing.
-        shutil.copy2(PAYLOAD, os.path.join(stage, "payload.py"))
+        # Kaggle script kernels only upload `code_file`; a sibling payload.py would
+        # NOT be present in the container (that is why early smoke runs died in a
+        # few seconds). Inline the payload source into the entry script instead.
+        with open(PAYLOAD, "r", encoding="utf-8") as pf:
+            payload_source = pf.read()
         payload_args = ["--seconds", str(args.seconds)]
         wrapper = (
             "import runpy, sys\n"
-            f"sys.argv = ['payload.py', *{payload_args!r}]\n"
-            "runpy.run_path('payload.py', run_name='__main__')\n"
+            f"PAYLOAD = {payload_source!r}\n"
+            "with open('/tmp/_payload.py', 'w', encoding='utf-8') as f:\n"
+            "    f.write(PAYLOAD)\n"
+            "sys.argv = ['/tmp/_payload.py', *" + repr(payload_args) + "]\n"
+            "runpy.run_path('/tmp/_payload.py', run_name='__main__')\n"
         )
         with open(os.path.join(stage, "entry_main.py"), "w", encoding="utf-8") as f:
             f.write(wrapper)
