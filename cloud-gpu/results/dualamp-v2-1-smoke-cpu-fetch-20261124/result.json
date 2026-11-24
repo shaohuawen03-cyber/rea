@@ -1,0 +1,9 @@
+{
+  "job_id": "dualamp-v2-1-smoke-cpu-fetch-20261124",
+  "provider": "kaggle",
+  "mode": "output",
+  "kernel_ref": "shaohuawen/dualamp-v2-1-smoke-cpu-20261124",
+  "copied_files": [],
+  "cli_output": "",
+  "fetched_at_utc": "2026-11-24T12:21:08Z"
+}
