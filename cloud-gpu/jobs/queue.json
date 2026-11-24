@@ -702,7 +702,7 @@
       "serve_minutes": 15.0,
       "wait": true,
       "timeout_sec": 5400,
-      "status": "pending",
+      "status": "failed",
       "created_at_utc": "2026-11-24T07:23:46Z",
       "kernel_slug": "dualamp-v2-1-smoke-20261124",
       "env": {
@@ -710,7 +710,7 @@
       },
       "note": "CPU smoke of the v2.1 wiring. Inputs now come from the committed cloud-gpu/jobs/v21_inputs.json, so a consumed envelope cannot block it.",
       "error": "Kaggle kernel shaohuawen/dualamp-v2-1-smoke-20261124 ended with error; inspect logs in /tmp/private-gpu-runs/dualamp-v2-1-smoke-20261124.",
-      "finished_at_utc": "2026-11-24T07:30:42Z"
+      "finished_at_utc": "2026-11-24T07:34:10Z"
     }
   ]
 }

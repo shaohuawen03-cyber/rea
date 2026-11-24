@@ -1,32 +1,32 @@
-[{"stream_name":"stderr","time":5.679565772,"data":"{\n"}
-,{"stream_name":"stderr","time":5.679633958,"data":"  \"stage\": \"dualamp_v2_1_training\",\n"}
-,{"stream_name":"stderr","time":5.679641638,"data":"  \"dataset_version\": \"positive_core_v2_1_dramp\",\n"}
-,{"stream_name":"stderr","time":5.6796454579999995,"data":"  \"rule_version\": \"auto_evidence_v2_2.0\",\n"}
-,{"stream_name":"stderr","time":5.679649084,"data":"  \"leanrea_commit\": \"f610dc00b1aec3ab948a5b77574af0e644259a13\",\n"}
-,{"stream_name":"stderr","time":5.679652895,"data":"  \"started_utc\": \"2026-11-24T07:30:28.739525+00:00\",\n"}
-,{"stream_name":"stderr","time":5.679656869,"data":"  \"training_started\": false,\n"}
-,{"stream_name":"stderr","time":5.679660768,"data":"  \"status\": \"FAILED_NOT_COMPLETED\",\n"}
-,{"stream_name":"stderr","time":5.679664718,"data":"  \"error\": \"private v2.1 bundle id and model-upload session are required\",\n"}
-,{"stream_name":"stderr","time":5.67966957,"data":"  \"traceback\": \"Traceback (most recent call last):\\n  File \\\"/tmp/_payload.py\\\", line 171, in main\\n    raise RuntimeError(\\\"private v2.1 bundle id and model-upload session are required\\\")\\nRuntimeError: private v2.1 bundle id and model-upload session are required\\n\",\n"}
-,{"stream_name":"stderr","time":5.679676009,"data":"  \"finished_utc\": \"2026-11-24T07:30:28.740290+00:00\"\n"}
-,{"stream_name":"stderr","time":5.679680068,"data":"}\n"}
-,{"stream_name":"stderr","time":5.680226786,"data":"Traceback (most recent call last):\n"}
-,{"stream_name":"stderr","time":5.680762031,"data":"  File \"/kaggle/src/script.py\", line 8, in \u003cmodule\u003e\n"}
-,{"stream_name":"stderr","time":5.680774331,"data":"    runpy.run_path('/tmp/_payload.py', run_name='__main__')\n"}
-,{"stream_name":"stderr","time":5.680779202,"data":"    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
-,{"stream_name":"stderr","time":5.680783287,"data":"  File \"\u003cfrozen runpy\u003e\", line 294, in run_path\n"}
-,{"stream_name":"stderr","time":5.680787519,"data":"  File \"\u003cfrozen runpy\u003e\", line 98, in _run_module_code\n"}
-,{"stream_name":"stderr","time":5.680791793,"data":"  File \"\u003cfrozen runpy\u003e\", line 88, in _run_code\n"}
-,{"stream_name":"stderr","time":5.680795709,"data":"  File \"/tmp/_payload.py\", line 385, in \u003cmodule\u003e\n"}
-,{"stream_name":"stderr","time":5.680799761,"data":"    sys.exit(main())\n"}
-,{"stream_name":"stderr","time":5.680803895,"data":"             ~~~~^^\n"}
-,{"stream_name":"stderr","time":5.680808249,"data":"  File \"/tmp/_payload.py\", line 171, in main\n"}
-,{"stream_name":"stderr","time":5.6808129,"data":"    raise RuntimeError(\"private v2.1 bundle id and model-upload session are required\")\n"}
-,{"stream_name":"stderr","time":5.680817476,"data":"RuntimeError: private v2.1 bundle id and model-upload session are required\n"}
-,{"stream_name":"stderr","time":8.237092385,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
-,{"stream_name":"stderr","time":8.237129232,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
-,{"stream_name":"stderr","time":8.554086541,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
-,{"stream_name":"stderr","time":8.554111021,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
-,{"stream_name":"stderr","time":9.580141271,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
-,{"stream_name":"stderr","time":10.744505086,"data":"[NbConvertApp] Writing 312691 bytes to __results__.html\n"}
+[{"stream_name":"stderr","time":7.27317351,"data":"{\n"}
+,{"stream_name":"stderr","time":7.273229889,"data":"  \"stage\": \"dualamp_v2_1_training\",\n"}
+,{"stream_name":"stderr","time":7.273235984,"data":"  \"dataset_version\": \"positive_core_v2_1_dramp\",\n"}
+,{"stream_name":"stderr","time":7.273239384,"data":"  \"rule_version\": \"auto_evidence_v2_2.0\",\n"}
+,{"stream_name":"stderr","time":7.27324233,"data":"  \"leanrea_commit\": \"f610dc00b1aec3ab948a5b77574af0e644259a13\",\n"}
+,{"stream_name":"stderr","time":7.273245208,"data":"  \"started_utc\": \"2026-11-24T07:33:39.593400+00:00\",\n"}
+,{"stream_name":"stderr","time":7.273248111,"data":"  \"training_started\": false,\n"}
+,{"stream_name":"stderr","time":7.27325125,"data":"  \"status\": \"FAILED_NOT_COMPLETED\",\n"}
+,{"stream_name":"stderr","time":7.27327941,"data":"  \"error\": \"no private v2.1 bundle id (env or v21_inputs.json)\",\n"}
+,{"stream_name":"stderr","time":7.27328255,"data":"  \"traceback\": \"Traceback (most recent call last):\\n  File \\\"/tmp/_payload.py\\\", line 180, in main\\n    raise RuntimeError(\\\"no private v2.1 bundle id (env or v21_inputs.json)\\\")\\nRuntimeError: no private v2.1 bundle id (env or v21_inputs.json)\\n\",\n"}
+,{"stream_name":"stderr","time":7.273288239,"data":"  \"finished_utc\": \"2026-11-24T07:33:39.594377+00:00\"\n"}
+,{"stream_name":"stderr","time":7.273295927,"data":"}\n"}
+,{"stream_name":"stderr","time":7.273928683,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":7.274664008,"data":"  File \"/kaggle/src/script.py\", line 8, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":7.274728435,"data":"    runpy.run_path('/tmp/_payload.py', run_name='__main__')\n"}
+,{"stream_name":"stderr","time":7.274735717,"data":"    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":7.274740919,"data":"  File \"\u003cfrozen runpy\u003e\", line 294, in run_path\n"}
+,{"stream_name":"stderr","time":7.27474637,"data":"  File \"\u003cfrozen runpy\u003e\", line 98, in _run_module_code\n"}
+,{"stream_name":"stderr","time":7.274750774,"data":"  File \"\u003cfrozen runpy\u003e\", line 88, in _run_code\n"}
+,{"stream_name":"stderr","time":7.274755457,"data":"  File \"/tmp/_payload.py\", line 402, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":7.274759939,"data":"    sys.exit(main())\n"}
+,{"stream_name":"stderr","time":7.274764043,"data":"             ~~~~^^\n"}
+,{"stream_name":"stderr","time":7.274768026,"data":"  File \"/tmp/_payload.py\", line 180, in main\n"}
+,{"stream_name":"stderr","time":7.274774466,"data":"    raise RuntimeError(\"no private v2.1 bundle id (env or v21_inputs.json)\")\n"}
+,{"stream_name":"stderr","time":7.274784225,"data":"RuntimeError: no private v2.1 bundle id (env or v21_inputs.json)\n"}
+,{"stream_name":"stderr","time":10.294000919,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":10.294045925,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":10.698786392,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":10.698834226,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":12.009345988,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":13.463326121,"data":"[NbConvertApp] Writing 314017 bytes to __results__.html\n"}
 ]
