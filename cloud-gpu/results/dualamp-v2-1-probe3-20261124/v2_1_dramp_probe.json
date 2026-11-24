@@ -1,0 +1,82 @@
+{
+  "stage": "v2_1_dramp_probe",
+  "started_utc": "2026-11-24T07:05:05.903734+00:00",
+  "attempts": [
+    {
+      "label": "abs_download.php",
+      "url": "https://dramp.cpu-bioinfor.org/download.php?filename=download_data/DRAMP3.0_new/Antibacterial_amps.txt",
+      "status": 404,
+      "error": "HTTPError"
+    },
+    {
+      "label": "abs_quoted",
+      "url": "https://dramp.cpu-bioinfor.org/download.php?filename=download_data%2FDRAMP3.0_new%2FAntibacterial_amps.txt",
+      "status": 404,
+      "error": "HTTPError"
+    },
+    {
+      "label": "subdir_download.php",
+      "url": "https://dramp.cpu-bioinfor.org/downloads/download.php?filename=download_data/DRAMP3.0_new/Antibacterial_amps.txt",
+      "status": 200,
+      "content_type": "application/octet-stream",
+      "location": "",
+      "head": "DRAMP_ID\tSequence\tName\tSource\tActivity\tPubmed_ID\tDataset\tLength\nDRAMP00005\tSLGPAIKATRQVCPKATRFVTVSCKKSDCQ\tEpicidin 280 (Bacteriocin; Predicted)\tStaphylococcus epidermidis BN 280 (Gram-positive bacteria)\tAntimicrobial, Antibacterial, Anti-Gram+\t9726851\tGeneral\t30.0\nDRAMP00017\tVTSWSLCTPGCTSPGGGSNCSFCC"
+    },
+    {
+      "label": "subdir_quoted",
+      "url": "https://dramp.cpu-bioinfor.org/downloads/download.php?filename=download_data%2FDRAMP3.0_new%2FAntibacterial_amps.txt",
+      "status": 200,
+      "content_type": "application/octet-stream",
+      "location": "",
+      "head": "DRAMP_ID\tSequence\tName\tSource\tActivity\tPubmed_ID\tDataset\tLength\nDRAMP00005\tSLGPAIKATRQVCPKATRFVTVSCKKSDCQ\tEpicidin 280 (Bacteriocin; Predicted)\tStaphylococcus epidermidis BN 280 (Gram-positive bacteria)\tAntimicrobial, Antibacterial, Anti-Gram+\t9726851\tGeneral\t30.0\nDRAMP00017\tVTSWSLCTPGCTSPGGGSNCSFCC"
+    },
+    {
+      "label": "subdir_direct_path",
+      "url": "https://dramp.cpu-bioinfor.org/downloads/download_data/DRAMP3.0_new/Antibacterial_amps.txt",
+      "status": 200,
+      "content_type": "text/plain",
+      "location": "",
+      "head": "DRAMP_ID\tSequence\tName\tSource\tActivity\tPubmed_ID\tDataset\tLength\nDRAMP00005\tSLGPAIKATRQVCPKATRFVTVSCKKSDCQ\tEpicidin 280 (Bacteriocin; Predicted)\tStaphylococcus epidermidis BN 280 (Gram-positive bacteria)\tAntimicrobial, Antibacterial, Anti-Gram+\t9726851\tGeneral\t30.0\nDRAMP00017\tVTSWSLCTPGCTSPGGGSNCSFCC"
+    },
+    {
+      "label": "root_direct_path",
+      "url": "https://dramp.cpu-bioinfor.org/download_data/DRAMP3.0_new/Antibacterial_amps.txt",
+      "status": 404,
+      "error": "HTTPError"
+    },
+    {
+      "label": "post_download.php",
+      "url": "https://dramp.cpu-bioinfor.org/download.php",
+      "status": 404,
+      "error": "HTTPError"
+    },
+    {
+      "label": "post_downloads_download.php",
+      "url": "https://dramp.cpu-bioinfor.org/downloads/download.php",
+      "status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "location": "",
+      "head": "\n"
+    },
+    {
+      "label": "page_downloads",
+      "url": "https://dramp.cpu-bioinfor.org/downloads/",
+      "status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "location": "",
+      "head": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <title>Welcome To Dramp Database</title>\n    <meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">\n    <meta charset=\"utf-8\">\n\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"../lazysheep/css/bootstrap.css\">\n    <link rel=\"stylesheet\" type=\""
+    },
+    {
+      "label": "github_mirror",
+      "url": "https://raw.githubusercontent.com/DRAMP-KSU/DRAMP/master/README.md",
+      "status": 404,
+      "error": "HTTPError"
+    }
+  ],
+  "finished_utc": "2026-11-24T07:05:14.519890+00:00",
+  "works": [
+    "subdir_download.php",
+    "subdir_quoted",
+    "subdir_direct_path"
+  ]
+}
