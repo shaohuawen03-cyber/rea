@@ -95,7 +95,13 @@ def find(work: Path, pattern: str) -> list[Path]:
 
 
 def operating_points(oof_rows: list[dict], targets: list[float]) -> list[dict]:
-    """Dev-OOF thresholds that hit fixed specificities, with the matching sensitivity."""
+    """Dev-OOF thresholds that hit a target specificity, with the matching sensitivity.
+
+    The threshold is the negative-score quantile at ``1 - target`` (empirical, nearest
+    order statistic), then sensitivity/specificity are measured on the same pooled dev
+    OOF rows. Reported per model across all seeds, plus the per-seed threshold spread so
+    a reader can see how stable the cut is.
+    """
     out: list[dict] = []
     by_model: dict[str, dict] = {}
     for row in oof_rows:
@@ -105,23 +111,40 @@ def operating_points(oof_rows: list[dict], targets: list[float]) -> list[dict]:
             p = float(row["prob"])
         except (KeyError, TypeError, ValueError):
             continue
-        by_model.setdefault(model, {"y": [], "p": []})
-        by_model[model]["y"].append(y)
-        by_model[model]["p"].append(p)
+        if not (0.0 <= p <= 1.0):
+            continue
+        bucket = by_model.setdefault(model, {"y": [], "p": [], "seeds": set()})
+        bucket["y"].append(y)
+        bucket["p"].append(p)
+        if row.get("seed") not in (None, ""):
+            bucket["seeds"].add(str(row["seed"]))
     for model, data in sorted(by_model.items()):
         neg = sorted(p for p, y in zip(data["p"], data["y"]) if y == 0)
         pos = sorted(p for p, y in zip(data["p"], data["y"]) if y == 1)
         if not neg or not pos:
             continue
         for target in targets:
-            idx = min(len(neg) - 1, max(0, int(round((1.0 - target) * (len(neg) - 1)))))
-            thr = neg[idx]
+            # Walk candidate cuts from the lowest negative score upwards and keep the first
+            # one whose achieved specificity still meets the target: that is the *most
+            # sensitive* operating point at the requested specificity. (Ordering this the
+            # other way round silently reports specificity 0.01 for a 0.99 request.)
+            thr = None
+            for cand in neg:
+                spec_c = sum(1 for p in neg if p < cand) / len(neg)
+                if spec_c >= target - 1e-12:
+                    thr = cand
+                    break
+            if thr is None:
+                thr = max(neg)
             sens = sum(1 for p in pos if p >= thr) / len(pos)
             spec = sum(1 for p in neg if p < thr) / len(neg)
             out.append({"model": model, "target_specificity": target,
+                        "source": "dev OOF (pooled over seeds)",
                         "oof_threshold": round(thr, 6),
                         "oof_specificity": round(spec, 4),
                         "oof_sensitivity": round(sens, 4),
+                        "specificity_gap": round(spec - target, 4),
+                        "n_seeds": len(data["seeds"]) or None,
                         "oof_n_neg": len(neg), "oof_n_pos": len(pos)})
     return out
 
@@ -131,10 +154,15 @@ def composition_challenge(metrics: list[dict], extra_paths: list[Path]) -> dict:
     rows: list[dict] = []
     for path in extra_paths:
         for row in csv_rows(path):
-            if any(k in json.dumps(row).lower() for k in ("scrambled", "decoy")):
+            blob = json.dumps(row).lower()
+            # external_test / homolog splits are *not* composition controls; counting them
+            # would let an unrelated split decide the composition verdict.
+            if ("scrambled" in blob or "composition" in blob or "decoy" in blob) \
+                    and "external" not in blob and "homolog" not in blob:
                 rows.append(row)
     for row in metrics:
-        if "scrambled" in json.dumps(row).lower():
+        blob = json.dumps(row).lower()
+        if ("scrambled" in blob or "composition" in blob) and "external" not in blob:
             rows.append(row)
     fracs = []
     for row in rows:
@@ -354,14 +382,17 @@ def main() -> int:
                     raise RuntimeError(
                         f"pipeline step failed ({proc.returncode}): {' '.join(cmd[3:7])}")
 
-        metrics_path = (find(wd, "internal_test_metrics.csv")
+        # leanrea writes manuscript/D10_test_metrics.csv (the D-numbered manuscript tables);
+        # accept the other spellings too so a leanrea bump cannot silently break the summary.
+        metrics_path = (find(wd, "D10_test_metrics.csv")
+                        or find(wd, "internal_test_metrics.csv")
                         or find(wd, "manuscript_D10_test_metrics.csv"))
         if not metrics_path:
             raise RuntimeError("no test-metrics table produced by the pipeline")
         metrics = csv_rows(metrics_path[0])
-        summary_files = find(wd, "internal_test_summary.csv")
+        summary_files = find(wd, "D10_test_summary.csv") or find(wd, "internal_test_summary.csv")
         summary = csv_rows(summary_files[0]) if summary_files else []
-        dataset_files = find(wd, "dataset_summary.json")
+        dataset_files = find(wd, "dataset_summary.json") or find(wd, "D1_dataset_summary.json")
         dataset = json.loads(dataset_files[0].read_text()) if dataset_files else {}
         calib_metrics = [p for p in find(wd, "calibration_metrics.csv")]
         calib_bins = [p for p in find(wd, "calibration_bins.csv")]
