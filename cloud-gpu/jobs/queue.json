@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-24T07:42:44Z",
+  "updated_at_utc": "2026-11-24T09:46:11Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -702,15 +702,13 @@
       "serve_minutes": 15.0,
       "wait": true,
       "timeout_sec": 7200,
-      "status": "poll_timeout",
+      "status": "pending",
       "created_at_utc": "2026-11-24T07:23:46Z",
       "kernel_slug": "dualamp-v2-1-smoke-20261124",
       "env": {
         "V21_SMOKE": "1"
       },
-      "note": "Smoke of the v2.1 wiring on a T4 (400 positives + decoys, 1 seed x 2 folds x 2 epochs). GPU is needed because fair-esm compiles/loads CUDA extensions for the feature stage; input descriptor is inlined via inline_json and the bundle is read from the committed descriptor.",
-      "error": "Kaggle kernel shaohuawen/dualamp-v2-1-smoke-20261124 ended with error; inspect logs in /tmp/private-gpu-runs/dualamp-v2-1-smoke-20261124.",
-      "finished_at_utc": "2026-11-24T09:43:33Z",
+      "note": "Smoke (400 positives + 400 decoys + 2000 UniProt fragments, 1 seed x 2 folds x 2 epochs). Adds an encoder preflight, per-step timing and a log that survives a crash.",
       "inline_json": {
         "V21_INPUTS_JSON": "cloud-gpu/jobs/v21_inputs.json"
       }

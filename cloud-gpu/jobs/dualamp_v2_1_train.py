@@ -21,6 +21,7 @@ import os
 import shutil
 import subprocess
 import sys
+import time
 import tempfile
 import traceback
 import zipfile
@@ -241,6 +242,9 @@ def main() -> int:
         wd = tmp / "work"
         data = wd / "data"
         data.mkdir(parents=True)
+        smoke = (os.environ.get("V21_SMOKE") or "").strip() == "1"
+        if smoke:
+            positives = positives[:400]
         write_fasta(data / "positives.fasta",
                     [(f"BACT_POS_{i:05d}", s) for i, s in enumerate(positives)])
         neg_src_dir = repo / "cloud-gpu" / "cache"
@@ -260,7 +264,8 @@ def main() -> int:
         neg_stats = pilot.build_negatives(
             data / "uniprot_bacteria_cytoplasm_reviewed.fasta.gz",
             data / "uniprot_bacteria_cytoplasm_reviewed.tsv.gz",
-            data / "negatives.fasta", set(positives), cap=20000, seed=11, neg_mode="standard")
+            data / "negatives.fasta", set(positives), cap=2000 if smoke else 20000,
+            seed=11, neg_mode="standard")
         report["negatives"] = neg_stats
 
         manifest = data / "sources.yaml"
@@ -281,12 +286,9 @@ def main() -> int:
             encoding="utf-8")
         report["manifest_sha256"] = sha(manifest)
 
-        smoke = (os.environ.get("V21_SMOKE") or "").strip() == "1"
         if smoke:
-            positives = positives[:400]
             decoys = decoys[:400]
-            write_fasta(data / "positives.fasta",
-                        [(f"BACT_POS_{i:05d}", s_) for i, s_ in enumerate(positives)])
+            write_fasta(decoy_fasta, [(f"CPD_{i:05d}", s_) for i, s_ in enumerate(decoys)])
         seeds = "1" if smoke else "1,2,3,4,5"
         epochs = "2" if smoke else "60"
         folds = "2" if smoke else "5"
@@ -302,6 +304,29 @@ def main() -> int:
              "--epochs", epochs, "--loss", "bce"],
             [sys.executable, "-m", "dualamp_lite", "report", "--workdir", str(wd / "run")],
         ]
+        # Preflight the encoder: a missing/broken fair-esm must fail here with a clear
+        # message instead of surfacing as "features exit 1" 20 minutes later.
+        preflight = {}
+        try:
+            sys.path.insert(0, str(pkg))
+            import numpy as np  # noqa: PLC0415
+            from dualamp_lite.v4.config import FeatureConfig  # noqa: PLC0415
+            from dualamp_lite.v4.features import build_encoder  # noqa: PLC0415
+            enc = build_encoder(FeatureConfig(backend="fair-esm"), device="cpu")
+            probe_res, probe_mean, probe_mask = enc.encode(["KLKLLKKLLK", "GIGKFLHSAKKFGKAFVGEIMNS"])
+            preflight = {
+                "encoder": enc.name,
+                "is_mock": bool(getattr(enc, "is_mock", False)),
+                "embed_dim": int(getattr(enc, "embed_dim", 0)),
+                "probe_shapes": [list(probe_res.shape), list(probe_mean.shape)],
+                "finite": bool(np.isfinite(probe_mean).all()),
+            }
+        except Exception as exc:  # noqa: BLE001 - recorded, then re-raised below
+            preflight = {"encoder": "fair-esm", "error": f"{type(exc).__name__}: {exc}"}
+            report["encoder_preflight"] = preflight
+            raise
+        report["encoder_preflight"] = preflight
+
         report["training_started"] = True
         # The log lives in the kernel output dir so a crash (or a killed poll) still
         # publishes it; the previous version wrote to /tmp and lost every root cause.
@@ -311,8 +336,16 @@ def main() -> int:
             for cmd in steps:
                 print("$ " + " ".join(cmd), file=log, flush=True)
                 log.flush()
+                t0 = time.time()
                 proc = subprocess.run(cmd, cwd=str(pkg), env=env, stdout=log,
                                       stderr=subprocess.STDOUT)
+                step_name = cmd[3]
+                report.setdefault("steps", {})[step_name] = {
+                    "returncode": proc.returncode,
+                    "seconds": round(time.time() - t0, 1),
+                }
+                (Path(out) / "v2_1_progress.json").write_text(
+                    json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8")
                 log.flush()
                 os.fsync(log.fileno())
                 if proc.returncode != 0:
