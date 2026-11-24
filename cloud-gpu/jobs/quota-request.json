@@ -1,9 +1,9 @@
 {
-  "label": "quota-proof-32",
+  "label": "quota-proof-32b",
   "run_smoke": false,
   "seconds": 60,
   "check_kernels": ["shaohuawen/quota-smoke-32"],
   "logs_ref": "shaohuawen/quota-smoke-32",
   "fetch_output": "shaohuawen/quota-smoke-32",
-  "note": "Pull quota-smoke-32 output/log for the final proof."
+  "note": "Re-pull quota-smoke-32 output with the fixed user_name + pre-signed URL download."
 }
