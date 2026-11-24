@@ -591,10 +591,11 @@
       "serve_minutes": 15.0,
       "wait": true,
       "timeout_sec": 10800,
-      "status": "pending",
+      "status": "completed",
       "created_at_utc": "2026-11-24T01:41:45Z",
       "kernel_slug": "dualamp-real8-v2-retry3-20261124",
-      "note": "User-authorized fresh strict-v2 exploratory run using current branch relay credentials. Bundle and FASTA SHA are verified; Drive input link is temporarily reader-only and must be made private after Kaggle reaches terminal status. Model outputs go to a private Drive upload session. This is the first actual training retry after retry1 was deleted before training; only one job is pending."
+      "note": "User-authorized fresh strict-v2 exploratory run using current branch relay credentials. Bundle and FASTA SHA are verified; Drive input link is temporarily reader-only and must be made private after Kaggle reaches terminal status. Model outputs go to a private Drive upload session. This is the first actual training retry after retry1 was deleted before training; only one job is pending.",
+      "finished_at_utc": "2026-11-24T02:29:35Z"
     }
   ]
 }
