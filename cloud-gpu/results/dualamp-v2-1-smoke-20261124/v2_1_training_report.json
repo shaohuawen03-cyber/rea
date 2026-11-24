@@ -3,10 +3,10 @@
   "dataset_version": "positive_core_v2_1_dramp",
   "rule_version": "auto_evidence_v2_2.0",
   "leanrea_commit": "f610dc00b1aec3ab948a5b77574af0e644259a13",
-  "started_utc": "2026-11-24T07:27:45.988671+00:00",
+  "started_utc": "2026-11-24T07:30:28.739525+00:00",
   "training_started": false,
   "status": "FAILED_NOT_COMPLETED",
-  "error": "Failed to retrieve file url:\n\n\tCannot retrieve the public link of the file. You may need to change\n\tthe permission to 'Anyone with the link', or have had many accesses.\n\tCheck FAQ in https://github.com/wkentaro/gdown?tab=readme-ov-file#faq.\n\nYou may still be able to access the file from the browser:\n\n\thttps://drive.google.com/uc?id=1MWre9VE-emU1Ubxi838aLP8VskFWCtI9\n\nbut Gdown can't. Please check connections and permissions.",
-  "traceback": "Traceback (most recent call last):\n  File \"/usr/local/lib/python3.13/dist-packages/gdown/download.py\", line 273, in download\n    url = get_url_from_gdrive_confirmation(res.text)\n  File \"/usr/local/lib/python3.13/dist-packages/gdown/download.py\", line 55, in get_url_from_gdrive_confirmation\n    raise FileURLRetrievalError(\n    ...<4 lines>...\n    )\ngdown.exceptions.FileURLRetrievalError: Cannot retrieve the public link of the file. You may need to change the permission to 'Anyone with the link', or have had many accesses. Check FAQ in https://github.com/wkentaro/gdown?tab=readme-ov-file#faq.\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/tmp/_payload.py\", line 177, in main\n    got = gdown.download(id=bundle_id, output=str(bundle), quiet=True)\n  File \"/usr/local/lib/python3.13/dist-packages/gdown/download.py\", line 284, in download\n    raise FileURLRetrievalError(message)\ngdown.exceptions.FileURLRetrievalError: Failed to retrieve file url:\n\n\tCannot retrieve the public link of the file. You may need to change\n\tthe permission to 'Anyone with the link', or have had many accesses.\n\tCheck FAQ in https://github.com/wkentaro/gdown?tab=readme-ov-file#faq.\n\nYou may still be able to access the file from the browser:\n\n\thttps://drive.google.com/uc?id=1MWre9VE-emU1Ubxi838aLP8VskFWCtI9\n\nbut Gdown can't. Please check connections and permissions.\n",
-  "finished_utc": "2026-11-24T07:27:47.449066+00:00"
+  "error": "private v2.1 bundle id and model-upload session are required",
+  "traceback": "Traceback (most recent call last):\n  File \"/tmp/_payload.py\", line 171, in main\n    raise RuntimeError(\"private v2.1 bundle id and model-upload session are required\")\nRuntimeError: private v2.1 bundle id and model-upload session are required\n",
+  "finished_utc": "2026-11-24T07:30:28.740290+00:00"
 }

@@ -1,4 +1,3 @@
 === Running job dualamp-v2-1-smoke-20261124 (kaggle / run) ===
-[poll] shaohuawen/dualamp-v2-1-smoke-20261124 state=RUNNING
 [poll] shaohuawen/dualamp-v2-1-smoke-20261124 state=ERROR
 [ERROR] Job dualamp-v2-1-smoke-20261124 failed: Kaggle kernel shaohuawen/dualamp-v2-1-smoke-20261124 ended with error; inspect logs in /tmp/private-gpu-runs/dualamp-v2-1-smoke-20261124.
