@@ -1,9 +1,7 @@
 {
-  "label": "quota-proof-32b",
+  "label": "quota-check",
   "run_smoke": false,
   "seconds": 60,
-  "check_kernels": ["shaohuawen/quota-smoke-32"],
-  "logs_ref": "shaohuawen/quota-smoke-32",
-  "fetch_output": "shaohuawen/quota-smoke-32",
-  "note": "Re-pull quota-smoke-32 output with the fixed user_name + pre-signed URL download."
+  "check_kernels": [],
+  "note": "Idle request: only reads the quota. Set run_smoke/seconds to start a GPU smoke kernel."
 }
