@@ -1,8 +1,8 @@
 {
-  "label": "quota-real-300s",
-  "run_smoke": true,
-  "seconds": 300,
-  "poll_timeout": 7200,
-  "keep_kernels": [],
-  "note": "FIXED: the kernel entry now inlines the payload (a sibling payload.py was never uploaded, which is why every earlier smoke died in ~7 s). 5-minute T4 run, wait for the real COMPLETE, then quota before/after."
+  "label": "quota-watch-32",
+  "run_smoke": false,
+  "seconds": 60,
+  "check_kernels": ["shaohuawen/quota-smoke-32"],
+  "fetch_output": "shaohuawen/quota-smoke-32",
+  "note": "Watch the fixed 5-minute kernel: raw session status, its output/log, and the quota."
 }
