@@ -1,0 +1,6 @@
+no ~/.kaggle/kaggle.json (bare API token mode)
+username from kernels list: shaohuawen
+username='shaohuawen' payload=cloud-gpu/jobs/quota_smoke.py seconds=300.0
+push rc=0
+Kernel version 1 successfully pushed.  Please check progress at https://www.kaggle.com/code/shaohuawen/quota-smoke-28
+
