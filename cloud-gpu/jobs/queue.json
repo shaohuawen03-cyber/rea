@@ -1026,7 +1026,7 @@
       "serve_minutes": 15.0,
       "wait": false,
       "timeout_sec": 5400,
-      "status": "pending",
+      "status": "pushed_async",
       "created_at_utc": "2026-11-24T13:20:22Z",
       "kernel_slug": "dualamp-v2-1-smoke-cpu-r4-20261124",
       "env": {
@@ -1035,7 +1035,8 @@
       "inline_json": {
         "V21_INPUTS_JSON": "cloud-gpu/jobs/v21_inputs.json"
       },
-      "note": "CPU smoke r4: r3 completed the four CLI steps but the CLI has no `evaluation` subcommand, so calibration/challenge tables were never produced. Now drives the V4 evaluation stage directly."
+      "note": "CPU smoke r4: r3 completed the four CLI steps but the CLI has no `evaluation` subcommand, so calibration/challenge tables were never produced. Now drives the V4 evaluation stage directly.",
+      "finished_at_utc": "2026-11-24T13:20:59Z"
     },
     {
       "id": "dualamp-v2-1-smoke-cpu-r4-fetch-20261124",
@@ -1043,10 +1044,11 @@
       "mode": "output",
       "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
       "kernel_slug": "dualamp-v2-1-smoke-cpu-r4-20261124",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-24T13:20:22Z",
-      "note": "Fetch the r4 smoke report."
+      "note": "Fetch the r4 smoke report.",
+      "finished_at_utc": "2026-11-24T13:21:01Z"
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
