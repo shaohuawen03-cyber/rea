@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-24T11:53:24Z",
+  "updated_at_utc": "2026-11-24T11:56:05Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -741,6 +741,18 @@
       "created_at_utc": "2026-11-24T11:53:24Z",
       "note": "Fetch smoke outputs once the kernel completes.",
       "finished_at_utc": "2026-11-24T11:54:06Z"
+    },
+    {
+      "id": "dualamp-v2-1-smoke-status-r2-20261124",
+      "provider": "kaggle",
+      "mode": "status",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
+      "kernel_slug": "dualamp-v2-1-smoke-20261124",
+      "status": "completed",
+      "wait": false,
+      "created_at_utc": "2026-11-24T11:56:05Z",
+      "note": "Second status read; the smoke kernel was still QUEUED at the first check.",
+      "finished_at_utc": "2026-11-24T11:57:04Z"
     }
   ]
 }
