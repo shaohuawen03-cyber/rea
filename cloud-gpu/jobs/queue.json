@@ -908,10 +908,11 @@
       "mode": "output",
       "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
       "kernel_slug": "dualamp-v2-1-smoke-cpu-r2-20261124",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-24T12:49:38Z",
-      "note": "Fetch the r2 smoke report (re-added after a rebase conflict dropped it)."
+      "note": "Fetch the r2 smoke report (re-added after a rebase conflict dropped it).",
+      "finished_at_utc": "2026-11-24T12:50:13Z"
     }
   ]
 }

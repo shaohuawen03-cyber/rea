@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-24T12:36:55Z",
+  "updated_at_utc": "2026-11-24T12:49:38Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -901,6 +901,18 @@
       },
       "note": "CPU smoke r2. r1 proved all four stages run (build/features/train/report, scrambled headline frac 0.53/0.11/0.22); it only failed reading the metrics file, now fixed, plus corrected fixed-specificity selection and composition-verdict scoping.",
       "finished_at_utc": "2026-11-24T12:37:26Z"
+    },
+    {
+      "id": "dualamp-v2-1-smoke-cpu-r2-fetch-20261124",
+      "provider": "kaggle",
+      "mode": "output",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
+      "kernel_slug": "dualamp-v2-1-smoke-cpu-r2-20261124",
+      "status": "completed",
+      "wait": false,
+      "created_at_utc": "2026-11-24T12:49:38Z",
+      "note": "Fetch the r2 smoke report (re-added after a rebase conflict dropped it).",
+      "finished_at_utc": "2026-11-24T12:50:13Z"
     }
   ]
 }

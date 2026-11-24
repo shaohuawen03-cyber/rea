@@ -1,0 +1,47 @@
+$ /usr/bin/python3 -m dualamp_lite build --manifest /tmp/v21-rxcjma31/work/data/sources.yaml --workdir /tmp/v21-rxcjma31/work/run --cluster-method auto
+[12:38:34] INFO    reading sources from /tmp/v21-rxcjma31/work/data/sources.yaml
+[12:38:35] INFO      source dramp_v2_1_positives   layer=bacterial_amp        kept=  400 (from 400 rows)
+[12:38:35] INFO      source uniprot_a_fragments    layer=negative_background  kept= 2000 (from 2000 rows)
+[12:38:35] INFO      source composition_decoys_v2_1 layer=scrambled            kept=  400 (from 400 rows)
+[12:38:35] INFO    after length/alphabet filtering: 2800 records
+[12:38:38] INFO      dedup: 2800 records -> 2800 unique sequences
+[12:38:38] INFO      scrambled challenge set: +400 sequences
+[12:38:38] WARNING   CD-HIT / MMseqs2 not found - using the built-in k-mer clustering fallback. Record this in the methods section (plan §5 requires naming the tool and params).
+[12:38:43] INFO    clustering: kmer_fallback(k=3) at identity 0.40 / coverage 0.80 -> 1558 clusters
+[12:38:43] WARNING   156 homology clusters contain both labels - assigned to 'review' (never trained on)
+[12:38:44] INFO      split sizes: {'train': 1351, 'scrambled': 800, 'review': 469, 'val': 290, 'test': 290}
+[12:38:44] INFO    dataset written: 3200 sequences, 1558 clusters, test=290 (pos=26) - see /tmp/v21-rxcjma31/work/run/dataset/dataset_all.csv
+[12:38:44] INFO    step1 build_dataset finished in 9.4s
+sequences=3200 clusters=1558 test=290
+$ /usr/bin/python3 -m dualamp_lite features --workdir /tmp/v21-rxcjma31/work/run --backend fair-esm --batch-size 64
+[12:38:46] INFO    device: cpu
+[12:38:49] INFO    biophys: 35 features, 4 pairs with |r| >= 0.85 (see biophys_correlation.csv)
+[12:38:49] INFO    feature backend: fair-esm
+[12:39:35] INFO      train: 1351 x 50 x 480 (65.0 MB) in 44.9s -> train_feat.npz
+[12:39:47] INFO      val: 290 x 50 x 480 (14.0 MB) in 12.5s -> val_feat.npz
+[12:40:00] INFO      test: 290 x 50 x 480 (14.0 MB) in 12.3s -> test_feat.npz
+[12:40:18] INFO      scrambled: 800 x 50 x 480 (38.5 MB) in 18.0s -> scrambled_feat.npz
+[12:40:18] INFO    step2 extract_features finished in 92.9s
+backend=fair-esm embed_dim=480 demo=False
+$ /usr/bin/python3 -m dualamp_lite train --workdir /tmp/v21-rxcjma31/work/run --models M1,M2,M3 --seeds 1 --folds 2 --epochs 2 --loss bce
+[12:40:22] INFO    dev: 1641 peptides (146 pos) in 943 clusters | test: 290 peptides (26 pos) in 265 clusters
+[12:40:22] INFO    training M1 ...
+[12:40:35] INFO      M1 seed 1: dev OOF AUROC 0.815, test AUROC 0.952 MCC 0.636 (epochs=2)
+[12:42:47] INFO    training M2 ...
+[12:43:08] INFO      M2 seed 1: dev OOF AUROC 0.970, test AUROC 0.999 MCC 0.913 (epochs=2)
+[12:45:23] INFO    training M3 ...
+[12:45:44] INFO      M3 seed 1: dev OOF AUROC 0.972, test AUROC 0.999 MCC 0.941 (epochs=2)
+[12:49:28] INFO      comparisons: 6 (BH-FDR controlled at 0.05)
+[12:49:28] INFO      external[scrambled] M1: {'n': 800, 'n_pos': 0, 'mean_score': 0.6292079091072083, 'frac_predicted_positive': 0.5025}
+[12:49:29] INFO      external[scrambled] M2: {'n': 800, 'n_pos': 0, 'mean_score': 0.1588834524154663, 'frac_predicted_positive': 0.11375}
+[12:49:30] INFO      external[scrambled] M3: {'n': 800, 'n_pos': 0, 'mean_score': 0.3114253282546997, 'frac_predicted_positive': 0.22}
+[12:49:30] INFO    wrote D10_test_metrics.csv and D9_ablation.csv
+[12:49:30] INFO    step3 train_and_eval finished in 548.1s
+models=['M1', 'M2', 'M3']
+  M1           AUROC=0.952 MCC=0.636 AUPRC=0.791
+  M2           AUROC=0.999 MCC=0.913 AUPRC=0.988
+  M3           AUROC=0.999 MCC=0.941 AUPRC=0.989
+$ /usr/bin/python3 -m dualamp_lite report --workdir /tmp/v21-rxcjma31/work/run
+[12:49:49] INFO    report written: /tmp/v21-rxcjma31/work/run/manuscript/D10_evaluation_report.md
+report: /tmp/v21-rxcjma31/work/run/manuscript/D10_evaluation_report.md
+manifest: /tmp/v21-rxcjma31/work/run/manuscript/D15_input_sha256.tsv (42 files)

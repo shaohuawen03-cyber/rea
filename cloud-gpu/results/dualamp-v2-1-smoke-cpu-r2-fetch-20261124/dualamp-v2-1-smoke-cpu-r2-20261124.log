@@ -1,0 +1,151 @@
+[{"stream_name":"stdout","time":5.884652637,"data":"[pip] gdown: rc=0\n"}
+,{"stream_name":"stdout","time":7.858006071,"data":"[pip] requests: rc=0\n"}
+,{"stream_name":"stdout","time":10.338623744,"data":"[pip] fair-esm: rc=0\n"}
+,{"stream_name":"stdout","time":12.429896133,"data":"[pip] pyyaml: rc=0\n"}
+,{"stream_name":"stdout","time":16.511871088,"data":"[pip] biopython: rc=0\n"}
+,{"stream_name":"stdout","time":18.489572551,"data":"[pip] pandas: rc=0\n"}
+,{"stream_name":"stdout","time":20.500353107,"data":"[pip] scikit-learn: rc=0\n"}
+,{"stream_name":"stdout","time":22.607662682,"data":"[pip] matplotlib: rc=0\n"}
+,{"stream_name":"stdout","time":63.606827125,"data":"Downloading: \"https://dl.fbaipublicfiles.com/fair-esm/models/esm2_t12_35M_UR50D.pt\" to /root/.cache/torch/hub/checkpoints/esm2_t12_35M_UR50D.pt\n"}
+,{"stream_name":"stdout","time":64.322583194,"data":"Downloading: \"https://dl.fbaipublicfiles.com/fair-esm/regression/esm2_t12_35M_UR50D-contact-regression.pt\" to /root/.cache/torch/hub/checkpoints/esm2_t12_35M_UR50D-contact-regression.pt\n"}
+,{"stream_name":"stdout","time":746.118532078,"data":"{\n"}
+,{"stream_name":"stdout","time":746.118695472,"data":"  \"stage\": \"dualamp_v2_1_training\",\n"}
+,{"stream_name":"stdout","time":746.118703154,"data":"  \"dataset_version\": \"positive_core_v2_1_dramp\",\n"}
+,{"stream_name":"stdout","time":746.118709935,"data":"  \"rule_version\": \"auto_evidence_v2_2.0\",\n"}
+,{"stream_name":"stdout","time":746.118715894,"data":"  \"leanrea_commit\": \"f610dc00b1aec3ab948a5b77574af0e644259a13\",\n"}
+,{"stream_name":"stdout","time":746.118721504,"data":"  \"started_utc\": \"2026-11-24T12:37:51.803975+00:00\",\n"}
+,{"stream_name":"stdout","time":746.118727465,"data":"  \"training_started\": true,\n"}
+,{"stream_name":"stdout","time":746.118733425,"data":"  \"upload_session_present\": false,\n"}
+,{"stream_name":"stdout","time":746.118739194,"data":"  \"cohort\": {\n"}
+,{"stream_name":"stdout","time":746.118745131,"data":"    \"positives\": 14577,\n"}
+,{"stream_name":"stdout","time":746.118750851,"data":"    \"composition_decoys\": 14572,\n"}
+,{"stream_name":"stdout","time":746.118756573,"data":"    \"positive_fasta_sha256\": \"9ca0d4076f6d61c16ad31b920afc9029ae463d3df3510049c9b6ac4366a8e40c\"\n"}
+,{"stream_name":"stdout","time":746.11876267,"data":"  },\n"}
+,{"stream_name":"stdout","time":746.118767876,"data":"  \"negatives\": {\n"}
+,{"stream_name":"stdout","time":746.118773468,"data":"    \"proteins_total\": 117172,\n"}
+,{"stream_name":"stdout","time":746.11877916,"data":"    \"keyword_excluded\": 18,\n"}
+,{"stream_name":"stdout","time":746.118784285,"data":"    \"fragments_raw\": 351462,\n"}
+,{"stream_name":"stdout","time":746.118789398,"data":"    \"fragments_standard_aa\": 351429,\n"}
+,{"stream_name":"stdout","time":746.118794448,"data":"    \"fragments_dedup\": 351119,\n"}
+,{"stream_name":"stdout","time":746.118799908,"data":"    \"fragments_hit_positive_4mer_gt08\": 5,\n"}
+,{"stream_name":"stdout","time":746.118805216,"data":"    \"negatives_final\": 2000,\n"}
+,{"stream_name":"stdout","time":746.118810744,"data":"    \"seed\": 11,\n"}
+,{"stream_name":"stdout","time":746.118816328,"data":"    \"cap\": 2000,\n"}
+,{"stream_name":"stdout","time":746.118822117,"data":"    \"neg_mode\": \"standard\",\n"}
+,{"stream_name":"stdout","time":746.11882823,"data":"    \"seconds\": 11.8\n"}
+,{"stream_name":"stdout","time":746.118833407,"data":"  },\n"}
+,{"stream_name":"stdout","time":746.118838947,"data":"  \"manifest_sha256\": \"1228dd2f4ea841f58aa682a01ff843feb65e64f948034053efaf4326106552d3\",\n"}
+,{"stream_name":"stdout","time":746.118845098,"data":"  \"smoke_mode\": true,\n"}
+,{"stream_name":"stdout","time":746.118869871,"data":"  \"encoder_preflight\": {\n"}
+,{"stream_name":"stdout","time":746.118874975,"data":"    \"encoder\": \"fair-esm\",\n"}
+,{"stream_name":"stdout","time":746.118879556,"data":"    \"is_mock\": false,\n"}
+,{"stream_name":"stdout","time":746.118883802,"data":"    \"embed_dim\": 480,\n"}
+,{"stream_name":"stdout","time":746.118887776,"data":"    \"probe_shapes\": [\n"}
+,{"stream_name":"stdout","time":746.118892694,"data":"      [\n"}
+,{"stream_name":"stdout","time":746.118896603,"data":"        2,\n"}
+,{"stream_name":"stdout","time":746.118900887,"data":"        23,\n"}
+,{"stream_name":"stdout","time":746.118904739,"data":"        480\n"}
+,{"stream_name":"stdout","time":746.118928534,"data":"      ],\n"}
+,{"stream_name":"stdout","time":746.118933043,"data":"      [\n"}
+,{"stream_name":"stdout","time":746.1189376,"data":"        2,\n"}
+,{"stream_name":"stdout","time":746.118941577,"data":"        480\n"}
+,{"stream_name":"stdout","time":746.118945196,"data":"      ]\n"}
+,{"stream_name":"stdout","time":746.118948947,"data":"    ],\n"}
+,{"stream_name":"stdout","time":746.118953114,"data":"    \"finite\": true\n"}
+,{"stream_name":"stdout","time":746.118957796,"data":"  },\n"}
+,{"stream_name":"stdout","time":746.118962025,"data":"  \"steps\": {\n"}
+,{"stream_name":"stdout","time":746.118966509,"data":"    \"build\": {\n"}
+,{"stream_name":"stdout","time":746.118971073,"data":"      \"returncode\": 0,\n"}
+,{"stream_name":"stdout","time":746.118975379,"data":"      \"seconds\": 10.3\n"}
+,{"stream_name":"stdout","time":746.118979276,"data":"    },\n"}
+,{"stream_name":"stdout","time":746.118983127,"data":"    \"features\": {\n"}
+,{"stream_name":"stdout","time":746.1189878,"data":"      \"returncode\": 0,\n"}
+,{"stream_name":"stdout","time":746.118992259,"data":"      \"seconds\": 94.3\n"}
+,{"stream_name":"stdout","time":746.118996825,"data":"    },\n"}
+,{"stream_name":"stdout","time":746.119001228,"data":"    \"train\": {\n"}
+,{"stream_name":"stdout","time":746.119006154,"data":"      \"returncode\": 0,\n"}
+,{"stream_name":"stdout","time":746.119010209,"data":"      \"seconds\": 552.6\n"}
+,{"stream_name":"stdout","time":746.119014207,"data":"    },\n"}
+,{"stream_name":"stdout","time":746.11901844,"data":"    \"report\": {\n"}
+,{"stream_name":"stdout","time":746.119022922,"data":"      \"returncode\": 0,\n"}
+,{"stream_name":"stdout","time":746.119027444,"data":"      \"seconds\": 19.5\n"}
+,{"stream_name":"stdout","time":746.11903174,"data":"    }\n"}
+,{"stream_name":"stdout","time":746.119036354,"data":"  },\n"}
+,{"stream_name":"stdout","time":746.119073745,"data":"  \"status\": \"COMPLETED_V2_1_TRAINING\",\n"}
+,{"stream_name":"stdout","time":746.119080057,"data":"  \"completed_utc\": \"2026-11-24T12:49:51.011921+00:00\",\n"}
+,{"stream_name":"stdout","time":746.119085227,"data":"  \"code_commit\": \"32f9cbf67db4c90829d56594fd0328f942acf869\",\n"}
+,{"stream_name":"stdout","time":746.119089249,"data":"  \"dataset_summary\": {\n"}
+,{"stream_name":"stdout","time":746.119093339,"data":"    \"cluster_method\": \"kmer_fallback(k=3)\",\n"}
+,{"stream_name":"stdout","time":746.119097874,"data":"    \"cluster_identity\": 0.4,\n"}
+,{"stream_name":"stdout","time":746.1191024,"data":"    \"cluster_coverage\": 0.8,\n"}
+,{"stream_name":"stdout","time":746.119106714,"data":"    \"n_clusters\": 1558,\n"}
+,{"stream_name":"stdout","time":746.119111091,"data":"    \"n_sequences\": 3200,\n"}
+,{"stream_name":"stdout","time":746.119115337,"data":"    \"layer_counts\": {\n"}
+,{"stream_name":"stdout","time":746.119126059,"data":"      \"negative_background\": 2000,\n"}
+,{"stream_name":"stdout","time":746.119130953,"data":"      \"scrambled\": 800,\n"}
+,{"stream_name":"stdout","time":746.119135357,"data":"      \"bacterial_amp\": 400\n"}
+,{"stream_name":"stdout","time":746.119139991,"data":"    },\n"}
+,{"stream_name":"stdout","time":746.119144502,"data":"    \"split_counts\": {\n"}
+,{"stream_name":"stdout","time":746.119149018,"data":"      \"train\": 1351,\n"}
+,{"stream_name":"stdout","time":746.119153617,"data":"      \"scrambled\": 800,\n"}
+,{"stream_name":"stdout","time":746.119157909,"data":"      \"review\": 469,\n"}
+,{"stream_name":"stdout","time":746.119162033,"data":"      \"test\": 290,\n"}
+,{"stream_name":"stdout","time":746.119166489,"data":"      \"val\": 290,\n"}
+,{"stream_name":"stdout","time":746.119171185,"data":"      \"dev\": 1641\n"}
+,{"stream_name":"stdout","time":746.11917589,"data":"    },\n"}
+,{"stream_name":"stdout","time":746.119182952,"data":"    \"split_positives\": {\n"}
+,{"stream_name":"stdout","time":746.11918762,"data":"      \"train\": 120,\n"}
+,{"stream_name":"stdout","time":746.119192047,"data":"      \"val\": 26,\n"}
+,{"stream_name":"stdout","time":746.119196635,"data":"      \"test\": 26,\n"}
+,{"stream_name":"stdout","time":746.119200989,"data":"      \"dev\": 0,\n"}
+,{"stream_name":"stdout","time":746.119205094,"data":"      \"external\": 0,\n"}
+,{"stream_name":"stdout","time":746.119209614,"data":"      \"external_homolog\": 0,\n"}
+,{"stream_name":"stdout","time":746.119214292,"data":"      \"scrambled\": 157,\n"}
+,{"stream_name":"stdout","time":746.119218519,"data":"      \"review\": 228\n"}
+,{"stream_name":"stdout","time":746.119223032,"data":"    },\n"}
+,{"stream_name":"stdout","time":746.11922742,"data":"    \"split_negatives\": {\n"}
+,{"stream_name":"stdout","time":746.119231923,"data":"      \"train\": 1231,\n"}
+,{"stream_name":"stdout","time":746.119236537,"data":"      \"val\": 264,\n"}
+,{"stream_name":"stdout","time":746.119240874,"data":"      \"test\": 264,\n"}
+,{"stream_name":"stdout","time":746.11924508,"data":"      \"dev\": 0,\n"}
+,{"stream_name":"stdout","time":746.119249584,"data":"      \"external\": 0,\n"}
+,{"stream_name":"stdout","time":746.119254176,"data":"      \"external_homolog\": 0,\n"}
+,{"stream_name":"stdout","time":746.119258634,"data":"      \"scrambled\": 643,\n"}
+,{"stream_name":"stdout","time":746.11926301,"data":"      \"review\": 241\n"}
+,{"stream_name":"stdout","time":746.119267444,"data":"    },\n"}
+,{"stream_name":"stdout","time":746.119271814,"data":"    \"external_homolog_overlap\": 0,\n"}
+,{"stream_name":"stdout","time":746.119276473,"data":"    \"dropped_records\": 0,\n"}
+,{"stream_name":"stdout","time":746.119281012,"data":"    \"drop_reasons\": {},\n"}
+,{"stream_name":"stdout","time":746.119301387,"data":"    \"inputs\": {\n"}
+,{"stream_name":"stdout","time":746.119306977,"data":"      \"manifest\": \"/tmp/v21-rxcjma31/work/data/sources.yaml\",\n"}
+,{"stream_name":"stdout","time":746.119312038,"data":"      \"sha256\": \"1228dd2f4ea841f58aa682a01ff843feb65e64f948034053efaf4326106552d3\"\n"}
+,{"stream_name":"stdout","time":746.119317092,"data":"    },\n"}
+,{"stream_name":"stdout","time":746.119321413,"data":"    \"min_len\": 5,\n"}
+,{"stream_name":"stdout","time":746.119325724,"data":"    \"max_len\": 50,\n"}
+,{"stream_name":"stdout","time":746.119330097,"data":"    \"demo_mode\": false\n"}
+,{"stream_name":"stdout","time":746.119334522,"data":"  },\n"}
+,{"stream_name":"stdout","time":746.119338858,"data":"  \"calibration_metrics\": [],\n"}
+,{"stream_name":"stdout","time":746.119347861,"data":"  \"fixed_specificity_operating_points\": [],\n"}
+,{"stream_name":"stdout","time":746.119352657,"data":"  \"composition_challenge\": {\n"}
+,{"stream_name":"stdout","time":746.119357331,"data":"    \"rows\": [],\n"}
+,{"stream_name":"stdout","time":746.119362114,"data":"    \"max_frac_predicted_positive\": null,\n"}
+,{"stream_name":"stdout","time":746.119366188,"data":"    \"verdict\": \"NOT_EVALUATED\"\n"}
+,{"stream_name":"stdout","time":746.119370623,"data":"  },\n"}
+,{"stream_name":"stdout","time":746.119374967,"data":"  \"caveats\": [\n"}
+,{"stream_name":"stdout","time":746.119379337,"data":"    \"Positives are DRAMP-curated bacterial actives (TIER_B_LABEL: bacterial activity label + named target + PubMed reference). The bulk dumps do not carry per-record MIC values, so this is not a MIC-quantitative cohort.\",\n"}
+,{"stream_name":"stdout","time":746.119386722,"data":"    \"Negatives are UniProt bacterial-cytoplasm fragments: a weak negative label, not experimentally verified inactivity.\",\n"}
+,{"stream_name":"stdout","time":746.119391976,"data":"    \"The composition-matched challenge is reported as a challenge; a high flag rate is published as a failure mode, not hidden.\"\n"}
+,{"stream_name":"stdout","time":746.119396907,"data":"  ],\n"}
+,{"stream_name":"stdout","time":746.119401244,"data":"  \"private_model_bundle\": {\n"}
+,{"stream_name":"stdout","time":746.119405554,"data":"    \"skipped\": \"no upload session in env\",\n"}
+,{"stream_name":"stdout","time":746.119410035,"data":"    \"local_bytes\": 76968482,\n"}
+,{"stream_name":"stdout","time":746.119414703,"data":"    \"local_sha256\": \"991c94ad9ed1b472e3adc201c303a9aebc24eae3c763afd74fd54b257c296636\"\n"}
+,{"stream_name":"stdout","time":746.11941945,"data":"  }\n"}
+,{"stream_name":"stdout","time":746.119423793,"data":"}\n"}
+,{"stream_name":"stderr","time":749.610606736,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":749.610648365,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":749.918109445,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":749.918140336,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":750.875517828,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":752.22550544,"data":"[NbConvertApp] Writing 327144 bytes to __results__.html\n"}
+]
