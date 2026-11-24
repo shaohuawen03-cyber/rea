@@ -1,0 +1,52 @@
+{
+  "label": "diag",
+  "captured_at_utc": "2026-11-24T01:11:37Z",
+  "source": "api.kaggle.com (exact seconds)",
+  "refresh_at": "2026-11-28T00:00:00Z",
+  "accelerators": {
+    "gpu": {
+      "used_seconds": 287.358,
+      "used_hours": 0.0798,
+      "reserved_seconds": 0.0,
+      "total_seconds": 108000.0,
+      "total_hours": 30.0,
+      "remaining_seconds": 107712.642,
+      "remaining_hours": 29.9202
+    },
+    "tpu": {
+      "used_seconds": 0.0,
+      "used_hours": 0.0,
+      "reserved_seconds": 0.0,
+      "total_seconds": 72000.0,
+      "total_hours": 20.0,
+      "remaining_seconds": 72000.0,
+      "remaining_hours": 20.0
+    }
+  },
+  "raw": {
+    "quotaRefreshTime": "2026-11-28T00:00:00Z",
+    "gpuQuota": {
+      "timeUsed": "287.358s",
+      "timeReserved": "0s",
+      "totalTimeAllowed": "108000s",
+      "minimumTimeAllowed": "108000s",
+      "hasEverRun": true
+    },
+    "tpuQuota": {
+      "timeUsed": "0s",
+      "timeReserved": "0s",
+      "totalTimeAllowed": "72000s",
+      "minimumTimeAllowed": "72000s"
+    }
+  },
+  "auth_diagnostics": {
+    "env_KAGGLE_API_TOKEN_len": 37,
+    "env_suffix": "ad46",
+    "access_token_exists": true,
+    "access_token_len": 37,
+    "access_token_suffix": "ad46",
+    "vault_token_exists": true,
+    "vault_key_exists": true,
+    "kaggle_dir": true
+  }
+}

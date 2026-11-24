@@ -1,0 +1,2 @@
+mine=47 candidates=['shaohuawen/quota-smoke-28'] keep=[]
+deleted shaohuawen/quota-smoke-28 (errorMessage='')
