@@ -127,6 +127,7 @@ def main() -> int:
     parser.add_argument("--seconds", type=float, default=120.0)
     parser.add_argument("--poll-timeout", type=int, default=3300, help="seconds to wait for the kernel (Kaggle GPU queues can be long)")
     parser.add_argument("--no-wait", action="store_true", help="push only; do not poll (keeps the workflow short)")
+    parser.add_argument("--fetch-logs", action="store_true", help="pull the kernel session log after it finishes")
     parser.add_argument("--diagnose", action="store_true", help="also print kernel status + recent kernel list")
     args = parser.parse_args()
 
@@ -250,6 +251,30 @@ def main() -> int:
                 shutil.copy2(path, os.path.join(args.out_dir, f"{args.prefix}-{name}"))
         finally:
             shutil.rmtree(fetched, ignore_errors=True)
+
+        if args.fetch_logs:
+            got = run(
+                [sys.executable, os.path.join(os.path.dirname(__file__), "kernel_logs.py"), ref,
+                 "--tail", "6000",
+                 "--out", os.path.join(args.out_dir, f"{args.prefix}-kernel.log")],
+                timeout=300,
+            )
+            log(f"log fetch rc={got.returncode}: {(got.stdout or got.stderr).strip()[:800]}")
+
+        if args.fetch_logs:
+            logs = run(
+                [
+                    sys.executable,
+                    os.path.join(os.path.dirname(__file__), "kernel_logs.py"),
+                    ref,
+                    "--tail",
+                    "6000",
+                    "--out",
+                    os.path.join(args.out_dir, f"{args.prefix}-kernel.log"),
+                ],
+                timeout=300,
+            )
+            log(f"log fetch rc={logs.returncode}: {(logs.stdout or logs.stderr).strip()[:600]}")
 
         with open(os.path.join(args.out_dir, f"{args.prefix}-url.txt"), "w", encoding="utf-8") as f:
             f.write(f"https://www.kaggle.com/code/{ref}\n")

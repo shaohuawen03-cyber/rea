@@ -69,6 +69,8 @@ jobs:
           delete_ref=""
           probe_args=""
           no_wait="false"
+          poll_timeout="3300"
+          keep=""
           if [ -f cloud-gpu/jobs/quota-request.json ]; then
             [ -n "$label" ] || label="$(jq -r '.label // ""' cloud-gpu/jobs/quota-request.json)"
             [ -n "$smoke" ] || smoke="$(jq -r '.run_smoke // false' cloud-gpu/jobs/quota-request.json)"
@@ -90,6 +92,8 @@ jobs:
             echo "run_smoke=$smoke"
             echo "seconds=$seconds"
             echo "no_wait=$no_wait"
+            echo "poll_timeout=$poll_timeout"
+            echo "keep=$keep"
             echo "kernels=$kernels"
             echo "cancel=$cancel_ref"
             echo "delete=$delete_ref"
@@ -242,6 +246,16 @@ jobs:
             --out "cloud-gpu/results/quota-${{ steps.req.outputs.label }}-${{ github.run_number }}-before.json" \
             | tee quota-before.txt
 
+      - name: Free GPU slots (delete stale quota-smoke kernels)
+        if: steps.req.outputs.run_smoke == 'true'
+        continue-on-error: true
+        run: |
+          set -uo pipefail
+          python cloud-gpu/scripts/free_gpu_slots.py \
+            --prefix quota-smoke- \
+            --keep "${{ steps.req.outputs.keep }}" \
+            --out "cloud-gpu/results/quota-slots-${{ github.run_number }}.txt" || true
+
       - name: Optional GPU smoke kernel
         if: steps.req.outputs.run_smoke == 'true'
         continue-on-error: true
@@ -252,6 +266,8 @@ jobs:
             --out-dir cloud-gpu/results \
             --prefix "quota-smoke-${{ github.run_number }}" \
             --seconds "${{ steps.req.outputs.seconds }}" \
+            --fetch-logs \
+            --poll-timeout "${{ steps.req.outputs.poll_timeout }}" \
             ${{ steps.req.outputs.no_wait == 'true' && '--no-wait' || '' }}
 
       - name: Smoke kernel health

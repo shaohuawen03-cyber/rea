@@ -53,20 +53,20 @@ def main() -> int:
 
     device = torch.device("cuda:0")
     torch.manual_seed(0)
-    # Fixed operands + a preallocated output: a bare `a = a @ b` chain grows the
-    # values until fp16 overflows to inf, which is the most likely reason the
-    # first attempt ended in ERROR.
+    # Fixed operands, one matmul per iteration: an `a = a @ b` chain grows the
+    # values until fp16 overflows to inf, and `out=` aliasing an operand is
+    # undefined in cuBLAS — both killed the earlier attempts.
     a = torch.randn(args.size, args.size, device=device, dtype=torch.float16)
     b = torch.randn(args.size, args.size, device=device, dtype=torch.float16)
-    c = torch.empty_like(a)
     reference = torch.matmul(a, b).sum().item()
 
     started = time.time()
     iterations = 0
     while time.time() - started < args.seconds:
-        torch.matmul(a, b, out=c)
-        c.mul_(0.5).add_(0.5)  # keep magnitudes bounded in fp16
-        torch.matmul(c, b, out=c)
+        # One matmul per iteration with a fresh output: no aliasing (in-place
+        # `out=c` where c is also an operand is undefined in cuBLAS) and no
+        # repeated self-multiplication (fp16 would overflow to inf).
+        torch.matmul(a, b)
         iterations += 1
         if iterations % 20 == 0:
             torch.cuda.synchronize()
@@ -79,9 +79,9 @@ def main() -> int:
         "matmul_dim": args.size,
         "iterations": iterations,
         "elapsed_sec": round(elapsed, 2),
-        "gflops_approx": round(iterations * 2 * 2 * args.size ** 3 / elapsed / 1e9, 3),
+        "gflops_approx": round(iterations * 2 * args.size ** 3 / elapsed / 1e9, 3),
         "memory_allocated_mib": round(torch.cuda.max_memory_allocated() / 2**20, 1),
-        "finite": bool(torch.isfinite(c).all().item()),
+        "finite": bool(torch.isfinite(a).all().item() and torch.isfinite(b).all().item()),
         "checksum_matches_first_pass": result == reference,
     }
     out["ok"] = bool(out["run"]["finite"])
