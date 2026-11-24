@@ -1,0 +1,32 @@
+[{"stream_name":"stdout","time":7.62213753,"data":"[build] dramp_antibacterial_txt FAILED: HTTP Error 404: Not Found\n"}
+,{"stream_name":"stdout","time":8.372070254,"data":"[build] dramp_antibacterial_fasta FAILED: HTTP Error 404: Not Found\n"}
+,{"stream_name":"stdout","time":8.967566829,"data":"[build] dramp_grampos_txt FAILED: HTTP Error 404: Not Found\n"}
+,{"stream_name":"stdout","time":9.374830908,"data":"[build] dramp_gramneg_txt FAILED: HTTP Error 404: Not Found\n"}
+,{"stream_name":"stdout","time":9.748299223,"data":"[build] apd3_bacteria_fasta: 17993 bytes\n"}
+,{"stream_name":"stdout","time":9.752136028,"data":"{\n"}
+,{"stream_name":"stdout","time":9.752163982,"data":"  \"stage\": \"v2_1_positive_build\",\n"}
+,{"stream_name":"stdout","time":9.752170758,"data":"  \"rule_version\": \"auto_evidence_v2_1.1\",\n"}
+,{"stream_name":"stdout","time":9.752176638,"data":"  \"started_utc\": \"2026-11-24T07:02:57.497000+00:00\",\n"}
+,{"stream_name":"stdout","time":9.752182303,"data":"  \"counts\": {\n"}
+,{"stream_name":"stdout","time":9.752187593,"data":"    \"apd3_bacteria_sequences\": 340,\n"}
+,{"stream_name":"stdout","time":9.752193017,"data":"    \"unique_strict_positives\": 0,\n"}
+,{"stream_name":"stdout","time":9.752198555,"data":"    \"multi_record_sequences\": 0,\n"}
+,{"stream_name":"stdout","time":9.752203824,"data":"    \"composition_preserving_decoys\": 0,\n"}
+,{"stream_name":"stdout","time":9.752209195,"data":"    \"parsed_dramp_records\": 0\n"}
+,{"stream_name":"stdout","time":9.752214505,"data":"  },\n"}
+,{"stream_name":"stdout","time":9.7522197,"data":"  \"status\": \"POSITIVES_BUILT\",\n"}
+,{"stream_name":"stdout","time":9.752225425,"data":"  \"positive_fasta_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n"}
+,{"stream_name":"stdout","time":9.752231160000001,"data":"  \"bundle_bytes\": 1142,\n"}
+,{"stream_name":"stdout","time":9.752236835,"data":"  \"bundle_sha256\": \"f1fa1171d74a0a54b6c5d74df51ef41dc9aa0ceb823b820da1c4bdad5ac51791\",\n"}
+,{"stream_name":"stdout","time":9.752242435,"data":"  \"private_bundle_upload\": {\n"}
+,{"stream_name":"stdout","time":9.752247965,"data":"    \"skipped\": \"no upload session provided\"\n"}
+,{"stream_name":"stdout","time":9.752253762,"data":"  },\n"}
+,{"stream_name":"stdout","time":9.752258801,"data":"  \"finished_utc\": \"2026-11-24T07:03:00.317373+00:00\"\n"}
+,{"stream_name":"stdout","time":9.752270146,"data":"}\n"}
+,{"stream_name":"stderr","time":12.895009138,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":12.895056102,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":13.402880096,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":13.402940194,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":14.742428681,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":16.407992094,"data":"[NbConvertApp] Writing 304371 bytes to __results__.html\n"}
+]

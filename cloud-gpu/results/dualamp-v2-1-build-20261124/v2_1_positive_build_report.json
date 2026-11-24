@@ -1,0 +1,43 @@
+{
+  "stage": "v2_1_positive_build",
+  "rule_version": "auto_evidence_v2_1.1",
+  "started_utc": "2026-11-24T07:02:57.497000+00:00",
+  "sources": {
+    "dramp_antibacterial_txt": {
+      "url": "https://dramp.cpu-bioinfor.org/download.php?filename=download_data/DRAMP3.0_new/Antibacterial_amps.txt",
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    },
+    "dramp_antibacterial_fasta": {
+      "url": "https://dramp.cpu-bioinfor.org/download.php?filename=download_data/DRAMP3.0_new/Antibacterial_amps.fasta",
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    },
+    "dramp_grampos_txt": {
+      "url": "https://dramp.cpu-bioinfor.org/download.php?filename=download_data/DRAMP3.0_new/Anti-Gram-positive_amps.txt",
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    },
+    "dramp_gramneg_txt": {
+      "url": "https://dramp.cpu-bioinfor.org/download.php?filename=download_data/DRAMP3.0_new/Anti-Gram-_amps.txt",
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    },
+    "apd3_bacteria_fasta": {
+      "url": "https://aps.unmc.edu/assets/sequences/bacteriaAMPs_APD2024.fasta",
+      "bytes": 17993,
+      "sha256": "8fd712b5f7adf8d96b1bb3f4eacefa71a7b6a2fc83993a0b744de24bf5ee316c"
+    }
+  },
+  "counts": {
+    "apd3_bacteria_sequences": 340,
+    "unique_strict_positives": 0,
+    "multi_record_sequences": 0,
+    "composition_preserving_decoys": 0,
+    "parsed_dramp_records": 0
+  },
+  "status": "POSITIVES_BUILT",
+  "positive_fasta_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "bundle_bytes": 1142,
+  "bundle_sha256": "f1fa1171d74a0a54b6c5d74df51ef41dc9aa0ceb823b820da1c4bdad5ac51791",
+  "private_bundle_upload": {
+    "skipped": "no upload session provided"
+  },
+  "finished_utc": "2026-11-24T07:03:00.317373+00:00"
+}
