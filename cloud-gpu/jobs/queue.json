@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-24T07:02:09Z",
+  "updated_at_utc": "2026-11-24T07:04:31Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -652,6 +652,22 @@
       "note": "CPU job: rebuild the strict positive set from DRAMP 3.0 + APD3 curated records (sequence+MIC+bacterial target+reference), dedupe, add composition-preserving decoys, upload the private bundle. No GPU.",
       "redispatch_note": "re-queued: the previous push was skipped by the envelope gate",
       "finished_at_utc": "2026-11-24T07:03:29Z"
+    },
+    {
+      "id": "dualamp-v2-1-probe3-20261124",
+      "provider": "kaggle",
+      "mode": "run",
+      "accelerator": "CPU",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_probe3.py",
+      "script_args": [],
+      "extra_pip": [],
+      "serve_minutes": 15.0,
+      "wait": true,
+      "timeout_sec": 2400,
+      "status": "pending",
+      "created_at_utc": "2026-11-24T07:04:31Z",
+      "kernel_slug": "dualamp-v2-1-probe3-20261124",
+      "note": "CPU probe 3: DRAMP download variants (referer/quoting/subdir/POST/GitHub mirror)."
     }
   ]
 }
