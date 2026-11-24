@@ -1,8 +1,8 @@
 {
-  "label": "quota-v2-log2",
+  "label": "quota-v2-log3",
   "run_smoke": false,
   "seconds": 60,
   "check_kernels": ["shaohuawen/dualamp-real8-v2-retry2-20261124"],
   "fetch_output": "shaohuawen/dualamp-real8-v2-retry2-20261124",
-  "note": "Stream the live session log (output listing is empty while RUNNING)."
+  "note": "Stream the live session log with the midtier log endpoint."
 }
