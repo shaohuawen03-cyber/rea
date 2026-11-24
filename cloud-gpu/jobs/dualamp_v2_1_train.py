@@ -382,10 +382,10 @@ def main() -> int:
                     raise RuntimeError(
                         f"pipeline step failed ({proc.returncode}): {' '.join(cmd[3:7])}")
 
-        # leanrea writes manuscript/D10_test_metrics.csv (the D-numbered manuscript tables);
-        # accept the other spellings too so a leanrea bump cannot silently break the summary.
-        metrics_path = (find(wd, "D10_test_metrics.csv")
-                        or find(wd, "internal_test_metrics.csv")
+        # leanrea publishes results/<run_id>/internal_test_metrics.csv plus a manuscript copy
+        # (D10_...); accept both spellings so a leanrea bump cannot silently break the summary.
+        metrics_path = (find(wd, "internal_test_metrics.csv")
+                        or find(wd, "D10_test_metrics.csv")
                         or find(wd, "manuscript_D10_test_metrics.csv"))
         if not metrics_path:
             raise RuntimeError("no test-metrics table produced by the pipeline")
@@ -423,7 +423,10 @@ def main() -> int:
             "calibration_metrics": [r for p in calib_metrics for r in csv_rows(p)],
             "calibration_bins": [r for p in calib_bins for r in csv_rows(p)][:120],
             "fixed_specificity_operating_points": operating_points(oof_rows, [0.99, 0.995]),
+            "fixed_specificity_source": "dev OOF" if oof_rows else "unavailable (no OOF table)",
             "composition_challenge": composition_challenge(metrics, challenge_paths),
+            "calibration_bins_count": len(
+                [r for p in calib_bins for r in csv_rows(p)]),
             "caveats": [
                 "Positives are DRAMP-curated bacterial actives (TIER_B_LABEL: bacterial "
                 "activity label + named target + PubMed reference). The bulk dumps do not "
