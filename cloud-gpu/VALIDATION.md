@@ -71,3 +71,46 @@ results/<job-id>/(≤2 MiB 小文件)随 bot 提交回分支 → 沙箱 git pull
    预分配输出并做有界衰减，`finite` 与 `ok` 都会写进产物。
 
 复现：写 `cloud-gpu/jobs/quota-request.json` → push → bot 提交回 `cloud-gpu/results/quota-latest.json`。
+
+## 最终验证：真跑满 300 s 的 GPU 内核（2026-11-24）
+
+早先几次冒烟内核都只结算 7~8 s 就 ERROR。根因**不是** GPU 不可用，而是
+`kaggle kernels push`(script 模式)只上传 `code_file` 一个文件，同目录的 `payload.py`
+不在容器里，`runpy.run_path("payload.py")` 立刻崩溃。修法：把 payload 源码以 `repr()`
+内联进 `entry_main.py`，运行时再写到 `/tmp/_payload.py`。
+
+| 时间（UTC） | 事件 | `gpuQuota.timeUsed` | 剩余 |
+| --- | --- | --- | --- |
+| 00:58:40 | 修复前基线（`quota-e2e-final-after`） | **89.742 s** | 29.9751 h |
+| 01:11:43 | 推送 `quota-smoke-32`（300 s 负载）前 | 287.358 s | 29.9202 h |
+| 01:15:31 | 内核运行中（RUNNING） | 511.547 s | 29.8579 h |
+| 01:20:59 | 内核 **COMPLETE**（跑满 300 s） | **609.078 s** | 29.8308 h |
+| 01:33:18 | 收尾复核（无新内核，数字不再变化） | 609.078 s | 29.8308 h |
+
+**额度下降 +519.336 s**（89.742 → 609.078 s，30 h 里用掉 10.15 min）。
+
+内核产物 `cloud-gpu/results/kernel-output-quota-smoke-32/quota_smoke_result.json`：
+
+```json
+{"requested_seconds": 300.0,
+ "torch": {"version": "2.11.0+cu130", "cuda_available": true, "device_count": 2,
+           "devices": ["Tesla T4", "Tesla T4"]},
+ "run": {"device": "cuda:0", "matmul_dim": 2048, "iterations": 311160,
+         "elapsed_sec": 300.01, "gflops_approx": 17818.127,
+         "finite": true, "checksum_matches_first_pass": true},
+ "ok": true, "status": "completed"}
+```
+
+即 2× Tesla T4 上 torch 2.11 + CUDA 13.0 真实算力跑满整段 300.01 s，
+结果有限、校验和自洽，会话状态 `{"status":"COMPLETE"}`。链接：
+<https://www.kaggle.com/code/shaohuawen/quota-smoke-32>
+
+复现一次即可复验：
+
+```bash
+python cloud-gpu/scripts/quota_smoke_kernel.py --slug quota-smoke-<n> --seconds 300 --poll-timeout 7200 --diagnose
+```
+
+坑位补充：`ApiListKernelSessionOutputRequest` 的字段是 `user_name`（不是 `owner_slug`），
+响应里每个 `ApiKernelSessionOutputFile` 自带预签名 `url` —— 直接用 `urlopen` 取文件，
+比 `download_kernel_output` 稳（后者在已完成内核上常返回空）。
