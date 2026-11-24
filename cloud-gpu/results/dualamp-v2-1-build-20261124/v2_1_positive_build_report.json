@@ -1,43 +1,133 @@
 {
   "stage": "v2_1_positive_build",
   "rule_version": "auto_evidence_v2_1.1",
-  "started_utc": "2026-11-24T07:02:57.497000+00:00",
+  "started_utc": "2026-11-24T07:09:10.855974+00:00",
   "sources": {
-    "dramp_antibacterial_txt": {
-      "url": "https://dramp.cpu-bioinfor.org/download.php?filename=download_data/DRAMP3.0_new/Antibacterial_amps.txt",
-      "error": "HTTPError: HTTP Error 404: Not Found"
+    "Antibacterial_amps.txt": {
+      "url": "https://dramp.cpu-bioinfor.org/downloads/download_data/DRAMP3.0_new/Antibacterial_amps.txt",
+      "bytes": 4317763,
+      "sha256": "18cf52751d95cf4c18e42227bbaff8c1c1a7fa28b0a1c607eea1c2727c96ee97",
+      "fields": [
+        "DRAMP_ID",
+        "Sequence",
+        "Name",
+        "Source",
+        "Activity",
+        "Pubmed_ID",
+        "Dataset",
+        "Length"
+      ],
+      "records": 28702
     },
-    "dramp_antibacterial_fasta": {
-      "url": "https://dramp.cpu-bioinfor.org/download.php?filename=download_data/DRAMP3.0_new/Antibacterial_amps.fasta",
-      "error": "HTTPError: HTTP Error 404: Not Found"
+    "Anti-Gram-positive_amps.txt": {
+      "url": "https://dramp.cpu-bioinfor.org/downloads/download_data/DRAMP3.0_new/Anti-Gram-positive_amps.txt",
+      "bytes": 3483042,
+      "sha256": "7a04357043877da4f9baf21e44043ef94a93bed4141bb3d9a0a4083e051c41e2",
+      "fields": [
+        "DRAMP_ID",
+        "Sequence",
+        "Sequence_Length",
+        "Name",
+        "Swiss_Prot_Entry",
+        "Family",
+        "Gene",
+        "Source",
+        "Activity",
+        "Protein_existence",
+        "Structure",
+        "Structure_Description",
+        "PDB_ID",
+        "Comments",
+        "Target_Organism",
+        "Hemolytic_activity",
+        "Linear/Cyclic/Branched",
+        "N-terminal_Modification",
+        "C-terminal_Modification",
+        "Other_Modifications",
+        "Stereochemistry",
+        "Cytotoxicity",
+        "Binding_Traget",
+        "Pubmed_ID",
+        "Reference",
+        "Author",
+        "Title"
+      ],
+      "records": 2733
     },
-    "dramp_grampos_txt": {
-      "url": "https://dramp.cpu-bioinfor.org/download.php?filename=download_data/DRAMP3.0_new/Anti-Gram-positive_amps.txt",
-      "error": "HTTPError: HTTP Error 404: Not Found"
-    },
-    "dramp_gramneg_txt": {
-      "url": "https://dramp.cpu-bioinfor.org/download.php?filename=download_data/DRAMP3.0_new/Anti-Gram-_amps.txt",
-      "error": "HTTPError: HTTP Error 404: Not Found"
-    },
-    "apd3_bacteria_fasta": {
-      "url": "https://aps.unmc.edu/assets/sequences/bacteriaAMPs_APD2024.fasta",
-      "bytes": 17993,
-      "sha256": "8fd712b5f7adf8d96b1bb3f4eacefa71a7b6a2fc83993a0b744de24bf5ee316c"
+    "Anti-Gram-_amps.txt": {
+      "url": "https://dramp.cpu-bioinfor.org/downloads/download_data/DRAMP3.0_new/Anti-Gram-_amps.txt",
+      "bytes": 3234646,
+      "sha256": "b816de63b103da4bf545a088e715e23886b2ff9b2885e8823e8fa0fdb7f1636f",
+      "fields": [
+        "DRAMP_ID",
+        "Sequence",
+        "Sequence_Length",
+        "Name",
+        "Swiss_Prot_Entry",
+        "Family",
+        "Gene",
+        "Source",
+        "Activity",
+        "Protein_existence",
+        "Structure",
+        "Structure_Description",
+        "PDB_ID",
+        "Comments",
+        "Target_Organism",
+        "Hemolytic_activity",
+        "Linear/Cyclic/Branched",
+        "N-terminal_Modification",
+        "C-terminal_Modification",
+        "Other_Modifications",
+        "Stereochemistry",
+        "Cytotoxicity",
+        "Binding_Traget",
+        "Pubmed_ID",
+        "Reference",
+        "Author",
+        "Title"
+      ],
+      "records": 2562
     }
   },
   "counts": {
-    "apd3_bacteria_sequences": 340,
+    "per_dataset": {
+      "Antibacterial": {
+        "records": 28702,
+        "kept_rows": 0
+      },
+      "Anti-Gram-positive": {
+        "records": 2733,
+        "kept_rows": 0
+      },
+      "Anti-Gram-": {
+        "records": 2562,
+        "kept_rows": 0
+      }
+    },
     "unique_strict_positives": 0,
     "multi_record_sequences": 0,
+    "distinct_pmids": 0,
     "composition_preserving_decoys": 0,
-    "parsed_dramp_records": 0
+    "length_min": 0,
+    "length_max": 0
   },
-  "status": "POSITIVES_BUILT",
+  "status": "POSITIVES_BUILT_AND_UPLOADED",
+  "target_distribution": {},
+  "activity_samples_redacted": [],
   "positive_fasta_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-  "bundle_bytes": 1142,
-  "bundle_sha256": "f1fa1171d74a0a54b6c5d74df51ef41dc9aa0ceb823b820da1c4bdad5ac51791",
+  "positive_sequences": 0,
+  "bundle_bytes": 1526,
+  "bundle_sha256": "60cf1e32ab18c5a0f3021380cf4d37b3bbb5bbbced61055f143510023d544ec5",
   "private_bundle_upload": {
-    "skipped": "no upload session provided"
+    "bytes": 1526,
+    "sha256": "60cf1e32ab18c5a0f3021380cf4d37b3bbb5bbbced61055f143510023d544ec5",
+    "drive_file": {
+      "kind": "drive#file",
+      "id": "1gW53qeMBFEpRdw2VKf_gW8nlNb4WXx3h",
+      "name": "positive_core_v2_1_bundle.zip",
+      "mimeType": "application/zip"
+    }
   },
-  "finished_utc": "2026-11-24T07:03:00.317373+00:00"
+  "finished_utc": "2026-11-24T07:10:45.876126+00:00"
 }
