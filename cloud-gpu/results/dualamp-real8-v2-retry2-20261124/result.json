@@ -1,0 +1,16 @@
+{
+  "job_id": "dualamp-real8-v2-retry2-20261124",
+  "provider": "kaggle",
+  "mode": "run",
+  "accelerator": "NvidiaTeslaT4",
+  "kernel_ref": "shaohuawen/dualamp-real8-v2-retry2-20261124",
+  "kernel_url": "https://www.kaggle.com/code/shaohuawen/dualamp-real8-v2-retry2-20261124",
+  "status": "completed",
+  "copied_files": [
+    "dualamp-real8-v2-retry2-20261124.log",
+    "v2_training.log",
+    "v2_training_report.json"
+  ],
+  "push_output": "Kernel version 1 successfully pushed.  Please check progress at https://www.kaggle.com/code/shaohuawen/dualamp-real8-v2-retry2-20261124",
+  "updated_at_utc": "2026-11-24T03:40:30Z"
+}
