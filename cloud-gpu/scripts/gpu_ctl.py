@@ -560,6 +560,11 @@ def execute_kaggle_job(job: dict[str, Any], run_dir: str) -> dict[str, Any]:
     # Per-job environment (e.g. V21_SMOKE=1) comes straight from the queue entry.
     for k, v in (job.get("env") or {}).items():
         injected_env[str(k)] = str(v)
+    # Inline the job's non-secret input descriptor so it survives the /tmp payload hop.
+    for k, v in (job.get("inline_json") or {}).items():
+        path = str(v)
+        if os.path.exists(path):
+            injected_env[str(k)] = open(path, encoding="utf-8").read().strip()
     for k in ("DRIVE_UPLOAD_URI", "DRIVE_ENDPOINT_UPLOAD_URI", "FASTA_URL", "FASTA_ID", "METADATA_ID", "REVIEW_ID", "LIT_REVIEW_ID", "EVIDENCE_AUDIT_ID", "APD6_MAPPING_ID", "APD_MACHINE_SCREEN_ID", "DRAMP_OVERLAP_ID", "DRAMP_DISTRIBUTION_ID", "DRAMP_STATS_ID", "DRAMP_DISCREPANCY_ID", "DRAMP_CONCLUSION_ID", "EVIDENCE_LEDGER_UPLOAD_URI", "SA_DATASET", "DRIVE_SA_JSON", "FASTA_SHA256", "REA_BRANCH"):
         if os.environ.get(k):
             injected_env[k] = os.environ[k]

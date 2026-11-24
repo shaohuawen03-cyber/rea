@@ -167,10 +167,21 @@ def main() -> int:
         # Inputs come from the committed, non-secret descriptor first; envelopes are only
         # needed for the single-use upload session. That keeps a consumed envelope from
         # blocking a retry (it used to, twice).
-        inputs_path = Path(os.environ.get("REA_REPO_DIR", ".")) / "cloud-gpu/jobs/v21_inputs.json"
-        if not inputs_path.exists():
-            inputs_path = Path(__file__).parent / "v21_inputs.json"
-        inputs = json.loads(inputs_path.read_text()) if inputs_path.exists() else {}
+        # The payload runs from /tmp (inlined by the relay), so the repo descriptor is not
+        # next to __file__. Candidates: job env, repo clone, cwd, then a built-in copy that
+        # the relay injects as V21_INPUTS_JSON.
+        inputs: dict = {}
+        env_blob = (os.environ.get("V21_INPUTS_JSON") or "").strip()
+        if env_blob:
+            try:
+                inputs = json.loads(env_blob)
+            except json.JSONDecodeError:
+                inputs = {}
+        for cand in (Path(os.environ.get("REA_REPO_DIR", ".")) / "cloud-gpu/jobs/v21_inputs.json",
+                     Path(__file__).parent / "v21_inputs.json",
+                     Path("cloud-gpu/jobs/v21_inputs.json")):
+            if not inputs and cand.exists():
+                inputs = json.loads(cand.read_text())
         bundle_id = ((os.environ.get("EVIDENCE_AUDIT_ID") or "").strip()
                      or str(inputs.get("private_bundle_drive_id", "")))
         want_sha = ((os.environ.get("FASTA_SHA256") or "").strip()
