@@ -1,0 +1,32 @@
+{
+  "kernel_ref": "shaohuawen/dualamp-real8-v2-retry3-20261124",
+  "kernel_status": "shaohuawen/dualamp-real8-v2-retry3-20261124 has status \"KernelWorkerStatus.COMPLETE\"",
+  "kernel_status_returncode": 0,
+  "output_fetch": "Downloading v2_training.log to /tmp/kernel-observe-fevup0fs\n\nOutput file downloaded to /tmp/kernel-observe-fevup0fs/v2_training.log\nDownloading v2_training_report.json to /tmp/kernel-observe-fevup0fs\n\nOutput file downloaded to /tmp/kernel-observe-fevup0fs/v2_training_report.json\nKernel log downloaded to /tmp/kernel-observe-fevup0fs/dualamp-real8-v2-retry3-20261124.log",
+  "gpu_quota": {
+    "time_used_seconds": 3424.69,
+    "time_reserved_seconds": 0.0,
+    "total_allowed_seconds": 108000.0,
+    "remaining_seconds": 104575.31,
+    "quota_refresh_time": "2026-11-28T00:00:00Z"
+  },
+  "stage": "dualamp_v2_strict_training",
+  "dataset_version": "positive_core_v2_strict",
+  "training_started": true,
+  "status": "COMPLETED_EXPLORATORY_V2_TRAINING",
+  "started_utc": "2026-11-24T01:42:25.920056+00:00",
+  "completed_utc": "2026-11-24T02:29:10.176867+00:00",
+  "positive_records": 16,
+  "positive_unique_sequences": 16,
+  "test_positive_n": 2,
+  "private_model_bundle": {
+    "bytes": 20863935,
+    "sha256": "24a5c49c2655db2068f965306f9ec1354104f054fd51ae62b8309ed9076ced82",
+    "drive_file": {
+      "kind": "drive#file",
+      "id": "1Ta6Qr2_Quun1dZh2S3j9rqmekk1u5tHG",
+      "name": "dualamp-v2-strict-model-bundle-retry3.zip",
+      "mimeType": "application/zip"
+    }
+  }
+}
