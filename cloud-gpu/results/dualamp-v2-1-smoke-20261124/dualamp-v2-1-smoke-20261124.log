@@ -1,32 +1,55 @@
-[{"stream_name":"stderr","time":7.69286461,"data":"{\n"}
-,{"stream_name":"stderr","time":7.692986503,"data":"  \"stage\": \"dualamp_v2_1_training\",\n"}
-,{"stream_name":"stderr","time":7.692991781,"data":"  \"dataset_version\": \"positive_core_v2_1_dramp\",\n"}
-,{"stream_name":"stderr","time":7.692995077,"data":"  \"rule_version\": \"auto_evidence_v2_2.0\",\n"}
-,{"stream_name":"stderr","time":7.692998011,"data":"  \"leanrea_commit\": \"f610dc00b1aec3ab948a5b77574af0e644259a13\",\n"}
-,{"stream_name":"stderr","time":7.693001057,"data":"  \"started_utc\": \"2026-11-24T07:24:40.505794+00:00\",\n"}
-,{"stream_name":"stderr","time":7.693003957,"data":"  \"training_started\": false,\n"}
-,{"stream_name":"stderr","time":7.69300681,"data":"  \"status\": \"FAILED_NOT_COMPLETED\",\n"}
-,{"stream_name":"stderr","time":7.693009634,"data":"  \"error\": \"private v2.1 bundle id and model-upload session are required\",\n"}
-,{"stream_name":"stderr","time":7.693013147,"data":"  \"traceback\": \"Traceback (most recent call last):\\n  File \\\"/tmp/_payload.py\\\", line 171, in main\\n    raise RuntimeError(\\\"private v2.1 bundle id and model-upload session are required\\\")\\nRuntimeError: private v2.1 bundle id and model-upload session are required\\n\",\n"}
-,{"stream_name":"stderr","time":7.693017824,"data":"  \"finished_utc\": \"2026-11-24T07:24:40.506617+00:00\"\n"}
-,{"stream_name":"stderr","time":7.693020756,"data":"}\n"}
-,{"stream_name":"stderr","time":7.69365227,"data":"Traceback (most recent call last):\n"}
-,{"stream_name":"stderr","time":7.694326592,"data":"  File \"/kaggle/src/script.py\", line 8, in \u003cmodule\u003e\n"}
-,{"stream_name":"stderr","time":7.694389937,"data":"    runpy.run_path('/tmp/_payload.py', run_name='__main__')\n"}
-,{"stream_name":"stderr","time":7.694397466,"data":"    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
-,{"stream_name":"stderr","time":7.69440186,"data":"  File \"\u003cfrozen runpy\u003e\", line 294, in run_path\n"}
-,{"stream_name":"stderr","time":7.694406493,"data":"  File \"\u003cfrozen runpy\u003e\", line 98, in _run_module_code\n"}
-,{"stream_name":"stderr","time":7.694410735,"data":"  File \"\u003cfrozen runpy\u003e\", line 88, in _run_code\n"}
-,{"stream_name":"stderr","time":7.694415098,"data":"  File \"/tmp/_payload.py\", line 385, in \u003cmodule\u003e\n"}
-,{"stream_name":"stderr","time":7.694419576,"data":"    sys.exit(main())\n"}
-,{"stream_name":"stderr","time":7.6944258,"data":"             ~~~~^^\n"}
-,{"stream_name":"stderr","time":7.694434406,"data":"  File \"/tmp/_payload.py\", line 171, in main\n"}
-,{"stream_name":"stderr","time":7.694437297,"data":"    raise RuntimeError(\"private v2.1 bundle id and model-upload session are required\")\n"}
-,{"stream_name":"stderr","time":7.694530209,"data":"RuntimeError: private v2.1 bundle id and model-upload session are required\n"}
-,{"stream_name":"stderr","time":10.664672913,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
-,{"stream_name":"stderr","time":10.664717835,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
-,{"stream_name":"stderr","time":11.149736967,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
-,{"stream_name":"stderr","time":11.149767503,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
-,{"stream_name":"stderr","time":12.414169004,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
-,{"stream_name":"stderr","time":13.934854446,"data":"[NbConvertApp] Writing 312211 bytes to __results__.html\n"}
+[{"stream_name":"stderr","time":8.936058331,"data":"{\n"}
+,{"stream_name":"stderr","time":8.936126577,"data":"  \"stage\": \"dualamp_v2_1_training\",\n"}
+,{"stream_name":"stderr","time":8.936132251,"data":"  \"dataset_version\": \"positive_core_v2_1_dramp\",\n"}
+,{"stream_name":"stderr","time":8.93613504,"data":"  \"rule_version\": \"auto_evidence_v2_2.0\",\n"}
+,{"stream_name":"stderr","time":8.936137697,"data":"  \"leanrea_commit\": \"f610dc00b1aec3ab948a5b77574af0e644259a13\",\n"}
+,{"stream_name":"stderr","time":8.936140319,"data":"  \"started_utc\": \"2026-11-24T07:27:45.988671+00:00\",\n"}
+,{"stream_name":"stderr","time":8.936142791,"data":"  \"training_started\": false,\n"}
+,{"stream_name":"stderr","time":8.936145253,"data":"  \"status\": \"FAILED_NOT_COMPLETED\",\n"}
+,{"stream_name":"stderr","time":8.936148069,"data":"  \"error\": \"Failed to retrieve file url:\\n\\n\\tCannot retrieve the public link of the file. You may need to change\\n\\tthe permission to 'Anyone with the link', or have had many accesses.\\n\\tCheck FAQ in https://github.com/wkentaro/gdown?tab=readme-ov-file#faq.\\n\\nYou may still be able to access the file from the browser:\\n\\n\\thttps://drive.google.com/uc?id=1MWre9VE-emU1Ubxi838aLP8VskFWCtI9\\n\\nbut Gdown can't. Please check connections and permissions.\",\n"}
+,{"stream_name":"stderr","time":8.936157836,"data":"  \"traceback\": \"Traceback (most recent call last):\\n  File \\\"/usr/local/lib/python3.13/dist-packages/gdown/download.py\\\", line 273, in download\\n    url = get_url_from_gdrive_confirmation(res.text)\\n  File \\\"/usr/local/lib/python3.13/dist-packages/gdown/download.py\\\", line 55, in get_url_from_gdrive_confirmation\\n    raise FileURLRetrievalError(\\n    ...\u003c4 lines\u003e...\\n    )\\ngdown.exceptions.FileURLRetrievalError: Cannot retrieve the public link of the file. You may need to change the permission to 'Anyone with the link', or have had many accesses. Check FAQ in https://github.com/wkentaro/gdown?tab=readme-ov-file#faq.\\n\\nDuring handling of the above exception, another exception occurred:\\n\\nTraceback (most recent call last):\\n  File \\\"/tmp/_payload.py\\\", line 177, in main\\n    got = gdown.download(id=bundle_id, output=str(bundle), quiet=True)\\n  File \\\"/usr/local/lib/python3.13/dist-packages/gdown/download.py\\\", line 284, in download\\n    raise FileURLRetrievalError(message)\\ngdown.exceptions.FileURLRetrievalError: Failed to retrieve file url:\\n\\n\\tCannot retrieve the public link of the file. You may need to change\\n\\tthe permission to 'Anyone with the link', or have had many accesses.\\n\\tCheck FAQ in https://github.com/wkentaro/gdown?tab=readme-ov-file#faq.\\n\\nYou may still be able to access the file from the browser:\\n\\n\\thttps://drive.google.com/uc?id=1MWre9VE-emU1Ubxi838aLP8VskFWCtI9\\n\\nbut Gdown can't. Please check connections and permissions.\\n\",\n"}
+,{"stream_name":"stderr","time":8.936166258,"data":"  \"finished_utc\": \"2026-11-24T07:27:47.449066+00:00\"\n"}
+,{"stream_name":"stderr","time":8.93616877,"data":"}\n"}
+,{"stream_name":"stderr","time":8.937357239,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":8.937739492,"data":"  File \"/usr/local/lib/python3.13/dist-packages/gdown/download.py\", line 273, in download\n"}
+,{"stream_name":"stderr","time":8.937769901,"data":"    url = get_url_from_gdrive_confirmation(res.text)\n"}
+,{"stream_name":"stderr","time":8.93777549,"data":"  File \"/usr/local/lib/python3.13/dist-packages/gdown/download.py\", line 55, in get_url_from_gdrive_confirmation\n"}
+,{"stream_name":"stderr","time":8.937780445,"data":"    raise FileURLRetrievalError(\n"}
+,{"stream_name":"stderr","time":8.937783918000001,"data":"    ...\u003c4 lines\u003e...\n"}
+,{"stream_name":"stderr","time":8.937787897,"data":"    )\n"}
+,{"stream_name":"stderr","time":8.937805074,"data":"gdown.exceptions.FileURLRetrievalError: Cannot retrieve the public link of the file. You may need to change the permission to 'Anyone with the link', or have had many accesses. Check FAQ in https://github.com/wkentaro/gdown?tab=readme-ov-file#faq.\n"}
+,{"stream_name":"stderr","time":8.937811119,"data":"\n"}
+,{"stream_name":"stderr","time":8.937814637,"data":"During handling of the above exception, another exception occurred:\n"}
+,{"stream_name":"stderr","time":8.937818661,"data":"\n"}
+,{"stream_name":"stderr","time":8.93782135,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":8.938505409,"data":"  File \"/kaggle/src/script.py\", line 8, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":8.938522056,"data":"    runpy.run_path('/tmp/_payload.py', run_name='__main__')\n"}
+,{"stream_name":"stderr","time":8.938526047,"data":"    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":8.93853018,"data":"  File \"\u003cfrozen runpy\u003e\", line 294, in run_path\n"}
+,{"stream_name":"stderr","time":8.938534283,"data":"  File \"\u003cfrozen runpy\u003e\", line 98, in _run_module_code\n"}
+,{"stream_name":"stderr","time":8.938538339,"data":"  File \"\u003cfrozen runpy\u003e\", line 88, in _run_code\n"}
+,{"stream_name":"stderr","time":8.938541877,"data":"  File \"/tmp/_payload.py\", line 385, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":8.938545821,"data":"    sys.exit(main())\n"}
+,{"stream_name":"stderr","time":8.938549479,"data":"             ~~~~^^\n"}
+,{"stream_name":"stderr","time":8.938553065,"data":"  File \"/tmp/_payload.py\", line 177, in main\n"}
+,{"stream_name":"stderr","time":8.938556914,"data":"    got = gdown.download(id=bundle_id, output=str(bundle), quiet=True)\n"}
+,{"stream_name":"stderr","time":8.938565425,"data":"  File \"/usr/local/lib/python3.13/dist-packages/gdown/download.py\", line 284, in download\n"}
+,{"stream_name":"stderr","time":8.93856917,"data":"    raise FileURLRetrievalError(message)\n"}
+,{"stream_name":"stderr","time":8.938582913,"data":"gdown.exceptions.FileURLRetrievalError: Failed to retrieve file url:\n"}
+,{"stream_name":"stderr","time":8.93858752,"data":"\n"}
+,{"stream_name":"stderr","time":8.938590892,"data":"\tCannot retrieve the public link of the file. You may need to change\n"}
+,{"stream_name":"stderr","time":8.93859455,"data":"\tthe permission to 'Anyone with the link', or have had many accesses.\n"}
+,{"stream_name":"stderr","time":8.938598413,"data":"\tCheck FAQ in https://github.com/wkentaro/gdown?tab=readme-ov-file#faq.\n"}
+,{"stream_name":"stderr","time":8.938602351,"data":"\n"}
+,{"stream_name":"stderr","time":8.938605732,"data":"You may still be able to access the file from the browser:\n"}
+,{"stream_name":"stderr","time":8.938609524,"data":"\n"}
+,{"stream_name":"stderr","time":8.938612844,"data":"\thttps://drive.google.com/uc?id=1MWre9VE-emU1Ubxi838aLP8VskFWCtI9\n"}
+,{"stream_name":"stderr","time":8.938616667,"data":"\n"}
+,{"stream_name":"stderr","time":8.938620368,"data":"but Gdown can't. Please check connections and permissions.\n"}
+,{"stream_name":"stderr","time":11.569156125,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":11.569193256,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":12.012830817,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":12.012889177,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":13.258392283,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":14.782532714,"data":"[NbConvertApp] Writing 313020 bytes to __results__.html\n"}
 ]
