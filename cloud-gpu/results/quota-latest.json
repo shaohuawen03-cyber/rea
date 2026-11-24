@@ -1,16 +1,16 @@
 {
-  "label": "quota-final-after",
-  "captured_at_utc": "2026-11-23T13:34:51Z",
+  "label": "quota-auto-e2e-after",
+  "captured_at_utc": "2026-11-24T00:54:59Z",
   "refresh_at": "2026-11-28T00:00:00Z",
   "source": "api.kaggle.com (exact seconds)",
   "gpu": {
-    "used_seconds": 66.559,
-    "used_hours": 0.0185,
+    "used_seconds": 81.916,
+    "used_hours": 0.0228,
     "reserved_seconds": 0.0,
     "total_seconds": 108000.0,
     "total_hours": 30.0,
-    "remaining_seconds": 107933.441,
-    "remaining_hours": 29.9815
+    "remaining_seconds": 107918.084,
+    "remaining_hours": 29.9772
   },
   "tpu": {
     "used_seconds": 0.0,
@@ -22,16 +22,16 @@
     "remaining_hours": 20.0
   },
   "delta": {
-    "from": "2026-11-23T13:34:51Z",
-    "to": "2026-11-23T13:34:51Z",
+    "from": "2026-11-24T00:54:34Z",
+    "to": "2026-11-24T00:54:59Z",
     "accelerators": {
       "gpu": {
-        "used_seconds_delta": 0.0,
-        "used_hours_delta": 0.0,
-        "used_seconds_before": 66.559,
-        "used_seconds_after": 66.559,
-        "remaining_hours_before": 29.9815,
-        "remaining_hours_after": 29.9815
+        "used_seconds_delta": 7.871,
+        "used_hours_delta": 0.0022,
+        "used_seconds_before": 74.045,
+        "used_seconds_after": 81.916,
+        "remaining_hours_before": 29.9794,
+        "remaining_hours_after": 29.9772
       },
       "tpu": {
         "used_seconds_delta": 0.0,
