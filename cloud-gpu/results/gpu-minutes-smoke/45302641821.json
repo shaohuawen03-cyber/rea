@@ -1,0 +1,35 @@
+{
+  "kernel_ref": "shaohuawen/dualamp-v2-gpu-minutes-45302641821",
+  "credential_source": "vault:KAGGLE_API_TOKEN",
+  "started_utc": "2026-11-24T01:07:54Z",
+  "gpu_quota_before": {
+    "time_used_seconds": 89.742,
+    "time_reserved_seconds": 0.0,
+    "total_allowed_seconds": 108000.0,
+    "remaining_seconds": 107910.258,
+    "quota_refresh_time": "2026-11-28T00:00:00Z"
+  },
+  "push": "Kernel version 1 successfully pushed.  Please check progress at https://www.kaggle.com/code/shaohuawen/dualamp-v2-gpu-minutes-45302641821",
+  "kernel_status": "shaohuawen/dualamp-v2-gpu-minutes-45302641821 has status \"KernelWorkerStatus.COMPLETE\"",
+  "output_fetch": "Downloading gpu_minutes_smoke_result.json to gpu-minutes-smoke-output\n\nOutput file downloaded to gpu-minutes-smoke-output/gpu_minutes_smoke_result.json\nKernel log downloaded to gpu-minutes-smoke-output/dualamp-v2-gpu-minutes-45302641821.log",
+  "kernel_report": {
+    "gpu_test": "PASS",
+    "gpu_enabled": true,
+    "started_utc": "2026-11-24T01:08:07Z",
+    "device": "Tesla T4",
+    "gpu_seconds": 180.04,
+    "iterations": 81125,
+    "cuda_version": "13.0",
+    "peak_memory_bytes": 46268416,
+    "completed_utc": "2026-11-24T01:11:08Z"
+  },
+  "gpu_quota_after": {
+    "time_used_seconds": 287.358,
+    "time_reserved_seconds": 0.0,
+    "total_allowed_seconds": 108000.0,
+    "remaining_seconds": 107712.642,
+    "quota_refresh_time": "2026-11-28T00:00:00Z"
+  },
+  "finished_utc": "2026-11-24T01:11:42Z",
+  "gpu_quota_delta_seconds": 197.61599999999999
+}
