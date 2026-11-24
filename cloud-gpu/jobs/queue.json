@@ -646,11 +646,11 @@
       "serve_minutes": 15.0,
       "wait": true,
       "timeout_sec": 3600,
-      "status": "pending",
+      "status": "completed",
       "created_at_utc": "2026-11-24T06:59:08Z",
       "kernel_slug": "dualamp-v2-1-build-20261124",
       "note": "CPU job: rebuild the strict positive set from DRAMP 3.0 dumps under rule auto_evidence_v2_2.0 (bacterial label + named target + PubMed ref, MIC tier recorded).",
-      "finished_at_utc": "2026-11-24T07:11:01Z"
+      "finished_at_utc": "2026-11-24T07:20:36Z"
     },
     {
       "id": "dualamp-v2-1-probe3-20261124",

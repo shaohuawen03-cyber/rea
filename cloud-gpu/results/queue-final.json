@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-24T07:12:51Z",
+  "updated_at_utc": "2026-11-24T07:18:21Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -649,8 +649,8 @@
       "status": "completed",
       "created_at_utc": "2026-11-24T06:59:08Z",
       "kernel_slug": "dualamp-v2-1-build-20261124",
-      "note": "CPU job: rebuild the strict positive set from DRAMP 3.0 TSV dumps (downloads/download_data/DRAMP3.0_new/...): sequence + MIC-like activity + PubMed ID + target attribution, dedupe, 1:1 composition decoys, private bundle upload.",
-      "finished_at_utc": "2026-11-24T07:11:01Z"
+      "note": "CPU job: rebuild the strict positive set from DRAMP 3.0 dumps under rule auto_evidence_v2_2.0 (bacterial label + named target + PubMed ref, MIC tier recorded).",
+      "finished_at_utc": "2026-11-24T07:20:36Z"
     },
     {
       "id": "dualamp-v2-1-probe3-20261124",

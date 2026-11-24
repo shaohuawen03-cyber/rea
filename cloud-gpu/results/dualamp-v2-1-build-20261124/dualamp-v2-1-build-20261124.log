@@ -1,55 +1,76 @@
-[{"stream_name":"stdout","time":33.098742071,"data":"[build] Antibacterial_amps.txt: 28702 records, fields=['DRAMP_ID', 'Sequence', 'Name', 'Source', 'Activity', 'Pubmed_ID', 'Dataset', 'Length']\n"}
-,{"stream_name":"stdout","time":78.103078983,"data":"[build] Anti-Gram-positive_amps.txt: 2733 records, fields=['DRAMP_ID', 'Sequence', 'Sequence_Length', 'Name', 'Swiss_Prot_Entry', 'Family', 'Gene', 'Source', 'Activity', 'Protein_existence', 'Structure', 'Structure_Description', 'PDB_ID', 'Comments', 'Target_Organism', 'Hemolytic_activity', 'Linear/Cyclic/Branched', 'N-terminal_Modification', 'C-terminal_Modification', 'Other_Modifications', 'Stereochemistry', 'Cytotoxicity', 'Binding_Traget', 'Pubmed_ID', 'Reference', 'Author', 'Title']\n"}
-,{"stream_name":"stdout","time":100.99259914699999,"data":"[build] Anti-Gram-_amps.txt: 2562 records, fields=['DRAMP_ID', 'Sequence', 'Sequence_Length', 'Name', 'Swiss_Prot_Entry', 'Family', 'Gene', 'Source', 'Activity', 'Protein_existence', 'Structure', 'Structure_Description', 'PDB_ID', 'Comments', 'Target_Organism', 'Hemolytic_activity', 'Linear/Cyclic/Branched', 'N-terminal_Modification', 'C-terminal_Modification', 'Other_Modifications', 'Stereochemistry', 'Cytotoxicity', 'Binding_Traget', 'Pubmed_ID', 'Reference', 'Author', 'Title']\n"}
-,{"stream_name":"stdout","time":102.620974584,"data":"{\n"}
-,{"stream_name":"stdout","time":102.621008922,"data":"  \"stage\": \"v2_1_positive_build\",\n"}
-,{"stream_name":"stdout","time":102.621014992,"data":"  \"rule_version\": \"auto_evidence_v2_1.1\",\n"}
-,{"stream_name":"stdout","time":102.62102049800001,"data":"  \"started_utc\": \"2026-11-24T07:09:10.855974+00:00\",\n"}
-,{"stream_name":"stdout","time":102.621025862,"data":"  \"counts\": {\n"}
-,{"stream_name":"stdout","time":102.621031261,"data":"    \"per_dataset\": {\n"}
-,{"stream_name":"stdout","time":102.621036484,"data":"      \"Antibacterial\": {\n"}
-,{"stream_name":"stdout","time":102.621041598,"data":"        \"records\": 28702,\n"}
-,{"stream_name":"stdout","time":102.62104673,"data":"        \"kept_rows\": 0\n"}
-,{"stream_name":"stdout","time":102.621051998,"data":"      },\n"}
-,{"stream_name":"stdout","time":102.621057102,"data":"      \"Anti-Gram-positive\": {\n"}
-,{"stream_name":"stdout","time":102.621062191,"data":"        \"records\": 2733,\n"}
-,{"stream_name":"stdout","time":102.621067219,"data":"        \"kept_rows\": 0\n"}
-,{"stream_name":"stdout","time":102.621072252,"data":"      },\n"}
-,{"stream_name":"stdout","time":102.621077202,"data":"      \"Anti-Gram-\": {\n"}
-,{"stream_name":"stdout","time":102.621082358,"data":"        \"records\": 2562,\n"}
-,{"stream_name":"stdout","time":102.62108733,"data":"        \"kept_rows\": 0\n"}
-,{"stream_name":"stdout","time":102.621092589,"data":"      }\n"}
-,{"stream_name":"stdout","time":102.621097632,"data":"    },\n"}
-,{"stream_name":"stdout","time":102.621102607,"data":"    \"unique_strict_positives\": 0,\n"}
-,{"stream_name":"stdout","time":102.621107898,"data":"    \"multi_record_sequences\": 0,\n"}
-,{"stream_name":"stdout","time":102.621112946,"data":"    \"distinct_pmids\": 0,\n"}
-,{"stream_name":"stdout","time":102.62111787,"data":"    \"composition_preserving_decoys\": 0,\n"}
-,{"stream_name":"stdout","time":102.621123013,"data":"    \"length_min\": 0,\n"}
-,{"stream_name":"stdout","time":102.62112811,"data":"    \"length_max\": 0\n"}
-,{"stream_name":"stdout","time":102.621133226,"data":"  },\n"}
-,{"stream_name":"stdout","time":102.62113796,"data":"  \"status\": \"POSITIVES_BUILT_AND_UPLOADED\",\n"}
-,{"stream_name":"stdout","time":102.621143148,"data":"  \"target_distribution\": {},\n"}
-,{"stream_name":"stdout","time":102.621148227,"data":"  \"activity_samples_redacted\": [],\n"}
-,{"stream_name":"stdout","time":102.621169745,"data":"  \"positive_fasta_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n"}
-,{"stream_name":"stdout","time":102.621174305,"data":"  \"positive_sequences\": 0,\n"}
-,{"stream_name":"stdout","time":102.621189683,"data":"  \"bundle_bytes\": 1526,\n"}
-,{"stream_name":"stdout","time":102.621193896,"data":"  \"bundle_sha256\": \"60cf1e32ab18c5a0f3021380cf4d37b3bbb5bbbced61055f143510023d544ec5\",\n"}
-,{"stream_name":"stdout","time":102.621197967,"data":"  \"private_bundle_upload\": {\n"}
-,{"stream_name":"stdout","time":102.621202246,"data":"    \"bytes\": 1526,\n"}
-,{"stream_name":"stdout","time":102.621206769,"data":"    \"sha256\": \"60cf1e32ab18c5a0f3021380cf4d37b3bbb5bbbced61055f143510023d544ec5\",\n"}
-,{"stream_name":"stdout","time":102.621211627,"data":"    \"drive_file\": {\n"}
-,{"stream_name":"stdout","time":102.621215628,"data":"      \"kind\": \"drive#file\",\n"}
-,{"stream_name":"stdout","time":102.621219661,"data":"      \"id\": \"1gW53qeMBFEpRdw2VKf_gW8nlNb4WXx3h\",\n"}
-,{"stream_name":"stdout","time":102.621223649,"data":"      \"name\": \"positive_core_v2_1_bundle.zip\",\n"}
-,{"stream_name":"stdout","time":102.6212279,"data":"      \"mimeType\": \"application/zip\"\n"}
-,{"stream_name":"stdout","time":102.62123203,"data":"    }\n"}
-,{"stream_name":"stdout","time":102.621235812,"data":"  },\n"}
-,{"stream_name":"stdout","time":102.621239953,"data":"  \"finished_utc\": \"2026-11-24T07:10:45.876126+00:00\"\n"}
-,{"stream_name":"stdout","time":102.62124418,"data":"}\n"}
-,{"stream_name":"stderr","time":105.939221535,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
-,{"stream_name":"stderr","time":105.939263573,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
-,{"stream_name":"stderr","time":106.455109425,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
-,{"stream_name":"stderr","time":106.455143714,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
-,{"stream_name":"stderr","time":107.873593166,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
-,{"stream_name":"stderr","time":109.54035925,"data":"[NbConvertApp] Writing 301343 bytes to __results__.html\n"}
+[{"stream_name":"stdout","time":31.461852568,"data":"[build] Antibacterial_amps.txt: 28702 records, fields=['DRAMP_ID', 'Sequence', 'Name', 'Source', 'Activity', 'Pubmed_ID', 'Dataset', 'Length']\n"}
+,{"stream_name":"stdout","time":59.949001611,"data":"[build] Anti-Gram-positive_amps.txt: 2733 records, fields=['DRAMP_ID', 'Sequence', 'Sequence_Length', 'Name', 'Swiss_Prot_Entry', 'Family', 'Gene', 'Source', 'Activity', 'Protein_existence', 'Structure', 'Structure_Description', 'PDB_ID', 'Comments', 'Target_Organism', 'Hemolytic_activity', 'Linear/Cyclic/Branched', 'N-terminal_Modification', 'C-terminal_Modification', 'Other_Modifications', 'Stereochemistry', 'Cytotoxicity', 'Binding_Traget', 'Pubmed_ID', 'Reference', 'Author', 'Title']\n"}
+,{"stream_name":"stdout","time":81.15680202,"data":"[build] Anti-Gram-_amps.txt: 2562 records, fields=['DRAMP_ID', 'Sequence', 'Sequence_Length', 'Name', 'Swiss_Prot_Entry', 'Family', 'Gene', 'Source', 'Activity', 'Protein_existence', 'Structure', 'Structure_Description', 'PDB_ID', 'Comments', 'Target_Organism', 'Hemolytic_activity', 'Linear/Cyclic/Branched', 'N-terminal_Modification', 'C-terminal_Modification', 'Other_Modifications', 'Stereochemistry', 'Cytotoxicity', 'Binding_Traget', 'Pubmed_ID', 'Reference', 'Author', 'Title']\n"}
+,{"stream_name":"stdout","time":84.207901722,"data":"{\n"}
+,{"stream_name":"stdout","time":84.207942563,"data":"  \"stage\": \"v2_1_positive_build\",\n"}
+,{"stream_name":"stdout","time":84.207956177,"data":"  \"rule_version\": \"auto_evidence_v2_2.0\",\n"}
+,{"stream_name":"stdout","time":84.207960457,"data":"  \"started_utc\": \"2026-11-24T07:19:05.793233+00:00\",\n"}
+,{"stream_name":"stdout","time":84.207964094,"data":"  \"counts\": {\n"}
+,{"stream_name":"stdout","time":84.207967591,"data":"    \"per_dataset\": {\n"}
+,{"stream_name":"stdout","time":84.208015929,"data":"      \"Antibacterial\": {\n"}
+,{"stream_name":"stdout","time":84.208021684,"data":"        \"records\": 28702,\n"}
+,{"stream_name":"stdout","time":84.208026822,"data":"        \"kept_rows\": 15157\n"}
+,{"stream_name":"stdout","time":84.208031945,"data":"      },\n"}
+,{"stream_name":"stdout","time":84.208036883,"data":"      \"Anti-Gram-positive\": {\n"}
+,{"stream_name":"stdout","time":84.20804828,"data":"        \"records\": 2733,\n"}
+,{"stream_name":"stdout","time":84.208052203,"data":"        \"kept_rows\": 2473\n"}
+,{"stream_name":"stdout","time":84.208055514,"data":"      },\n"}
+,{"stream_name":"stdout","time":84.208058705,"data":"      \"Anti-Gram-\": {\n"}
+,{"stream_name":"stdout","time":84.208062002,"data":"        \"records\": 2562,\n"}
+,{"stream_name":"stdout","time":84.208065404,"data":"        \"kept_rows\": 2369\n"}
+,{"stream_name":"stdout","time":84.208068796,"data":"      }\n"}
+,{"stream_name":"stdout","time":84.208071965,"data":"    },\n"}
+,{"stream_name":"stdout","time":84.208075208,"data":"    \"unique_strict_positives\": 14577,\n"}
+,{"stream_name":"stdout","time":84.208078591,"data":"    \"multi_record_sequences\": 2867,\n"}
+,{"stream_name":"stdout","time":84.208082344,"data":"    \"distinct_pmids\": 2053,\n"}
+,{"stream_name":"stdout","time":84.208086051,"data":"    \"tier_a_mic\": 0,\n"}
+,{"stream_name":"stdout","time":84.208089365,"data":"    \"tier_b_label\": 14577,\n"}
+,{"stream_name":"stdout","time":84.208092717,"data":"    \"composition_preserving_decoys\": 14572,\n"}
+,{"stream_name":"stdout","time":84.20809605,"data":"    \"length_min\": 5,\n"}
+,{"stream_name":"stdout","time":84.208099329,"data":"    \"length_max\": 50\n"}
+,{"stream_name":"stdout","time":84.208102668,"data":"  },\n"}
+,{"stream_name":"stdout","time":84.208105929,"data":"  \"status\": \"POSITIVES_BUILT_AND_UPLOADED\",\n"}
+,{"stream_name":"stdout","time":84.20812188,"data":"  \"target_distribution\": {\n"}
+,{"stream_name":"stdout","time":84.208125003,"data":"    \"bacteria\": 14571,\n"}
+,{"stream_name":"stdout","time":84.208127623,"data":"    \"gram-positive bacteria: staphylococcus a\": 2,\n"}
+,{"stream_name":"stdout","time":84.208130327,"data":"    \"gram-positive bacteria: : clavibacter mi\": 2,\n"}
+,{"stream_name":"stdout","time":84.208132936,"data":"    \"[ref.15003829] gram-negative bacterium: \": 1,\n"}
+,{"stream_name":"stdout","time":84.208135558,"data":"    \"[ref.8925841] gram-positive bacteria: mi\": 1\n"}
+,{"stream_name":"stdout","time":84.20813813,"data":"  },\n"}
+,{"stream_name":"stdout","time":84.208140697,"data":"  \"activity_samples_redacted\": [\n"}
+,{"stream_name":"stdout","time":84.208143303,"data":"    \"Antimicrobial, Antibacterial, Anti-Gram+\",\n"}
+,{"stream_name":"stdout","time":84.208145949,"data":"    \"Antimicrobial, Antibacterial\",\n"}
+,{"stream_name":"stdout","time":84.208148501,"data":"    \"Antimicrobial, Antibacterial, Anti-Gram+\",\n"}
+,{"stream_name":"stdout","time":84.208151108,"data":"    \"Antimicrobial, Antibacterial\",\n"}
+,{"stream_name":"stdout","time":84.208197103,"data":"    \"Antimicrobial, Antibacterial, Anti-Gram+\",\n"}
+,{"stream_name":"stdout","time":84.208199996,"data":"    \"Antimicrobial, Antibacterial, Anti-Gram+\",\n"}
+,{"stream_name":"stdout","time":84.208202708,"data":"    \"Antimicrobial, Antibacterial, Anti-Gram+, Anti-Gram-\",\n"}
+,{"stream_name":"stdout","time":84.208205329,"data":"    \"Antimicrobial, Antibacterial, Anti-Gram+\",\n"}
+,{"stream_name":"stdout","time":84.208208137,"data":"    \"Antimicrobial, Antibacterial, Anti-Gram+\",\n"}
+,{"stream_name":"stdout","time":84.208210715,"data":"    \"Antimicrobial, Antibacterial, Anti-Gram+\",\n"}
+,{"stream_name":"stdout","time":84.208213314,"data":"    \"Antimicrobial, Antibacterial, Anti-Gram+, Anti-Gram-\",\n"}
+,{"stream_name":"stdout","time":84.208215926,"data":"    \"Antimicrobial, Antibacterial, Anti-Gram+\"\n"}
+,{"stream_name":"stdout","time":84.20821864,"data":"  ],\n"}
+,{"stream_name":"stdout","time":84.208221141,"data":"  \"positive_fasta_sha256\": \"9ca0d4076f6d61c16ad31b920afc9029ae463d3df3510049c9b6ac4366a8e40c\",\n"}
+,{"stream_name":"stdout","time":84.208223939,"data":"  \"positive_sequences\": 14577,\n"}
+,{"stream_name":"stdout","time":84.208226505,"data":"  \"bundle_bytes\": 820190,\n"}
+,{"stream_name":"stdout","time":84.208229244,"data":"  \"bundle_sha256\": \"d5dce04e7763dc1abe9cdcf2729de1701cccdf6c893a903e6aee2319058936bd\",\n"}
+,{"stream_name":"stdout","time":84.208231972,"data":"  \"private_bundle_upload\": {\n"}
+,{"stream_name":"stdout","time":84.208234585,"data":"    \"bytes\": 820190,\n"}
+,{"stream_name":"stdout","time":84.2082372,"data":"    \"sha256\": \"d5dce04e7763dc1abe9cdcf2729de1701cccdf6c893a903e6aee2319058936bd\",\n"}
+,{"stream_name":"stdout","time":84.208240653,"data":"    \"drive_file\": {\n"}
+,{"stream_name":"stdout","time":84.208243244,"data":"      \"kind\": \"drive#file\",\n"}
+,{"stream_name":"stdout","time":84.208247306,"data":"      \"id\": \"1MWre9VE-emU1Ubxi838aLP8VskFWCtI9\",\n"}
+,{"stream_name":"stdout","time":84.208250219,"data":"      \"name\": \"positive_core_v2_1_bundle_v2.zip\",\n"}
+,{"stream_name":"stdout","time":84.208253017,"data":"      \"mimeType\": \"application/zip\"\n"}
+,{"stream_name":"stdout","time":84.208255759,"data":"    }\n"}
+,{"stream_name":"stdout","time":84.20825833,"data":"  },\n"}
+,{"stream_name":"stdout","time":84.20826086,"data":"  \"finished_utc\": \"2026-11-24T07:20:22.685707+00:00\"\n"}
+,{"stream_name":"stdout","time":84.208267628,"data":"}\n"}
+,{"stream_name":"stderr","time":87.188939703,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":87.188996957,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":87.650215016,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":87.650250841,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":88.913859453,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":90.449034809,"data":"[NbConvertApp] Writing 303479 bytes to __results__.html\n"}
 ]
