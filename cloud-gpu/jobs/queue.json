@@ -702,13 +702,15 @@
       "serve_minutes": 15.0,
       "wait": true,
       "timeout_sec": 5400,
-      "status": "pending",
+      "status": "failed",
       "created_at_utc": "2026-11-24T07:23:46Z",
       "kernel_slug": "dualamp-v2-1-smoke-20261124",
       "env": {
         "V21_SMOKE": "1"
       },
-      "note": "CPU smoke of the v2.1 pipeline wiring: 400 positives + decoys, 1 seed x 2 folds x 2 epochs, fair-esm on CPU. Validates manifest -> build -> features -> train -> report before any GPU run."
+      "note": "CPU smoke of the v2.1 pipeline wiring: 400 positives + decoys, 1 seed x 2 folds x 2 epochs, fair-esm on CPU. Validates manifest -> build -> features -> train -> report before any GPU run.",
+      "error": "Kaggle kernel shaohuawen/dualamp-v2-1-smoke-20261124 ended with error; inspect logs in /tmp/private-gpu-runs/dualamp-v2-1-smoke-20261124.",
+      "finished_at_utc": "2026-11-24T07:25:11Z"
     }
   ]
 }

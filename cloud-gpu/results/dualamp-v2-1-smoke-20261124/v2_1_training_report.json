@@ -1,0 +1,12 @@
+{
+  "stage": "dualamp_v2_1_training",
+  "dataset_version": "positive_core_v2_1_dramp",
+  "rule_version": "auto_evidence_v2_2.0",
+  "leanrea_commit": "f610dc00b1aec3ab948a5b77574af0e644259a13",
+  "started_utc": "2026-11-24T07:24:40.505794+00:00",
+  "training_started": false,
+  "status": "FAILED_NOT_COMPLETED",
+  "error": "private v2.1 bundle id and model-upload session are required",
+  "traceback": "Traceback (most recent call last):\n  File \"/tmp/_payload.py\", line 171, in main\n    raise RuntimeError(\"private v2.1 bundle id and model-upload session are required\")\nRuntimeError: private v2.1 bundle id and model-upload session are required\n",
+  "finished_utc": "2026-11-24T07:24:40.506617+00:00"
+}
