@@ -576,8 +576,18 @@ def execute_kaggle_job(job: dict[str, Any], run_dir: str) -> dict[str, Any]:
     stage_dir = tempfile.mkdtemp(prefix="kag_push_")
     try:
         entry_py = os.path.join(stage_dir, "entry_main.py")
+        # pip must be loud: a silent install failure previously surfaced only as a
+        # downstream "No module named Bio" and cost hours.
         pip_snippet = (
-            f"import subprocess, sys\nsubprocess.check_call([sys.executable, '-m', 'pip', 'install', '-q', *{repr(extra_pip)}])\n"
+            "import subprocess, sys\n"
+            f"_pkgs = {repr(extra_pip)}\n"
+            "for _p in _pkgs:\n"
+            "    _r = subprocess.run([sys.executable, '-m', 'pip', 'install', '-q', '--no-input', _p],\n"
+            "                        capture_output=True, text=True)\n"
+            "    print(f'[pip] {_p}: rc={_r.returncode}', flush=True)\n"
+            "    if _r.returncode != 0:\n"
+            "        print((_r.stdout or '')[-1500:] + (_r.stderr or '')[-1500:], flush=True)\n"
+            "        raise SystemExit(f'pip install failed for {_p}')\n"
             if extra_pip
             else ""
         )
