@@ -1,0 +1,61 @@
+{
+  "stage": "dualamp_v2_1_training",
+  "dataset_version": "positive_core_v2_1_dramp",
+  "rule_version": "auto_evidence_v2_2.0",
+  "leanrea_commit": "f610dc00b1aec3ab948a5b77574af0e644259a13",
+  "started_utc": "2026-11-24T13:21:27.584852+00:00",
+  "training_started": true,
+  "upload_session_present": false,
+  "cohort": {
+    "positives": 14577,
+    "composition_decoys": 14572,
+    "positive_fasta_sha256": "9ca0d4076f6d61c16ad31b920afc9029ae463d3df3510049c9b6ac4366a8e40c"
+  },
+  "negatives": {
+    "proteins_total": 117172,
+    "keyword_excluded": 18,
+    "fragments_raw": 351462,
+    "fragments_standard_aa": 351429,
+    "fragments_dedup": 351119,
+    "fragments_hit_positive_4mer_gt08": 5,
+    "negatives_final": 2000,
+    "seed": 11,
+    "cap": 2000,
+    "neg_mode": "standard",
+    "seconds": 12.3
+  },
+  "manifest_sha256": "4003e144cadc94ffad61727b2bc416b8cf9aab4c0f2b436f565fd17cd1cfb768",
+  "smoke_mode": true,
+  "evaluation_stage": "driven via dualamp_lite.v4.pipeline.run_stage('evaluation')",
+  "encoder_preflight": {
+    "encoder": "fair-esm",
+    "is_mock": false,
+    "embed_dim": 480,
+    "probe_shapes": [
+      [
+        2,
+        23,
+        480
+      ],
+      [
+        2,
+        480
+      ]
+    ],
+    "finite": true
+  },
+  "steps": {
+    "build": {
+      "returncode": 0,
+      "seconds": 10.2
+    },
+    "features": {
+      "returncode": 0,
+      "seconds": 97.3
+    },
+    "train": {
+      "returncode": 0,
+      "seconds": 567.5
+    }
+  }
+}

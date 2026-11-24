@@ -1,0 +1,96 @@
+[{"stream_name":"stdout","time":6.852962742,"data":"[pip] gdown: rc=0\n"}
+,{"stream_name":"stdout","time":8.976582540999999,"data":"[pip] requests: rc=0\n"}
+,{"stream_name":"stdout","time":11.739467299,"data":"[pip] fair-esm: rc=0\n"}
+,{"stream_name":"stdout","time":13.815572622,"data":"[pip] pyyaml: rc=0\n"}
+,{"stream_name":"stdout","time":18.183228975,"data":"[pip] biopython: rc=0\n"}
+,{"stream_name":"stdout","time":20.284234764,"data":"[pip] pandas: rc=0\n"}
+,{"stream_name":"stdout","time":22.409851784,"data":"[pip] scikit-learn: rc=0\n"}
+,{"stream_name":"stdout","time":24.559386723,"data":"[pip] matplotlib: rc=0\n"}
+,{"stream_name":"stdout","time":67.353425842,"data":"Downloading: \"https://dl.fbaipublicfiles.com/fair-esm/models/esm2_t12_35M_UR50D.pt\" to /root/.cache/torch/hub/checkpoints/esm2_t12_35M_UR50D.pt\n"}
+,{"stream_name":"stdout","time":68.081207858,"data":"Downloading: \"https://dl.fbaipublicfiles.com/fair-esm/regression/esm2_t12_35M_UR50D-contact-regression.pt\" to /root/.cache/torch/hub/checkpoints/esm2_t12_35M_UR50D-contact-regression.pt\n"}
+,{"stream_name":"stderr","time":748.487434556,"data":"{\n"}
+,{"stream_name":"stderr","time":748.487491983,"data":"  \"stage\": \"dualamp_v2_1_training\",\n"}
+,{"stream_name":"stderr","time":748.487499686,"data":"  \"dataset_version\": \"positive_core_v2_1_dramp\",\n"}
+,{"stream_name":"stderr","time":748.487505688,"data":"  \"rule_version\": \"auto_evidence_v2_2.0\",\n"}
+,{"stream_name":"stderr","time":748.487511393,"data":"  \"leanrea_commit\": \"f610dc00b1aec3ab948a5b77574af0e644259a13\",\n"}
+,{"stream_name":"stderr","time":748.487516675,"data":"  \"started_utc\": \"2026-11-24T13:21:27.584852+00:00\",\n"}
+,{"stream_name":"stderr","time":748.487521948,"data":"  \"training_started\": true,\n"}
+,{"stream_name":"stderr","time":748.487526852,"data":"  \"upload_session_present\": false,\n"}
+,{"stream_name":"stderr","time":748.487550277,"data":"  \"cohort\": {\n"}
+,{"stream_name":"stderr","time":748.487556283,"data":"    \"positives\": 14577,\n"}
+,{"stream_name":"stderr","time":748.487562037,"data":"    \"composition_decoys\": 14572,\n"}
+,{"stream_name":"stderr","time":748.487567563,"data":"    \"positive_fasta_sha256\": \"9ca0d4076f6d61c16ad31b920afc9029ae463d3df3510049c9b6ac4366a8e40c\"\n"}
+,{"stream_name":"stderr","time":748.487573016,"data":"  },\n"}
+,{"stream_name":"stderr","time":748.48757802,"data":"  \"negatives\": {\n"}
+,{"stream_name":"stderr","time":748.487583439,"data":"    \"proteins_total\": 117172,\n"}
+,{"stream_name":"stderr","time":748.487589475,"data":"    \"keyword_excluded\": 18,\n"}
+,{"stream_name":"stderr","time":748.487595189,"data":"    \"fragments_raw\": 351462,\n"}
+,{"stream_name":"stderr","time":748.487600787,"data":"    \"fragments_standard_aa\": 351429,\n"}
+,{"stream_name":"stderr","time":748.48760586,"data":"    \"fragments_dedup\": 351119,\n"}
+,{"stream_name":"stderr","time":748.487611796,"data":"    \"fragments_hit_positive_4mer_gt08\": 5,\n"}
+,{"stream_name":"stderr","time":748.487617348,"data":"    \"negatives_final\": 2000,\n"}
+,{"stream_name":"stderr","time":748.487622534,"data":"    \"seed\": 11,\n"}
+,{"stream_name":"stderr","time":748.487627699,"data":"    \"cap\": 2000,\n"}
+,{"stream_name":"stderr","time":748.48763305,"data":"    \"neg_mode\": \"standard\",\n"}
+,{"stream_name":"stderr","time":748.487638609,"data":"    \"seconds\": 12.3\n"}
+,{"stream_name":"stderr","time":748.487644014,"data":"  },\n"}
+,{"stream_name":"stderr","time":748.487649152,"data":"  \"manifest_sha256\": \"4003e144cadc94ffad61727b2bc416b8cf9aab4c0f2b436f565fd17cd1cfb768\",\n"}
+,{"stream_name":"stderr","time":748.487654885,"data":"  \"smoke_mode\": true,\n"}
+,{"stream_name":"stderr","time":748.487672326,"data":"  \"evaluation_stage\": \"driven via dualamp_lite.v4.pipeline.run_stage('evaluation')\",\n"}
+,{"stream_name":"stderr","time":748.487677357,"data":"  \"encoder_preflight\": {\n"}
+,{"stream_name":"stderr","time":748.487681746,"data":"    \"encoder\": \"fair-esm\",\n"}
+,{"stream_name":"stderr","time":748.487705817,"data":"    \"is_mock\": false,\n"}
+,{"stream_name":"stderr","time":748.487710533,"data":"    \"embed_dim\": 480,\n"}
+,{"stream_name":"stderr","time":748.48771506,"data":"    \"probe_shapes\": [\n"}
+,{"stream_name":"stderr","time":748.487719594,"data":"      [\n"}
+,{"stream_name":"stderr","time":748.487724071,"data":"        2,\n"}
+,{"stream_name":"stderr","time":748.487728534,"data":"        23,\n"}
+,{"stream_name":"stderr","time":748.487732922,"data":"        480\n"}
+,{"stream_name":"stderr","time":748.487737354,"data":"      ],\n"}
+,{"stream_name":"stderr","time":748.487741812,"data":"      [\n"}
+,{"stream_name":"stderr","time":748.487746226,"data":"        2,\n"}
+,{"stream_name":"stderr","time":748.487750583,"data":"        480\n"}
+,{"stream_name":"stderr","time":748.487755429,"data":"      ]\n"}
+,{"stream_name":"stderr","time":748.487759778,"data":"    ],\n"}
+,{"stream_name":"stderr","time":748.487763971,"data":"    \"finite\": true\n"}
+,{"stream_name":"stderr","time":748.487767983,"data":"  },\n"}
+,{"stream_name":"stderr","time":748.487772,"data":"  \"steps\": {\n"}
+,{"stream_name":"stderr","time":748.487776161,"data":"    \"build\": {\n"}
+,{"stream_name":"stderr","time":748.487780611,"data":"      \"returncode\": 0,\n"}
+,{"stream_name":"stderr","time":748.487785385,"data":"      \"seconds\": 10.2\n"}
+,{"stream_name":"stderr","time":748.487789941,"data":"    },\n"}
+,{"stream_name":"stderr","time":748.487794363,"data":"    \"features\": {\n"}
+,{"stream_name":"stderr","time":748.4877989,"data":"      \"returncode\": 0,\n"}
+,{"stream_name":"stderr","time":748.487803032,"data":"      \"seconds\": 97.3\n"}
+,{"stream_name":"stderr","time":748.487807574,"data":"    },\n"}
+,{"stream_name":"stderr","time":748.487812032,"data":"    \"train\": {\n"}
+,{"stream_name":"stderr","time":748.487816591,"data":"      \"returncode\": 0,\n"}
+,{"stream_name":"stderr","time":748.487821122,"data":"      \"seconds\": 567.5\n"}
+,{"stream_name":"stderr","time":748.487825598,"data":"    }\n"}
+,{"stream_name":"stderr","time":748.487830099,"data":"  },\n"}
+,{"stream_name":"stderr","time":748.487834507,"data":"  \"status\": \"FAILED_NOT_COMPLETED\",\n"}
+,{"stream_name":"stderr","time":748.487839317,"data":"  \"error\": \"list index out of range\",\n"}
+,{"stream_name":"stderr","time":748.487844443,"data":"  \"traceback\": \"Traceback (most recent call last):\\n  File \\\"/tmp/_payload.py\\\", line 392, in main\\n    step_name = cmd[3]\\n                ~~~^^^\\nIndexError: list index out of range\\n\",\n"}
+,{"stream_name":"stderr","time":748.487852322,"data":"  \"finished_utc\": \"2026-11-24T13:33:31.496940+00:00\"\n"}
+,{"stream_name":"stderr","time":748.487856317,"data":"}\n"}
+,{"stream_name":"stderr","time":748.809342396,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":748.810086971,"data":"  File \"/kaggle/src/script.py\", line 15, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":748.810118753,"data":"    runpy.run_path('/tmp/_payload.py', run_name='__main__')\n"}
+,{"stream_name":"stderr","time":748.810122802,"data":"    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":748.810125906,"data":"  File \"\u003cfrozen runpy\u003e\", line 294, in run_path\n"}
+,{"stream_name":"stderr","time":748.810164599,"data":"  File \"\u003cfrozen runpy\u003e\", line 98, in _run_module_code\n"}
+,{"stream_name":"stderr","time":748.810170374,"data":"  File \"\u003cfrozen runpy\u003e\", line 88, in _run_code\n"}
+,{"stream_name":"stderr","time":748.810174857,"data":"  File \"/tmp/_payload.py\", line 516, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":748.810180004,"data":"    sys.exit(main())\n"}
+,{"stream_name":"stderr","time":748.8101894,"data":"             ~~~~^^\n"}
+,{"stream_name":"stderr","time":748.810193777,"data":"  File \"/tmp/_payload.py\", line 392, in main\n"}
+,{"stream_name":"stderr","time":748.81019794,"data":"    step_name = cmd[3]\n"}
+,{"stream_name":"stderr","time":748.810201791,"data":"                ~~~^^^\n"}
+,{"stream_name":"stderr","time":748.810205613,"data":"IndexError: list index out of range\n"}
+,{"stream_name":"stderr","time":752.2215441,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":752.221585069,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":752.574629878,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":752.574676839,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":753.586252668,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":754.972916706,"data":"[NbConvertApp] Writing 331447 bytes to __results__.html\n"}
+]
