@@ -1,0 +1,13 @@
+{
+  "kernel_ref": "shaohuawen/dualamp-real8-v2-retry3-20261124",
+  "kernel_status": "shaohuawen/dualamp-real8-v2-retry3-20261124 has status \"KernelWorkerStatus.RUNNING\"",
+  "kernel_status_returncode": 0,
+  "output_fetch": "skipped: kernel not in a terminal state or status unavailable",
+  "gpu_quota": {
+    "time_used_seconds": 2180.6169101,
+    "time_reserved_seconds": 0.0,
+    "total_allowed_seconds": 108000.0,
+    "remaining_seconds": 105819.3830899,
+    "quota_refresh_time": "2026-11-28T00:00:00Z"
+  }
+}
