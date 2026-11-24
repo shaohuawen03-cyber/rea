@@ -706,7 +706,7 @@
       "serve_minutes": 15.0,
       "wait": false,
       "timeout_sec": 3600,
-      "status": "pending",
+      "status": "pushed_async",
       "created_at_utc": "2026-11-24T07:23:46Z",
       "kernel_slug": "dualamp-v2-1-smoke-20261124",
       "env": {
@@ -715,7 +715,8 @@
       "note": "Async smoke (400/400/2000, 1 seed x 2 folds x 2 epochs). wait=false so the relay returns immediately; status/output jobs follow. pip installs are now loud.",
       "inline_json": {
         "V21_INPUTS_JSON": "cloud-gpu/jobs/v21_inputs.json"
-      }
+      },
+      "finished_at_utc": "2026-11-24T11:54:03Z"
     },
     {
       "id": "dualamp-v2-1-smoke-status-20261124",
@@ -723,10 +724,11 @@
       "mode": "status",
       "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
       "kernel_slug": "dualamp-v2-1-smoke-20261124",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-24T11:53:24Z",
-      "note": "Read the smoke kernel state without burning GPU."
+      "note": "Read the smoke kernel state without burning GPU.",
+      "finished_at_utc": "2026-11-24T11:54:05Z"
     },
     {
       "id": "dualamp-v2-1-smoke-fetch-20261124",
@@ -734,10 +736,11 @@
       "mode": "output",
       "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
       "kernel_slug": "dualamp-v2-1-smoke-20261124",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-24T11:53:24Z",
-      "note": "Fetch smoke outputs once the kernel completes."
+      "note": "Fetch smoke outputs once the kernel completes.",
+      "finished_at_utc": "2026-11-24T11:54:06Z"
     }
   ]
 }
