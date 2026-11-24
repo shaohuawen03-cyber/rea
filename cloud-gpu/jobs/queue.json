@@ -852,10 +852,11 @@
       "mode": "status",
       "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
       "kernel_slug": "dualamp-v2-1-smoke-cpu-20261124",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-24T12:30:42Z",
-      "note": "CPU smoke progress check."
+      "note": "CPU smoke progress check.",
+      "finished_at_utc": "2026-11-24T12:31:17Z"
     }
   ]
 }
