@@ -1,6 +1,6 @@
 {
-  "label": "quota-e2e-final-after",
-  "captured_at_utc": "2026-11-24T00:58:40Z",
+  "label": "quota-verify-28-after",
+  "captured_at_utc": "2026-11-24T01:01:40Z",
   "refresh_at": "2026-11-28T00:00:00Z",
   "source": "api.kaggle.com (exact seconds)",
   "gpu": {
@@ -22,15 +22,15 @@
     "remaining_hours": 20.0
   },
   "delta": {
-    "from": "2026-11-24T00:58:05Z",
-    "to": "2026-11-24T00:58:40Z",
+    "from": "2026-11-24T01:01:40Z",
+    "to": "2026-11-24T01:01:40Z",
     "accelerators": {
       "gpu": {
-        "used_seconds_delta": 7.826,
-        "used_hours_delta": 0.0022,
-        "used_seconds_before": 81.916,
+        "used_seconds_delta": 0.0,
+        "used_hours_delta": 0.0,
+        "used_seconds_before": 89.742,
         "used_seconds_after": 89.742,
-        "remaining_hours_before": 29.9772,
+        "remaining_hours_before": 29.9751,
         "remaining_hours_after": 29.9751
       },
       "tpu": {
