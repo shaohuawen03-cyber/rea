@@ -1,0 +1,70 @@
+--- shaohuawen/quota-smoke-32 log (tail) ---
+  \"timestamp_utc\": \"2026-11-24T01:11:50Z\",\n"}
+,{"stream_name":"stdout","time":311.464351779,"data":"  \"python\": \"3.13.16\",\n"}
+,{"stream_name":"stdout","time":311.464354566,"data":"  \"platform\": \"Linux-6.18.55+-x86_64-with-glibc2.39\",\n"}
+,{"stream_name":"stdout","time":311.464357444,"data":"  \"requested_seconds\": 300.0,\n"}
+,{"stream_name":"stdout","time":311.464360204,"data":"  \"torch\": {\n"}
+,{"stream_name":"stdout","time":311.464362956,"data":"    \"version\": \"2.11.0+cu130\",\n"}
+,{"stream_name":"stdout","time":311.464365752,"data":"    \"cuda_available\": true,\n"}
+,{"stream_name":"stdout","time":311.464369161,"data":"    \"cuda_version\": \"13.0\",\n"}
+,{"stream_name":"stdout","time":311.46438937,"data":"    \"device_count\": 2,\n"}
+,{"stream_name":"stdout","time":311.464394286,"data":"    \"devices\": [\n"}
+,{"stream_name":"stdout","time":311.464398835,"data":"      \"Tesla T4\",\n"}
+,{"stream_name":"stdout","time":311.464403572,"data":"      \"Tesla T4\"\n"}
+,{"stream_name":"stdout","time":311.464408147,"data":"    ]\n"}
+,{"stream_name":"stdout","time":311.464412607,"data":"  },\n"}
+,{"stream_name":"stdout","time":311.464416644,"data":"  \"run\": {\n"}
+,{"stream_name":"stdout","time":311.464420682,"data":"    \"device\": \"cuda:0\",\n"}
+,{"stream_name":"stdout","time":311.464424744,"data":"    \"matmul_dim\": 2048,\n"}
+,{"stream_name":"stdout","time":311.464428697,"data":"    \"iterations\": 311160,\n"}
+,{"stream_name":"stdout","time":311.464432628,"data":"    \"elapsed_sec\": 300.01,\n"}
+,{"stream_name":"stdout","time":311.464443798,"data":"    \"gflops_approx\": 17818.127,\n"}
+,{"stream_name":"stdout","time":311.464454328,"data":"    \"memory_allocated_mib\": 32.1,\n"}
+,{"stream_name":"stdout","time":311.464457774,"data":"    \"finite\": true,\n"}
+,{"stream_name":"stdout","time":311.464460441,"data":"    \"checksum_matches_first_pass\": true\n"}
+,{"stream_name":"stdout","time":311.464463133,"data":"  },\n"}
+,{"stream_name":"stdout","time":311.464465686,"data":"  \"ok\": true,\n"}
+,{"stream_name":"stdout","time":311.464468424,"data":"  \"status\": \"completed\"\n"}
+,{"stream_name":"stdout","time":311.464471161,"data":"}\n"}
+,{"stream_name":"stderr","time":317.947496422,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":317.947541161,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":318.298060354,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":318.298088986,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":319.326657998,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":320.594260914,"data":"[NbConvertApp] Writing 283958 bytes to __results__.html\n"}
+]
+   saved cloud-gpu/results/kernel-output-quota-smoke-32/kernel.log
+shaohuawen/quota-smoke-32: 1 file(s)
+ - quota_smoke_result.json url=yes
+   saved cloud-gpu/results/kernel-output-quota-smoke-32/quota_smoke_result.json (648 chars)
+   --- quota_smoke_result.json (tail) ---
+{
+  "script": "quota_smoke",
+  "timestamp_utc": "2026-11-24T01:11:50Z",
+  "python": "3.13.16",
+  "platform": "Linux-6.18.55+-x86_64-with-glibc2.39",
+  "requested_seconds": 300.0,
+  "torch": {
+    "version": "2.11.0+cu130",
+    "cuda_available": true,
+    "cuda_version": "13.0",
+    "device_count": 2,
+    "devices": [
+      "Tesla T4",
+      "Tesla T4"
+    ]
+  },
+  "run": {
+    "device": "cuda:0",
+    "matmul_dim": 2048,
+    "iterations": 311160,
+    "elapsed_sec": 300.01,
+    "gflops_approx": 17818.127,
+    "memory_allocated_mib": 32.1,
+    "finite": true,
+    "checksum_matches_first_pass": true
+  },
+  "ok": true,
+  "status": "completed"
+}
+
