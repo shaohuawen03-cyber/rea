@@ -72,6 +72,7 @@ jobs:
           poll_timeout="3300"
           keep=""
           logs_ref=""
+          fetch_output=""
           if [ -f cloud-gpu/jobs/quota-request.json ]; then
             [ -n "$label" ] || label="$(jq -r '.label // ""' cloud-gpu/jobs/quota-request.json)"
             [ -n "$smoke" ] || smoke="$(jq -r '.run_smoke // false' cloud-gpu/jobs/quota-request.json)"
@@ -82,6 +83,7 @@ jobs:
             delete_ref="$(jq -r '.delete_kernel // ""' cloud-gpu/jobs/quota-request.json)"
             probe_args="$(jq -r '.probe_refs // [] | map("--ref \"" + . + "\"") | join(" ")' cloud-gpu/jobs/quota-request.json)"
             logs_ref="$(jq -r '.logs_ref // ""' cloud-gpu/jobs/quota-request.json)"
+            fetch_output="$(jq -r '.fetch_output // ""' cloud-gpu/jobs/quota-request.json)"
             [ -n "$logs_ref" ] && probe_args="$probe_args --logs $logs_ref"
             [ -n "$probe_args" ] || probe_args=""
           fi
@@ -100,6 +102,7 @@ jobs:
             echo "delete=$delete_ref"
             echo "probe=$probe_args"
             echo "logs=$logs_ref"
+            echo "fetch_output=$fetch_output"
           } >> "$GITHUB_OUTPUT"
           echo "label=$label run_smoke=$smoke seconds=$seconds no_wait=$no_wait kernels=$kernels"
 
@@ -231,6 +234,14 @@ jobs:
           python cloud-gpu/scripts/kaggle_probe.py \
             ${{ steps.req.outputs.probe }} \
             --out "cloud-gpu/results/quota-probe-${{ github.run_number }}.jsonl" || true
+
+      - name: Fetch kernel output (optional)
+        if: steps.req.outputs.fetch_output != ''
+        continue-on-error: true
+        run: |
+          set -uo pipefail
+          python cloud-gpu/scripts/fetch_kernel_output.py "${{ steps.req.outputs.fetch_output }}" \
+            --out-dir cloud-gpu/results || true
 
       - name: Kernel status (who holds the GPU sessions)
         run: |

@@ -1,7 +1,7 @@
 {
-  "label": "quota-diag-logs",
+  "label": "quota-diag-output",
   "run_smoke": false,
   "seconds": 60,
-  "logs_ref": "shaohuawen/quota-smoke-28",
-  "note": "Pull the real log/result of an ERROR smoke kernel to see why it exits after only a few seconds."
+  "fetch_output": "shaohuawen/quota-smoke-28",
+  "note": "Download the finished smoke kernel's output files (kernel.log / quota_smoke_result.json) to see why it errors after a few seconds."
 }
