@@ -1,8 +1,9 @@
 {
-  "label": "quota-e2e-final",
-  "run_smoke": true,
-  "seconds": 300,
-  "poll_timeout": 7200,
-  "keep_kernels": [],
-  "note": "Fully hands-off run: free GPU slots, push a 5-minute T4 kernel, poll the raw session status until it really finishes, fetch its log + result, then report quota before/after."
+  "label": "quota-verify-28",
+  "run_smoke": false,
+  "seconds": 60,
+  "check_kernels": ["shaohuawen/quota-smoke-28"],
+  "logs_ref": "shaohuawen/quota-smoke-28",
+  "probe_refs": ["shaohuawen/quota-smoke-28"],
+  "note": "Read-only: check whether quota-smoke-28 holds a real session, pull its log/result, and re-read the quota."
 }

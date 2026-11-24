@@ -71,6 +71,7 @@ jobs:
           no_wait="false"
           poll_timeout="3300"
           keep=""
+          logs_ref=""
           if [ -f cloud-gpu/jobs/quota-request.json ]; then
             [ -n "$label" ] || label="$(jq -r '.label // ""' cloud-gpu/jobs/quota-request.json)"
             [ -n "$smoke" ] || smoke="$(jq -r '.run_smoke // false' cloud-gpu/jobs/quota-request.json)"
@@ -98,6 +99,7 @@ jobs:
             echo "cancel=$cancel_ref"
             echo "delete=$delete_ref"
             echo "probe=$probe_args"
+            echo "logs=$logs_ref"
           } >> "$GITHUB_OUTPUT"
           echo "label=$label run_smoke=$smoke seconds=$seconds no_wait=$no_wait kernels=$kernels"
 
@@ -223,7 +225,7 @@ jobs:
             --out "cloud-gpu/results/quota-cancel-${{ github.run_number }}.txt" || true
 
       - name: Raw API probe (optional)
-        if: steps.req.outputs.probe != ''
+        if: steps.req.outputs.probe != '' || steps.req.outputs.logs != ''
         run: |
           set -uo pipefail
           python cloud-gpu/scripts/kaggle_probe.py \
