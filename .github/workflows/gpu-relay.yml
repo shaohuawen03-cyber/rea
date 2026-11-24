@@ -184,15 +184,19 @@ jobs:
           path: ~/.gpu-relay
           key: gpu-relay-vault-${{ github.run_id }}
 
-      - name: Gate isolated jobs (secret-only runs skip the shared queue)
+      - name: Gate isolated jobs (envelope-only pushes skip the shared queue)
         id: gate
         run: |
-          # A run started just to consume an envelope / run one job must not also
-          # replay the whole pending queue from the pushed snapshot.
+          # A push that *only* touches cloud-gpu/secrets/* is an envelope top-up, not a
+          # dispatch: replaying the queue there would re-run finished work. Any push that
+          # also changes queue.json is a real dispatch and must run.
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ -n "${{ inputs.only_id }}" ]; then
             echo "run_queue=true" >> "$GITHUB_OUTPUT"
           elif [ "${{ github.event_name }}" = "push" ]; then
-            if git show --stat --name-only HEAD 2>/dev/null | grep -q '^cloud-gpu/secrets/'; then
+            changed="$(git show --pretty=format: --name-only HEAD 2>/dev/null | sed '/^$/d')"
+            if echo "$changed" | grep -q '^cloud-gpu/jobs/queue.json$'; then
+              echo "run_queue=true" >> "$GITHUB_OUTPUT"
+            elif echo "$changed" | grep -q '^cloud-gpu/secrets/'; then
               echo "run_queue=false" >> "$GITHUB_OUTPUT"
             else
               echo "run_queue=true" >> "$GITHUB_OUTPUT"
