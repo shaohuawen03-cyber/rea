@@ -227,14 +227,25 @@ def main() -> int:
         status = "queued"
         deadline = time.time() + args.poll_timeout
         while time.time() < deadline:
-            time.sleep(20)
-            probe = run(["kaggle", "kernels", "status", ref], timeout=60)
-            status = (probe.stdout or probe.stderr).strip()
+            time.sleep(30)
             raw = raw_session_status(user, slug)
-            log(f"status: {status} | raw: {raw}")
-            low = status.lower()
-            if "complete" in low or "error" in low or "cancel" in low:
+            log(f"raw= {raw}")
+            # `kaggle kernels status` prints QUEUED for a kernel that has no
+            # session at all, so only the raw body is trustworthy:
+            #   {}                  -> not scheduled yet
+            #   RUNNING / COMPLETE / ERROR -> a real session exists/is done
+            if raw == "no-session":
+                continue
+            try:
+                parsed = json.loads(raw)
+            except (json.JSONDecodeError, TypeError):
+                parsed = {}
+            state = str(parsed.get("status", "")).upper() if isinstance(parsed, dict) else ""
+            if state in ("COMPLETE", "ERROR", "CANCELLED", "CANCELED"):
+                status = state
+                log(f"session finished with {state}")
                 break
+            status = state or "running"
 
         os.makedirs(args.out_dir, exist_ok=True)
         fetched = tempfile.mkdtemp(prefix="quota_out_")
@@ -252,6 +263,16 @@ def main() -> int:
         finally:
             shutil.rmtree(fetched, ignore_errors=True)
 
+        for candidate in ("quota_smoke_result.json",):
+            path = os.path.join(fetched, candidate)
+            if os.path.exists(path):
+                try:
+                    with open(path, "r", encoding="utf-8") as f:
+                        result = json.load(f)
+                    log(f"kernel result: {json.dumps(result.get('run', {}), ensure_ascii=False)[:600]}")
+                except (OSError, json.JSONDecodeError) as exc:
+                    log(f"kernel result unreadable: {exc}")
+
         if args.fetch_logs:
             got = run(
                 [sys.executable, os.path.join(os.path.dirname(__file__), "kernel_logs.py"), ref,
@@ -260,6 +281,16 @@ def main() -> int:
                 timeout=300,
             )
             log(f"log fetch rc={got.returncode}: {(got.stdout or got.stderr).strip()[:800]}")
+
+        for candidate in ("quota_smoke_result.json",):
+            path = os.path.join(fetched, candidate)
+            if os.path.exists(path):
+                try:
+                    with open(path, "r", encoding="utf-8") as f:
+                        result = json.load(f)
+                    log(f"kernel result: {json.dumps(result.get('run', {}), ensure_ascii=False)[:600]}")
+                except (OSError, json.JSONDecodeError) as exc:
+                    log(f"kernel result unreadable: {exc}")
 
         if args.fetch_logs:
             logs = run(

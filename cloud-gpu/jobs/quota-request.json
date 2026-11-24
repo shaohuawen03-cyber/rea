@@ -1,8 +1,8 @@
 {
-  "label": "quota-auto-e2e",
+  "label": "quota-e2e-final",
   "run_smoke": true,
   "seconds": 300,
-  "poll_timeout": 6600,
+  "poll_timeout": 7200,
   "keep_kernels": [],
-  "note": "Hands-off end-to-end: delete stale quota-smoke kernels to free GPU slots, push a fresh 5-minute T4 kernel, wait for it to really finish, fetch its log, then report quota before/after as one before/after pair."
+  "note": "Fully hands-off run: free GPU slots, push a 5-minute T4 kernel, poll the raw session status until it really finishes, fetch its log + result, then report quota before/after."
 }
