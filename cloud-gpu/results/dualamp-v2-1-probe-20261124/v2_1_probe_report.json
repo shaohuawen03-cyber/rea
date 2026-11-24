@@ -1,0 +1,77 @@
+{
+  "stage": "v2_1_data_source_probe",
+  "started_utc": "2026-11-24T06:54:47.705422+00:00",
+  "python": "3.13.18",
+  "probes": {
+    "dbaasp_lookup": {
+      "url": "https://dbaasp.org/api/v1?query=lookup&lookup_type=target_group&format=json",
+      "status": 200,
+      "content_type": "",
+      "bytes": 0,
+      "body_head": ""
+    },
+    "dbaasp_card": {
+      "url": "https://dbaasp.org/api/v1?query=peptide_card&peptide_id=107&format=json",
+      "status": 200,
+      "content_type": "",
+      "bytes": 0,
+      "body_head": ""
+    },
+    "dbaasp_ranking": {
+      "url": "https://dbaasp.org/api/v1?query=ranking_search&target_species_id=3232&activity_measure_id=72&operation=%3C=&activity=0.5&format=json",
+      "status": 200,
+      "content_type": "",
+      "bytes": 0,
+      "body_head": ""
+    },
+    "dbaasp_api_page": {
+      "url": "https://dbaasp.org/api",
+      "status": 200,
+      "content_type": "text/html;charset=UTF-8",
+      "bytes": 4150,
+      "body_head": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <base href=\"/\"/>\n  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"/>\n  <meta name=\"resource-type\" content=\"document\"/>\n  <meta name=\"Referrer-Policy\" value=\"no-referrer | same-origin\"/>\n\n  <script src=\"/js/libs/jquery-4.0.0.min.js\"></script>\n  <script src=\"/js/libs/bootstrap-5.3.8.min.js\"></script>\n  <script src=\"/js/events.js\"></script>"
+    },
+    "europepmc": {
+      "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=antimicrobial%20peptide%20MIC&format=json&pageSize=1",
+      "error": "URLError: <urlopen error [Errno 104] Connection reset by peer>",
+      "body_head": ""
+    },
+    "ncbi_eutils": {
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=antimicrobial+peptide&retmode=json&retmax=1",
+      "status": 200,
+      "content_type": "application/json; charset=UTF-8",
+      "bytes": 814,
+      "body_head": "{\"header\":{\"type\":\"esearch\",\"version\":\"0.3\"},\"esearchresult\":{\"count\":\"62876\",\"retmax\":\"1\",\"retstart\":\"0\",\"idlist\":[\"43071416\"],\"translationset\":[{\"from\":\"antimicrobial peptide\",\"to\":\"\\\"antimicrobial peptides\\\"[Supplementary Concept] OR \\\"antimicrobial peptides\\\"[All Fields] OR \\\"antimicrobial peptide\\\"[All Fields] OR \\\"antimicrobial peptides\\\"[MeSH Terms] OR (\\\"antimicrobial\\\"[All Fields] AND \\\"p",
+      "json_top_keys": [
+        "header",
+        "esearchresult"
+      ]
+    },
+    "dramp": {
+      "url": "https://dramp.cpu-bioinfor.org/",
+      "status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "bytes": 26796,
+      "body_head": "\n\n\n\n<!DOCTYPE html>\n\n\n\n\n\n\n\n<html lang=\"en\">\n\n\n\n\n\n\n\n<head>\n\n\n\n\n\n\n\n\t<title>Welcome To Dramp Database</title>\n\n\n\n\n\n\n\n\t<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">\n\n\n\n\n\n\n\n\t<meta charset=\"utf-8\">\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"./lazysheep/css/bootstrap.css\">\n\n\n\n\n\n\n\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"./lazysheep/css/private.css\">\n\n\n\n\n"
+    },
+    "apd3": {
+      "url": "https://aps.unmc.edu/",
+      "status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "bytes": 23562,
+      "body_head": "<html>\n    <link href=\"https://aps.unmc.edu/assets/css/foundation.css\" rel=\"stylesheet\" type=\"text/css\" />\n    <link href=\"https://aps.unmc.edu/assets/css/content.css\" rel=\"stylesheet\" type=\"text/css\" />\n    <link href=\"https://aps.unmc.edu/assets/css/font-awesome.min.css\" rel=\"stylesheet\" type=\"text/css\" />\n    <head>\n        <title>Antimicrobial Peptide Database</title>\n    </head>\n    <body>\n  "
+    }
+  },
+  "reachable": {
+    "dbaasp_lookup": true,
+    "dbaasp_card": true,
+    "dbaasp_ranking": true,
+    "dbaasp_api_page": true,
+    "europepmc": false,
+    "ncbi_eutils": true,
+    "dramp": true,
+    "apd3": true
+  },
+  "status": "PROBE_DONE",
+  "finished_utc": "2026-11-24T06:54:49.915648+00:00"
+}

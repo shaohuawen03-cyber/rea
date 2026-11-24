@@ -1,0 +1,25 @@
+[{"stream_name":"stdout","time":1.728032561,"data":"[probe] dbaasp_lookup: {\"url\": \"https://dbaasp.org/api/v1?query=lookup\u0026lookup_type=target_group\u0026format=json\", \"status\": 200, \"content_type\": \"\", \"bytes\": 0}\n"}
+,{"stream_name":"stdout","time":1.85389965,"data":"[probe] dbaasp_card: {\"url\": \"https://dbaasp.org/api/v1?query=peptide_card\u0026peptide_id=107\u0026format=json\", \"status\": 200, \"content_type\": \"\", \"bytes\": 0}\n"}
+,{"stream_name":"stdout","time":1.991682812,"data":"[probe] dbaasp_ranking: {\"url\": \"https://dbaasp.org/api/v1?query=ranking_search\u0026target_species_id=3232\u0026activity_measure_id=72\u0026operation=%3C=\u0026activity=0.5\u0026format=json\", \"status\": 200, \"content_type\": \"\", \"bytes\": 0}\n"}
+,{"stream_name":"stdout","time":2.091203528,"data":"[probe] dbaasp_api_page: {\"url\": \"https://dbaasp.org/api\", \"status\": 200, \"content_type\": \"text/html;charset=UTF-8\", \"bytes\": 4150}\n"}
+,{"stream_name":"stdout","time":2.289701875,"data":"[probe] europepmc: {\"url\": \"https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=antimicrobial%20peptide%20MIC\u0026format=json\u0026pageSize=1\", \"error\": \"URLError: \u003curlopen error [Errno 104] Connection reset by peer\u003e\"}\n"}
+,{"stream_name":"stdout","time":2.479811133,"data":"[probe] ncbi_eutils: {\"url\": \"https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed\u0026term=antimicrobial+peptide\u0026retmode=json\u0026retmax=1\", \"status\": 200, \"content_type\": \"application/json; charset=UTF-8\", \"bytes\": 814, \"json_top_keys\": [\"header\", \"esearchresult\"]}\n"}
+,{"stream_name":"stdout","time":3.385941668,"data":"[probe] dramp: {\"url\": \"https://dramp.cpu-bioinfor.org/\", \"status\": 200, \"content_type\": \"text/html; charset=UTF-8\", \"bytes\": 26796}\n"}
+,{"stream_name":"stdout","time":3.647824269,"data":"[probe] apd3: {\"url\": \"https://aps.unmc.edu/\", \"status\": 200, \"content_type\": \"text/html; charset=UTF-8\", \"bytes\": 23562}\n"}
+,{"stream_name":"stdout","time":3.648298087,"data":"{\n"}
+,{"stream_name":"stdout","time":3.6483164500000003,"data":"  \"dbaasp_lookup\": true,\n"}
+,{"stream_name":"stdout","time":3.648321362,"data":"  \"dbaasp_card\": true,\n"}
+,{"stream_name":"stdout","time":3.648325802,"data":"  \"dbaasp_ranking\": true,\n"}
+,{"stream_name":"stdout","time":3.648329953,"data":"  \"dbaasp_api_page\": true,\n"}
+,{"stream_name":"stdout","time":3.648334025,"data":"  \"europepmc\": false,\n"}
+,{"stream_name":"stdout","time":3.648338281,"data":"  \"ncbi_eutils\": true,\n"}
+,{"stream_name":"stdout","time":3.64834219,"data":"  \"dramp\": true,\n"}
+,{"stream_name":"stdout","time":3.64834624,"data":"  \"apd3\": true\n"}
+,{"stream_name":"stdout","time":3.64844387,"data":"}\n"}
+,{"stream_name":"stderr","time":7.012672963,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":7.012704115,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":7.573154723,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":7.573185958,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":10.240338633,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":11.947084922,"data":"[NbConvertApp] Writing 283223 bytes to __results__.html\n"}
+]

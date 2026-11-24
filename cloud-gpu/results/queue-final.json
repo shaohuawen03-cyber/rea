@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-24T02:44:34Z",
+  "updated_at_utc": "2026-11-24T06:54:11Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -598,6 +598,23 @@
       "kernel_slug": "dualamp-real8-v2-retry2-20261124",
       "note": "Third strict-v2 exploratory attempt. Fixes vs the failed runs: (1) payload inlining into the kernel entry script (same bug that made every earlier smoke kernel exit in 7-8 s); (2) frozen private bundle re-opened as anyone-with-link for this run only and re-closed right after the kernel reaches a terminal state; (3) polling reads the raw GetKernelSessionStatus body. 16 strict positives, test n=2 -> exploratory only. M1/M2/M3, 5 seeds x 5 folds x 60 epochs.",
       "finished_at_utc": "2026-11-24T03:40:30Z"
+    },
+    {
+      "id": "dualamp-v2-1-probe-20261124",
+      "provider": "kaggle",
+      "mode": "run",
+      "accelerator": "CPU",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_probe.py",
+      "script_args": [],
+      "extra_pip": [],
+      "serve_minutes": 15.0,
+      "wait": true,
+      "timeout_sec": 3600,
+      "status": "completed",
+      "created_at_utc": "2026-11-24T06:54:11Z",
+      "kernel_slug": "dualamp-v2-1-probe-20261124",
+      "note": "CPU-only probe of curated AMP data sources (DBAASP/EuropePMC/NCBI) feeding the v2.1 positive-set expansion. No GPU, no quota burn.",
+      "finished_at_utc": "2026-11-24T06:55:24Z"
     }
   ]
 }
