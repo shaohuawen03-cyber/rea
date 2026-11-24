@@ -1,59 +1,132 @@
-[{"stream_name":"stderr","time":298.823624868,"data":"{\n"}
-,{"stream_name":"stderr","time":298.823667524,"data":"  \"stage\": \"dualamp_v2_1_training\",\n"}
-,{"stream_name":"stderr","time":298.823672473,"data":"  \"dataset_version\": \"positive_core_v2_1_dramp\",\n"}
-,{"stream_name":"stderr","time":298.823675959,"data":"  \"rule_version\": \"auto_evidence_v2_2.0\",\n"}
-,{"stream_name":"stderr","time":298.823679036,"data":"  \"leanrea_commit\": \"f610dc00b1aec3ab948a5b77574af0e644259a13\",\n"}
-,{"stream_name":"stderr","time":298.823682293,"data":"  \"started_utc\": \"2026-11-24T07:36:12.229732+00:00\",\n"}
-,{"stream_name":"stderr","time":298.823685381,"data":"  \"training_started\": true,\n"}
-,{"stream_name":"stderr","time":298.823688426,"data":"  \"upload_session_present\": false,\n"}
-,{"stream_name":"stderr","time":298.823691627,"data":"  \"cohort\": {\n"}
-,{"stream_name":"stderr","time":298.823694682,"data":"    \"positives\": 14577,\n"}
-,{"stream_name":"stderr","time":298.823697743,"data":"    \"composition_decoys\": 14572,\n"}
-,{"stream_name":"stderr","time":298.823700867,"data":"    \"positive_fasta_sha256\": \"9ca0d4076f6d61c16ad31b920afc9029ae463d3df3510049c9b6ac4366a8e40c\"\n"}
-,{"stream_name":"stderr","time":298.823704272,"data":"  },\n"}
-,{"stream_name":"stderr","time":298.82370719,"data":"  \"negatives\": {\n"}
-,{"stream_name":"stderr","time":298.823710122,"data":"    \"proteins_total\": 117172,\n"}
-,{"stream_name":"stderr","time":298.823713143,"data":"    \"keyword_excluded\": 18,\n"}
-,{"stream_name":"stderr","time":298.823716156,"data":"    \"fragments_raw\": 351462,\n"}
-,{"stream_name":"stderr","time":298.823719205,"data":"    \"fragments_standard_aa\": 351429,\n"}
-,{"stream_name":"stderr","time":298.823722605,"data":"    \"fragments_dedup\": 351119,\n"}
-,{"stream_name":"stderr","time":298.823725613,"data":"    \"fragments_hit_positive_4mer_gt08\": 31495,\n"}
-,{"stream_name":"stderr","time":298.82372867,"data":"    \"negatives_final\": 20000,\n"}
-,{"stream_name":"stderr","time":298.823732898,"data":"    \"seed\": 11,\n"}
-,{"stream_name":"stderr","time":298.823738124,"data":"    \"cap\": 20000,\n"}
-,{"stream_name":"stderr","time":298.823741324,"data":"    \"neg_mode\": \"standard\",\n"}
-,{"stream_name":"stderr","time":298.82374432,"data":"    \"seconds\": 13.2\n"}
-,{"stream_name":"stderr","time":298.823747293,"data":"  },\n"}
-,{"stream_name":"stderr","time":298.823782455,"data":"  \"manifest_sha256\": \"add51c5952142c80148d67ff9c3a71236c6dadb3cd79930042601b97cc0a605e\",\n"}
-,{"stream_name":"stderr","time":298.823788113,"data":"  \"smoke_mode\": true,\n"}
-,{"stream_name":"stderr","time":298.823792496,"data":"  \"status\": \"FAILED_NOT_COMPLETED\",\n"}
-,{"stream_name":"stderr","time":298.823797481,"data":"  \"error\": \"Command '['/usr/bin/python3', '-m', 'dualamp_lite', 'features', '--workdir', '/tmp/v21-ssba1elc/work/run', '--backend', 'fair-esm', '--batch-size', '64']' returned non-zero exit status 1.\",\n"}
-,{"stream_name":"stderr","time":298.823807023,"data":"  \"traceback\": \"Traceback (most recent call last):\\n  File \\\"/tmp/_payload.py\\\", line 310, in main\\n    subprocess.run(cmd, cwd=str(pkg), env=env, stdout=log,\\n    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n                   stderr=subprocess.STDOUT, check=True)\\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\\"/usr/lib/python3.13/subprocess.py\\\", line 578, in run\\n    raise CalledProcessError(retcode, process.args,\\n                             output=stdout, stderr=stderr)\\nsubprocess.CalledProcessError: Command '['/usr/bin/python3', '-m', 'dualamp_lite', 'features', '--workdir', '/tmp/v21-ssba1elc/work/run', '--backend', 'fair-esm', '--batch-size', '64']' returned non-zero exit status 1.\\n\",\n"}
-,{"stream_name":"stderr","time":298.823824965,"data":"  \"finished_utc\": \"2026-11-24T07:41:04.796580+00:00\"\n"}
-,{"stream_name":"stderr","time":298.823828725,"data":"}\n"}
-,{"stream_name":"stderr","time":299.082522085,"data":"Traceback (most recent call last):\n"}
-,{"stream_name":"stderr","time":299.083343281,"data":"  File \"/kaggle/src/script.py\", line 8, in \u003cmodule\u003e\n"}
-,{"stream_name":"stderr","time":299.083365209,"data":"    runpy.run_path('/tmp/_payload.py', run_name='__main__')\n"}
-,{"stream_name":"stderr","time":299.083370491,"data":"    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
-,{"stream_name":"stderr","time":299.083375234,"data":"  File \"\u003cfrozen runpy\u003e\", line 294, in run_path\n"}
-,{"stream_name":"stderr","time":299.083380461,"data":"  File \"\u003cfrozen runpy\u003e\", line 98, in _run_module_code\n"}
-,{"stream_name":"stderr","time":299.083385158,"data":"  File \"\u003cfrozen runpy\u003e\", line 88, in _run_code\n"}
-,{"stream_name":"stderr","time":299.083389856,"data":"  File \"/tmp/_payload.py\", line 413, in \u003cmodule\u003e\n"}
-,{"stream_name":"stderr","time":299.083395035,"data":"    sys.exit(main())\n"}
-,{"stream_name":"stderr","time":299.083400239,"data":"             ~~~~^^\n"}
-,{"stream_name":"stderr","time":299.083404724,"data":"  File \"/tmp/_payload.py\", line 310, in main\n"}
-,{"stream_name":"stderr","time":299.083409752,"data":"    subprocess.run(cmd, cwd=str(pkg), env=env, stdout=log,\n"}
-,{"stream_name":"stderr","time":299.083414302,"data":"    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
-,{"stream_name":"stderr","time":299.083419269,"data":"                   stderr=subprocess.STDOUT, check=True)\n"}
-,{"stream_name":"stderr","time":299.083424332,"data":"                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
-,{"stream_name":"stderr","time":299.083429448,"data":"  File \"/usr/lib/python3.13/subprocess.py\", line 578, in run\n"}
-,{"stream_name":"stderr","time":299.083434457,"data":"    raise CalledProcessError(retcode, process.args,\n"}
-,{"stream_name":"stderr","time":299.083439567,"data":"                             output=stdout, stderr=stderr)\n"}
-,{"stream_name":"stderr","time":299.083444744,"data":"subprocess.CalledProcessError: Command '['/usr/bin/python3', '-m', 'dualamp_lite', 'features', '--workdir', '/tmp/v21-ssba1elc/work/run', '--backend', 'fair-esm', '--batch-size', '64']' returned non-zero exit status 1.\n"}
-,{"stream_name":"stderr","time":301.699516044,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
-,{"stream_name":"stderr","time":301.699553995,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
-,{"stream_name":"stderr","time":302.007598139,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
-,{"stream_name":"stderr","time":302.00762494,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
-,{"stream_name":"stderr","time":302.970644672,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
-,{"stream_name":"stderr","time":304.160917005,"data":"[NbConvertApp] Writing 316131 bytes to __results__.html\n"}
+[{"stream_name":"stdout","time":47.405234067,"data":"Downloading: \"https://dl.fbaipublicfiles.com/fair-esm/models/esm2_t12_35M_UR50D.pt\" to /root/.cache/torch/hub/checkpoints/esm2_t12_35M_UR50D.pt\n"}
+,{"stream_name":"stdout","time":47.964757352,"data":"Downloading: \"https://dl.fbaipublicfiles.com/fair-esm/regression/esm2_t12_35M_UR50D-contact-regression.pt\" to /root/.cache/torch/hub/checkpoints/esm2_t12_35M_UR50D-contact-regression.pt\n"}
+,{"stream_name":"stdout","time":65.507281773,"data":"$ /usr/bin/python3 -m dualamp_lite build --manifest /tmp/v21-hp27i9ts/work/data/sources.yaml --workdir /tmp/v21-hp27i9ts/work/run --cluster-method auto\n"}
+,{"stream_name":"stdout","time":65.507312087,"data":"[09:47:42] INFO    reading sources from /tmp/v21-hp27i9ts/work/data/sources.yaml\n"}
+,{"stream_name":"stdout","time":65.507316998,"data":"[09:47:42] INFO      source dramp_v2_1_positives   layer=bacterial_amp        kept=  400 (from 400 rows)\n"}
+,{"stream_name":"stdout","time":65.507321233,"data":"[09:47:42] INFO      source uniprot_a_fragments    layer=negative_background  kept= 2000 (from 2000 rows)\n"}
+,{"stream_name":"stdout","time":65.507325433,"data":"[09:47:42] INFO      source composition_decoys_v2_1 layer=scrambled            kept=  400 (from 400 rows)\n"}
+,{"stream_name":"stdout","time":65.507329644,"data":"[09:47:42] INFO    after length/alphabet filtering: 2800 records\n"}
+,{"stream_name":"stdout","time":65.507333688,"data":"[09:47:45] INFO      dedup: 2800 records -\u003e 2800 unique sequences\n"}
+,{"stream_name":"stdout","time":65.50733806,"data":"[09:47:46] INFO      scrambled challenge set: +400 sequences\n"}
+,{"stream_name":"stdout","time":65.507342073,"data":"[09:47:46] WARNING   CD-HIT / MMseqs2 not found - using the built-in k-mer clustering fallback. Record this in the methods section (plan §5 requires naming the tool and params).\n"}
+,{"stream_name":"stdout","time":65.507347124,"data":"[09:47:50] INFO    clustering: kmer_fallback(k=3) at identity 0.40 / coverage 0.80 -\u003e 1558 clusters\n"}
+,{"stream_name":"stdout","time":65.507351422,"data":"[09:47:50] WARNING   156 homology clusters contain both labels - assigned to 'review' (never trained on)\n"}
+,{"stream_name":"stdout","time":65.507355605,"data":"[09:47:51] INFO      split sizes: {'train': 1351, 'scrambled': 800, 'review': 469, 'val': 290, 'test': 290}\n"}
+,{"stream_name":"stdout","time":65.507359808,"data":"[09:47:51] INFO    dataset written: 3200 sequences, 1558 clusters, test=290 (pos=26) - see /tmp/v21-hp27i9ts/work/run/dataset/dataset_all.csv\n"}
+,{"stream_name":"stdout","time":65.507364091,"data":"[09:47:51] INFO    step1 build_dataset finished in 8.5s\n"}
+,{"stream_name":"stdout","time":65.507367994,"data":"sequences=3200 clusters=1558 test=290\n"}
+,{"stream_name":"stdout","time":65.507375043,"data":"$ /usr/bin/python3 -m dualamp_lite features --workdir /tmp/v21-hp27i9ts/work/run --backend fair-esm --batch-size 64\n"}
+,{"stream_name":"stdout","time":65.507379308,"data":"[09:47:53] INFO    device: cuda\n"}
+,{"stream_name":"stdout","time":65.50740623,"data":"[09:47:55] INFO    step2 extract_features finished in 3.5s\n"}
+,{"stream_name":"stdout","time":65.50741159,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stdout","time":65.507416048,"data":"  File \"/tmp/v21-hp27i9ts/leanrea/dualamp-lite/dualamp_lite/biophys.py\", line 209, in instability_index\n"}
+,{"stream_name":"stdout","time":65.507420421,"data":"    from Bio.SeqUtils.ProtParam import ProteinAnalysis\n"}
+,{"stream_name":"stdout","time":65.507424363,"data":"ModuleNotFoundError: No module named 'Bio'\n"}
+,{"stream_name":"stdout","time":65.507428322,"data":"\n"}
+,{"stream_name":"stdout","time":65.507432062,"data":"The above exception was the direct cause of the following exception:\n"}
+,{"stream_name":"stdout","time":65.507448538,"data":"\n"}
+,{"stream_name":"stdout","time":65.507452651,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stdout","time":65.507457841,"data":"  File \"\u003cfrozen runpy\u003e\", line 203, in _run_module_as_main\n"}
+,{"stream_name":"stdout","time":65.507462127,"data":"  File \"\u003cfrozen runpy\u003e\", line 88, in _run_code\n"}
+,{"stream_name":"stdout","time":65.507466256,"data":"  File \"/tmp/v21-hp27i9ts/leanrea/dualamp-lite/dualamp_lite/__main__.py\", line 4, in \u003cmodule\u003e\n"}
+,{"stream_name":"stdout","time":65.507470632,"data":"    raise SystemExit(main())\n"}
+,{"stream_name":"stdout","time":65.507474504,"data":"                     ~~~~^^\n"}
+,{"stream_name":"stdout","time":65.507478476,"data":"  File \"/tmp/v21-hp27i9ts/leanrea/dualamp-lite/dualamp_lite/cli.py\", line 354, in main\n"}
+,{"stream_name":"stdout","time":65.507482681,"data":"    return args.func(args)\n"}
+,{"stream_name":"stdout","time":65.507486556,"data":"           ~~~~~~~~~^^^^^^\n"}
+,{"stream_name":"stdout","time":65.507490428,"data":"  File \"/tmp/v21-hp27i9ts/leanrea/dualamp-lite/dualamp_lite/cli.py\", line 150, in cmd_features\n"}
+,{"stream_name":"stdout","time":65.507494611,"data":"    meta = extract_all(_feature_cfg(args), paths, force=args.force, logger=logger)\n"}
+,{"stream_name":"stdout","time":65.507498665,"data":"  File \"/tmp/v21-hp27i9ts/leanrea/dualamp-lite/dualamp_lite/features.py\", line 267, in extract_all\n"}
+,{"stream_name":"stdout","time":65.507502863,"data":"    split: biophys.compute_features(df[\"seq\"].tolist(), logger=logger)\n"}
+,{"stream_name":"stdout","time":65.507507117,"data":"           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stdout","time":65.507511108,"data":"  File \"/tmp/v21-hp27i9ts/leanrea/dualamp-lite/dualamp_lite/biophys.py\", line 257, in compute_features\n"}
+,{"stream_name":"stdout","time":65.507515328,"data":"    values = feature_dict(seq)\n"}
+,{"stream_name":"stdout","time":65.507519191,"data":"  File \"/tmp/v21-hp27i9ts/leanrea/dualamp-lite/dualamp_lite/biophys.py\", line 226, in feature_dict\n"}
+,{"stream_name":"stdout","time":65.507523356,"data":"    instab = instability_index(seq)\n"}
+,{"stream_name":"stdout","time":65.507527409,"data":"  File \"/tmp/v21-hp27i9ts/leanrea/dualamp-lite/dualamp_lite/biophys.py\", line 211, in instability_index\n"}
+,{"stream_name":"stdout","time":65.507531634,"data":"    raise ImportError(\n"}
+,{"stream_name":"stdout","time":65.507535533,"data":"        \"biopython is required for the instability index: pip install biopython\"\n"}
+,{"stream_name":"stdout","time":65.507539684,"data":"    ) from exc\n"}
+,{"stream_name":"stdout","time":65.507543559,"data":"ImportError: biopython is required for the instability index: pip install biopython\n"}
+,{"stream_name":"stdout","time":65.507547628,"data":"\n"}
+,{"stream_name":"stderr","time":65.508862046,"data":"{\n"}
+,{"stream_name":"stderr","time":65.508879658,"data":"  \"stage\": \"dualamp_v2_1_training\",\n"}
+,{"stream_name":"stderr","time":65.508885407,"data":"  \"dataset_version\": \"positive_core_v2_1_dramp\",\n"}
+,{"stream_name":"stderr","time":65.508905843,"data":"  \"rule_version\": \"auto_evidence_v2_2.0\",\n"}
+,{"stream_name":"stderr","time":65.508910101,"data":"  \"leanrea_commit\": \"f610dc00b1aec3ab948a5b77574af0e644259a13\",\n"}
+,{"stream_name":"stderr","time":65.508914223,"data":"  \"started_utc\": \"2026-11-24T09:46:59.526834+00:00\",\n"}
+,{"stream_name":"stderr","time":65.508918093,"data":"  \"training_started\": true,\n"}
+,{"stream_name":"stderr","time":65.508922186,"data":"  \"upload_session_present\": false,\n"}
+,{"stream_name":"stderr","time":65.50893352,"data":"  \"cohort\": {\n"}
+,{"stream_name":"stderr","time":65.508938103,"data":"    \"positives\": 14577,\n"}
+,{"stream_name":"stderr","time":65.50894251,"data":"    \"composition_decoys\": 14572,\n"}
+,{"stream_name":"stderr","time":65.508946676,"data":"    \"positive_fasta_sha256\": \"9ca0d4076f6d61c16ad31b920afc9029ae463d3df3510049c9b6ac4366a8e40c\"\n"}
+,{"stream_name":"stderr","time":65.508950906,"data":"  },\n"}
+,{"stream_name":"stderr","time":65.508954741,"data":"  \"negatives\": {\n"}
+,{"stream_name":"stderr","time":65.508958797,"data":"    \"proteins_total\": 117172,\n"}
+,{"stream_name":"stderr","time":65.508962823,"data":"    \"keyword_excluded\": 18,\n"}
+,{"stream_name":"stderr","time":65.508966773,"data":"    \"fragments_raw\": 351462,\n"}
+,{"stream_name":"stderr","time":65.508970783,"data":"    \"fragments_standard_aa\": 351429,\n"}
+,{"stream_name":"stderr","time":65.508974813,"data":"    \"fragments_dedup\": 351119,\n"}
+,{"stream_name":"stderr","time":65.508978829,"data":"    \"fragments_hit_positive_4mer_gt08\": 5,\n"}
+,{"stream_name":"stderr","time":65.508982758,"data":"    \"negatives_final\": 2000,\n"}
+,{"stream_name":"stderr","time":65.508986843,"data":"    \"seed\": 11,\n"}
+,{"stream_name":"stderr","time":65.508990859,"data":"    \"cap\": 2000,\n"}
+,{"stream_name":"stderr","time":65.50899481,"data":"    \"neg_mode\": \"standard\",\n"}
+,{"stream_name":"stderr","time":65.508998829,"data":"    \"seconds\": 10.1\n"}
+,{"stream_name":"stderr","time":65.50900289,"data":"  },\n"}
+,{"stream_name":"stderr","time":65.50900711,"data":"  \"manifest_sha256\": \"e467078953ecc6e14da9cf33e9bdda2c22ffdf664c14faa54c0ab551185abdfa\",\n"}
+,{"stream_name":"stderr","time":65.50901188,"data":"  \"smoke_mode\": true,\n"}
+,{"stream_name":"stderr","time":65.509016183,"data":"  \"encoder_preflight\": {\n"}
+,{"stream_name":"stderr","time":65.509020543,"data":"    \"encoder\": \"fair-esm\",\n"}
+,{"stream_name":"stderr","time":65.509025021,"data":"    \"is_mock\": false,\n"}
+,{"stream_name":"stderr","time":65.509029445,"data":"    \"embed_dim\": 480,\n"}
+,{"stream_name":"stderr","time":65.509033705,"data":"    \"probe_shapes\": [\n"}
+,{"stream_name":"stderr","time":65.509041573,"data":"      [\n"}
+,{"stream_name":"stderr","time":65.509045841,"data":"        2,\n"}
+,{"stream_name":"stderr","time":65.509050044,"data":"        23,\n"}
+,{"stream_name":"stderr","time":65.509054308,"data":"        480\n"}
+,{"stream_name":"stderr","time":65.509058578,"data":"      ],\n"}
+,{"stream_name":"stderr","time":65.509062885,"data":"      [\n"}
+,{"stream_name":"stderr","time":65.509067087,"data":"        2,\n"}
+,{"stream_name":"stderr","time":65.509071297,"data":"        480\n"}
+,{"stream_name":"stderr","time":65.509075796,"data":"      ]\n"}
+,{"stream_name":"stderr","time":65.509079557,"data":"    ],\n"}
+,{"stream_name":"stderr","time":65.509083624,"data":"    \"finite\": true\n"}
+,{"stream_name":"stderr","time":65.509087656,"data":"  },\n"}
+,{"stream_name":"stderr","time":65.509091786,"data":"  \"steps\": {\n"}
+,{"stream_name":"stderr","time":65.509096196,"data":"    \"build\": {\n"}
+,{"stream_name":"stderr","time":65.509100488,"data":"      \"returncode\": 0,\n"}
+,{"stream_name":"stderr","time":65.509104889,"data":"      \"seconds\": 9.2\n"}
+,{"stream_name":"stderr","time":65.509109197,"data":"    },\n"}
+,{"stream_name":"stderr","time":65.509113103,"data":"    \"features\": {\n"}
+,{"stream_name":"stderr","time":65.509120917,"data":"      \"returncode\": 1,\n"}
+,{"stream_name":"stderr","time":65.509125278,"data":"      \"seconds\": 7.6\n"}
+,{"stream_name":"stderr","time":65.509129682,"data":"    }\n"}
+,{"stream_name":"stderr","time":65.509133784,"data":"  },\n"}
+,{"stream_name":"stderr","time":65.509137968,"data":"  \"status\": \"FAILED_NOT_COMPLETED\",\n"}
+,{"stream_name":"stderr","time":65.509142378,"data":"  \"error\": \"pipeline step failed (1): features --workdir /tmp/v21-hp27i9ts/work/run --backend\",\n"}
+,{"stream_name":"stderr","time":65.509148972,"data":"  \"traceback\": \"Traceback (most recent call last):\\n  File \\\"/tmp/_payload.py\\\", line 354, in main\\n    raise RuntimeError(\\n        f\\\"pipeline step failed ({proc.returncode}): {' '.join(cmd[3:7])}\\\")\\nRuntimeError: pipeline step failed (1): features --workdir /tmp/v21-hp27i9ts/work/run --backend\\n\",\n"}
+,{"stream_name":"stderr","time":65.509155146,"data":"  \"finished_utc\": \"2026-11-24T09:47:59.072576+00:00\"\n"}
+,{"stream_name":"stderr","time":65.509159852,"data":"}\n"}
+,{"stream_name":"stderr","time":65.767557563,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":65.768139383,"data":"  File \"/kaggle/src/script.py\", line 8, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":65.768148668,"data":"    runpy.run_path('/tmp/_payload.py', run_name='__main__')\n"}
+,{"stream_name":"stderr","time":65.768155673,"data":"    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":65.768162992,"data":"  File \"\u003cfrozen runpy\u003e\", line 294, in run_path\n"}
+,{"stream_name":"stderr","time":65.76816589,"data":"  File \"\u003cfrozen runpy\u003e\", line 98, in _run_module_code\n"}
+,{"stream_name":"stderr","time":65.768168487,"data":"  File \"\u003cfrozen runpy\u003e\", line 88, in _run_code\n"}
+,{"stream_name":"stderr","time":65.768170988,"data":"  File \"/tmp/_payload.py\", line 456, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":65.768173613,"data":"    sys.exit(main())\n"}
+,{"stream_name":"stderr","time":65.768175909,"data":"             ~~~~^^\n"}
+,{"stream_name":"stderr","time":65.76817834,"data":"  File \"/tmp/_payload.py\", line 354, in main\n"}
+,{"stream_name":"stderr","time":65.768180744,"data":"    raise RuntimeError(\n"}
+,{"stream_name":"stderr","time":65.768183197,"data":"        f\"pipeline step failed ({proc.returncode}): {' '.join(cmd[3:7])}\")\n"}
+,{"stream_name":"stderr","time":65.768185788,"data":"RuntimeError: pipeline step failed (1): features --workdir /tmp/v21-hp27i9ts/work/run --backend\n"}
+,{"stream_name":"stderr","time":68.270184501,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":68.270211215,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":68.568682924,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":68.568709152,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":69.427461693,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":70.604940981,"data":"[NbConvertApp] Writing 320732 bytes to __results__.html\n"}
 ]

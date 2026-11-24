@@ -3,7 +3,7 @@
   "dataset_version": "positive_core_v2_1_dramp",
   "rule_version": "auto_evidence_v2_2.0",
   "leanrea_commit": "f610dc00b1aec3ab948a5b77574af0e644259a13",
-  "started_utc": "2026-11-24T07:36:12.229732+00:00",
+  "started_utc": "2026-11-24T09:46:59.526834+00:00",
   "training_started": true,
   "upload_session_present": false,
   "cohort": {
@@ -17,17 +17,44 @@
     "fragments_raw": 351462,
     "fragments_standard_aa": 351429,
     "fragments_dedup": 351119,
-    "fragments_hit_positive_4mer_gt08": 31495,
-    "negatives_final": 20000,
+    "fragments_hit_positive_4mer_gt08": 5,
+    "negatives_final": 2000,
     "seed": 11,
-    "cap": 20000,
+    "cap": 2000,
     "neg_mode": "standard",
-    "seconds": 13.2
+    "seconds": 10.1
   },
-  "manifest_sha256": "add51c5952142c80148d67ff9c3a71236c6dadb3cd79930042601b97cc0a605e",
+  "manifest_sha256": "e467078953ecc6e14da9cf33e9bdda2c22ffdf664c14faa54c0ab551185abdfa",
   "smoke_mode": true,
+  "encoder_preflight": {
+    "encoder": "fair-esm",
+    "is_mock": false,
+    "embed_dim": 480,
+    "probe_shapes": [
+      [
+        2,
+        23,
+        480
+      ],
+      [
+        2,
+        480
+      ]
+    ],
+    "finite": true
+  },
+  "steps": {
+    "build": {
+      "returncode": 0,
+      "seconds": 9.2
+    },
+    "features": {
+      "returncode": 1,
+      "seconds": 7.6
+    }
+  },
   "status": "FAILED_NOT_COMPLETED",
-  "error": "Command '['/usr/bin/python3', '-m', 'dualamp_lite', 'features', '--workdir', '/tmp/v21-ssba1elc/work/run', '--backend', 'fair-esm', '--batch-size', '64']' returned non-zero exit status 1.",
-  "traceback": "Traceback (most recent call last):\n  File \"/tmp/_payload.py\", line 310, in main\n    subprocess.run(cmd, cwd=str(pkg), env=env, stdout=log,\n    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n                   stderr=subprocess.STDOUT, check=True)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.13/subprocess.py\", line 578, in run\n    raise CalledProcessError(retcode, process.args,\n                             output=stdout, stderr=stderr)\nsubprocess.CalledProcessError: Command '['/usr/bin/python3', '-m', 'dualamp_lite', 'features', '--workdir', '/tmp/v21-ssba1elc/work/run', '--backend', 'fair-esm', '--batch-size', '64']' returned non-zero exit status 1.\n",
-  "finished_utc": "2026-11-24T07:41:04.796580+00:00"
+  "error": "pipeline step failed (1): features --workdir /tmp/v21-hp27i9ts/work/run --backend",
+  "traceback": "Traceback (most recent call last):\n  File \"/tmp/_payload.py\", line 354, in main\n    raise RuntimeError(\n        f\"pipeline step failed ({proc.returncode}): {' '.join(cmd[3:7])}\")\nRuntimeError: pipeline step failed (1): features --workdir /tmp/v21-hp27i9ts/work/run --backend\n",
+  "finished_utc": "2026-11-24T09:47:59.072576+00:00"
 }

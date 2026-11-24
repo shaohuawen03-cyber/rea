@@ -1,0 +1,48 @@
+$ /usr/bin/python3 -m dualamp_lite build --manifest /tmp/v21-hp27i9ts/work/data/sources.yaml --workdir /tmp/v21-hp27i9ts/work/run --cluster-method auto
+[09:47:42] INFO    reading sources from /tmp/v21-hp27i9ts/work/data/sources.yaml
+[09:47:42] INFO      source dramp_v2_1_positives   layer=bacterial_amp        kept=  400 (from 400 rows)
+[09:47:42] INFO      source uniprot_a_fragments    layer=negative_background  kept= 2000 (from 2000 rows)
+[09:47:42] INFO      source composition_decoys_v2_1 layer=scrambled            kept=  400 (from 400 rows)
+[09:47:42] INFO    after length/alphabet filtering: 2800 records
+[09:47:45] INFO      dedup: 2800 records -> 2800 unique sequences
+[09:47:46] INFO      scrambled challenge set: +400 sequences
+[09:47:46] WARNING   CD-HIT / MMseqs2 not found - using the built-in k-mer clustering fallback. Record this in the methods section (plan §5 requires naming the tool and params).
+[09:47:50] INFO    clustering: kmer_fallback(k=3) at identity 0.40 / coverage 0.80 -> 1558 clusters
+[09:47:50] WARNING   156 homology clusters contain both labels - assigned to 'review' (never trained on)
+[09:47:51] INFO      split sizes: {'train': 1351, 'scrambled': 800, 'review': 469, 'val': 290, 'test': 290}
+[09:47:51] INFO    dataset written: 3200 sequences, 1558 clusters, test=290 (pos=26) - see /tmp/v21-hp27i9ts/work/run/dataset/dataset_all.csv
+[09:47:51] INFO    step1 build_dataset finished in 8.5s
+sequences=3200 clusters=1558 test=290
+$ /usr/bin/python3 -m dualamp_lite features --workdir /tmp/v21-hp27i9ts/work/run --backend fair-esm --batch-size 64
+[09:47:53] INFO    device: cuda
+[09:47:55] INFO    step2 extract_features finished in 3.5s
+Traceback (most recent call last):
+  File "/tmp/v21-hp27i9ts/leanrea/dualamp-lite/dualamp_lite/biophys.py", line 209, in instability_index
+    from Bio.SeqUtils.ProtParam import ProteinAnalysis
+ModuleNotFoundError: No module named 'Bio'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 203, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/tmp/v21-hp27i9ts/leanrea/dualamp-lite/dualamp_lite/__main__.py", line 4, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/tmp/v21-hp27i9ts/leanrea/dualamp-lite/dualamp_lite/cli.py", line 354, in main
+    return args.func(args)
+           ~~~~~~~~~^^^^^^
+  File "/tmp/v21-hp27i9ts/leanrea/dualamp-lite/dualamp_lite/cli.py", line 150, in cmd_features
+    meta = extract_all(_feature_cfg(args), paths, force=args.force, logger=logger)
+  File "/tmp/v21-hp27i9ts/leanrea/dualamp-lite/dualamp_lite/features.py", line 267, in extract_all
+    split: biophys.compute_features(df["seq"].tolist(), logger=logger)
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/v21-hp27i9ts/leanrea/dualamp-lite/dualamp_lite/biophys.py", line 257, in compute_features
+    values = feature_dict(seq)
+  File "/tmp/v21-hp27i9ts/leanrea/dualamp-lite/dualamp_lite/biophys.py", line 226, in feature_dict
+    instab = instability_index(seq)
+  File "/tmp/v21-hp27i9ts/leanrea/dualamp-lite/dualamp_lite/biophys.py", line 211, in instability_index
+    raise ImportError(
+        "biopython is required for the instability index: pip install biopython"
+    ) from exc
+ImportError: biopython is required for the instability index: pip install biopython

@@ -1,12 +1,6 @@
 {
   "job_id": "dualamp-v2-1-smoke-20261124",
-  "provider": "kaggle",
-  "mode": "run",
-  "accelerator": "NvidiaTeslaT4",
-  "kernel_ref": "shaohuawen/dualamp-v2-1-smoke-20261124",
-  "kernel_url": "https://www.kaggle.com/code/shaohuawen/dualamp-v2-1-smoke-20261124",
-  "status": "poll_timeout",
-  "copied_files": [],
-  "push_output": "Kernel version 6 successfully pushed.  Please check progress at https://www.kaggle.com/code/shaohuawen/dualamp-v2-1-smoke-20261124",
-  "updated_at_utc": "2026-11-24T09:43:33Z"
+  "status": "failed",
+  "error": "Kaggle kernel shaohuawen/dualamp-v2-1-smoke-20261124 ended with error; inspect logs in /tmp/private-gpu-runs/dualamp-v2-1-smoke-20261124.",
+  "timestamp_utc": "2026-11-24T09:48:12Z"
 }
