@@ -706,7 +706,7 @@
       "serve_minutes": 15.0,
       "wait": true,
       "timeout_sec": 7200,
-      "status": "pending",
+      "status": "poll_timeout",
       "created_at_utc": "2026-11-24T07:23:46Z",
       "kernel_slug": "dualamp-v2-1-smoke-20261124",
       "env": {
@@ -715,7 +715,8 @@
       "note": "Smoke (400/400/2000, 1 seed x 2 folds x 2 epochs). Adds biopython (features stage needed it: instability index) plus the plotting stack.",
       "inline_json": {
         "V21_INPUTS_JSON": "cloud-gpu/jobs/v21_inputs.json"
-      }
+      },
+      "finished_at_utc": "2026-11-24T11:50:15Z"
     }
   ]
 }
