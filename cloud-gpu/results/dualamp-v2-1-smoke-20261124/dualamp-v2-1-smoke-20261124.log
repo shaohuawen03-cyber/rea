@@ -1,32 +1,59 @@
-[{"stream_name":"stderr","time":7.27317351,"data":"{\n"}
-,{"stream_name":"stderr","time":7.273229889,"data":"  \"stage\": \"dualamp_v2_1_training\",\n"}
-,{"stream_name":"stderr","time":7.273235984,"data":"  \"dataset_version\": \"positive_core_v2_1_dramp\",\n"}
-,{"stream_name":"stderr","time":7.273239384,"data":"  \"rule_version\": \"auto_evidence_v2_2.0\",\n"}
-,{"stream_name":"stderr","time":7.27324233,"data":"  \"leanrea_commit\": \"f610dc00b1aec3ab948a5b77574af0e644259a13\",\n"}
-,{"stream_name":"stderr","time":7.273245208,"data":"  \"started_utc\": \"2026-11-24T07:33:39.593400+00:00\",\n"}
-,{"stream_name":"stderr","time":7.273248111,"data":"  \"training_started\": false,\n"}
-,{"stream_name":"stderr","time":7.27325125,"data":"  \"status\": \"FAILED_NOT_COMPLETED\",\n"}
-,{"stream_name":"stderr","time":7.27327941,"data":"  \"error\": \"no private v2.1 bundle id (env or v21_inputs.json)\",\n"}
-,{"stream_name":"stderr","time":7.27328255,"data":"  \"traceback\": \"Traceback (most recent call last):\\n  File \\\"/tmp/_payload.py\\\", line 180, in main\\n    raise RuntimeError(\\\"no private v2.1 bundle id (env or v21_inputs.json)\\\")\\nRuntimeError: no private v2.1 bundle id (env or v21_inputs.json)\\n\",\n"}
-,{"stream_name":"stderr","time":7.273288239,"data":"  \"finished_utc\": \"2026-11-24T07:33:39.594377+00:00\"\n"}
-,{"stream_name":"stderr","time":7.273295927,"data":"}\n"}
-,{"stream_name":"stderr","time":7.273928683,"data":"Traceback (most recent call last):\n"}
-,{"stream_name":"stderr","time":7.274664008,"data":"  File \"/kaggle/src/script.py\", line 8, in \u003cmodule\u003e\n"}
-,{"stream_name":"stderr","time":7.274728435,"data":"    runpy.run_path('/tmp/_payload.py', run_name='__main__')\n"}
-,{"stream_name":"stderr","time":7.274735717,"data":"    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
-,{"stream_name":"stderr","time":7.274740919,"data":"  File \"\u003cfrozen runpy\u003e\", line 294, in run_path\n"}
-,{"stream_name":"stderr","time":7.27474637,"data":"  File \"\u003cfrozen runpy\u003e\", line 98, in _run_module_code\n"}
-,{"stream_name":"stderr","time":7.274750774,"data":"  File \"\u003cfrozen runpy\u003e\", line 88, in _run_code\n"}
-,{"stream_name":"stderr","time":7.274755457,"data":"  File \"/tmp/_payload.py\", line 402, in \u003cmodule\u003e\n"}
-,{"stream_name":"stderr","time":7.274759939,"data":"    sys.exit(main())\n"}
-,{"stream_name":"stderr","time":7.274764043,"data":"             ~~~~^^\n"}
-,{"stream_name":"stderr","time":7.274768026,"data":"  File \"/tmp/_payload.py\", line 180, in main\n"}
-,{"stream_name":"stderr","time":7.274774466,"data":"    raise RuntimeError(\"no private v2.1 bundle id (env or v21_inputs.json)\")\n"}
-,{"stream_name":"stderr","time":7.274784225,"data":"RuntimeError: no private v2.1 bundle id (env or v21_inputs.json)\n"}
-,{"stream_name":"stderr","time":10.294000919,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
-,{"stream_name":"stderr","time":10.294045925,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
-,{"stream_name":"stderr","time":10.698786392,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
-,{"stream_name":"stderr","time":10.698834226,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
-,{"stream_name":"stderr","time":12.009345988,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
-,{"stream_name":"stderr","time":13.463326121,"data":"[NbConvertApp] Writing 314017 bytes to __results__.html\n"}
+[{"stream_name":"stderr","time":298.823624868,"data":"{\n"}
+,{"stream_name":"stderr","time":298.823667524,"data":"  \"stage\": \"dualamp_v2_1_training\",\n"}
+,{"stream_name":"stderr","time":298.823672473,"data":"  \"dataset_version\": \"positive_core_v2_1_dramp\",\n"}
+,{"stream_name":"stderr","time":298.823675959,"data":"  \"rule_version\": \"auto_evidence_v2_2.0\",\n"}
+,{"stream_name":"stderr","time":298.823679036,"data":"  \"leanrea_commit\": \"f610dc00b1aec3ab948a5b77574af0e644259a13\",\n"}
+,{"stream_name":"stderr","time":298.823682293,"data":"  \"started_utc\": \"2026-11-24T07:36:12.229732+00:00\",\n"}
+,{"stream_name":"stderr","time":298.823685381,"data":"  \"training_started\": true,\n"}
+,{"stream_name":"stderr","time":298.823688426,"data":"  \"upload_session_present\": false,\n"}
+,{"stream_name":"stderr","time":298.823691627,"data":"  \"cohort\": {\n"}
+,{"stream_name":"stderr","time":298.823694682,"data":"    \"positives\": 14577,\n"}
+,{"stream_name":"stderr","time":298.823697743,"data":"    \"composition_decoys\": 14572,\n"}
+,{"stream_name":"stderr","time":298.823700867,"data":"    \"positive_fasta_sha256\": \"9ca0d4076f6d61c16ad31b920afc9029ae463d3df3510049c9b6ac4366a8e40c\"\n"}
+,{"stream_name":"stderr","time":298.823704272,"data":"  },\n"}
+,{"stream_name":"stderr","time":298.82370719,"data":"  \"negatives\": {\n"}
+,{"stream_name":"stderr","time":298.823710122,"data":"    \"proteins_total\": 117172,\n"}
+,{"stream_name":"stderr","time":298.823713143,"data":"    \"keyword_excluded\": 18,\n"}
+,{"stream_name":"stderr","time":298.823716156,"data":"    \"fragments_raw\": 351462,\n"}
+,{"stream_name":"stderr","time":298.823719205,"data":"    \"fragments_standard_aa\": 351429,\n"}
+,{"stream_name":"stderr","time":298.823722605,"data":"    \"fragments_dedup\": 351119,\n"}
+,{"stream_name":"stderr","time":298.823725613,"data":"    \"fragments_hit_positive_4mer_gt08\": 31495,\n"}
+,{"stream_name":"stderr","time":298.82372867,"data":"    \"negatives_final\": 20000,\n"}
+,{"stream_name":"stderr","time":298.823732898,"data":"    \"seed\": 11,\n"}
+,{"stream_name":"stderr","time":298.823738124,"data":"    \"cap\": 20000,\n"}
+,{"stream_name":"stderr","time":298.823741324,"data":"    \"neg_mode\": \"standard\",\n"}
+,{"stream_name":"stderr","time":298.82374432,"data":"    \"seconds\": 13.2\n"}
+,{"stream_name":"stderr","time":298.823747293,"data":"  },\n"}
+,{"stream_name":"stderr","time":298.823782455,"data":"  \"manifest_sha256\": \"add51c5952142c80148d67ff9c3a71236c6dadb3cd79930042601b97cc0a605e\",\n"}
+,{"stream_name":"stderr","time":298.823788113,"data":"  \"smoke_mode\": true,\n"}
+,{"stream_name":"stderr","time":298.823792496,"data":"  \"status\": \"FAILED_NOT_COMPLETED\",\n"}
+,{"stream_name":"stderr","time":298.823797481,"data":"  \"error\": \"Command '['/usr/bin/python3', '-m', 'dualamp_lite', 'features', '--workdir', '/tmp/v21-ssba1elc/work/run', '--backend', 'fair-esm', '--batch-size', '64']' returned non-zero exit status 1.\",\n"}
+,{"stream_name":"stderr","time":298.823807023,"data":"  \"traceback\": \"Traceback (most recent call last):\\n  File \\\"/tmp/_payload.py\\\", line 310, in main\\n    subprocess.run(cmd, cwd=str(pkg), env=env, stdout=log,\\n    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n                   stderr=subprocess.STDOUT, check=True)\\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\\"/usr/lib/python3.13/subprocess.py\\\", line 578, in run\\n    raise CalledProcessError(retcode, process.args,\\n                             output=stdout, stderr=stderr)\\nsubprocess.CalledProcessError: Command '['/usr/bin/python3', '-m', 'dualamp_lite', 'features', '--workdir', '/tmp/v21-ssba1elc/work/run', '--backend', 'fair-esm', '--batch-size', '64']' returned non-zero exit status 1.\\n\",\n"}
+,{"stream_name":"stderr","time":298.823824965,"data":"  \"finished_utc\": \"2026-11-24T07:41:04.796580+00:00\"\n"}
+,{"stream_name":"stderr","time":298.823828725,"data":"}\n"}
+,{"stream_name":"stderr","time":299.082522085,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":299.083343281,"data":"  File \"/kaggle/src/script.py\", line 8, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":299.083365209,"data":"    runpy.run_path('/tmp/_payload.py', run_name='__main__')\n"}
+,{"stream_name":"stderr","time":299.083370491,"data":"    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":299.083375234,"data":"  File \"\u003cfrozen runpy\u003e\", line 294, in run_path\n"}
+,{"stream_name":"stderr","time":299.083380461,"data":"  File \"\u003cfrozen runpy\u003e\", line 98, in _run_module_code\n"}
+,{"stream_name":"stderr","time":299.083385158,"data":"  File \"\u003cfrozen runpy\u003e\", line 88, in _run_code\n"}
+,{"stream_name":"stderr","time":299.083389856,"data":"  File \"/tmp/_payload.py\", line 413, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":299.083395035,"data":"    sys.exit(main())\n"}
+,{"stream_name":"stderr","time":299.083400239,"data":"             ~~~~^^\n"}
+,{"stream_name":"stderr","time":299.083404724,"data":"  File \"/tmp/_payload.py\", line 310, in main\n"}
+,{"stream_name":"stderr","time":299.083409752,"data":"    subprocess.run(cmd, cwd=str(pkg), env=env, stdout=log,\n"}
+,{"stream_name":"stderr","time":299.083414302,"data":"    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":299.083419269,"data":"                   stderr=subprocess.STDOUT, check=True)\n"}
+,{"stream_name":"stderr","time":299.083424332,"data":"                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":299.083429448,"data":"  File \"/usr/lib/python3.13/subprocess.py\", line 578, in run\n"}
+,{"stream_name":"stderr","time":299.083434457,"data":"    raise CalledProcessError(retcode, process.args,\n"}
+,{"stream_name":"stderr","time":299.083439567,"data":"                             output=stdout, stderr=stderr)\n"}
+,{"stream_name":"stderr","time":299.083444744,"data":"subprocess.CalledProcessError: Command '['/usr/bin/python3', '-m', 'dualamp_lite', 'features', '--workdir', '/tmp/v21-ssba1elc/work/run', '--backend', 'fair-esm', '--batch-size', '64']' returned non-zero exit status 1.\n"}
+,{"stream_name":"stderr","time":301.699516044,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":301.699553995,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":302.007598139,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":302.00762494,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":302.970644672,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":304.160917005,"data":"[NbConvertApp] Writing 316131 bytes to __results__.html\n"}
 ]

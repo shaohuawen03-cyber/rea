@@ -2,5 +2,5 @@
   "job_id": "dualamp-v2-1-smoke-20261124",
   "status": "failed",
   "error": "Kaggle kernel shaohuawen/dualamp-v2-1-smoke-20261124 ended with error; inspect logs in /tmp/private-gpu-runs/dualamp-v2-1-smoke-20261124.",
-  "timestamp_utc": "2026-11-24T07:34:10Z"
+  "timestamp_utc": "2026-11-24T07:41:25Z"
 }

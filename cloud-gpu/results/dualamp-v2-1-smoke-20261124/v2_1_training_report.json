@@ -3,10 +3,31 @@
   "dataset_version": "positive_core_v2_1_dramp",
   "rule_version": "auto_evidence_v2_2.0",
   "leanrea_commit": "f610dc00b1aec3ab948a5b77574af0e644259a13",
-  "started_utc": "2026-11-24T07:33:39.593400+00:00",
-  "training_started": false,
+  "started_utc": "2026-11-24T07:36:12.229732+00:00",
+  "training_started": true,
+  "upload_session_present": false,
+  "cohort": {
+    "positives": 14577,
+    "composition_decoys": 14572,
+    "positive_fasta_sha256": "9ca0d4076f6d61c16ad31b920afc9029ae463d3df3510049c9b6ac4366a8e40c"
+  },
+  "negatives": {
+    "proteins_total": 117172,
+    "keyword_excluded": 18,
+    "fragments_raw": 351462,
+    "fragments_standard_aa": 351429,
+    "fragments_dedup": 351119,
+    "fragments_hit_positive_4mer_gt08": 31495,
+    "negatives_final": 20000,
+    "seed": 11,
+    "cap": 20000,
+    "neg_mode": "standard",
+    "seconds": 13.2
+  },
+  "manifest_sha256": "add51c5952142c80148d67ff9c3a71236c6dadb3cd79930042601b97cc0a605e",
+  "smoke_mode": true,
   "status": "FAILED_NOT_COMPLETED",
-  "error": "no private v2.1 bundle id (env or v21_inputs.json)",
-  "traceback": "Traceback (most recent call last):\n  File \"/tmp/_payload.py\", line 180, in main\n    raise RuntimeError(\"no private v2.1 bundle id (env or v21_inputs.json)\")\nRuntimeError: no private v2.1 bundle id (env or v21_inputs.json)\n",
-  "finished_utc": "2026-11-24T07:33:39.594377+00:00"
+  "error": "Command '['/usr/bin/python3', '-m', 'dualamp_lite', 'features', '--workdir', '/tmp/v21-ssba1elc/work/run', '--backend', 'fair-esm', '--batch-size', '64']' returned non-zero exit status 1.",
+  "traceback": "Traceback (most recent call last):\n  File \"/tmp/_payload.py\", line 310, in main\n    subprocess.run(cmd, cwd=str(pkg), env=env, stdout=log,\n    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n                   stderr=subprocess.STDOUT, check=True)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.13/subprocess.py\", line 578, in run\n    raise CalledProcessError(retcode, process.args,\n                             output=stdout, stderr=stderr)\nsubprocess.CalledProcessError: Command '['/usr/bin/python3', '-m', 'dualamp_lite', 'features', '--workdir', '/tmp/v21-ssba1elc/work/run', '--backend', 'fair-esm', '--batch-size', '64']' returned non-zero exit status 1.\n",
+  "finished_utc": "2026-11-24T07:41:04.796580+00:00"
 }
