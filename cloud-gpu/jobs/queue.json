@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-24T13:16:19Z",
+  "updated_at_utc": "2026-11-24T13:20:22Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -1005,6 +1005,48 @@
       "created_at_utc": "2026-11-24T13:16:19Z",
       "note": "r3 output fetch after ~20 min.",
       "finished_at_utc": "2026-11-24T13:16:52Z"
+    },
+    {
+      "id": "dualamp-v2-1-smoke-cpu-r4-20261124",
+      "provider": "kaggle",
+      "mode": "run",
+      "accelerator": "CPU",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
+      "script_args": [],
+      "extra_pip": [
+        "gdown",
+        "requests",
+        "fair-esm",
+        "pyyaml",
+        "biopython",
+        "pandas",
+        "scikit-learn",
+        "matplotlib"
+      ],
+      "serve_minutes": 15.0,
+      "wait": false,
+      "timeout_sec": 5400,
+      "status": "pending",
+      "created_at_utc": "2026-11-24T13:20:22Z",
+      "kernel_slug": "dualamp-v2-1-smoke-cpu-r4-20261124",
+      "env": {
+        "V21_SMOKE": "1"
+      },
+      "inline_json": {
+        "V21_INPUTS_JSON": "cloud-gpu/jobs/v21_inputs.json"
+      },
+      "note": "CPU smoke r4: r3 completed the four CLI steps but the CLI has no `evaluation` subcommand, so calibration/challenge tables were never produced. Now drives the V4 evaluation stage directly."
+    },
+    {
+      "id": "dualamp-v2-1-smoke-cpu-r4-fetch-20261124",
+      "provider": "kaggle",
+      "mode": "output",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
+      "kernel_slug": "dualamp-v2-1-smoke-cpu-r4-20261124",
+      "status": "pending",
+      "wait": false,
+      "created_at_utc": "2026-11-24T13:20:22Z",
+      "note": "Fetch the r4 smoke report."
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"

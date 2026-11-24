@@ -332,6 +332,28 @@ def main() -> int:
              "--epochs", epochs, "--loss", "bce"],
             [sys.executable, "-m", "dualamp_lite", "report", "--workdir", str(wd / "run")],
         ]
+        # `train` alone only writes the test metrics. Calibration (Brier/ECE/Platt), the
+        # challenge-set table and the subgroup tables live in the V4 `evaluation` stage,
+        # which the CLI has no subcommand for. Drive it directly on the existing run id;
+        # without it the calibration and composition fields are empty (both early smokes).
+        eval_payload = {
+            "workdir": str(wd / "run"),
+            "code": (
+                "import json, sys\n"
+                "sys.path.insert(0, '.')\n"
+                "from pathlib import Path\n"
+                "from dualamp_lite.v4.config import Paths, load_config\n"
+                "from dualamp_lite.v4.pipeline import build_context, run_stage\n"
+                f"root = Path({str(wd / 'run')!r})\n"
+                "run_id = (root / 'latest_run.txt').read_text().strip()\n"
+                "cfg = load_config(root / 'configs' / f'resolved_{run_id}.yaml', workdir=root)\n"
+                "ctx = build_context(cfg, Paths(root), run_id=run_id)\n"
+                "print(json.dumps({'run_id': run_id, 'evaluation': run_stage(ctx, 'evaluation')}, default=str)[:2000])\n"
+            ),
+        }
+        (tmp / "run_evaluation_stage.py").write_text(eval_payload["code"], encoding="utf-8")
+        steps.insert(3, [sys.executable, str(tmp / "run_evaluation_stage.py")])
+        report["evaluation_stage"] = "driven via dualamp_lite.v4.pipeline.run_stage('evaluation')"
         # Preflight the encoder: a missing/broken fair-esm must fail here with a clear
         # message instead of surfacing as "features exit 1" 20 minutes later.
         preflight = {}
