@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-24T13:20:22Z",
+  "updated_at_utc": "2026-11-24T13:32:10Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -1049,6 +1049,30 @@
       "created_at_utc": "2026-11-24T13:20:22Z",
       "note": "Fetch the r4 smoke report.",
       "finished_at_utc": "2026-11-24T13:21:01Z"
+    },
+    {
+      "id": "dualamp-v2-1-smoke-cpu-r4-status-y1-20261124",
+      "provider": "kaggle",
+      "mode": "status",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
+      "kernel_slug": "dualamp-v2-1-smoke-cpu-r4-20261124",
+      "status": "completed",
+      "wait": false,
+      "created_at_utc": "2026-11-24T13:32:10Z",
+      "note": "r4 status after ~12 min.",
+      "finished_at_utc": "2026-11-24T13:32:42Z"
+    },
+    {
+      "id": "dualamp-v2-1-smoke-cpu-r4-fetch-y1-20261124",
+      "provider": "kaggle",
+      "mode": "output",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
+      "kernel_slug": "dualamp-v2-1-smoke-cpu-r4-20261124",
+      "status": "completed",
+      "wait": false,
+      "created_at_utc": "2026-11-24T13:32:10Z",
+      "note": "r4 output fetch after ~12 min.",
+      "finished_at_utc": "2026-11-24T13:32:43Z"
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"

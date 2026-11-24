@@ -1056,10 +1056,11 @@
       "mode": "status",
       "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
       "kernel_slug": "dualamp-v2-1-smoke-cpu-r4-20261124",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-24T13:32:10Z",
-      "note": "r4 status after ~12 min."
+      "note": "r4 status after ~12 min.",
+      "finished_at_utc": "2026-11-24T13:32:42Z"
     },
     {
       "id": "dualamp-v2-1-smoke-cpu-r4-fetch-y1-20261124",
@@ -1067,10 +1068,11 @@
       "mode": "output",
       "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
       "kernel_slug": "dualamp-v2-1-smoke-cpu-r4-20261124",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-24T13:32:10Z",
-      "note": "r4 output fetch after ~12 min."
+      "note": "r4 output fetch after ~12 min.",
+      "finished_at_utc": "2026-11-24T13:32:43Z"
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
