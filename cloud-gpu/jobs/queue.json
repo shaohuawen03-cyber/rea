@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-24T07:04:31Z",
+  "updated_at_utc": "2026-11-24T07:08:24Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -646,11 +646,10 @@
       "serve_minutes": 15.0,
       "wait": true,
       "timeout_sec": 3600,
-      "status": "completed",
+      "status": "pending",
       "created_at_utc": "2026-11-24T06:59:08Z",
       "kernel_slug": "dualamp-v2-1-build-20261124",
-      "note": "CPU job: rebuild the strict positive set from DRAMP 3.0 + APD3 curated records (sequence+MIC+bacterial target+reference), dedupe, add composition-preserving decoys, upload the private bundle. No GPU.",
-      "redispatch_note": "re-queued: the previous push was skipped by the envelope gate",
+      "note": "CPU job: rebuild the strict positive set from DRAMP 3.0 TSV dumps (downloads/download_data/DRAMP3.0_new/...): sequence + MIC-like activity + PubMed ID + target attribution, dedupe, 1:1 composition decoys, private bundle upload.",
       "finished_at_utc": "2026-11-24T07:03:29Z"
     },
     {

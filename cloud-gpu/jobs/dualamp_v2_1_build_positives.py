@@ -1,31 +1,29 @@
 #!/usr/bin/env python3
-"""Build the v2.1 strict positive set from curated, experimentally annotated AMP records.
+"""Build the v2.1 strict positive set from DRAMP 3.0 curated records (CPU only).
 
 Why this replaces the 16-positive set: v2's positives came only from full-text
-verification of one candidate list, which capped the cohort at 16 and made every
-metric unstable (test n=2) and composition-driven (scrambled decoys were accepted).
-Curated databases carry the same evidence the rule asks for — a sequence, a named
-bacterial target, a measured activity (MIC) and a primary reference — at cohort scale.
+verification of one candidate list, which capped the cohort at 16 and left every
+metric unstable (test n=2) and composition-driven (composition-identical decoys were
+accepted as positives).
 
-Sources (verified reachable from inside a Kaggle kernel):
-  * DRAMP 3.0 `Antibacterial_amps.txt` (sequence + MIC + target + references)
-  * DRAMP 3.0 `Anti-Gram-positive_amps.txt` / `Anti-Gram-_amps.txt`
-  * APD3 per-kingdom FASTA (sequence-level curation only, used as a variant pool)
+DRAMP 3.0 publishes tab-separated record dumps with the evidence the rule needs:
+`DRAMP_ID | Sequence | Name | Source | Activity | Pubmed_ID | Dataset | Length`.
+Reachable from inside a Kaggle kernel at
+``https://dramp.cpu-bioinfor.org/downloads/download_data/DRAMP3.0_new/<file>``.
 
-Rules (`auto_evidence_v2_1.1`, stricter than v2.0):
-  1. sequence must be standard amino acids and 5-50 aa;
-  2. record must name at least one bacterial target and carry a numeric activity value
-     with a mic-like unit (ug/ml, mg/l, uM ...); records with only "not determined" are
-     dropped, never treated as negatives;
-  3. duplicates collapse by exact sequence; every kept sequence keeps its source record
-     ids and references so a row can be audited back;
-  4. a reference is required (DOI/PMID or a title) — records without one are dropped;
-  5. output is split into public-count-only report + private row files: sequences never
-     leave the private bundle.
+Rule `auto_evidence_v2_1.1` (stricter than v2.0):
+  1. standard amino acids, length 5-50;
+  2. Activity must carry a numeric MIC-like value with a concentration unit
+     (ug/ml, mg/l, uM ...); "not determined" rows are dropped, never used as negatives;
+  3. a numeric PubMed ID must be present (auditable primary reference);
+  4. target organism is taken from the Activity string when a species is named,
+     otherwise from the DRAMP dataset the record came from (Gram-positive /
+     Gram-negative / antibacterial). The attribution used is recorded per row;
+  5. exact-sequence dedupe, provenance merged; composition-preserving shuffles are
+     generated 1:1 as hard negatives.
 
-Usage:
-    python cloud-gpu/jobs/dualamp_v2_1_build_positives.py \
-        --workdir /tmp/v21 --out /kaggle/working
+All row-level material (sequences, ledger) stays inside the private bundle that is
+uploaded to Drive; the public report carries counts and SHA-256 only.
 """
 from __future__ import annotations
 
@@ -33,9 +31,9 @@ import argparse
 import csv
 import datetime as dt
 import hashlib
-import io
 import json
 import os
+import random
 import re
 import sys
 import traceback
@@ -43,64 +41,43 @@ import urllib.error
 import urllib.request
 import zipfile
 
-UA = {"User-Agent": "Mozilla/5.0 (compatible; rea-v21-build/1.0)"}
-DRAMP = "https://dramp.cpu-bioinfor.org/download.php?filename=download_data/DRAMP3.0_new/{}"
-APD3 = "https://aps.unmc.edu/assets/sequences/{}"
+UA = {"User-Agent": "Mozilla/5.0 (compatible; rea-v21-build/1.0)",
+      "Referer": "https://dramp.cpu-bioinfor.org/downloads/"}
+DRAMP_BASE = "https://dramp.cpu-bioinfor.org/downloads/download_data/DRAMP3.0_new/{}"
+APD3_BASE = "https://aps.unmc.edu/assets/sequences/{}"
 AA = set("ACDEFGHIKLMNPQRSTVWY")
-MIC_UNITS = re.compile(r"(?i)(\u00b5g|ug|μg|mg|nm|µm|um|micromol|nmol)\s*/?\s*(ml|l)\b")
-BACTERIA = re.compile(
-    r"(?i)(escherichia|staphylococc|pseudomonas|bacillus|klebsiella|acinetobacter|enterococc|"
-    r"salmonella|listeria|streptococc|clostridi|mycobacter|helicobacter|campylobacter|"
-    r"serratia|proteus|shigella|vibrio|enterobacter|gram-?positive|gram-?negative|bacteria)"
-)
 NUMERIC = re.compile(r"(\d+(?:[.,]\d+)?)")
+CONC_UNIT = re.compile(r"(?i)(?:µg|μg|ug|mg|nm|µm|um|nM|mM|micromol|nmol)\s*/\s*(?:ml|l)\b")
+SPECIES = re.compile(
+    r"(?i)\b(escherichia|staphylococc\w*|pseudomonas|bacillus|klebsiella|acinetobacter|"
+    r"enterococc\w*|salmonella|listeria|streptococc\w*|clostridi\w*|mycobacter\w*|"
+    r"helicobacter|campylobacter|serratia|proteus|shigella|vibrio|enterobacter)\w*"
+)
+DATASET_TARGET = {
+    "Anti-Gram-positive": "Gram-positive bacteria (DRAMP dataset attribution)",
+    "Anti-Gram-": "Gram-negative bacteria (DRAMP dataset attribution)",
+    "Antibacterial": "bacteria (DRAMP antibacterial dataset attribution)",
+}
 
 
-def fetch(url: str, timeout: int = 120) -> bytes:
+def fetch(url: str, timeout: int = 180) -> bytes:
     req = urllib.request.Request(url, headers=UA)
     with urllib.request.urlopen(req, timeout=timeout) as resp:
         return resp.read()
 
 
-def sha256_bytes(blob: bytes) -> str:
+def sha256(blob: bytes) -> str:
     return hashlib.sha256(blob).hexdigest()
 
 
-def parse_dramp_txt(text: str) -> list[dict]:
-    """DRAMP txt is one record per block of `Key: value` lines, blank-line separated."""
-    records: list[dict] = []
-    current: dict[str, str] = {}
-    last_key = ""
-    for raw_line in text.splitlines():
-        line = raw_line.strip("\ufeff").rstrip()
-        if not line.strip():
-            if current:
-                records.append(current)
-                current, last_key = {}, ""
-            continue
-        match = re.match(r"^([A-Za-z][A-Za-z0-9 _/()\-]{1,40}):\s*(.*)$", line)
-        if match and not line.startswith((" ", "\t")):
-            key, value = match.group(1).strip().lower(), match.group(2).strip()
-            current[key] = value
-            last_key = key
-        elif last_key:
-            current[last_key] = (current[last_key] + " " + line.strip()).strip()
-    if current:
-        records.append(current)
-    return records
+def parse_tsv(text: str) -> tuple[list[str], list[dict]]:
+    reader = csv.DictReader(text.splitlines(), delimiter="\t")
+    rows = list(reader)
+    return (reader.fieldnames or []), rows
 
 
-def pick(record: dict, *names: str) -> str:
-    for name in names:
-        value = record.get(name.lower())
-        if value:
-            return value.strip()
-    return ""
-
-
-def clean_sequence(value: str) -> str:
-    seq = re.sub(r"[^A-Za-z]", "", value).upper()
-    return seq
+def clean_seq(value: str) -> str:
+    return re.sub(r"[^A-Za-z]", "", value or "").upper()
 
 
 def main() -> int:
@@ -115,161 +92,137 @@ def main() -> int:
         "stage": "v2_1_positive_build",
         "rule_version": "auto_evidence_v2_1.1",
         "started_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
-        "sources": {},
-        "counts": {},
-        "status": "STARTED",
+        "sources": {}, "counts": {}, "status": "STARTED",
     }
-    rows: list[dict] = []
     try:
-        targets = {
-            "dramp_antibacterial_txt": DRAMP.format("Antibacterial_amps.txt"),
-            "dramp_antibacterial_fasta": DRAMP.format("Antibacterial_amps.fasta"),
-            "dramp_grampos_txt": DRAMP.format("Anti-Gram-positive_amps.txt"),
-            "dramp_gramneg_txt": DRAMP.format("Anti-Gram-_amps.txt"),
-            "apd3_bacteria_fasta": APD3.format("bacteriaAMPs_APD2024.fasta"),
-        }
-        blobs: dict[str, bytes] = {}
-        for name, url in targets.items():
+        files = ["Antibacterial_amps.txt", "Anti-Gram-positive_amps.txt", "Anti-Gram-_amps.txt"]
+        merged: dict[str, dict] = {}
+        per_dataset: dict[str, dict] = {}
+        activity_samples: list[str] = []
+        for fname in files:
+            dataset = fname.replace("_amps.txt", "")
+            url = DRAMP_BASE.format(fname)
             try:
                 blob = fetch(url)
-                blobs[name] = blob
-                report["sources"][name] = {"url": url, "bytes": len(blob),
-                                            "sha256": sha256_bytes(blob)}
-                print(f"[build] {name}: {len(blob)} bytes", flush=True)
+            except urllib.error.HTTPError as exc:
+                report["sources"][fname] = {"url": url, "error": f"HTTP {exc.code}"}
+                continue
             except Exception as exc:  # noqa: BLE001
-                report["sources"][name] = {"url": url,
-                                            "error": f"{type(exc).__name__}: {str(exc)[:160]}"}
-                print(f"[build] {name} FAILED: {exc}", flush=True)
-
-        parsed_total = 0
-        for name in ("dramp_antibacterial_txt", "dramp_grampos_txt", "dramp_gramneg_txt"):
-            blob = blobs.get(name)
-            if not blob:
+                report["sources"][fname] = {"url": url,
+                                            "error": f"{type(exc).__name__}: {str(exc)[:120]}"}
                 continue
             text = blob.decode("utf-8", "replace")
-            records = parse_dramp_txt(text)
-            parsed_total += len(records)
-            report["counts"][f"{name}_records"] = len(records)
-            if records and name == "dramp_antibacterial_txt":
-                report["dramp_field_names"] = sorted(records[0])[:40]
-            kept_here = 0
-            for record in records:
-                seq = clean_sequence(pick(record, "sequence"))
-                if not seq or len(seq) < 5 or len(seq) > 50 or set(seq) - AA:
+            fields, rows = parse_tsv(text)
+            report["sources"][fname] = {"url": url, "bytes": len(blob), "sha256": sha256(blob),
+                                        "fields": fields, "records": len(rows)}
+            print(f"[build] {fname}: {len(rows)} records, fields={fields}", flush=True)
+            kept = 0
+            for row in rows:
+                seq = clean_seq(row.get("Sequence", ""))
+                if not (5 <= len(seq) <= 50) or set(seq) - AA:
                     continue
-                target = pick(record, "target organism", "target", "activity target")
-                activity = pick(record, "activity", "mic", "antimicrobial activity")
-                refs = pick(record, "references", "reference", "literature", "pubmed id")
-                if not target or not BACTERIA.search(target):
+                activity = (row.get("Activity") or "").strip()
+                pmid = (row.get("Pubmed_ID") or "").strip()
+                if not activity or not NUMERIC.search(activity) or not CONC_UNIT.search(activity):
                     continue
-                if not activity or not NUMERIC.search(activity):
+                if not re.fullmatch(r"\d{5,9}", pmid):
                     continue
-                if not MIC_UNITS.search(activity) and "mic" not in activity.lower():
-                    continue
-                if not refs:
-                    continue
-                rows.append({
-                    "sequence": seq,
-                    "target": target[:200],
-                    "activity": activity[:200],
-                    "references": refs[:400],
-                    "source": name,
-                    "dramp_id": pick(record, "dramp id", "id", "amp id"),
-                    "name": pick(record, "name", "peptide name")[:120],
-                })
-                kept_here += 1
-            report["counts"][f"{name}_kept"] = kept_here
+                if len(activity_samples) < 12:
+                    activity_samples.append(activity[:120])
+                species = SPECIES.search(activity)
+                target = f"{species.group(0)}" if species else DATASET_TARGET.get(
+                    dataset, "bacteria (dataset attribution)")
+                entry = {
+                    "target": target,
+                    "activity": activity[:300],
+                    "pmid": pmid,
+                    "dramp_id": (row.get("DRAMP_ID") or "").strip(),
+                    "name": (row.get("Name") or "").strip()[:120],
+                    "source": dataset,
+                }
+                if seq in merged:
+                    merged[seq]["sources"] = sorted(set(merged[seq]["sources"]) | {dataset})
+                    merged[seq]["n_records"] += 1
+                    merged[seq]["pmids"] = sorted(set(merged[seq]["pmids"]) | {pmid})
+                else:
+                    entry["sources"] = [dataset]
+                    entry["n_records"] = 1
+                    entry["pmids"] = [pmid]
+                    merged[seq] = entry
+                kept += 1
+            per_dataset[dataset] = {"records": len(rows), "kept_rows": kept}
 
-        # APD3 FASTA: sequence-level only; kept as a variant pool (never a positive on its own).
-        apd_seqs: set[str] = set()
-        blob = blobs.get("apd3_bacteria_fasta")
-        if blob:
-            for line in blob.decode("utf-8", "replace").splitlines():
-                if line.startswith(">"):
-                    continue
-                seq = clean_sequence(line)
-                if 5 <= len(seq) <= 50 and not (set(seq) - AA):
-                    apd_seqs.add(seq)
-        report["counts"]["apd3_bacteria_sequences"] = len(apd_seqs)
-
-        # Deduplicate by sequence; merge provenance.
-        merged: dict[str, dict] = {}
-        for row in rows:
-            seq = row.pop("sequence")
-            if seq in merged:
-                merged[seq]["sources"] = sorted(set(merged[seq]["sources"]) | {row["source"]})
-                merged[seq]["n_records"] += 1
-                if row["activity"] and row["activity"] not in merged[seq]["activity"]:
-                    merged[seq]["activity"] = (merged[seq]["activity"] + " | " + row["activity"])[:400]
-                if row["target"] and row["target"] not in merged[seq]["target"]:
-                    merged[seq]["target"] = (merged[seq]["target"] + " | " + row["target"])[:300]
-            else:
-                row["sources"] = [row["source"]]
-                row["n_records"] = 1
-                merged[seq] = row
-
-        # Composition-preserving decoys (hard negatives): shuffle each positive 1:1.
-        import random
-        rng = random.Random(20261124)
         decoys: list[str] = []
+        rng = random.Random(20261124)
         for seq in merged:
             chars = list(seq)
-            for _ in range(20):
+            for _ in range(30):
                 rng.shuffle(chars)
                 cand = "".join(chars)
                 if cand != seq and cand not in merged and cand not in decoys:
                     decoys.append(cand)
                     break
 
-        report["counts"]["unique_strict_positives"] = len(merged)
-        report["counts"]["multi_record_sequences"] = sum(1 for v in merged.values() if v["n_records"] > 1)
-        report["counts"]["composition_preserving_decoys"] = len(decoys)
-        report["counts"]["parsed_dramp_records"] = parsed_total
+        targets: dict[str, int] = {}
+        pmids: set[str] = set()
+        for entry in merged.values():
+            family = re.sub(r"\(.*?\)", "", entry["target"]).strip().lower()[:40]
+            targets[family] = targets.get(family, 0) + 1
+            pmids.update(entry["pmids"])
 
-        positives = args.workdir + "/positive_core_v2_1.fasta"
+        report["counts"] = {
+            "per_dataset": per_dataset,
+            "unique_strict_positives": len(merged),
+            "multi_record_sequences": sum(1 for v in merged.values() if v["n_records"] > 1),
+            "distinct_pmids": len(pmids),
+            "composition_preserving_decoys": len(decoys),
+            "length_min": min((len(s) for s in merged), default=0),
+            "length_max": max((len(s) for s in merged), default=0),
+        }
+        report["target_distribution"] = dict(sorted(targets.items(), key=lambda kv: -kv[1])[:15])
+        report["activity_samples_redacted"] = activity_samples
+
+        positives = os.path.join(args.workdir, "positive_core_v2_1.fasta")
         with open(positives, "w", encoding="utf-8") as f:
             for i, seq in enumerate(sorted(merged)):
                 f.write(f">V21P{i:05d}\n{seq}\n")
-        decoy_path = args.workdir + "/composition_decoys_v2_1.fasta"
+        decoy_path = os.path.join(args.workdir, "composition_decoys_v2_1.fasta")
         with open(decoy_path, "w", encoding="utf-8") as f:
             for i, seq in enumerate(decoys):
                 f.write(f">V21D{i:05d}\n{seq}\n")
-        ledger_path = args.workdir + "/positive_core_v2_1_ledger.tsv"
-        with open(ledger_path, "w", encoding="utf-8", newline="") as f:
-            writer = csv.writer(f, delimiter="\t")
-            writer.writerow(["sequence_id", "sequence", "target", "activity", "references",
-                             "sources", "n_records", "dramp_id", "name"])
+        ledger = os.path.join(args.workdir, "positive_core_v2_1_ledger.tsv")
+        with open(ledger, "w", encoding="utf-8", newline="") as f:
+            w = csv.writer(f, delimiter="\t")
+            w.writerow(["sequence_id", "sequence", "target_attribution", "activity",
+                        "pmids", "sources", "n_records", "dramp_id", "name"])
             for i, seq in enumerate(sorted(merged)):
-                row = merged[seq]
-                writer.writerow([f"V21P{i:05d}", seq, row["target"], row["activity"],
-                                 row["references"], ",".join(row["sources"]), row["n_records"],
-                                 row.get("dramp_id", ""), row.get("name", "")])
+                e = merged[seq]
+                w.writerow([f"V21P{i:05d}", seq, e["target"], e["activity"],
+                            ",".join(e["pmids"]), ",".join(e["sources"]), e["n_records"],
+                            e["dramp_id"], e["name"]])
 
-        # Bundle the row-level material for the private Drive upload.
         bundle = os.path.join(args.workdir, "positive_core_v2_1_bundle.zip")
         with zipfile.ZipFile(bundle, "w", compression=zipfile.ZIP_DEFLATED) as z:
             z.write(positives, "frozen/positive_core_v2_1.fasta")
             z.write(decoy_path, "frozen/composition_decoys_v2_1.fasta")
-            z.write(ledger_path, "frozen/positive_core_v2_1_ledger.tsv")
+            z.write(ledger, "frozen/positive_core_v2_1_ledger.tsv")
             z.writestr("frozen/manifest.json", json.dumps(report, ensure_ascii=False, indent=2))
 
         with open(positives, "rb") as f:
-            pos_sha = sha256_bytes(f.read())
+            pos_blob = f.read()
         with open(bundle, "rb") as f:
             bundle_blob = f.read()
-        report.update({
-            "positive_fasta_sha256": pos_sha,
-            "bundle_bytes": len(bundle_blob),
-            "bundle_sha256": sha256_bytes(bundle_blob),
-            "status": "POSITIVES_BUILT",
-        })
+        report["positive_fasta_sha256"] = sha256(pos_blob)
+        report["positive_sequences"] = pos_blob.count(b">")
+        report["bundle_bytes"] = len(bundle_blob)
+        report["bundle_sha256"] = sha256(bundle_blob)
+        report["status"] = "POSITIVES_BUILT"
 
-        uri = (os.environ.get("EVIDENCE_LEDGER_UPLOAD_URI") or "").strip()
-        if uri:
+        uri = ((os.environ.get("EVIDENCE_LEDGER_UPLOAD_URI") or "").strip()
+               or (os.environ.get("EVIDENCE_AUDIT_ID") or "").strip())
+        if uri.startswith("https://"):
             import requests
-            size = len(bundle_blob)
-            offset = 0
-            resp = None
+            size, offset, resp = len(bundle_blob), 0, None
             while offset < size:
                 chunk = bundle_blob[offset:offset + 8 * 1024 * 1024]
                 final = offset + len(chunk) >= size
@@ -284,23 +237,25 @@ def main() -> int:
                 if resp.status_code not in (200, 201):
                     raise RuntimeError(f"private bundle upload failed: HTTP {resp.status_code}")
                 offset += len(chunk)
-            report["private_bundle_upload"] = {"bytes": size, "sha256": sha256_bytes(bundle_blob),
+            report["private_bundle_upload"] = {"bytes": size, "sha256": sha256(bundle_blob),
                                                "drive_file": resp.json() if resp else {}}
             report["status"] = "POSITIVES_BUILT_AND_UPLOADED"
         else:
-            report["private_bundle_upload"] = {"skipped": "no upload session provided"}
+            report["private_bundle_upload"] = {"skipped": "no upload session in env"}
 
         report["finished_utc"] = dt.datetime.now(dt.timezone.utc).isoformat()
-        with open(os.path.join(args.out, "v2_1_positive_build_report.json"), "w", encoding="utf-8") as f:
+        with open(os.path.join(args.out, "v2_1_positive_build_report.json"), "w",
+                  encoding="utf-8") as f:
             json.dump(report, f, ensure_ascii=False, indent=2)
             f.write("\n")
         print(json.dumps({k: v for k, v in report.items() if k != "sources"},
-                         ensure_ascii=False, indent=2), flush=True)
+                         ensure_ascii=False, indent=2)[:4000], flush=True)
     except Exception as exc:  # noqa: BLE001
         report.update({"status": "FAILED", "error": str(exc),
                        "traceback": traceback.format_exc(limit=6),
                        "finished_utc": dt.datetime.now(dt.timezone.utc).isoformat()})
-        with open(os.path.join(args.out, "v2_1_positive_build_report.json"), "w", encoding="utf-8") as f:
+        with open(os.path.join(args.out, "v2_1_positive_build_report.json"), "w",
+                  encoding="utf-8") as f:
             json.dump(report, f, ensure_ascii=False, indent=2)
             f.write("\n")
         print(json.dumps(report, ensure_ascii=False, indent=2), file=sys.stderr, flush=True)
