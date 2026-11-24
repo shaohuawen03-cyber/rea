@@ -1,8 +1,8 @@
 {
-  "label": "quota-watch-32",
+  "label": "quota-finish-32",
   "run_smoke": false,
   "seconds": 60,
   "check_kernels": ["shaohuawen/quota-smoke-32"],
   "fetch_output": "shaohuawen/quota-smoke-32",
-  "note": "Watch the fixed 5-minute kernel: raw session status, its output/log, and the quota."
+  "note": "Wait for quota-smoke-32 to reach COMPLETE, then read its output/log and the quota."
 }
