@@ -1,6 +1,6 @@
 {
   "label": "quota-v2-done-after",
-  "captured_at_utc": "2026-11-24T07:18:51Z",
+  "captured_at_utc": "2026-11-24T07:27:25Z",
   "refresh_at": "2026-11-28T00:00:00Z",
   "source": "api.kaggle.com (exact seconds)",
   "gpu": {
@@ -22,8 +22,8 @@
     "remaining_hours": 20.0
   },
   "delta": {
-    "from": "2026-11-24T07:18:51Z",
-    "to": "2026-11-24T07:18:51Z",
+    "from": "2026-11-24T07:27:25Z",
+    "to": "2026-11-24T07:27:25Z",
     "accelerators": {
       "gpu": {
         "used_seconds_delta": 0.0,
