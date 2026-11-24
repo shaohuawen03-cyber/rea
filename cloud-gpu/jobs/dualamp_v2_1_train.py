@@ -366,16 +366,22 @@ def main() -> int:
         calib_metrics = [p for p in find(wd, "calibration_metrics.csv")]
         calib_bins = [p for p in find(wd, "calibration_bins.csv")]
 
+        # OOF predictions feed the fixed-specificity operating points. The file name is
+        # oof_predictions.csv under runs/<run>/<model>/seed_<n>/, and the model column may
+        # be absent, so recover it from the path instead of guessing.
         oof_rows: list[dict] = []
         for path in find(wd, "oof*.csv"):
-            rows = csv_rows(path)
-            for row in rows:
-                if {"model", "y_true", "prob"} <= set(row):
-                    oof_rows.append(row)
-                elif {"y_true", "prob"} <= set(row):
-                    row.setdefault("model", path.parent.parent.name)
-                    oof_rows.append(row)
+            parts = [x.lower() for x in path.parts]
+            model_from_path = next((x.upper() for x in parts if x in ("m1", "m2", "m3")), "")
+            for row in csv_rows(path):
+                if not {"y_true", "prob"} <= set(row):
+                    continue
+                if not row.get("model"):
+                    row["model"] = row.get("model_name") or model_from_path or "unknown"
+                oof_rows.append(row)
 
+        challenge_paths = [p for p in find(wd, "*.csv")
+                           if p.name in ("challenge_sets.csv", "external_validation.csv")]
         report.update({
             "status": "COMPLETED_V2_1_TRAINING",
             "completed_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
@@ -386,9 +392,7 @@ def main() -> int:
             "calibration_metrics": [r for p in calib_metrics for r in csv_rows(p)],
             "calibration_bins": [r for p in calib_bins for r in csv_rows(p)][:120],
             "fixed_specificity_operating_points": operating_points(oof_rows, [0.99, 0.995]),
-            "composition_challenge": composition_challenge(
-                metrics, [p for p in find(wd, "*.csv") if "challenge" in p.name.lower()]
-                + [p for p in find(wd, "external_validation.csv")]),
+            "composition_challenge": composition_challenge(metrics, challenge_paths),
             "caveats": [
                 "Positives are DRAMP-curated bacterial actives (TIER_B_LABEL: bacterial "
                 "activity label + named target + PubMed reference). The bulk dumps do not "
