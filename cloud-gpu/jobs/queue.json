@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-24T07:27:00Z",
+  "updated_at_utc": "2026-11-24T07:29:50Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -702,7 +702,7 @@
       "serve_minutes": 15.0,
       "wait": true,
       "timeout_sec": 5400,
-      "status": "failed",
+      "status": "pending",
       "created_at_utc": "2026-11-24T07:23:46Z",
       "kernel_slug": "dualamp-v2-1-smoke-20261124",
       "env": {
