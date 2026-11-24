@@ -1,0 +1,120 @@
+{
+  "stage": "v2_1_data_source_probe_2",
+  "started_utc": "2026-11-24T06:57:26.531771+00:00",
+  "python": "3.13.18",
+  "probes": {
+    "dbaasp_post_lookup": {
+      "status": 403,
+      "error": "HTTPError",
+      "content_type": "application/json",
+      "preview": "{\"timestamp\":\"2026-11-24T06:57:27.164Z\",\"status\":403,\"error\":\"Forbidden\",\"path\":\"/api/v1\"}",
+      "json_top_keys": [
+        "timestamp",
+        "status",
+        "error",
+        "path"
+      ]
+    },
+    "dbaasp_post_card": {
+      "status": 403,
+      "error": "HTTPError",
+      "content_type": "application/json",
+      "preview": "{\"timestamp\":\"2026-11-24T06:57:27.789Z\",\"status\":403,\"error\":\"Forbidden\",\"path\":\"/api/v1\"}",
+      "json_top_keys": [
+        "timestamp",
+        "status",
+        "error",
+        "path"
+      ]
+    },
+    "dbaasp_post_ranking": {
+      "status": 403,
+      "error": "HTTPError",
+      "content_type": "application/json",
+      "preview": "{\"timestamp\":\"2026-11-24T06:57:28.411Z\",\"status\":403,\"error\":\"Forbidden\",\"path\":\"/api/v1\"}",
+      "json_top_keys": [
+        "timestamp",
+        "status",
+        "error",
+        "path"
+      ]
+    },
+    "dbaasp_post_search_seq": {
+      "status": 403,
+      "error": "HTTPError",
+      "content_type": "application/json",
+      "preview": "{\"timestamp\":\"2026-11-24T06:57:29.037Z\",\"status\":403,\"error\":\"Forbidden\",\"path\":\"/api/v1\"}",
+      "json_top_keys": [
+        "timestamp",
+        "status",
+        "error",
+        "path"
+      ]
+    },
+    "dramp_downloads": {
+      "status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "bytes": 21845,
+      "preview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <title>Welcome To Dramp Database</title>\n    <meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">\n    <meta charset=\"utf-8\">\n\n    <link rel=\"",
+      "links": [
+        "../downloads/",
+        "download.php?filename=download_data/DRAMP3.0_new/Anti-Gram-_amps.fasta",
+        "download.php?filename=download_data/DRAMP3.0_new/Anti-Gram-_amps.txt",
+        "download.php?filename=download_data/DRAMP3.0_new/Anti-Gram-_amps.xlsx",
+        "download.php?filename=download_data/DRAMP3.0_new/Anti-Gram-positive_amps.fasta",
+        "download.php?filename=download_data/DRAMP3.0_new/Anti-Gram-positive_amps.txt",
+        "download.php?filename=download_data/DRAMP3.0_new/Anti-Gram-positive_amps.xlsx",
+        "download.php?filename=download_data/DRAMP3.0_new/Antibacterial_amps.fasta",
+        "download.php?filename=download_data/DRAMP3.0_new/Antibacterial_amps.txt",
+        "download.php?filename=download_data/DRAMP3.0_new/Antibacterial_amps.xlsx",
+        "download.php?filename=download_data/DRAMP3.0_new/Anticancer_amps.fasta",
+        "download.php?filename=download_data/DRAMP3.0_new/Anticancer_amps.txt",
+        "download.php?filename=download_data/DRAMP3.0_new/Anticancer_amps.xlsx",
+        "download.php?filename=download_data/DRAMP3.0_new/Antifungal_amps.fasta",
+        "download.php?filename=download_data/DRAMP3.0_new/Antifungal_amps.txt",
+        "download.php?filename=download_data/DRAMP3.0_new/Antifungal_amps.xlsx",
+        "download.php?filename=download_data/DRAMP3.0_new/Antiinfective_amps.fasta",
+        "download.php?filename=download_data/DRAMP3.0_new/Antiinfective_amps.txt",
+        "download.php?filename=download_data/DRAMP3.0_new/Antiinfective_amps.xlsx",
+        "download.php?filename=download_data/DRAMP3.0_new/Antiinflammatory_amps.fasta",
+        "download.php?filename=download_data/DRAMP3.0_new/Antiinflammatory_amps.txt",
+        "download.php?filename=download_data/DRAMP3.0_new/Antiinflammatory_amps.xlsx",
+        "download.php?filename=download_data/DRAMP3.0_new/Antiparasitic_amps.fasta",
+        "download.php?filename=download_data/DRAMP3.0_new/Antiparasitic_amps.txt",
+        "download.php?filename=download_data/DRAMP3.0_new/Antiparasitic_amps.xlsx"
+      ]
+    },
+    "dramp_downloads2": {
+      "status": 404,
+      "error": "HTTPError",
+      "content_type": "text/html; charset=UTF-8",
+      "preview": "File not found.\n",
+      "links": []
+    },
+    "apd3_download": {
+      "status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "bytes": 12992,
+      "preview": "<html>\n    <link href=\"https://aps.unmc.edu/assets/css/foundation.css\" rel=\"stylesheet\" type=\"text/css\" />\n    <link href=\"https://aps.unmc.edu/assets/css/content.css\" rel=\"stylesheet\" type=\"text/css\"",
+      "links": [
+        "/assets/sequences/amphibianAMPs_APD2024.fasta",
+        "/assets/sequences/animalAMPs_APD2024a.fasta",
+        "/assets/sequences/bacteriaAMPs_APD2024.fasta",
+        "/assets/sequences/humanAMPs_APD2024.fasta",
+        "/assets/sequences/insectAMPs_APD2024.fasta",
+        "/assets/sequences/naturalAMPs_APD2024a.fasta",
+        "/assets/sequences/plantAMPs_APD2024.fasta",
+        "https://aps.unmc.edu/downloads"
+      ]
+    },
+    "apd3_api": {
+      "status": 404,
+      "error": "HTTPError",
+      "content_type": "text/html; charset=UTF-8",
+      "preview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>404 Page Not Found</title>\n<style type=\"text/css\">\n\n::selection { background-color: #E13300; color: white; }\n::-moz-selection { ba",
+      "links": []
+    }
+  },
+  "status": "PROBE_DONE",
+  "finished_utc": "2026-11-24T06:57:32.590124+00:00"
+}
