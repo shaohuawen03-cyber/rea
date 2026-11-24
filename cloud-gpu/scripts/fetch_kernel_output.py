@@ -10,52 +10,42 @@ can be explained from the workflow log instead of guesswork.
 from __future__ import annotations
 
 import argparse
-import glob
 import os
-import shutil
 import sys
-import tempfile
 
 
 def fetch_session_log(owner: str, slug: str, dest: str, tail_chars: int = 20000) -> bool:
     """Stream a running session's log and keep its tail.
 
     While a kernel is still RUNNING the output listing is empty, so the only way to
-    see progress is the session log stream. The stream is FileDownload-wrapped; write
-    it to a file and read the tail instead of decoding an in-memory Response.
+    see progress is the midtier log stream (`kernels_logs_stream`, SSE while live,
+    persisted blob once done). Rebuild readable text from the data events.
     """
     from kaggle.api.kaggle_api_extended import KaggleApi
-    from kagglesdk.kernels.types.kernels_api_service import ApiGetKernelSessionLogsStreamRequest
 
     api = KaggleApi()
     api.authenticate()
-    request = ApiGetKernelSessionLogsStreamRequest()
-    request.user_name = owner
-    request.kernel_slug = slug
-    tmp = tempfile.mkdtemp(prefix="kaglog_")
     try:
-        with api.build_kaggle_client() as kaggle:
-            kaggle.kernels.kernels_api_client.get_kernel_session_logs_stream(request, out_dir=tmp)
         chunks: list[str] = []
-        for path in sorted(glob.glob(os.path.join(tmp, "*"))):
-            with open(path, "rb") as f:
-                chunks.append(f.read().decode("utf-8", "replace"))
+        for event in api.kernels_logs_stream(f"{owner}/{slug}"):
+            data = event.get("data", "") if isinstance(event, dict) else str(event)
+            if data:
+                chunks.append(data)
         text = "".join(chunks).strip()
         if not text:
-            print("[log] session log stream returned nothing")
+            print("[log] log stream returned nothing")
             return False
-        print(f"--- {owner}/{slug} live log (tail {tail_chars} chars) ---")
+        print(f"--- {owner}/{slug} live log (last {tail_chars} chars) ---")
         print(text[-tail_chars:])
         os.makedirs(dest, exist_ok=True)
-        with open(os.path.join(dest, "kernel.log"), "w", encoding="utf-8") as f:
+        path = os.path.join(dest, "kernel.log")
+        with open(path, "w", encoding="utf-8") as f:
             f.write(text)
-        print(f"   saved {os.path.join(dest, 'kernel.log')} ({len(text)} chars)")
+        print(f"   saved {path} ({len(text)} chars)")
         return True
     except Exception as exc:  # noqa: BLE001
         print(f"[log] stream failed: {type(exc).__name__}: {str(exc)[:200]}")
         return False
-    finally:
-        shutil.rmtree(tmp, ignore_errors=True)
 
 
 def main() -> int:
