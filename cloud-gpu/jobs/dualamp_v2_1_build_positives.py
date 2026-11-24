@@ -11,15 +11,19 @@ DRAMP 3.0 publishes tab-separated record dumps with the evidence the rule needs:
 Reachable from inside a Kaggle kernel at
 ``https://dramp.cpu-bioinfor.org/downloads/download_data/DRAMP3.0_new/<file>``.
 
-Rule `auto_evidence_v2_1.1` (stricter than v2.0):
+Rule `auto_evidence_v2_2.0` (evidence-graded; replaces v1.1's numeric-MIC-only gate):
   1. standard amino acids, length 5-50;
-  2. Activity must carry a numeric MIC-like value with a concentration unit
-     (ug/ml, mg/l, uM ...); "not determined" rows are dropped, never used as negatives;
-  3. a numeric PubMed ID must be present (auditable primary reference);
-  4. target organism is taken from the Activity string when a species is named,
-     otherwise from the DRAMP dataset the record came from (Gram-positive /
-     Gram-negative / antibacterial). The attribution used is recorded per row;
-  5. exact-sequence dedupe, provenance merged; composition-preserving shuffles are
+  2. the record must carry a bacterial activity label (Antibacterial / Anti-Gram+ /
+     Anti-Gram-) **and** a named bacterial target (Target_Organism, else a species in
+     the Activity string, else the DRAMP dataset attribution);
+  3. at least one numeric PubMed ID must be present (auditable primary reference);
+  4. evidence tier is recorded per row:
+       TIER_A_MIC          Activity carries a numeric MIC-like value with a unit
+       TIER_B_LABEL        curated bacterial activity label + target + reference,
+                           no numeric MIC in the dump (DRAMP stores MIC in its web
+                           activity tables, not in these bulk dumps)
+     "not determined" rows are dropped, never used as negatives;
+  5. exact-sequence dedupe with provenance merge; composition-preserving shuffles are
      generated 1:1 as hard negatives.
 
 All row-level material (sequences, ledger) stays inside the private bundle that is
@@ -53,6 +57,7 @@ SPECIES = re.compile(
     r"enterococc\w*|salmonella|listeria|streptococc\w*|clostridi\w*|mycobacter\w*|"
     r"helicobacter|campylobacter|serratia|proteus|shigella|vibrio|enterobacter)\w*"
 )
+BACTERIAL_LABEL = re.compile(r"(?i)(antibacterial|anti-gram|antimicrobial)")
 DATASET_TARGET = {
     "Anti-Gram-positive": "Gram-positive bacteria (DRAMP dataset attribution)",
     "Anti-Gram-": "Gram-negative bacteria (DRAMP dataset attribution)",
@@ -90,7 +95,7 @@ def main() -> int:
 
     report: dict = {
         "stage": "v2_1_positive_build",
-        "rule_version": "auto_evidence_v2_1.1",
+        "rule_version": "auto_evidence_v2_2.0",
         "started_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
         "sources": {}, "counts": {}, "status": "STARTED",
     }
@@ -122,20 +127,29 @@ def main() -> int:
                 if not (5 <= len(seq) <= 50) or set(seq) - AA:
                     continue
                 activity = (row.get("Activity") or "").strip()
-                pmid = (row.get("Pubmed_ID") or "").strip()
-                if not activity or not NUMERIC.search(activity) or not CONC_UNIT.search(activity):
+                if not BACTERIAL_LABEL.search(activity):
                     continue
-                if not re.fullmatch(r"\d{5,9}", pmid):
+                pmid_field = (row.get("Pubmed_ID") or "").strip()
+                pmids_found = [p for p in re.split(r"[#;,\s]+", pmid_field) if re.fullmatch(r"\d{5,9}", p)]
+                if not pmids_found:
                     continue
+                named = (row.get("Target_Organism") or "").strip()
+                species = SPECIES.search(named) or SPECIES.search(activity)
+                if named:
+                    target = named[:200]
+                elif species:
+                    target = species.group(0)
+                else:
+                    target = DATASET_TARGET.get(dataset, "bacteria (dataset attribution)")
+                has_mic = bool(NUMERIC.search(activity) and CONC_UNIT.search(activity))
+                tier = "TIER_A_MIC" if has_mic else "TIER_B_LABEL"
                 if len(activity_samples) < 12:
                     activity_samples.append(activity[:120])
-                species = SPECIES.search(activity)
-                target = f"{species.group(0)}" if species else DATASET_TARGET.get(
-                    dataset, "bacteria (dataset attribution)")
                 entry = {
                     "target": target,
                     "activity": activity[:300],
-                    "pmid": pmid,
+                    "tier": tier,
+                    "pmids": sorted(set(pmids_found)),
                     "dramp_id": (row.get("DRAMP_ID") or "").strip(),
                     "name": (row.get("Name") or "").strip()[:120],
                     "source": dataset,
@@ -143,11 +157,13 @@ def main() -> int:
                 if seq in merged:
                     merged[seq]["sources"] = sorted(set(merged[seq]["sources"]) | {dataset})
                     merged[seq]["n_records"] += 1
-                    merged[seq]["pmids"] = sorted(set(merged[seq]["pmids"]) | {pmid})
+                    merged[seq]["pmids"] = sorted(set(merged[seq]["pmids"]) | set(pmids_found))
+                    if has_mic and merged[seq]["tier"] != "TIER_A_MIC":
+                        merged[seq]["tier"] = "TIER_A_MIC"
                 else:
                     entry["sources"] = [dataset]
                     entry["n_records"] = 1
-                    entry["pmids"] = [pmid]
+                    entry[ "pmids"] = sorted(set(pmids_found))
                     merged[seq] = entry
                 kept += 1
             per_dataset[dataset] = {"records": len(rows), "kept_rows": kept}
@@ -175,6 +191,8 @@ def main() -> int:
             "unique_strict_positives": len(merged),
             "multi_record_sequences": sum(1 for v in merged.values() if v["n_records"] > 1),
             "distinct_pmids": len(pmids),
+            "tier_a_mic": sum(1 for v in merged.values() if v["tier"] == "TIER_A_MIC"),
+            "tier_b_label": sum(1 for v in merged.values() if v["tier"] == "TIER_B_LABEL"),
             "composition_preserving_decoys": len(decoys),
             "length_min": min((len(s) for s in merged), default=0),
             "length_max": max((len(s) for s in merged), default=0),
@@ -193,11 +211,11 @@ def main() -> int:
         ledger = os.path.join(args.workdir, "positive_core_v2_1_ledger.tsv")
         with open(ledger, "w", encoding="utf-8", newline="") as f:
             w = csv.writer(f, delimiter="\t")
-            w.writerow(["sequence_id", "sequence", "target_attribution", "activity",
+            w.writerow(["sequence_id", "sequence", "target_attribution", "activity", "tier",
                         "pmids", "sources", "n_records", "dramp_id", "name"])
             for i, seq in enumerate(sorted(merged)):
                 e = merged[seq]
-                w.writerow([f"V21P{i:05d}", seq, e["target"], e["activity"],
+                w.writerow([f"V21P{i:05d}", seq, e["target"], e["activity"], e["tier"],
                             ",".join(e["pmids"]), ",".join(e["sources"]), e["n_records"],
                             e["dramp_id"], e["name"]])
 
