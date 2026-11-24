@@ -44,6 +44,14 @@ def main() -> int:
         response = kaggle.kernels.kernels_api_client.list_kernel_session_output(listing)
 
     files = getattr(response, "files", []) or []
+    kernel_log = getattr(response, "log", "") or ""
+    if kernel_log:
+        print(f"--- {args.ref} log (tail) ---")
+        print(kernel_log[-3000:])
+        path = os.path.join(dest, "kernel.log")
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(kernel_log)
+        print(f"   saved {path}")
     print(f"{args.ref}: {len(files)} file(s)")
     for item in files:
         name = getattr(item, "name", "") or getattr(item, "file_name", "")
