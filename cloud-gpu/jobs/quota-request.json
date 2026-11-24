@@ -1,8 +1,8 @@
 {
-  "label": "quota-v2-log",
+  "label": "quota-v2-log2",
   "run_smoke": false,
   "seconds": 60,
   "check_kernels": ["shaohuawen/dualamp-real8-v2-retry2-20261124"],
   "fetch_output": "shaohuawen/dualamp-real8-v2-retry2-20261124",
-  "note": "Pull the live kernel log to confirm training progress (not a hung session)."
+  "note": "Stream the live session log (output listing is empty while RUNNING)."
 }
