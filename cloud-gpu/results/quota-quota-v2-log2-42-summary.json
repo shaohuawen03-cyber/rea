@@ -1,0 +1,47 @@
+{
+  "label": "quota-v2-log2-after",
+  "captured_at_utc": "2026-11-24T03:21:27Z",
+  "refresh_at": "2026-11-28T00:00:00Z",
+  "source": "api.kaggle.com (exact seconds)",
+  "gpu": {
+    "used_seconds": 5327.488,
+    "used_hours": 1.4799,
+    "reserved_seconds": 0.0,
+    "total_seconds": 108000.0,
+    "total_hours": 30.0,
+    "remaining_seconds": 102672.512,
+    "remaining_hours": 28.5201
+  },
+  "tpu": {
+    "used_seconds": 0.0,
+    "used_hours": 0.0,
+    "reserved_seconds": 0.0,
+    "total_seconds": 72000.0,
+    "total_hours": 20.0,
+    "remaining_seconds": 72000.0,
+    "remaining_hours": 20.0
+  },
+  "delta": {
+    "from": "2026-11-24T03:21:27Z",
+    "to": "2026-11-24T03:21:27Z",
+    "accelerators": {
+      "gpu": {
+        "used_seconds_delta": 0.133,
+        "used_hours_delta": 0.0,
+        "used_seconds_before": 5327.355,
+        "used_seconds_after": 5327.488,
+        "remaining_hours_before": 28.5202,
+        "remaining_hours_after": 28.5201
+      },
+      "tpu": {
+        "used_seconds_delta": 0.0,
+        "used_hours_delta": 0.0,
+        "used_seconds_before": 0.0,
+        "used_seconds_after": 0.0,
+        "remaining_hours_before": 20.0,
+        "remaining_hours_after": 20.0
+      }
+    }
+  },
+  "errors": null
+}

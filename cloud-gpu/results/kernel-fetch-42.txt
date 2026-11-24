@@ -1,0 +1,2 @@
+[log] stream failed: TypeError: KernelsApiClient.get_kernel_session_logs_stream() got an unexpected keyword argument 'out_dir'
+shaohuawen/dualamp-real8-v2-retry2-20261124: 0 file(s)
