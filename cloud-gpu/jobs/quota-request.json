@@ -1,8 +1,9 @@
 {
-  "label": "quota-finish-32",
+  "label": "quota-proof-32",
   "run_smoke": false,
   "seconds": 60,
   "check_kernels": ["shaohuawen/quota-smoke-32"],
+  "logs_ref": "shaohuawen/quota-smoke-32",
   "fetch_output": "shaohuawen/quota-smoke-32",
-  "note": "Wait for quota-smoke-32 to reach COMPLETE, then read its output/log and the quota."
+  "note": "Pull quota-smoke-32 output/log for the final proof."
 }

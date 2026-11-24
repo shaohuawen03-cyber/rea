@@ -43,6 +43,14 @@ def main() -> int:
     with api.build_kaggle_client() as kaggle:
         response = kaggle.kernels.kernels_api_client.list_kernel_session_output(listing)
 
+    print(f"[debug] response type={type(response).__name__}")
+    try:
+        import json as _json
+
+        print(f"[debug] response json={_json.dumps(response.to_dict())[:2000]}")
+    except Exception as exc:  # noqa: BLE001
+        print(f"[debug] to_dict failed: {type(exc).__name__}: {str(exc)[:200]}")
+
     files = getattr(response, "files", []) or []
     kernel_log = getattr(response, "log", "") or ""
     if kernel_log:

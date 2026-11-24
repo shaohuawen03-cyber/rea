@@ -241,7 +241,8 @@ jobs:
         run: |
           set -uo pipefail
           python cloud-gpu/scripts/fetch_kernel_output.py "${{ steps.req.outputs.fetch_output }}" \
-            --out-dir cloud-gpu/results || true
+            --out-dir cloud-gpu/results 2>&1 \
+            | tee "cloud-gpu/results/kernel-fetch-${{ github.run_number }}.txt" || true
 
       - name: Kernel status (who holds the GPU sessions)
         run: |
