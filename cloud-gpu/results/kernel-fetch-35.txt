@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/home/runner/work/rea/rea/cloud-gpu/scripts/fetch_kernel_output.py", line 99, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/home/runner/work/rea/rea/cloud-gpu/scripts/fetch_kernel_output.py", line 41, in main
+    listing.owner_slug = owner
+    ^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/kagglesdk/kaggle_object.py", line 304, in __setattr__
+    raise AttributeError(f"Unknown field for {self.__class__.__name__}: {key}")
+AttributeError: Unknown field for ApiListKernelSessionOutputRequest: owner_slug
