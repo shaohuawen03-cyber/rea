@@ -57,15 +57,16 @@ def main() -> int:
         try:
             with api.build_kaggle_client() as kaggle:
                 stream = kaggle.kernels.kernels_api_client.get_kernel_session_logs_stream(log_req)
+            # FileDownload.prepare_from returns the raw requests.Response.
             text = ""
-            for attr in ("content", "text", "body", "data"):
-                value = getattr(stream, attr, None)
-                if isinstance(value, (bytes, bytearray)):
-                    text = bytes(value).decode("utf-8", "replace")
-                    break
-                if isinstance(value, str) and value:
-                    text = value
-                    break
+            if hasattr(stream, "text"):
+                text = stream.text or ""
+            elif isinstance(stream, (bytes, bytearray)):
+                text = bytes(stream).decode("utf-8", "replace")
+            if not text:
+                content = getattr(stream, "content", None)
+                if isinstance(content, (bytes, bytearray)):
+                    text = bytes(content).decode("utf-8", "replace")
             if not text:
                 text = repr(stream)
             lines.append("--- log tail ---")

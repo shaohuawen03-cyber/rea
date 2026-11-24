@@ -94,5 +94,34 @@ def main() -> int:
     return 0
 
 
+def _emergency(exc: BaseException) -> None:
+    """Even a crashed run leaves a result file, so the relay can report why."""
+    import traceback
+
+    blob = json.dumps(
+        {
+            "script": "quota_smoke",
+            "status": "fatal",
+            "error": f"{type(exc).__name__}: {exc}",
+            "traceback": traceback.format_exc()[-2000:],
+            "timestamp_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        },
+        ensure_ascii=False,
+        indent=2,
+    )
+    print(blob, flush=True)
+    try:
+        with open("/kaggle/working/quota_smoke_result.json", "w", encoding="utf-8") as f:
+            f.write(blob + "\n")
+    except OSError:
+        pass
+
+
 if __name__ == "__main__":
-    raise SystemExit(main())
+    try:
+        raise SystemExit(main())
+    except SystemExit:
+        raise
+    except BaseException as exc:  # noqa: BLE001
+        _emergency(exc)
+        raise SystemExit(1)

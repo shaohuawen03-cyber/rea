@@ -1,9 +1,7 @@
 {
-  "label": "quota-verify-28",
+  "label": "quota-diag-logs",
   "run_smoke": false,
   "seconds": 60,
-  "check_kernels": ["shaohuawen/quota-smoke-28"],
   "logs_ref": "shaohuawen/quota-smoke-28",
-  "probe_refs": ["shaohuawen/quota-smoke-28"],
-  "note": "Read-only: check whether quota-smoke-28 holds a real session, pull its log/result, and re-read the quota."
+  "note": "Pull the real log/result of an ERROR smoke kernel to see why it exits after only a few seconds."
 }

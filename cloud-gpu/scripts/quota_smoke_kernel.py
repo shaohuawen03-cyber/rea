@@ -263,6 +263,15 @@ def main() -> int:
         finally:
             shutil.rmtree(fetched, ignore_errors=True)
 
+        log_path = os.path.join(fetched, "kernel.log")
+        if os.path.exists(log_path):
+            try:
+                with open(log_path, "r", encoding="utf-8", errors="replace") as f:
+                    tail = f.read()[-4000:]
+                log(f"kernel.log tail:\n{tail}")
+            except OSError as exc:
+                log(f"kernel.log unreadable: {exc}")
+
         for candidate in ("quota_smoke_result.json",):
             path = os.path.join(fetched, candidate)
             if os.path.exists(path):
@@ -281,6 +290,15 @@ def main() -> int:
                 timeout=300,
             )
             log(f"log fetch rc={got.returncode}: {(got.stdout or got.stderr).strip()[:800]}")
+
+        log_path = os.path.join(fetched, "kernel.log")
+        if os.path.exists(log_path):
+            try:
+                with open(log_path, "r", encoding="utf-8", errors="replace") as f:
+                    tail = f.read()[-4000:]
+                log(f"kernel.log tail:\n{tail}")
+            except OSError as exc:
+                log(f"kernel.log unreadable: {exc}")
 
         for candidate in ("quota_smoke_result.json",):
             path = os.path.join(fetched, candidate)
