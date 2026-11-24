@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-24T12:12:10Z",
+  "updated_at_utc": "2026-11-24T12:20:36Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -821,6 +821,28 @@
       },
       "note": "CPU smoke: the T4 kernel has sat in Kaggle's QUEUED state for over an hour. esm2_t12_35M on 2.8k peptides is cheap on CPU and validates the same plumbing (build/features/train/report).",
       "finished_at_utc": "2026-11-24T12:12:45Z"
+    },
+    {
+      "id": "dualamp-v2-1-smoke-cpu-status-20261124",
+      "provider": "kaggle",
+      "mode": "status",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
+      "kernel_slug": "dualamp-v2-1-smoke-cpu-20261124",
+      "status": "pending",
+      "wait": false,
+      "created_at_utc": "2026-11-24T12:20:36Z",
+      "note": "CPU smoke control step."
+    },
+    {
+      "id": "dualamp-v2-1-smoke-cpu-fetch-20261124",
+      "provider": "kaggle",
+      "mode": "output",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
+      "kernel_slug": "dualamp-v2-1-smoke-cpu-20261124",
+      "status": "pending",
+      "wait": false,
+      "created_at_utc": "2026-11-24T12:20:36Z",
+      "note": "CPU smoke control step."
     }
   ]
 }
