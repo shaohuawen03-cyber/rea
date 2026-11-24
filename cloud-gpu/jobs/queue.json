@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-24T09:46:11Z",
+  "updated_at_utc": "2026-11-24T09:49:17Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -697,23 +697,25 @@
         "gdown",
         "requests",
         "fair-esm",
-        "pyyaml"
+        "pyyaml",
+        "biopython",
+        "pandas",
+        "scikit-learn",
+        "matplotlib"
       ],
       "serve_minutes": 15.0,
       "wait": true,
       "timeout_sec": 7200,
-      "status": "failed",
+      "status": "pending",
       "created_at_utc": "2026-11-24T07:23:46Z",
       "kernel_slug": "dualamp-v2-1-smoke-20261124",
       "env": {
         "V21_SMOKE": "1"
       },
-      "note": "Smoke (400 positives + 400 decoys + 2000 UniProt fragments, 1 seed x 2 folds x 2 epochs). Adds an encoder preflight, per-step timing and a log that survives a crash.",
+      "note": "Smoke (400/400/2000, 1 seed x 2 folds x 2 epochs). Adds biopython (features stage needed it: instability index) plus the plotting stack.",
       "inline_json": {
         "V21_INPUTS_JSON": "cloud-gpu/jobs/v21_inputs.json"
-      },
-      "error": "Kaggle kernel shaohuawen/dualamp-v2-1-smoke-20261124 ended with error; inspect logs in /tmp/private-gpu-runs/dualamp-v2-1-smoke-20261124.",
-      "finished_at_utc": "2026-11-24T09:48:12Z"
+      }
     }
   ]
 }
