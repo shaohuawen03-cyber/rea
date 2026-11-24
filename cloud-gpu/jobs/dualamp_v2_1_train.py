@@ -303,13 +303,23 @@ def main() -> int:
             [sys.executable, "-m", "dualamp_lite", "report", "--workdir", str(wd / "run")],
         ]
         report["training_started"] = True
-        log_path = tmp / "training.log"
+        # The log lives in the kernel output dir so a crash (or a killed poll) still
+        # publishes it; the previous version wrote to /tmp and lost every root cause.
+        log_path = Path(out) / "v2_1_training.log"
+        log_path.parent.mkdir(parents=True, exist_ok=True)
         with log_path.open("w", encoding="utf-8") as log:
             for cmd in steps:
                 print("$ " + " ".join(cmd), file=log, flush=True)
-                subprocess.run(cmd, cwd=str(pkg), env=env, stdout=log,
-                               stderr=subprocess.STDOUT, check=True)
-        shutil.copy2(log_path, out / "v2_1_training.log")
+                log.flush()
+                proc = subprocess.run(cmd, cwd=str(pkg), env=env, stdout=log,
+                                      stderr=subprocess.STDOUT)
+                log.flush()
+                os.fsync(log.fileno())
+                if proc.returncode != 0:
+                    print(log_path.read_text(encoding="utf-8", errors="replace")[-4000:],
+                          flush=True)
+                    raise RuntimeError(
+                        f"pipeline step failed ({proc.returncode}): {' '.join(cmd[3:7])}")
 
         metrics_path = (find(wd, "internal_test_metrics.csv")
                         or find(wd, "manuscript_D10_test_metrics.csv"))
