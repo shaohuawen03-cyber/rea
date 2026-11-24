@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-23T11:24:00Z",
+  "updated_at_utc": "2026-11-24T02:44:34Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -505,12 +505,14 @@
       "serve_minutes": 15.0,
       "wait": true,
       "timeout_sec": 10800,
-      "status": "interrupted_timeout",
+      "status": "failed",
       "created_at_utc": "2026-11-23T06:47:00Z",
       "kernel_slug": "dualamp-real8-v2-20261123",
       "note": "First strict-literature positive_core_v2 training run after full 3,579-ID evidence ledger/freeze, exact ID closure, MMseqs2-grouped split leakage audit (0 leaks), and UniProt weak-negative audit. 16 strict positives only (test n=2): explicitly exploratory/underpowered, not publication-ready or definitive. M1/M2 primary, M3 control; 5 seeds × 5 folds × 60 epochs. Model binaries/scaler uploaded only to private Drive; no weights or peptide rows in Git.",
       "interrupted_at_utc": "2026-11-23T09:47:20Z",
-      "error": "GitHub Actions 3-hour job timeout cancelled the relay wait; Kaggle kernel status must be queried before any retry."
+      "error": "Kernel died 0.8 s after start: gdown could not fetch the frozen bundle (FileURLRetrievalError) because the Drive link had been revoked while the kernel was queued. Payload path verified fixed later; retry runs under a fresh slug.",
+      "failure_stage": "private_bundle_download",
+      "finished_at_utc": "2026-11-23T11:15:56Z"
     },
     {
       "id": "dualamp-real8-v2-status-after-timeout-20261123",
@@ -577,7 +579,7 @@
       "finished_at_utc": "2026-11-23T11:20:45Z"
     },
     {
-      "id": "dualamp-real8-v2-retry1-20261123",
+      "id": "dualamp-real8-v2-retry2-20261124",
       "provider": "kaggle",
       "mode": "run",
       "accelerator": "NvidiaTeslaT4",
@@ -590,11 +592,11 @@
       ],
       "serve_minutes": 15.0,
       "wait": true,
-      "timeout_sec": 10800,
+      "timeout_sec": 10200,
       "status": "pending",
-      "created_at_utc": "2026-11-23T11:24:00Z",
-      "kernel_slug": "dualamp-real8-v2-retry1-20261123",
-      "note": "Second strict-v2 exploratory training attempt under a new unique Kaggle kernel slug. First relay attempt failed before training because the frozen bundle link had been revoked while the kernel was still QUEUED; short-lived link access is reopened for this run and must be revoked after terminal status. Same 16 strict positives; test n=2, underpowered. M1/M2/M3, 5 seeds x 5 folds x 60 epochs. Private output archive uses a fresh Drive upload session."
+      "created_at_utc": "2026-11-24T02:44:34Z",
+      "kernel_slug": "dualamp-real8-v2-retry2-20261124",
+      "note": "Third strict-v2 exploratory attempt. Fixes vs the failed runs: (1) payload inlining into the kernel entry script (same bug that made every earlier smoke kernel exit in 7-8 s); (2) frozen private bundle re-opened as anyone-with-link for this run only and re-closed right after the kernel reaches a terminal state; (3) polling reads the raw GetKernelSessionStatus body. 16 strict positives, test n=2 -> exploratory only. M1/M2/M3, 5 seeds x 5 folds x 60 epochs."
     }
   ]
 }

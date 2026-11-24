@@ -52,7 +52,7 @@ jobs:
     # Skip the bot's own commits (envelope consumption / result publish) to avoid loops.
     if: github.event_name != 'push' || !contains(github.event.head_commit.message, 'gpu-relay:')
     runs-on: ubuntu-latest
-    timeout-minutes: 180
+    timeout-minutes: 300
     steps:
       - uses: actions/checkout@v4
         with:
@@ -184,7 +184,25 @@ jobs:
           path: ~/.gpu-relay
           key: gpu-relay-vault-${{ github.run_id }}
 
+      - name: Gate isolated jobs (secret-only runs skip the shared queue)
+        id: gate
+        run: |
+          # A run started just to consume an envelope / run one job must not also
+          # replay the whole pending queue from the pushed snapshot.
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ -n "${{ inputs.only_id }}" ]; then
+            echo "run_queue=true" >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.event_name }}" = "push" ]; then
+            if git show --stat --name-only HEAD 2>/dev/null | grep -q '^cloud-gpu/secrets/'; then
+              echo "run_queue=false" >> "$GITHUB_OUTPUT"
+            else
+              echo "run_queue=true" >> "$GITHUB_OUTPUT"
+            fi
+          else
+            echo "run_queue=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Execute GPU job queue (private run dir outside git)
+        if: steps.gate.outputs.run_queue == 'true'
         id: run_jobs
         continue-on-error: true
         run: |

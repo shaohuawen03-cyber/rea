@@ -20,6 +20,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import urllib.request
 import time
 from typing import Any
 
@@ -426,6 +427,38 @@ def execute_colab_job(
             run_cmd(["colab", "--auth=adc", "stop", "-s", session_name], env=colab_env, timeout=60)
 
 
+def raw_session_state(username: str, slug: str, env: dict[str, str]) -> str:
+    """Return the real kernel session state from the raw API body.
+
+    `kaggle kernels status` prints the enum default QUEUED when there is no session
+    record, so a killed/never-started kernel looks alive forever. The raw
+    GetKernelSessionStatus body only carries a status when a session exists.
+    """
+    token = (env.get("KAGGLE_API_TOKEN") or "").strip()
+    if not token:
+        token = (os.environ.get("KAGGLE_API_TOKEN") or "").strip()
+    if not token:
+        token_file = os.path.expanduser("~/.kaggle/access_token")
+        if os.path.exists(token_file):
+            token = open(token_file, encoding="utf-8").read().strip()
+    if not token:
+        return ""
+    body = json.dumps({"userName": username, "kernelSlug": slug}).encode("utf-8")
+    req = urllib.request.Request(
+        "https://api.kaggle.com/v1/kernels.KernelsApiService/GetKernelSessionStatus",
+        data=body,
+        headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"},
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=45) as resp:
+            payload = json.loads(resp.read().decode("utf-8") or "{}")
+    except Exception as exc:  # noqa: BLE001
+        print(f"[poll] raw status failed: {type(exc).__name__}: {str(exc)[:160]}", flush=True)
+        return ""
+    return str(payload.get("status") or "")
+
+
 def execute_kaggle_job(job: dict[str, Any], run_dir: str) -> dict[str, Any]:
     kaggle_env, kag_src = resolve_kaggle_env()
     if not kag_src:
@@ -548,16 +581,22 @@ def execute_kaggle_job(job: dict[str, Any], run_dir: str) -> dict[str, Any]:
     if wait_for_completion:
         poll_timeout = int(job.get("timeout_sec", 9000))  # 全量 real 运行约 60-70min，默认 60min 会误判 pushed_async
         deadline = time.time() + poll_timeout
+        last_state = ""
         while time.time() < deadline:
             time.sleep(20)
-            st = run_cmd(["kaggle", "kernels", "status", kernel_ref], env=kaggle_env, timeout=45)
-            txt = (st.stdout or st.stderr).lower()
-            if "complete" in txt:
+            state = raw_session_state(username, slug, kaggle_env)
+            if state and state != last_state:
+                print(f"[poll] {kernel_ref} state={state}", flush=True)
+                last_state = state
+            txt = state.lower()
+            if state and txt == "complete":
                 final_status = "completed"
                 break
-            if "error" in txt or "cancel" in txt:
+            if txt in ("error", "cancel", "cancelled", "canceled"):
                 final_status = "failed"
                 break
+        else:
+            final_status = "poll_timeout"
         tmp_out = tempfile.mkdtemp(prefix="kag_out_")
         try:
             run_cmd(["kaggle", "kernels", "output", kernel_ref, "-p", tmp_out, "-o"], env=kaggle_env, timeout=900)
