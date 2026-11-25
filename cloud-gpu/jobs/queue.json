@@ -1327,13 +1327,14 @@
       "serve_minutes": 15.0,
       "wait": false,
       "timeout_sec": 12600,
-      "status": "pending",
+      "status": "pushed_async",
       "created_at_utc": "2026-11-25T00:54:34Z",
       "kernel_slug": "dualamp-v2-1-full-r2-20261124",
       "inline_json": {
         "V21_INPUTS_JSON": "cloud-gpu/jobs/v21_inputs.json"
       },
-      "note": "FULL v2.1: 14,577 positives + 20,000 weak negatives + 14,572 composition decoys, M1/M2/M3 x seeds 1-5 x 5 folds x 60 epochs. The evaluation stage (Brier/ECE/Platt + challenge table) is now non-fatal, so a broken auxiliary stage cannot discard training."
+      "note": "FULL v2.1: 14,577 positives + 20,000 weak negatives + 14,572 composition decoys, M1/M2/M3 x seeds 1-5 x 5 folds x 60 epochs. The evaluation stage (Brier/ECE/Platt + challenge table) is now non-fatal, so a broken auxiliary stage cannot discard training.",
+      "finished_at_utc": "2026-11-25T00:55:07Z"
     },
     {
       "id": "dualamp-v2-1-full-r2-status-20261124",
@@ -1341,10 +1342,11 @@
       "mode": "status",
       "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
       "kernel_slug": "dualamp-v2-1-full-r2-20261124",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-25T00:54:34Z",
-      "note": "Full r2 status read."
+      "note": "Full r2 status read.",
+      "finished_at_utc": "2026-11-25T00:55:08Z"
     },
     {
       "id": "dualamp-v2-1-full-r2-fetch-20261124",
@@ -1352,10 +1354,11 @@
       "mode": "output",
       "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
       "kernel_slug": "dualamp-v2-1-full-r2-20261124",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-25T00:54:34Z",
-      "note": "Full r2 output fetch."
+      "note": "Full r2 output fetch.",
+      "finished_at_utc": "2026-11-25T00:55:09Z"
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
