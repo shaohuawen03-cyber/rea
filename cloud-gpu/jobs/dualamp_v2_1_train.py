@@ -358,6 +358,10 @@ def main() -> int:
                 "            return child.name\n"
                 "    return ''\n"
                 "run_id = _discover(root)\n"
+                "print('workdir tree:', sorted(str(p.relative_to(root)) for p in root.rglob('*') if p.is_dir())[:40])\n"
+                "if not run_id:\n"
+                "    hits = [p.parent.name for p in root.rglob('oof_predictions.csv')]\n"
+                "    run_id = hits[0] if hits else ''\n"
                 "assert run_id, f'no run id found under {root}'\n"
                 "print('discovered run_id:', run_id)\n"
                 "cfg = load_config(root / 'configs' / f'resolved_{run_id}.yaml', workdir=root)\n"
@@ -403,7 +407,7 @@ def main() -> int:
                 t0 = time.time()
                 proc = subprocess.run(cmd, cwd=str(pkg), env=env, stdout=log,
                                       stderr=subprocess.STDOUT)
-                step_name = cmd[3]
+                step_name = "evaluation" if cmd[1].endswith("run_evaluation_stage.py") else cmd[3]
                 report.setdefault("steps", {})[step_name] = {
                     "returncode": proc.returncode,
                     "seconds": round(time.time() - t0, 1),
@@ -413,8 +417,15 @@ def main() -> int:
                 log.flush()
                 os.fsync(log.fileno())
                 if proc.returncode != 0:
-                    print(log_path.read_text(encoding="utf-8", errors="replace")[-4000:],
-                          flush=True)
+                    tail = log_path.read_text(encoding="utf-8", errors="replace")[-4000:]
+                    print(tail, flush=True)
+                    if step_name == "evaluation":
+                        # 20 minutes of GPU training must survive a broken auxiliary stage:
+                        # record it, keep going, and let the release tier say so.
+                        report.setdefault("auxiliary_stage_errors", {})["evaluation"] = tail[-1200:]
+                        print("[warn] evaluation stage failed; continuing without its tables",
+                              flush=True)
+                        continue
                     raise RuntimeError(
                         f"pipeline step failed ({proc.returncode}): {' '.join(cmd[3:7])}")
 
