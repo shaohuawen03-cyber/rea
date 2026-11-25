@@ -2157,10 +2157,11 @@
       "mode": "output",
       "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
       "kernel_slug": "dualamp-v2-1-full-r3-20261124",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-25T08:09:07Z",
-      "note": "Re-list the delivery run output to prove whether the 759 MB zip exists anywhere."
+      "note": "Re-list the delivery run output to prove whether the 759 MB zip exists anywhere.",
+      "finished_at_utc": "2026-11-25T08:09:45Z"
     },
     {
       "id": "dualamp-v2-1-r3-output-listing-b-20261125",
@@ -2168,10 +2169,11 @@
       "mode": "output",
       "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
       "kernel_slug": "dualamp-v2-1-full-r3-20261124",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-25T08:09:07Z",
-      "note": "Re-list the delivery run output to prove whether the 759 MB zip exists anywhere."
+      "note": "Re-list the delivery run output to prove whether the 759 MB zip exists anywhere.",
+      "finished_at_utc": "2026-11-25T08:09:46Z"
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"

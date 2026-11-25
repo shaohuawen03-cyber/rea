@@ -1,0 +1,708 @@
+{
+  "stage": "dualamp_v2_1_training",
+  "dataset_version": "positive_core_v2_1_dramp",
+  "rule_version": "auto_evidence_v2_2.0",
+  "leanrea_commit": "f610dc00b1aec3ab948a5b77574af0e644259a13",
+  "started_utc": "2026-11-25T03:10:45.628234+00:00",
+  "training_started": true,
+  "upload_session_present": false,
+  "cohort": {
+    "positives": 14577,
+    "composition_decoys": 14572,
+    "positive_fasta_sha256": "9ca0d4076f6d61c16ad31b920afc9029ae463d3df3510049c9b6ac4366a8e40c"
+  },
+  "negatives": {
+    "proteins_total": 117172,
+    "keyword_excluded": 18,
+    "fragments_raw": 351462,
+    "fragments_standard_aa": 351429,
+    "fragments_dedup": 351119,
+    "fragments_hit_positive_4mer_gt08": 31495,
+    "negatives_final": 20000,
+    "seed": 11,
+    "cap": 20000,
+    "neg_mode": "standard",
+    "seconds": 10.1
+  },
+  "manifest_sha256": "edd73d3d14622b3245141e1dce1394d29b02846cd8dff243a69676c439d1b3a4",
+  "smoke_mode": false,
+  "evaluation_stage": "driven via dualamp_lite.v4.pipeline.run_stage('evaluation')",
+  "encoder_preflight": {
+    "encoder": "fair-esm",
+    "is_mock": false,
+    "embed_dim": 480,
+    "probe_shapes": [
+      [
+        2,
+        23,
+        480
+      ],
+      [
+        2,
+        480
+      ]
+    ],
+    "finite": true
+  },
+  "steps": {
+    "build": {
+      "returncode": 0,
+      "seconds": 256.7
+    },
+    "features": {
+      "returncode": 0,
+      "seconds": 49.6
+    },
+    "train": {
+      "returncode": 0,
+      "seconds": 5483.7
+    },
+    "evaluation": {
+      "returncode": 1,
+      "seconds": 3.8
+    },
+    "report": {
+      "returncode": 0,
+      "seconds": 26.1
+    }
+  },
+  "auxiliary_stage_errors": {
+    "evaluation": "olled at 0.05)\n[04:47:28] INFO      external[scrambled] M1: {'n': 15071, 'n_pos': 0, 'mean_score': 0.7753273248672485, 'frac_predicted_positive': 0.7015460155265079}\n[04:47:40] INFO      external[scrambled] M2: {'n': 15071, 'n_pos': 0, 'mean_score': 0.7109682559967041, 'frac_predicted_positive': 0.6753367394333488}\n[04:47:52] INFO      external[scrambled] M3: {'n': 15071, 'n_pos': 0, 'mean_score': 0.695813000202179, 'frac_predicted_positive': 0.6564262490876518}\n[04:47:52] INFO    wrote D10_test_metrics.csv and D9_ablation.csv\n[04:47:52] INFO    step3 train_and_eval finished in 5477.7s\nmodels=['M1', 'M2', 'M3']\n  M1           AUROC=0.983 MCC=0.849 AUPRC=0.938\n  M2           AUROC=0.989 MCC=0.873 AUPRC=0.958\n  M3           AUROC=0.989 MCC=0.864 AUPRC=0.959\n$ /usr/bin/python3 /tmp/v21-ed5z5ya1/run_evaluation_stage.py\nworkdir tree: ['ablation', 'baseline', 'cache', 'dataset', 'dataset/splits', 'features', 'figures', 'logs', 'manuscript', 'model']\nTraceback (most recent call last):\n  File \"/tmp/v21-ed5z5ya1/run_evaluation_stage.py\", line 24, in <module>\n    assert run_id, f'no run id found under {root}'\n           ^^^^^^\nAssertionError: no run id found under /tmp/v21-ed5z5ya1/work/run\n"
+  },
+  "status": "COMPLETED_V2_1_TRAINING",
+  "completed_utc": "2026-11-25T04:48:26.854786+00:00",
+  "code_commit": "11c735d57ffb2c59841d525b4e98e74c70ec6db3",
+  "dataset_summary": {
+    "cluster_method": "kmer_fallback(k=3)",
+    "cluster_identity": 0.4,
+    "cluster_coverage": 0.8,
+    "n_clusters": 7455,
+    "n_sequences": 49648,
+    "layer_counts": {
+      "negative_background": 20000,
+      "scrambled": 15071,
+      "bacterial_amp": 14577
+    },
+    "split_counts": {
+      "review": 21022,
+      "scrambled": 15071,
+      "train": 9488,
+      "val": 2034,
+      "test": 2033,
+      "dev": 11522
+    },
+    "split_positives": {
+      "train": 1642,
+      "val": 352,
+      "test": 352,
+      "dev": 0,
+      "external": 0,
+      "external_homolog": 0,
+      "scrambled": 14572,
+      "review": 12231
+    },
+    "split_negatives": {
+      "train": 7846,
+      "val": 1682,
+      "test": 1681,
+      "dev": 0,
+      "external": 0,
+      "external_homolog": 0,
+      "scrambled": 499,
+      "review": 8791
+    },
+    "external_homolog_overlap": 0,
+    "dropped_records": 0,
+    "drop_reasons": {},
+    "inputs": {
+      "manifest": "/tmp/v21-ed5z5ya1/work/data/sources.yaml",
+      "sha256": "edd73d3d14622b3245141e1dce1394d29b02846cd8dff243a69676c439d1b3a4"
+    },
+    "min_len": 5,
+    "max_len": 50,
+    "demo_mode": false
+  },
+  "metrics": [
+    {
+      "model": "M3",
+      "family": "torch",
+      "n_test": "2033",
+      "threshold": "0.7502981999999999",
+      "seconds": "1664.3",
+      "n_pos": "352",
+      "auroc": "0.9893072981450436",
+      "auroc_ci_low": "0.9847379516352734",
+      "auroc_ci_high": "0.9932282593033814",
+      "auprc": "0.9586679564310323",
+      "auprc_ci_low": "0.9411305699444996",
+      "auprc_ci_high": "0.9737400775934708",
+      "mcc": "0.8641217137119439",
+      "mcc_ci_low": "0.8294434022041836",
+      "mcc_ci_high": "0.8980573254116889",
+      "f1": "0.8869565217391304",
+      "f1_ci_low": "0.8562390819004349",
+      "f1_ci_high": "0.9157253142331596",
+      "precision": "0.9053254437869822",
+      "precision_ci_low": "0.8688512641590593",
+      "precision_ci_high": "0.9354881951050764",
+      "sensitivity": "0.8693181818181818",
+      "sensitivity_ci_low": "0.82407339524275",
+      "sensitivity_ci_high": "0.9090969696969696",
+      "specificity": "0.9809637120761452",
+      "specificity_ci_low": "0.974186892498935",
+      "specificity_ci_high": "0.9870744098354325",
+      "accuracy": "0.9616330545991146",
+      "accuracy_ci_low": "0.9515350739085726",
+      "accuracy_ci_high": "0.9710935345087235",
+      "mean_score": "0.1799815171714391",
+      "frac_predicted_positive": "0.1662567634038367",
+      "auroc_delong_ci_low": "0.9853919922465694",
+      "auroc_delong_ci_high": "0.9932226040435176",
+      "test_auroc_seed_mean": "0.9879667811367693",
+      "test_auroc_seed_sd": "0.0005094275663519427"
+    },
+    {
+      "model": "M2",
+      "family": "torch",
+      "n_test": "2033",
+      "threshold": "0.7273075999999999",
+      "seconds": "1650.4",
+      "n_pos": "352",
+      "auroc": "0.9889439457033152",
+      "auroc_ci_low": "0.9838685275099595",
+      "auroc_ci_high": "0.9931389101354463",
+      "auprc": "0.9576872875755054",
+      "auprc_ci_low": "0.940117947258887",
+      "auprc_ci_high": "0.9725144447139096",
+      "mcc": "0.8728756557244065",
+      "mcc_ci_low": "0.8394152925021515",
+      "mcc_ci_high": "0.9047811865766794",
+      "f1": "0.8948863636363636",
+      "f1_ci_low": "0.8658837735520648",
+      "f1_ci_high": "0.9217893743756705",
+      "precision": "0.8948863636363636",
+      "precision_ci_low": "0.8571428571428571",
+      "precision_ci_high": "0.9291265451575781",
+      "sensitivity": "0.8948863636363636",
+      "sensitivity_ci_low": "0.853588960833304",
+      "sensitivity_ci_high": "0.9329982817869416",
+      "specificity": "0.9779892920880429",
+      "specificity_ci_low": "0.9700943499674619",
+      "specificity_ci_high": "0.9850156917631585",
+      "accuracy": "0.9636005902606984",
+      "accuracy_ci_low": "0.9539313798124094",
+      "accuracy_ci_high": "0.9726505683584038",
+      "mean_score": "0.18704584787248593",
+      "frac_predicted_positive": "0.17314313821938024",
+      "auroc_delong_ci_low": "0.9844601241476156",
+      "auroc_delong_ci_high": "0.9934277672590146",
+      "test_auroc_seed_mean": "0.9872753974906712",
+      "test_auroc_seed_sd": "0.00049947041215653"
+    },
+    {
+      "model": "M1",
+      "family": "torch",
+      "n_test": "2033",
+      "threshold": "0.8116253999999999",
+      "seconds": "2040.7",
+      "n_pos": "352",
+      "auroc": "0.9832249472716457",
+      "auroc_ci_low": "0.9752019209272366",
+      "auroc_ci_high": "0.989853011815998",
+      "auprc": "0.9381589798089826",
+      "auprc_ci_low": "0.9129714240195328",
+      "auprc_ci_high": "0.959560080897125",
+      "mcc": "0.8491688754588634",
+      "mcc_ci_low": "0.8126725808350895",
+      "mcc_ci_high": "0.8845750031667198",
+      "f1": "0.8753541076487252",
+      "f1_ci_low": "0.8441720218184847",
+      "f1_ci_high": "0.9052653238033356",
+      "precision": "0.8728813559322034",
+      "precision_ci_low": "0.8328445747800587",
+      "precision_ci_high": "0.9098360655737705",
+      "sensitivity": "0.8778409090909091",
+      "sensitivity_ci_low": "0.8337648817174291",
+      "sensitivity_ci_high": "0.9169018985203702",
+      "specificity": "0.9732302201070792",
+      "specificity_ci_low": "0.965009126180505",
+      "specificity_ci_high": "0.9810021315657779",
+      "accuracy": "0.9567142154451549",
+      "accuracy_ci_low": "0.946285140562249",
+      "accuracy_ci_high": "0.9663318924394874",
+      "mean_score": "0.23287110993875437",
+      "frac_predicted_positive": "0.17412690605017217",
+      "auroc_delong_ci_low": "0.9779527180784667",
+      "auroc_delong_ci_high": "0.9884971764648246",
+      "test_auroc_seed_mean": "0.9831911470445082",
+      "test_auroc_seed_sd": "0.00038593177200333057"
+    }
+  ],
+  "metrics_summary": [],
+  "calibration_metrics": [
+    {
+      "model": "M1",
+      "n_test": 2033,
+      "n_pos": 352,
+      "auroc": 0.9832,
+      "brier": 0.05119,
+      "brier_ref_all_positive": 0.14316,
+      "ece": 0.05973,
+      "mean_predicted": 0.2329,
+      "observed_rate": 0.1731
+    },
+    {
+      "model": "M2",
+      "n_test": 2033,
+      "n_pos": 352,
+      "auroc": 0.9889,
+      "brier": 0.03088,
+      "brier_ref_all_positive": 0.14316,
+      "ece": 0.02465,
+      "mean_predicted": 0.187,
+      "observed_rate": 0.1731
+    },
+    {
+      "model": "M3",
+      "n_test": 2033,
+      "n_pos": 352,
+      "auroc": 0.9893,
+      "brier": 0.03023,
+      "brier_ref_all_positive": 0.14316,
+      "ece": 0.02383,
+      "mean_predicted": 0.18,
+      "observed_rate": 0.1731
+    }
+  ],
+  "calibration_bins": [
+    {
+      "model": "M1",
+      "bin_low": 0.0,
+      "bin_high": 0.1,
+      "n": 1381,
+      "mean_predicted": 0.0095,
+      "observed_rate": 0.0051
+    },
+    {
+      "model": "M1",
+      "bin_low": 0.1,
+      "bin_high": 0.2,
+      "n": 83,
+      "mean_predicted": 0.1399,
+      "observed_rate": 0.0602
+    },
+    {
+      "model": "M1",
+      "bin_low": 0.2,
+      "bin_high": 0.3,
+      "n": 51,
+      "mean_predicted": 0.2495,
+      "observed_rate": 0.0392
+    },
+    {
+      "model": "M1",
+      "bin_low": 0.3,
+      "bin_high": 0.4,
+      "n": 39,
+      "mean_predicted": 0.3547,
+      "observed_rate": 0.1282
+    },
+    {
+      "model": "M1",
+      "bin_low": 0.4,
+      "bin_high": 0.5,
+      "n": 26,
+      "mean_predicted": 0.4608,
+      "observed_rate": 0.0769
+    },
+    {
+      "model": "M1",
+      "bin_low": 0.5,
+      "bin_high": 0.6,
+      "n": 35,
+      "mean_predicted": 0.5475,
+      "observed_rate": 0.1714
+    },
+    {
+      "model": "M1",
+      "bin_low": 0.6,
+      "bin_high": 0.7,
+      "n": 26,
+      "mean_predicted": 0.6556,
+      "observed_rate": 0.1538
+    },
+    {
+      "model": "M1",
+      "bin_low": 0.7,
+      "bin_high": 0.8,
+      "n": 32,
+      "mean_predicted": 0.7494,
+      "observed_rate": 0.2812
+    },
+    {
+      "model": "M1",
+      "bin_low": 0.8,
+      "bin_high": 0.9,
+      "n": 34,
+      "mean_predicted": 0.8508,
+      "observed_rate": 0.5294
+    },
+    {
+      "model": "M1",
+      "bin_low": 0.9,
+      "bin_high": 1.0,
+      "n": 326,
+      "mean_predicted": 0.9846,
+      "observed_rate": 0.9018
+    },
+    {
+      "model": "M2",
+      "bin_low": 0.0,
+      "bin_high": 0.1,
+      "n": 1578,
+      "mean_predicted": 0.0024,
+      "observed_rate": 0.0089
+    },
+    {
+      "model": "M2",
+      "bin_low": 0.1,
+      "bin_high": 0.2,
+      "n": 39,
+      "mean_predicted": 0.1466,
+      "observed_rate": 0.1282
+    },
+    {
+      "model": "M2",
+      "bin_low": 0.2,
+      "bin_high": 0.3,
+      "n": 14,
+      "mean_predicted": 0.2479,
+      "observed_rate": 0.1429
+    },
+    {
+      "model": "M2",
+      "bin_low": 0.3,
+      "bin_high": 0.4,
+      "n": 23,
+      "mean_predicted": 0.355,
+      "observed_rate": 0.2174
+    },
+    {
+      "model": "M2",
+      "bin_low": 0.4,
+      "bin_high": 0.5,
+      "n": 12,
+      "mean_predicted": 0.4357,
+      "observed_rate": 0.3333
+    },
+    {
+      "model": "M2",
+      "bin_low": 0.5,
+      "bin_high": 0.6,
+      "n": 10,
+      "mean_predicted": 0.5557,
+      "observed_rate": 0.3
+    },
+    {
+      "model": "M2",
+      "bin_low": 0.6,
+      "bin_high": 0.7,
+      "n": 5,
+      "mean_predicted": 0.649,
+      "observed_rate": 0.8
+    },
+    {
+      "model": "M2",
+      "bin_low": 0.7,
+      "bin_high": 0.8,
+      "n": 8,
+      "mean_predicted": 0.7629,
+      "observed_rate": 0.625
+    },
+    {
+      "model": "M2",
+      "bin_low": 0.8,
+      "bin_high": 0.9,
+      "n": 21,
+      "mean_predicted": 0.8505,
+      "observed_rate": 0.5714
+    },
+    {
+      "model": "M2",
+      "bin_low": 0.9,
+      "bin_high": 1.0,
+      "n": 323,
+      "mean_predicted": 0.9941,
+      "observed_rate": 0.9226
+    },
+    {
+      "model": "M3",
+      "bin_low": 0.0,
+      "bin_high": 0.1,
+      "n": 1615,
+      "mean_predicted": 0.002,
+      "observed_rate": 0.0105
+    },
+    {
+      "model": "M3",
+      "bin_low": 0.1,
+      "bin_high": 0.2,
+      "n": 23,
+      "mean_predicted": 0.141,
+      "observed_rate": 0.1739
+    },
+    {
+      "model": "M3",
+      "bin_low": 0.2,
+      "bin_high": 0.3,
+      "n": 16,
+      "mean_predicted": 0.2432,
+      "observed_rate": 0.25
+    },
+    {
+      "model": "M3",
+      "bin_low": 0.3,
+      "bin_high": 0.4,
+      "n": 4,
+      "mean_predicted": 0.3625,
+      "observed_rate": 0.25
+    },
+    {
+      "model": "M3",
+      "bin_low": 0.4,
+      "bin_high": 0.5,
+      "n": 10,
+      "mean_predicted": 0.4571,
+      "observed_rate": 0.5
+    },
+    {
+      "model": "M3",
+      "bin_low": 0.5,
+      "bin_high": 0.6,
+      "n": 12,
+      "mean_predicted": 0.5616,
+      "observed_rate": 0.3333
+    },
+    {
+      "model": "M3",
+      "bin_low": 0.6,
+      "bin_high": 0.7,
+      "n": 9,
+      "mean_predicted": 0.6528,
+      "observed_rate": 0.8889
+    },
+    {
+      "model": "M3",
+      "bin_low": 0.7,
+      "bin_high": 0.8,
+      "n": 10,
+      "mean_predicted": 0.7393,
+      "observed_rate": 0.5
+    },
+    {
+      "model": "M3",
+      "bin_low": 0.8,
+      "bin_high": 0.9,
+      "n": 16,
+      "mean_predicted": 0.849,
+      "observed_rate": 0.625
+    },
+    {
+      "model": "M3",
+      "bin_low": 0.9,
+      "bin_high": 1.0,
+      "n": 318,
+      "mean_predicted": 0.9937,
+      "observed_rate": 0.9245
+    }
+  ],
+  "calibration_source": [
+    "model/M1_scores.npz",
+    "model/M2_scores.npz",
+    "model/M3_scores.npz"
+  ],
+  "calibration_in_metrics": [
+    {
+      "model": "M1",
+      "n_test": 2033,
+      "n_pos": 352,
+      "auroc": 0.9832,
+      "brier": 0.05119,
+      "ece": 0.05973,
+      "mean_predicted": 0.2329,
+      "observed_rate": 0.1731
+    },
+    {
+      "model": "M2",
+      "n_test": 2033,
+      "n_pos": 352,
+      "auroc": 0.9889,
+      "brier": 0.03088,
+      "ece": 0.02465,
+      "mean_predicted": 0.187,
+      "observed_rate": 0.1731
+    },
+    {
+      "model": "M3",
+      "n_test": 2033,
+      "n_pos": 352,
+      "auroc": 0.9893,
+      "brier": 0.03023,
+      "ece": 0.02383,
+      "mean_predicted": 0.18,
+      "observed_rate": 0.1731
+    }
+  ],
+  "fixed_specificity_operating_points": [
+    {
+      "target_specificity": 0.99,
+      "dev_threshold": 0.836127,
+      "dev_specificity": 0.99,
+      "dev_sensitivity": 0.8781,
+      "dev_n_neg": 9528,
+      "dev_n_pos": 1994,
+      "source": "dev OOF (seed 1) per model/<MODEL>_scores.npz",
+      "model": "M1",
+      "test_at_dev_threshold": {
+        "sensitivity": 0.8608,
+        "specificity": 0.9744,
+        "mcc": 0.8409,
+        "precision": 0.8757,
+        "f1": 0.8682
+      }
+    },
+    {
+      "target_specificity": 0.995,
+      "dev_threshold": 0.936395,
+      "dev_specificity": 0.9951,
+      "dev_sensitivity": 0.8185,
+      "dev_n_neg": 9528,
+      "dev_n_pos": 1994,
+      "source": "dev OOF (seed 1) per model/<MODEL>_scores.npz",
+      "model": "M1",
+      "test_at_dev_threshold": {
+        "sensitivity": 0.7869,
+        "specificity": 0.9857,
+        "mcc": 0.8232,
+        "precision": 0.9203,
+        "f1": 0.8484
+      }
+    },
+    {
+      "target_specificity": 0.99,
+      "dev_threshold": 0.823001,
+      "dev_specificity": 0.99,
+      "dev_sensitivity": 0.8666,
+      "dev_n_neg": 9528,
+      "dev_n_pos": 1994,
+      "source": "dev OOF (seed 1) per model/<MODEL>_scores.npz",
+      "model": "M2",
+      "test_at_dev_threshold": {
+        "sensitivity": 0.8722,
+        "specificity": 0.9798,
+        "mcc": 0.8627,
+        "precision": 0.9003,
+        "f1": 0.886
+      }
+    },
+    {
+      "target_specificity": 0.995,
+      "dev_threshold": 0.951772,
+      "dev_specificity": 0.9951,
+      "dev_sensitivity": 0.817,
+      "dev_n_neg": 9528,
+      "dev_n_pos": 1994,
+      "source": "dev OOF (seed 1) per model/<MODEL>_scores.npz",
+      "model": "M2",
+      "test_at_dev_threshold": {
+        "sensitivity": 0.8267,
+        "specificity": 0.9893,
+        "mcc": 0.86,
+        "precision": 0.9417,
+        "f1": 0.8805
+      }
+    },
+    {
+      "target_specificity": 0.99,
+      "dev_threshold": 0.952314,
+      "dev_specificity": 0.99,
+      "dev_sensitivity": 0.848,
+      "dev_n_neg": 9528,
+      "dev_n_pos": 1994,
+      "source": "dev OOF (seed 1) per model/<MODEL>_scores.npz",
+      "model": "M3",
+      "test_at_dev_threshold": {
+        "sensitivity": 0.8153,
+        "specificity": 0.9893,
+        "mcc": 0.8526,
+        "precision": 0.941,
+        "f1": 0.8737
+      }
+    },
+    {
+      "target_specificity": 0.995,
+      "dev_threshold": 0.99102,
+      "dev_specificity": 0.9951,
+      "dev_sensitivity": 0.7839,
+      "dev_n_neg": 9528,
+      "dev_n_pos": 1994,
+      "source": "dev OOF (seed 1) per model/<MODEL>_scores.npz",
+      "model": "M3",
+      "test_at_dev_threshold": {
+        "sensitivity": 0.75,
+        "specificity": 0.9952,
+        "mcc": 0.8283,
+        "precision": 0.9706,
+        "f1": 0.8462
+      }
+    }
+  ],
+  "fixed_specificity_source": "dev OOF vector in model/<MODEL>_scores.npz",
+  "composition_challenge": {
+    "rows": [
+      {
+        "split": "scrambled_test",
+        "model": "M1",
+        "source": "training log",
+        "n": 15071,
+        "n_pos": 0,
+        "mean_score": 0.7753,
+        "frac_predicted_positive": 0.7015
+      },
+      {
+        "split": "scrambled_test",
+        "model": "M2",
+        "source": "training log",
+        "n": 15071,
+        "n_pos": 0,
+        "mean_score": 0.711,
+        "frac_predicted_positive": 0.6753
+      },
+      {
+        "split": "scrambled_test",
+        "model": "M3",
+        "source": "training log",
+        "n": 15071,
+        "n_pos": 0,
+        "mean_score": 0.6958,
+        "frac_predicted_positive": 0.6564
+      }
+    ],
+    "max_frac_predicted_positive": 0.7015,
+    "best_model_frac": 0.6564,
+    "verdict": "FAIL_COMPOSITION_SHORTCUT",
+    "criterion": "PASS only if every model keeps composition-decoy acceptance < 10%",
+    "note": "decoy sequences are length+composition matched shuffles of the positives; a high acceptance rate means the model reads composition, not order"
+  },
+  "calibration_bins_count": 0,
+  "caveats": [
+    "Positives are DRAMP-curated bacterial actives (TIER_B_LABEL: bacterial activity label + named target + PubMed reference). The bulk dumps do not carry per-record MIC values, so this is not a MIC-quantitative cohort.",
+    "Negatives are UniProt bacterial-cytoplasm fragments: a weak negative label, not experimentally verified inactivity.",
+    "The composition-matched challenge is reported as a challenge; a high flag rate is published as a failure mode, not hidden."
+  ],
+  "private_model_bundle": {
+    "skipped": "no upload session in env",
+    "local_bytes": 759753038,
+    "local_sha256": "9247b18cb9539cd954c48060b513c47aa2d42c51b4e581530096323ee339b465"
+  }
+}
