@@ -1,0 +1,12 @@
+{
+  "job_id": "dualamp-v2-1-weights-r4-20261125",
+  "provider": "kaggle",
+  "mode": "run",
+  "accelerator": "NvidiaTeslaT4",
+  "kernel_ref": "shaohuawen/dualamp-v2-1-weights-r4-20261125",
+  "kernel_url": "https://www.kaggle.com/code/shaohuawen/dualamp-v2-1-weights-r4-20261125",
+  "status": "pushed_async",
+  "copied_files": [],
+  "push_output": "Kernel version 1 successfully pushed.  Please check progress at https://www.kaggle.com/code/shaohuawen/dualamp-v2-1-weights-r4-20261125",
+  "updated_at_utc": "2026-11-25T08:17:45Z"
+}
