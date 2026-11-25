@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-25T02:10:17Z",
+  "updated_at_utc": "2026-11-25T02:40:13Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -1431,6 +1431,30 @@
       "created_at_utc": "2026-11-25T02:10:17Z",
       "note": "Full r2 check.",
       "finished_at_utc": "2026-11-25T02:11:04Z"
+    },
+    {
+      "id": "dualamp-v2-1-full-r2-status-a4-20261124",
+      "provider": "kaggle",
+      "mode": "status",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
+      "kernel_slug": "dualamp-v2-1-full-r2-20261124",
+      "status": "completed",
+      "wait": false,
+      "created_at_utc": "2026-11-25T02:40:13Z",
+      "note": "Full r2 check a4.",
+      "finished_at_utc": "2026-11-25T02:40:53Z"
+    },
+    {
+      "id": "dualamp-v2-1-full-r2-fetch-a4-20261124",
+      "provider": "kaggle",
+      "mode": "output",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
+      "kernel_slug": "dualamp-v2-1-full-r2-20261124",
+      "status": "completed",
+      "wait": false,
+      "created_at_utc": "2026-11-25T02:40:13Z",
+      "note": "Full r2 check a4.",
+      "finished_at_utc": "2026-11-25T02:40:55Z"
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"

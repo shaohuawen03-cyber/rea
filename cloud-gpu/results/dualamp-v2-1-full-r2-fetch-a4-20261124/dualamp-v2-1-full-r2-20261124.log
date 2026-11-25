@@ -1,0 +1,214 @@
+[{"stream_name":"stdout","time":4.741636742,"data":"[pip] gdown: rc=0\n"}
+,{"stream_name":"stdout","time":6.421591642,"data":"[pip] requests: rc=0\n"}
+,{"stream_name":"stdout","time":8.659063686,"data":"[pip] fair-esm: rc=0\n"}
+,{"stream_name":"stdout","time":10.275675561,"data":"[pip] pyyaml: rc=0\n"}
+,{"stream_name":"stdout","time":14.04202304,"data":"[pip] biopython: rc=0\n"}
+,{"stream_name":"stdout","time":15.612011738,"data":"[pip] pandas: rc=0\n"}
+,{"stream_name":"stdout","time":17.210620765,"data":"[pip] scikit-learn: rc=0\n"}
+,{"stream_name":"stdout","time":18.818937843,"data":"[pip] matplotlib: rc=0\n"}
+,{"stream_name":"stdout","time":52.987122574,"data":"Downloading: \"https://dl.fbaipublicfiles.com/fair-esm/models/esm2_t12_35M_UR50D.pt\" to /root/.cache/torch/hub/checkpoints/esm2_t12_35M_UR50D.pt\n"}
+,{"stream_name":"stdout","time":53.520270846,"data":"Downloading: \"https://dl.fbaipublicfiles.com/fair-esm/regression/esm2_t12_35M_UR50D-contact-regression.pt\" to /root/.cache/torch/hub/checkpoints/esm2_t12_35M_UR50D-contact-regression.pt\n"}
+,{"stream_name":"stdout","time":5934.04443024,"data":"f3 early stop at epoch 26 (best 14, val AUROC 0.987)\n"}
+,{"stream_name":"stdout","time":5934.044481058,"data":"[02:00:28] INFO        M2/s5/f4 early stop at epoch 19 (best 7, val AUROC 0.995)\n"}
+,{"stream_name":"stdout","time":5934.044486697,"data":"[02:00:55] INFO      M2 seed 5: dev OOF AUROC 0.988, test AUROC 0.987 MCC 0.871 (epochs=7)\n"}
+,{"stream_name":"stdout","time":5934.044491229,"data":"[02:02:59] INFO    training M3 ...\n"}
+,{"stream_name":"stdout","time":5934.044495595,"data":"[02:03:45] INFO        M3/s1/f0 early stop at epoch 17 (best 5, val AUROC 0.997)\n"}
+,{"stream_name":"stdout","time":5934.044501206,"data":"[02:04:58] INFO        M3/s1/f1 early stop at epoch 27 (best 15, val AUROC 0.994)\n"}
+,{"stream_name":"stdout","time":5934.044509864,"data":"[02:05:50] INFO        M3/s1/f2 early stop at epoch 19 (best 7, val AUROC 0.989)\n"}
+,{"stream_name":"stdout","time":5934.044513704,"data":"[02:06:49] INFO        M3/s1/f3 early stop at epoch 22 (best 10, val AUROC 0.995)\n"}
+,{"stream_name":"stdout","time":5934.04453856,"data":"[02:07:36] INFO        M3/s1/f4 early stop at epoch 17 (best 5, val AUROC 0.992)\n"}
+,{"stream_name":"stdout","time":5934.044543725,"data":"[02:08:00] INFO      M3 seed 1: dev OOF AUROC 0.991, test AUROC 0.988 MCC 0.870 (epochs=7)\n"}
+,{"stream_name":"stdout","time":5934.044548906,"data":"[02:08:55] INFO        M3/s2/f0 early stop at epoch 20 (best 8, val AUROC 0.993)\n"}
+,{"stream_name":"stdout","time":5934.044554046,"data":"[02:10:11] INFO        M3/s2/f1 early stop at epoch 28 (best 16, val AUROC 0.993)\n"}
+,{"stream_name":"stdout","time":5934.044558594,"data":"[02:11:44] INFO        M3/s2/f2 early stop at epoch 34 (best 22, val AUROC 0.996)\n"}
+,{"stream_name":"stdout","time":5934.044563149,"data":"[02:12:23] INFO        M3/s2/f3 early stop at epoch 14 (best 2, val AUROC 0.993)\n"}
+,{"stream_name":"stdout","time":5934.044567651,"data":"[02:13:15] INFO        M3/s2/f4 early stop at epoch 19 (best 7, val AUROC 0.996)\n"}
+,{"stream_name":"stdout","time":5934.04457233,"data":"[02:13:43] INFO      M3 seed 2: dev OOF AUROC 0.992, test AUROC 0.988 MCC 0.863 (epochs=8)\n"}
+,{"stream_name":"stdout","time":5934.044576436,"data":"[02:14:45] INFO        M3/s3/f0 early stop at epoch 22 (best 10, val AUROC 0.993)\n"}
+,{"stream_name":"stdout","time":5934.044580651,"data":"[02:15:55] INFO        M3/s3/f1 early stop at epoch 26 (best 14, val AUROC 0.995)\n"}
+,{"stream_name":"stdout","time":5934.044584615,"data":"[02:16:33] INFO        M3/s3/f2 early stop at epoch 14 (best 2, val AUROC 0.995)\n"}
+,{"stream_name":"stdout","time":5934.04458879,"data":"[02:17:14] INFO        M3/s3/f3 early stop at epoch 15 (best 3, val AUROC 0.995)\n"}
+,{"stream_name":"stdout","time":5934.044604295,"data":"[02:18:19] INFO        M3/s3/f4 early stop at epoch 24 (best 12, val AUROC 0.992)\n"}
+,{"stream_name":"stdout","time":5934.044607908,"data":"[02:18:54] INFO      M3 seed 3: dev OOF AUROC 0.989, test AUROC 0.988 MCC 0.873 (epochs=10)\n"}
+,{"stream_name":"stdout","time":5934.044610991,"data":"[02:19:46] INFO        M3/s4/f0 early stop at epoch 19 (best 7, val AUROC 0.993)\n"}
+,{"stream_name":"stdout","time":5934.044614355,"data":"[02:20:38] INFO        M3/s4/f1 early stop at epoch 19 (best 7, val AUROC 0.995)\n"}
+,{"stream_name":"stdout","time":5934.044617535,"data":"[02:21:57] INFO        M3/s4/f2 early stop at epoch 29 (best 17, val AUROC 0.995)\n"}
+,{"stream_name":"stdout","time":5934.044623753,"data":"[02:22:44] INFO        M3/s4/f3 early stop at epoch 17 (best 5, val AUROC 0.994)\n"}
+,{"stream_name":"stdout","time":5934.04462752,"data":"[02:23:33] INFO        M3/s4/f4 early stop at epoch 18 (best 6, val AUROC 0.989)\n"}
+,{"stream_name":"stdout","time":5934.044631514,"data":"[02:23:57] INFO      M3 seed 4: dev OOF AUROC 0.991, test AUROC 0.988 MCC 0.861 (epochs=7)\n"}
+,{"stream_name":"stdout","time":5934.044635626,"data":"[02:25:11] INFO        M3/s5/f0 early stop at epoch 27 (best 15, val AUROC 0.993)\n"}
+,{"stream_name":"stdout","time":5934.044638751,"data":"[02:26:05] INFO        M3/s5/f1 early stop at epoch 20 (best 8, val AUROC 0.995)\n"}
+,{"stream_name":"stdout","time":5934.044642009,"data":"[02:27:45] INFO        M3/s5/f2 early stop at epoch 37 (best 25, val AUROC 0.996)\n"}
+,{"stream_name":"stdout","time":5934.044645155,"data":"[02:28:35] INFO        M3/s5/f3 early stop at epoch 18 (best 6, val AUROC 0.989)\n"}
+,{"stream_name":"stdout","time":5934.044648785,"data":"[02:29:19] INFO        M3/s5/f4 early stop at epoch 16 (best 4, val AUROC 0.994)\n"}
+,{"stream_name":"stdout","time":5934.044670734,"data":"[02:29:46] INFO      M3 seed 5: dev OOF AUROC 0.990, test AUROC 0.987 MCC 0.863 (epochs=8)\n"}
+,{"stream_name":"stdout","time":5934.044675002,"data":"[02:33:21] INFO      comparisons: 6 (BH-FDR controlled at 0.05)\n"}
+,{"stream_name":"stdout","time":5934.044694331,"data":"[02:33:32] INFO      external[scrambled] M1: {'n': 15071, 'n_pos': 0, 'mean_score': 0.7753273248672485, 'frac_predicted_positive': 0.7015460155265079}\n"}
+,{"stream_name":"stdout","time":5934.044698882,"data":"[02:33:45] INFO      external[scrambled] M2: {'n': 15071, 'n_pos': 0, 'mean_score': 0.7109682559967041, 'frac_predicted_positive': 0.6753367394333488}\n"}
+,{"stream_name":"stdout","time":5934.044702624,"data":"[02:33:57] INFO      external[scrambled] M3: {'n': 15071, 'n_pos': 0, 'mean_score': 0.695813000202179, 'frac_predicted_positive': 0.6564262490876518}\n"}
+,{"stream_name":"stdout","time":5934.044706134,"data":"[02:33:57] INFO    wrote D10_test_metrics.csv and D9_ablation.csv\n"}
+,{"stream_name":"stdout","time":5934.044709653,"data":"[02:33:57] INFO    step3 train_and_eval finished in 5563.4s\n"}
+,{"stream_name":"stdout","time":5934.044713222,"data":"models=['M1', 'M2', 'M3']\n"}
+,{"stream_name":"stdout","time":5934.044716331,"data":"  M1           AUROC=0.983 MCC=0.849 AUPRC=0.938\n"}
+,{"stream_name":"stdout","time":5934.044719507,"data":"  M2           AUROC=0.989 MCC=0.873 AUPRC=0.958\n"}
+,{"stream_name":"stdout","time":5934.044722634,"data":"  M3           AUROC=0.989 MCC=0.864 AUPRC=0.959\n"}
+,{"stream_name":"stdout","time":5934.044726352,"data":"$ /usr/bin/python3 /tmp/v21-wnk481vb/run_evaluation_stage.py\n"}
+,{"stream_name":"stdout","time":5934.044730072,"data":"workdir tree: ['ablation', 'baseline', 'cache', 'dataset', 'dataset/splits', 'features', 'figures', 'logs', 'manuscript', 'model']\n"}
+,{"stream_name":"stdout","time":5934.044734214,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stdout","time":5934.044742856,"data":"  File \"/tmp/v21-wnk481vb/run_evaluation_stage.py\", line 24, in \u003cmodule\u003e\n"}
+,{"stream_name":"stdout","time":5934.044746855,"data":"    assert run_id, f'no run id found under {root}'\n"}
+,{"stream_name":"stdout","time":5934.044750322,"data":"           ^^^^^^\n"}
+,{"stream_name":"stdout","time":5934.044753609,"data":"AssertionError: no run id found under /tmp/v21-wnk481vb/work/run\n"}
+,{"stream_name":"stdout","time":5934.044756888,"data":"\n"}
+,{"stream_name":"stdout","time":5934.044760464,"data":"[warn] evaluation stage failed; continuing without its tables\n"}
+,{"stream_name":"stdout","time":5991.763402051,"data":"{\n"}
+,{"stream_name":"stdout","time":5991.76344701,"data":"  \"stage\": \"dualamp_v2_1_training\",\n"}
+,{"stream_name":"stdout","time":5991.76348001,"data":"  \"dataset_version\": \"positive_core_v2_1_dramp\",\n"}
+,{"stream_name":"stdout","time":5991.763485794,"data":"  \"rule_version\": \"auto_evidence_v2_2.0\",\n"}
+,{"stream_name":"stdout","time":5991.763491114,"data":"  \"leanrea_commit\": \"f610dc00b1aec3ab948a5b77574af0e644259a13\",\n"}
+,{"stream_name":"stdout","time":5991.7634965,"data":"  \"started_utc\": \"2026-11-25T00:55:28.779988+00:00\",\n"}
+,{"stream_name":"stdout","time":5991.76350112,"data":"  \"training_started\": true,\n"}
+,{"stream_name":"stdout","time":5991.763505392,"data":"  \"upload_session_present\": false,\n"}
+,{"stream_name":"stdout","time":5991.76350968,"data":"  \"cohort\": {\n"}
+,{"stream_name":"stdout","time":5991.763513888,"data":"    \"positives\": 14577,\n"}
+,{"stream_name":"stdout","time":5991.76351815,"data":"    \"composition_decoys\": 14572,\n"}
+,{"stream_name":"stdout","time":5991.763524115,"data":"    \"positive_fasta_sha256\": \"9ca0d4076f6d61c16ad31b920afc9029ae463d3df3510049c9b6ac4366a8e40c\"\n"}
+,{"stream_name":"stdout","time":5991.763532634,"data":"  },\n"}
+,{"stream_name":"stdout","time":5991.763535475,"data":"  \"negatives\": {\n"}
+,{"stream_name":"stdout","time":5991.763546332,"data":"    \"proteins_total\": 117172,\n"}
+,{"stream_name":"stdout","time":5991.763549259,"data":"    \"keyword_excluded\": 18,\n"}
+,{"stream_name":"stdout","time":5991.76355213,"data":"    \"fragments_raw\": 351462,\n"}
+,{"stream_name":"stdout","time":5991.763555042,"data":"    \"fragments_standard_aa\": 351429,\n"}
+,{"stream_name":"stdout","time":5991.763558425,"data":"    \"fragments_dedup\": 351119,\n"}
+,{"stream_name":"stdout","time":5991.763561591,"data":"    \"fragments_hit_positive_4mer_gt08\": 31495,\n"}
+,{"stream_name":"stdout","time":5991.763565831,"data":"    \"negatives_final\": 20000,\n"}
+,{"stream_name":"stdout","time":5991.763583457,"data":"    \"seed\": 11,\n"}
+,{"stream_name":"stdout","time":5991.763588997,"data":"    \"cap\": 20000,\n"}
+,{"stream_name":"stdout","time":5991.763593944,"data":"    \"neg_mode\": \"standard\",\n"}
+,{"stream_name":"stdout","time":5991.763599009,"data":"    \"seconds\": 10.3\n"}
+,{"stream_name":"stdout","time":5991.763603259,"data":"  },\n"}
+,{"stream_name":"stdout","time":5991.763607342,"data":"  \"manifest_sha256\": \"81f8377c5bf7830fb9dd0194900b59e925295a43ef5dadf4bd031a3a403c36e3\",\n"}
+,{"stream_name":"stdout","time":5991.76362884,"data":"  \"smoke_mode\": false,\n"}
+,{"stream_name":"stdout","time":5991.763633342,"data":"  \"evaluation_stage\": \"driven via dualamp_lite.v4.pipeline.run_stage('evaluation')\",\n"}
+,{"stream_name":"stdout","time":5991.763638134,"data":"  \"encoder_preflight\": {\n"}
+,{"stream_name":"stdout","time":5991.763644336,"data":"    \"encoder\": \"fair-esm\",\n"}
+,{"stream_name":"stdout","time":5991.763689232,"data":"    \"is_mock\": false,\n"}
+,{"stream_name":"stdout","time":5991.76370794,"data":"    \"embed_dim\": 480,\n"}
+,{"stream_name":"stdout","time":5991.763711844,"data":"    \"probe_shapes\": [\n"}
+,{"stream_name":"stdout","time":5991.763715392,"data":"      [\n"}
+,{"stream_name":"stdout","time":5991.763718864,"data":"        2,\n"}
+,{"stream_name":"stdout","time":5991.763722245,"data":"        23,\n"}
+,{"stream_name":"stdout","time":5991.763725662,"data":"        480\n"}
+,{"stream_name":"stdout","time":5991.763728967,"data":"      ],\n"}
+,{"stream_name":"stdout","time":5991.763732404,"data":"      [\n"}
+,{"stream_name":"stdout","time":5991.763735726,"data":"        2,\n"}
+,{"stream_name":"stdout","time":5991.763739116,"data":"        480\n"}
+,{"stream_name":"stdout","time":5991.763742538,"data":"      ]\n"}
+,{"stream_name":"stdout","time":5991.763747631,"data":"    ],\n"}
+,{"stream_name":"stdout","time":5991.7637551,"data":"    \"finite\": true\n"}
+,{"stream_name":"stdout","time":5991.763772212,"data":"  },\n"}
+,{"stream_name":"stdout","time":5991.763776216,"data":"  \"steps\": {\n"}
+,{"stream_name":"stdout","time":5991.763780286,"data":"    \"build\": {\n"}
+,{"stream_name":"stdout","time":5991.763784432,"data":"      \"returncode\": 0,\n"}
+,{"stream_name":"stdout","time":5991.76378874,"data":"      \"seconds\": 258.1\n"}
+,{"stream_name":"stdout","time":5991.763798932,"data":"    },\n"}
+,{"stream_name":"stdout","time":5991.763802322,"data":"    \"features\": {\n"}
+,{"stream_name":"stdout","time":5991.76380575,"data":"      \"returncode\": 0,\n"}
+,{"stream_name":"stdout","time":5991.763809342,"data":"      \"seconds\": 49.0\n"}
+,{"stream_name":"stdout","time":5991.763812811,"data":"    },\n"}
+,{"stream_name":"stdout","time":5991.763816117,"data":"    \"train\": {\n"}
+,{"stream_name":"stdout","time":5991.763819538,"data":"      \"returncode\": 0,\n"}
+,{"stream_name":"stdout","time":5991.763822964,"data":"      \"seconds\": 5568.9\n"}
+,{"stream_name":"stdout","time":5991.763826404,"data":"    },\n"}
+,{"stream_name":"stdout","time":5991.76382975,"data":"    \"evaluation\": {\n"}
+,{"stream_name":"stdout","time":5991.763833238,"data":"      \"returncode\": 1,\n"}
+,{"stream_name":"stdout","time":5991.763836763,"data":"      \"seconds\": 3.8\n"}
+,{"stream_name":"stdout","time":5991.763840151,"data":"    },\n"}
+,{"stream_name":"stdout","time":5991.763843487,"data":"    \"report\": {\n"}
+,{"stream_name":"stdout","time":5991.7638487,"data":"      \"returncode\": 0,\n"}
+,{"stream_name":"stdout","time":5991.763856736,"data":"      \"seconds\": 22.0\n"}
+,{"stream_name":"stdout","time":5991.763871802,"data":"    }\n"}
+,{"stream_name":"stdout","time":5991.763875688,"data":"  },\n"}
+,{"stream_name":"stdout","time":5991.76387967,"data":"  \"auxiliary_stage_errors\": {\n"}
+,{"stream_name":"stdout","time":5991.763886874,"data":"    \"evaluation\": \"olled at 0.05)\\n[02:33:32] INFO      external[scrambled] M1: {'n': 15071, 'n_pos': 0, 'mean_score': 0.7753273248672485, 'frac_predicted_positive': 0.7015460155265079}\\n[02:33:45] INFO      external[scrambled] M2: {'n': 15071, 'n_pos': 0, 'mean_score': 0.7109682559967041, 'frac_predicted_positive': 0.6753367394333488}\\n[02:33:57] INFO      external[scrambled] M3: {'n': 15071, 'n_pos': 0, 'mean_score': 0.695813000202179, 'frac_predicted_positive': 0.6564262490876518}\\n[02:33:57] INFO    wrote D10_test_metrics.csv and D9_ablation.csv\\n[02:33:57] INFO    step3 train_and_eval finished in 5563.4s\\nmodels=['M1', 'M2', 'M3']\\n  M1           AUROC=0.983 MCC=0.849 AUPRC=0.938\\n  M2           AUROC=0.989 MCC=0.873 AUPRC=0.958\\n  M3           AUROC=0.989 MCC=0.864 AUPRC=0.959\\n$ /usr/bin/python3 /tmp/v21-wnk481vb/run_evaluation_stage.py\\nworkdir tree: ['ablation', 'baseline', 'cache', 'dataset', 'dataset/splits', 'features', 'figures', 'logs', 'manuscript', 'model']\\nTraceback (most recent call last):\\n  File \\\"/tmp/v21-wnk481vb/run_evaluation_stage.py\\\", line 24, in \u003cmodule\u003e\\n    assert run_id, f'no run id found under {root}'\\n           ^^^^^^\\nAssertionError: no run id found under /tmp/v21-wnk481vb/work/run\\n\"\n"}
+,{"stream_name":"stdout","time":5991.763904889,"data":"  },\n"}
+,{"stream_name":"stdout","time":5991.763908376,"data":"  \"status\": \"COMPLETED_V2_1_TRAINING\",\n"}
+,{"stream_name":"stdout","time":5991.763912164,"data":"  \"completed_utc\": \"2026-11-25T02:34:26.029226+00:00\",\n"}
+,{"stream_name":"stdout","time":5991.763915896,"data":"  \"code_commit\": \"e06a0aca74516a8b89a518e6510ddafb94b6a287\",\n"}
+,{"stream_name":"stdout","time":5991.763919559,"data":"  \"dataset_summary\": {\n"}
+,{"stream_name":"stdout","time":5991.76392308,"data":"    \"cluster_method\": \"kmer_fallback(k=3)\",\n"}
+,{"stream_name":"stdout","time":5991.763926764,"data":"    \"cluster_identity\": 0.4,\n"}
+,{"stream_name":"stdout","time":5991.763930308,"data":"    \"cluster_coverage\": 0.8,\n"}
+,{"stream_name":"stdout","time":5991.763933722,"data":"    \"n_clusters\": 7455,\n"}
+,{"stream_name":"stdout","time":5991.763942265,"data":"    \"n_sequences\": 49648,\n"}
+,{"stream_name":"stdout","time":5991.763947816,"data":"    \"layer_counts\": {\n"}
+,{"stream_name":"stdout","time":5991.763955836,"data":"      \"negative_background\": 20000,\n"}
+,{"stream_name":"stdout","time":5991.763971668,"data":"      \"scrambled\": 15071,\n"}
+,{"stream_name":"stdout","time":5991.763975946,"data":"      \"bacterial_amp\": 14577\n"}
+,{"stream_name":"stdout","time":5991.76397992,"data":"    },\n"}
+,{"stream_name":"stdout","time":5991.763983648,"data":"    \"split_counts\": {\n"}
+,{"stream_name":"stdout","time":5991.76398796,"data":"      \"review\": 21022,\n"}
+,{"stream_name":"stdout","time":5991.76399164,"data":"      \"scrambled\": 15071,\n"}
+,{"stream_name":"stdout","time":5991.763995181,"data":"      \"train\": 9488,\n"}
+,{"stream_name":"stdout","time":5991.763998749,"data":"      \"val\": 2034,\n"}
+,{"stream_name":"stdout","time":5991.764002192,"data":"      \"test\": 2033,\n"}
+,{"stream_name":"stdout","time":5991.764005696,"data":"      \"dev\": 11522\n"}
+,{"stream_name":"stdout","time":5991.76400919,"data":"    },\n"}
+,{"stream_name":"stdout","time":5991.764012472,"data":"    \"split_positives\": {\n"}
+,{"stream_name":"stdout","time":5991.764015894,"data":"      \"train\": 1642,\n"}
+,{"stream_name":"stdout","time":5991.764019251,"data":"      \"val\": 352,\n"}
+,{"stream_name":"stdout","time":5991.764022975,"data":"      \"test\": 352,\n"}
+,{"stream_name":"stdout","time":5991.76402644,"data":"      \"dev\": 0,\n"}
+,{"stream_name":"stdout","time":5991.764029832,"data":"      \"external\": 0,\n"}
+,{"stream_name":"stdout","time":5991.764033272,"data":"      \"external_homolog\": 0,\n"}
+,{"stream_name":"stdout","time":5991.7640368,"data":"      \"scrambled\": 14572,\n"}
+,{"stream_name":"stdout","time":5991.764040363,"data":"      \"review\": 12231\n"}
+,{"stream_name":"stdout","time":5991.764045646,"data":"    },\n"}
+,{"stream_name":"stdout","time":5991.764053552,"data":"    \"split_negatives\": {\n"}
+,{"stream_name":"stdout","time":5991.764069208,"data":"      \"train\": 7846,\n"}
+,{"stream_name":"stdout","time":5991.764073139,"data":"      \"val\": 1682,\n"}
+,{"stream_name":"stdout","time":5991.764077191,"data":"      \"test\": 1681,\n"}
+,{"stream_name":"stdout","time":5991.76408102,"data":"      \"dev\": 0,\n"}
+,{"stream_name":"stdout","time":5991.764089233,"data":"      \"external\": 0,\n"}
+,{"stream_name":"stdout","time":5991.764092876,"data":"      \"external_homolog\": 0,\n"}
+,{"stream_name":"stdout","time":5991.764096368,"data":"      \"scrambled\": 499,\n"}
+,{"stream_name":"stdout","time":5991.764100031,"data":"      \"review\": 8791\n"}
+,{"stream_name":"stdout","time":5991.764103474,"data":"    },\n"}
+,{"stream_name":"stdout","time":5991.764106858,"data":"    \"external_homolog_overlap\": 0,\n"}
+,{"stream_name":"stdout","time":5991.764110369,"data":"    \"dropped_records\": 0,\n"}
+,{"stream_name":"stdout","time":5991.76411382,"data":"    \"drop_reasons\": {},\n"}
+,{"stream_name":"stdout","time":5991.764117286,"data":"    \"inputs\": {\n"}
+,{"stream_name":"stdout","time":5991.764120792,"data":"      \"manifest\": \"/tmp/v21-wnk481vb/work/data/sources.yaml\",\n"}
+,{"stream_name":"stdout","time":5991.764125136,"data":"      \"sha256\": \"81f8377c5bf7830fb9dd0194900b59e925295a43ef5dadf4bd031a3a403c36e3\"\n"}
+,{"stream_name":"stdout","time":5991.764128952,"data":"    },\n"}
+,{"stream_name":"stdout","time":5991.764132274,"data":"    \"min_len\": 5,\n"}
+,{"stream_name":"stdout","time":5991.764135708,"data":"    \"max_len\": 50,\n"}
+,{"stream_name":"stdout","time":5991.764139132,"data":"    \"demo_mode\": false\n"}
+,{"stream_name":"stdout","time":5991.764144456,"data":"  },\n"}
+,{"stream_name":"stdout","time":5991.764152022,"data":"  \"calibration_metrics\": [],\n"}
+,{"stream_name":"stdout","time":5991.76416771,"data":"  \"fixed_specificity_operating_points\": [],\n"}
+,{"stream_name":"stdout","time":5991.76417226,"data":"  \"fixed_specificity_source\": \"unavailable (no OOF table)\",\n"}
+,{"stream_name":"stdout","time":5991.76417653,"data":"  \"composition_challenge\": {\n"}
+,{"stream_name":"stdout","time":5991.764180867,"data":"    \"rows\": [],\n"}
+,{"stream_name":"stdout","time":5991.764184904,"data":"    \"max_frac_predicted_positive\": null,\n"}
+,{"stream_name":"stdout","time":5991.764188592,"data":"    \"verdict\": \"NOT_EVALUATED\"\n"}
+,{"stream_name":"stdout","time":5991.76419217,"data":"  },\n"}
+,{"stream_name":"stdout","time":5991.764195586,"data":"  \"calibration_bins_count\": 0,\n"}
+,{"stream_name":"stdout","time":5991.764199118,"data":"  \"caveats\": [\n"}
+,{"stream_name":"stdout","time":5991.764202694,"data":"    \"Positives are DRAMP-curated bacterial actives (TIER_B_LABEL: bacterial activity label + named target + PubMed reference). The bulk dumps do not carry per-record MIC values, so this is not a MIC-quantitative cohort.\",\n"}
+,{"stream_name":"stdout","time":5991.764206951,"data":"    \"Negatives are UniProt bacterial-cytoplasm fragments: a weak negative label, not experimentally verified inactivity.\",\n"}
+,{"stream_name":"stdout","time":5991.764210934,"data":"    \"The composition-matched challenge is reported as a challenge; a high flag rate is published as a failure mode, not hidden.\"\n"}
+,{"stream_name":"stdout","time":5991.764214829,"data":"  ],\n"}
+,{"stream_name":"stdout","time":5991.764218116,"data":"  \"private_model_bundle\": {\n"}
+,{"stream_name":"stdout","time":5991.764221665,"data":"    \"skipped\": \"no upload session in env\",\n"}
+,{"stream_name":"stdout","time":5991.764225261,"data":"    \"local_bytes\": 759753063,\n"}
+,{"stream_name":"stdout","time":5991.764228759,"data":"    \"local_sha256\": \"1d421e108527fcabfcda4a30d2e6c681656429579b2fa65f72fd45a859379241\"\n"}
+,{"stream_name":"stdout","time":5991.764232545,"data":"  }\n"}
+,{"stream_name":"stdout","time":5991.764237507,"data":"}\n"}
+,{"stream_name":"stderr","time":5994.687112771,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":5994.687160089,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":5994.893465435,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":5994.893494262,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":5995.673945004,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":5996.718009102,"data":"[NbConvertApp] Writing 336215 bytes to __results__.html\n"}
+]

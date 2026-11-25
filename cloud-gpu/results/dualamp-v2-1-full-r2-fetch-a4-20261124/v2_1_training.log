@@ -1,0 +1,146 @@
+$ /usr/bin/python3 -m dualamp_lite build --manifest /tmp/v21-wnk481vb/work/data/sources.yaml --workdir /tmp/v21-wnk481vb/work/run --cluster-method auto
+[00:56:04] INFO    reading sources from /tmp/v21-wnk481vb/work/data/sources.yaml
+[00:56:04] INFO      source dramp_v2_1_positives   layer=bacterial_amp        kept=14577 (from 14577 rows)
+[00:56:05] INFO      source uniprot_a_fragments    layer=negative_background  kept=20000 (from 20000 rows)
+[00:56:05] INFO      source composition_decoys_v2_1 layer=scrambled            kept=14572 (from 14572 rows)
+[00:56:05] INFO    after length/alphabet filtering: 49149 records
+[00:56:54] INFO      dedup: 49149 records -> 49149 unique sequences
+[00:56:54] INFO      scrambled challenge set: +499 sequences
+[00:56:54] WARNING   CD-HIT / MMseqs2 not found - using the built-in k-mer clustering fallback. Record this in the methods section (plan §5 requires naming the tool and params).
+[01:00:19] INFO    clustering: kmer_fallback(k=3) at identity 0.40 / coverage 0.80 -> 7455 clusters
+[01:00:19] WARNING   2620 homology clusters contain both labels - assigned to 'review' (never trained on)
+[01:00:21] INFO      split sizes: {'review': 21022, 'scrambled': 15071, 'train': 9488, 'val': 2034, 'test': 2033}
+[01:00:22] INFO    dataset written: 49648 sequences, 7455 clusters, test=2033 (pos=352) - see /tmp/v21-wnk481vb/work/run/dataset/dataset_all.csv
+[01:00:22] INFO    step1 build_dataset finished in 257.5s
+sequences=49648 clusters=7455 test=2033
+$ /usr/bin/python3 -m dualamp_lite features --workdir /tmp/v21-wnk481vb/work/run --backend fair-esm --batch-size 64
+[01:00:24] INFO    device: cuda
+[01:00:26] INFO      biophys 5000/9488
+[01:00:29] INFO      biophys 5000/15071
+[01:00:29] INFO      biophys 10000/15071
+[01:00:30] INFO      biophys 15000/15071
+[01:00:30] INFO    biophys: 35 features, 3 pairs with |r| >= 0.85 (see biophys_correlation.csv)
+[01:00:30] WARNING   estimated residue-tensor RAM ~10.4 GB for the train split; consider splitting the dataset or lowering --max-residues
+[01:00:30] INFO    feature backend: fair-esm
+[01:00:46] INFO      train: 9488 x 50 x 480 (456.6 MB) in 14.6s -> train_feat.npz
+[01:00:49] INFO      val: 2034 x 50 x 480 (97.9 MB) in 3.1s -> val_feat.npz
+[01:00:52] INFO      test: 2033 x 50 x 480 (97.8 MB) in 3.0s -> test_feat.npz
+[01:01:08] INFO      scrambled: 15071 x 50 x 480 (724.7 MB) in 16.1s -> scrambled_feat.npz
+[01:01:08] INFO    step2 extract_features finished in 45.8s
+backend=fair-esm embed_dim=480 demo=False
+$ /usr/bin/python3 -m dualamp_lite train --workdir /tmp/v21-wnk481vb/work/run --models M1,M2,M3 --seeds 1,2,3,4,5 --folds 5 --epochs 60 --loss bce
+[01:01:14] INFO    dev: 11522 peptides (1994 pos) in 3104 clusters | test: 2033 peptides (352 pos) in 1009 clusters
+[01:01:14] INFO    training M1 ...
+[01:01:55] INFO        M1/s1/f0 early stop at epoch 16 (best 4, val AUROC 0.996)
+[01:03:07] INFO        M1/s1/f1 early stop at epoch 34 (best 22, val AUROC 0.994)
+[01:04:37] INFO        M1/s1/f2 early stop at epoch 43 (best 31, val AUROC 0.990)
+[01:05:41] INFO        M1/s1/f3 early stop at epoch 31 (best 19, val AUROC 0.995)
+[01:06:44] INFO        M1/s1/f4 early stop at epoch 30 (best 18, val AUROC 0.991)
+[01:07:35] INFO      M1 seed 1: dev OOF AUROC 0.993, test AUROC 0.984 MCC 0.841 (epochs=19)
+[01:09:20] INFO        M1/s2/f0 early stop at epoch 50 (best 38, val AUROC 0.992)
+[01:10:32] INFO        M1/s2/f1 early stop at epoch 35 (best 23, val AUROC 0.993)
+[01:11:43] INFO        M1/s2/f2 early stop at epoch 34 (best 22, val AUROC 0.994)
+[01:12:24] INFO        M1/s2/f3 early stop at epoch 20 (best 8, val AUROC 0.992)
+[01:13:04] INFO        M1/s2/f4 early stop at epoch 19 (best 7, val AUROC 0.996)
+[01:14:01] INFO      M1 seed 2: dev OOF AUROC 0.993, test AUROC 0.983 MCC 0.843 (epochs=22)
+[01:15:28] INFO        M1/s3/f0 early stop at epoch 42 (best 30, val AUROC 0.994)
+[01:16:28] INFO        M1/s3/f1 early stop at epoch 29 (best 17, val AUROC 0.993)
+[01:17:07] INFO        M1/s3/f2 early stop at epoch 19 (best 7, val AUROC 0.993)
+[01:18:36] INFO        M1/s3/f3 early stop at epoch 43 (best 31, val AUROC 0.994)
+[01:19:36] INFO        M1/s3/f4 early stop at epoch 29 (best 17, val AUROC 0.992)
+[01:20:22] INFO      M1 seed 3: dev OOF AUROC 0.993, test AUROC 0.983 MCC 0.843 (epochs=17)
+[01:21:23] INFO        M1/s4/f0 early stop at epoch 29 (best 17, val AUROC 0.993)
+[01:22:31] INFO        M1/s4/f1 early stop at epoch 33 (best 21, val AUROC 0.994)
+[01:23:47] INFO        M1/s4/f2 early stop at epoch 37 (best 25, val AUROC 0.995)
+[01:24:48] INFO        M1/s4/f3 early stop at epoch 29 (best 17, val AUROC 0.994)
+[01:26:27] INFO        M1/s4/f4 early stop at epoch 48 (best 36, val AUROC 0.993)
+[01:27:21] INFO      M1 seed 4: dev OOF AUROC 0.992, test AUROC 0.983 MCC 0.842 (epochs=21)
+[01:28:50] INFO        M1/s5/f0 early stop at epoch 43 (best 31, val AUROC 0.992)
+[01:29:45] INFO        M1/s5/f1 early stop at epoch 26 (best 14, val AUROC 0.996)
+[01:30:22] INFO        M1/s5/f2 early stop at epoch 18 (best 6, val AUROC 0.995)
+[01:32:05] INFO        M1/s5/f3 early stop at epoch 50 (best 38, val AUROC 0.990)
+[01:32:55] INFO        M1/s5/f4 early stop at epoch 24 (best 12, val AUROC 0.994)
+[01:33:35] INFO      M1 seed 5: dev OOF AUROC 0.993, test AUROC 0.983 MCC 0.837 (epochs=14)
+[01:35:37] INFO    training M2 ...
+[01:36:39] INFO        M2/s1/f0 early stop at epoch 23 (best 11, val AUROC 0.997)
+[01:37:13] INFO        M2/s1/f1 early stop at epoch 13 (best 1, val AUROC 0.993)
+[01:38:14] INFO        M2/s1/f2 early stop at epoch 24 (best 12, val AUROC 0.989)
+[01:39:21] INFO        M2/s1/f3 early stop at epoch 26 (best 14, val AUROC 0.995)
+[01:40:12] INFO        M2/s1/f4 early stop at epoch 20 (best 8, val AUROC 0.991)
+[01:40:47] INFO      M2 seed 1: dev OOF AUROC 0.988, test AUROC 0.987 MCC 0.863 (epochs=11)
+[01:42:13] INFO        M2/s2/f0 early stop at epoch 33 (best 21, val AUROC 0.992)
+[01:43:11] INFO        M2/s2/f1 early stop at epoch 22 (best 10, val AUROC 0.993)
+[01:44:21] INFO        M2/s2/f2 early stop at epoch 27 (best 15, val AUROC 0.995)
+[01:45:10] INFO        M2/s2/f3 early stop at epoch 19 (best 7, val AUROC 0.994)
+[01:46:02] INFO        M2/s2/f4 early stop at epoch 20 (best 8, val AUROC 0.997)
+[01:46:32] INFO      M2 seed 2: dev OOF AUROC 0.993, test AUROC 0.988 MCC 0.878 (epochs=10)
+[01:47:39] INFO        M2/s3/f0 early stop at epoch 26 (best 14, val AUROC 0.994)
+[01:48:24] INFO        M2/s3/f1 early stop at epoch 17 (best 5, val AUROC 0.994)
+[01:49:31] INFO        M2/s3/f2 early stop at epoch 26 (best 14, val AUROC 0.995)
+[01:50:10] INFO        M2/s3/f3 early stop at epoch 15 (best 3, val AUROC 0.995)
+[01:50:43] INFO        M2/s3/f4 early stop at epoch 13 (best 1, val AUROC 0.991)
+[01:51:05] INFO      M2 seed 3: dev OOF AUROC 0.989, test AUROC 0.987 MCC 0.850 (epochs=5)
+[01:52:16] INFO        M2/s4/f0 early stop at epoch 27 (best 15, val AUROC 0.992)
+[01:52:52] INFO        M2/s4/f1 early stop at epoch 14 (best 2, val AUROC 0.995)
+[01:54:04] INFO        M2/s4/f2 early stop at epoch 28 (best 16, val AUROC 0.995)
+[01:54:44] INFO        M2/s4/f3 early stop at epoch 15 (best 3, val AUROC 0.994)
+[01:55:41] INFO        M2/s4/f4 early stop at epoch 22 (best 10, val AUROC 0.991)
+[01:56:14] INFO      M2 seed 4: dev OOF AUROC 0.988, test AUROC 0.987 MCC 0.863 (epochs=10)
+[01:57:17] INFO        M2/s5/f0 early stop at epoch 24 (best 12, val AUROC 0.993)
+[01:57:52] INFO        M2/s5/f1 early stop at epoch 13 (best 1, val AUROC 0.995)
+[01:58:33] INFO        M2/s5/f2 early stop at epoch 16 (best 4, val AUROC 0.994)
+[01:59:40] INFO        M2/s5/f3 early stop at epoch 26 (best 14, val AUROC 0.987)
+[02:00:28] INFO        M2/s5/f4 early stop at epoch 19 (best 7, val AUROC 0.995)
+[02:00:55] INFO      M2 seed 5: dev OOF AUROC 0.988, test AUROC 0.987 MCC 0.871 (epochs=7)
+[02:02:59] INFO    training M3 ...
+[02:03:45] INFO        M3/s1/f0 early stop at epoch 17 (best 5, val AUROC 0.997)
+[02:04:58] INFO        M3/s1/f1 early stop at epoch 27 (best 15, val AUROC 0.994)
+[02:05:50] INFO        M3/s1/f2 early stop at epoch 19 (best 7, val AUROC 0.989)
+[02:06:49] INFO        M3/s1/f3 early stop at epoch 22 (best 10, val AUROC 0.995)
+[02:07:36] INFO        M3/s1/f4 early stop at epoch 17 (best 5, val AUROC 0.992)
+[02:08:00] INFO      M3 seed 1: dev OOF AUROC 0.991, test AUROC 0.988 MCC 0.870 (epochs=7)
+[02:08:55] INFO        M3/s2/f0 early stop at epoch 20 (best 8, val AUROC 0.993)
+[02:10:11] INFO        M3/s2/f1 early stop at epoch 28 (best 16, val AUROC 0.993)
+[02:11:44] INFO        M3/s2/f2 early stop at epoch 34 (best 22, val AUROC 0.996)
+[02:12:23] INFO        M3/s2/f3 early stop at epoch 14 (best 2, val AUROC 0.993)
+[02:13:15] INFO        M3/s2/f4 early stop at epoch 19 (best 7, val AUROC 0.996)
+[02:13:43] INFO      M3 seed 2: dev OOF AUROC 0.992, test AUROC 0.988 MCC 0.863 (epochs=8)
+[02:14:45] INFO        M3/s3/f0 early stop at epoch 22 (best 10, val AUROC 0.993)
+[02:15:55] INFO        M3/s3/f1 early stop at epoch 26 (best 14, val AUROC 0.995)
+[02:16:33] INFO        M3/s3/f2 early stop at epoch 14 (best 2, val AUROC 0.995)
+[02:17:14] INFO        M3/s3/f3 early stop at epoch 15 (best 3, val AUROC 0.995)
+[02:18:19] INFO        M3/s3/f4 early stop at epoch 24 (best 12, val AUROC 0.992)
+[02:18:54] INFO      M3 seed 3: dev OOF AUROC 0.989, test AUROC 0.988 MCC 0.873 (epochs=10)
+[02:19:46] INFO        M3/s4/f0 early stop at epoch 19 (best 7, val AUROC 0.993)
+[02:20:38] INFO        M3/s4/f1 early stop at epoch 19 (best 7, val AUROC 0.995)
+[02:21:57] INFO        M3/s4/f2 early stop at epoch 29 (best 17, val AUROC 0.995)
+[02:22:44] INFO        M3/s4/f3 early stop at epoch 17 (best 5, val AUROC 0.994)
+[02:23:33] INFO        M3/s4/f4 early stop at epoch 18 (best 6, val AUROC 0.989)
+[02:23:57] INFO      M3 seed 4: dev OOF AUROC 0.991, test AUROC 0.988 MCC 0.861 (epochs=7)
+[02:25:11] INFO        M3/s5/f0 early stop at epoch 27 (best 15, val AUROC 0.993)
+[02:26:05] INFO        M3/s5/f1 early stop at epoch 20 (best 8, val AUROC 0.995)
+[02:27:45] INFO        M3/s5/f2 early stop at epoch 37 (best 25, val AUROC 0.996)
+[02:28:35] INFO        M3/s5/f3 early stop at epoch 18 (best 6, val AUROC 0.989)
+[02:29:19] INFO        M3/s5/f4 early stop at epoch 16 (best 4, val AUROC 0.994)
+[02:29:46] INFO      M3 seed 5: dev OOF AUROC 0.990, test AUROC 0.987 MCC 0.863 (epochs=8)
+[02:33:21] INFO      comparisons: 6 (BH-FDR controlled at 0.05)
+[02:33:32] INFO      external[scrambled] M1: {'n': 15071, 'n_pos': 0, 'mean_score': 0.7753273248672485, 'frac_predicted_positive': 0.7015460155265079}
+[02:33:45] INFO      external[scrambled] M2: {'n': 15071, 'n_pos': 0, 'mean_score': 0.7109682559967041, 'frac_predicted_positive': 0.6753367394333488}
+[02:33:57] INFO      external[scrambled] M3: {'n': 15071, 'n_pos': 0, 'mean_score': 0.695813000202179, 'frac_predicted_positive': 0.6564262490876518}
+[02:33:57] INFO    wrote D10_test_metrics.csv and D9_ablation.csv
+[02:33:57] INFO    step3 train_and_eval finished in 5563.4s
+models=['M1', 'M2', 'M3']
+  M1           AUROC=0.983 MCC=0.849 AUPRC=0.938
+  M2           AUROC=0.989 MCC=0.873 AUPRC=0.958
+  M3           AUROC=0.989 MCC=0.864 AUPRC=0.959
+$ /usr/bin/python3 /tmp/v21-wnk481vb/run_evaluation_stage.py
+workdir tree: ['ablation', 'baseline', 'cache', 'dataset', 'dataset/splits', 'features', 'figures', 'logs', 'manuscript', 'model']
+Traceback (most recent call last):
+  File "/tmp/v21-wnk481vb/run_evaluation_stage.py", line 24, in <module>
+    assert run_id, f'no run id found under {root}'
+           ^^^^^^
+AssertionError: no run id found under /tmp/v21-wnk481vb/work/run
+$ /usr/bin/python3 -m dualamp_lite report --workdir /tmp/v21-wnk481vb/work/run
+[02:34:21] INFO    report written: /tmp/v21-wnk481vb/work/run/manuscript/D10_evaluation_report.md
+report: /tmp/v21-wnk481vb/work/run/manuscript/D10_evaluation_report.md
+manifest: /tmp/v21-wnk481vb/work/run/manuscript/D15_input_sha256.tsv (54 files)
