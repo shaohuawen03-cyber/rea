@@ -1,0 +1,8 @@
+{
+  "job_id": "dualamp-v2-1-weights-r4-status-20261125",
+  "provider": "kaggle",
+  "mode": "status",
+  "kernel_ref": "shaohuawen/dualamp-v2-1-weights-r4-20261125",
+  "status_output": "shaohuawen/dualamp-v2-1-weights-r4-20261125 has status \"KernelWorkerStatus.QUEUED\"",
+  "checked_at_utc": "2026-11-25T08:19:06Z"
+}
