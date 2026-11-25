@@ -720,7 +720,13 @@ def main() -> int:
             root = wd / "run" / sub
             if root.exists():
                 private_files.extend(p for p in sorted(root.rglob("*")) if p.is_file())
+        breakdown: dict[str, int] = {}
+        for f in private_files:
+            rel = str(f.relative_to(wd / "run")).split("/")[0]
+            breakdown[rel] = breakdown.get(rel, 0) + f.stat().st_size
+        report["private_bundle_breakdown"] = breakdown
         print(f"[package] private files: {len(private_files)}", flush=True)
+        print(f"[package] bytes by directory: {breakdown}", flush=True)
         if not any(p.suffix == ".pt" for p in private_files):
             raise RuntimeError("no trained checkpoint found for the private archive")
         private_zip = tmp / "dualamp_v2_1_model_bundle.zip"
