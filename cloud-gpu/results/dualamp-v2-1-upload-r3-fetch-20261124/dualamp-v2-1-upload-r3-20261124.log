@@ -1,0 +1,9 @@
+[{"stream_name":"stdout","time":7.172250651,"data":"[pip] requests: rc=0\n"}
+,{"stream_name":"stderr","time":7.176263642,"data":"no bundle at /kaggle/working/dualamp_v2_1_model_bundle.zip\n"}
+,{"stream_name":"stderr","time":9.632475938,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":9.632514644,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":10.046057172,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":10.046092459,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":11.206748832,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":12.586581006,"data":"[NbConvertApp] Writing 284480 bytes to __results__.html\n"}
+]
