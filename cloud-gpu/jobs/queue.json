@@ -1970,10 +1970,11 @@
       "mode": "status",
       "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
       "kernel_slug": "dualamp-v2-1-package-r3b-20261124",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-25T06:44:46Z",
-      "note": "Package-only r3b check 2."
+      "note": "Package-only r3b check 2.",
+      "finished_at_utc": "2026-11-25T06:45:25Z"
     },
     {
       "id": "dualamp-v2-1-package-r3b-fetch-2-20261124",
@@ -1981,10 +1982,11 @@
       "mode": "output",
       "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
       "kernel_slug": "dualamp-v2-1-package-r3b-20261124",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-25T06:44:46Z",
-      "note": "Package-only r3b check 2."
+      "note": "Package-only r3b check 2.",
+      "finished_at_utc": "2026-11-25T06:45:27Z"
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
