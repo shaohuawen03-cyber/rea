@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-25T10:37:42Z",
+  "updated_at_utc": "2026-11-25T10:45:13Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -2323,6 +2323,53 @@
       "created_at_utc": "2026-11-25T10:37:42Z",
       "note": "Weights run watch f / fetch d.",
       "finished_at_utc": "2026-11-25T10:38:24Z"
+    },
+    {
+      "id": "dualamp-v2-1-model-only-r4-20261125",
+      "provider": "kaggle",
+      "mode": "run",
+      "accelerator": "CPU",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_extract_model.py",
+      "script_args": [],
+      "extra_pip": [],
+      "serve_minutes": 15.0,
+      "wait": false,
+      "timeout_sec": 3600,
+      "status": "pushed_async",
+      "created_at_utc": "2026-11-25T10:45:13Z",
+      "kernel_slug": "dualamp-v2-1-model-only-r4-20261125",
+      "kernel_sources": [
+        "shaohuawen/dualamp-v2-1-weights-r4-20261125"
+      ],
+      "env": {
+        "V21_SOURCE_KERNEL": "dualamp-v2-1-weights-r4-20261125"
+      },
+      "note": "CPU-only, no training: extracts the ~24 MB model-only archive out of the 758 MB weights bundle so the .pt files are separately downloadable and publishable.",
+      "finished_at_utc": "2026-11-25T10:45:50Z"
+    },
+    {
+      "id": "dualamp-v2-1-model-only-r4-20261125-status",
+      "provider": "kaggle",
+      "mode": "status",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_extract_model.py",
+      "kernel_slug": "dualamp-v2-1-model-only-r4-20261125",
+      "status": "completed",
+      "wait": false,
+      "created_at_utc": "2026-11-25T10:45:13Z",
+      "note": "Model-only extract check.",
+      "finished_at_utc": "2026-11-25T10:45:51Z"
+    },
+    {
+      "id": "dualamp-v2-1-model-only-r4-20261125-fetch",
+      "provider": "kaggle",
+      "mode": "output",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_extract_model.py",
+      "kernel_slug": "dualamp-v2-1-model-only-r4-20261125",
+      "status": "completed",
+      "wait": false,
+      "created_at_utc": "2026-11-25T10:45:13Z",
+      "note": "Model-only extract check.",
+      "finished_at_utc": "2026-11-25T10:45:52Z"
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
