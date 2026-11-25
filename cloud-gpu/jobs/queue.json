@@ -2472,10 +2472,11 @@
       "mode": "output",
       "script_path": "cloud-gpu/jobs/dualamp_v2_1_extract_model.py",
       "kernel_slug": "dualamp-v2-1-model-only-r4-20261125",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-25T11:51:20Z",
-      "note": "Third collect attempt: relay now carries weights past the 2 MiB gate."
+      "note": "Third collect attempt: relay now carries weights past the 2 MiB gate.",
+      "finished_at_utc": "2026-11-25T11:51:57Z"
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
