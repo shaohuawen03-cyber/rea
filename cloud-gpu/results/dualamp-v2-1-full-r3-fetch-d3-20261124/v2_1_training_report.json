@@ -704,5 +704,34 @@
     "skipped": "no upload session in env",
     "local_bytes": 759753038,
     "local_sha256": "9247b18cb9539cd954c48060b513c47aa2d42c51b4e581530096323ee339b465"
+  },
+  "protocol": {
+    "models": [
+      "M1",
+      "M2",
+      "M3"
+    ],
+    "role": {
+      "M1": "primary",
+      "M2": "primary",
+      "M3": "control (ablation arm)"
+    },
+    "seeds": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "folds": 5,
+    "epochs_setting": 60,
+    "loss": "bce",
+    "threshold_source": "probability 0.5 for the headline row; fixed-specificity thresholds taken from dev OOF",
+    "test": "internal_test (held-out split, no cluster overlap with train/val)",
+    "smoke_mode": false,
+    "encoder": "fair-esm esm2_t12_35M_UR50D layer 12 (480-d)",
+    "leanrea_commit": "f610dc00b1aec3ab948a5b77574af0e644259a13",
+    "reconstructed": true,
+    "provenance": "filled in when publishing from a delivery run whose kernel predates the protocol field; values mirror the private_bundle run_provenance block (seeds 1-5, folds 5, epochs 60, models M1-M3)"
   }
 }

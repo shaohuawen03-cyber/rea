@@ -116,7 +116,19 @@ def main() -> int:
     tier, blockers = decide_tier(report, metrics, challenge)
 
     write_csv(out / "v2_1_test_metrics.csv", metrics)
-    write_csv(out / "v2_1_metrics_summary.csv", report.get("metrics_summary") or [])
+    seed_rows = report.get("metrics_summary") or []
+    if not seed_rows:
+        # leanrea did not emit a seed-level summary table in this run; the per-model
+        # seed mean/sd still rides on the headline rows, so surface it rather than
+        # publishing an empty file.
+        seed_rows = [{
+            "model": m.get("model"),
+            "n_seeds": m.get("n_seeds") or "",
+            "test_auroc_seed_mean": m.get("test_auroc_seed_mean"),
+            "test_auroc_seed_sd": m.get("test_auroc_seed_sd"),
+            "source": "headline metric row (seed-level table absent in the report)",
+        } for m in metrics if str(m.get("split", "internal_test")) == "internal_test"]
+    write_csv(out / "v2_1_metrics_summary.csv", seed_rows)
     write_csv(out / "v2_1_calibration.csv", report.get("calibration_metrics") or [])
     write_csv(out / "v2_1_operating_points.csv", report.get("fixed_specificity_operating_points") or [])
     write_csv(out / "v2_1_challenge_sets.csv", challenge.get("rows") or [])

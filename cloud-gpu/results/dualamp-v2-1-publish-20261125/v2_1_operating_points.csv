@@ -1,0 +1,7 @@
+target_specificity,dev_threshold,dev_specificity,dev_sensitivity,dev_n_neg,dev_n_pos,source,model,test_at_dev_threshold
+0.99,0.836127,0.99,0.8781,9528,1994,dev OOF (seed 1) per model/<MODEL>_scores.npz,M1,"{'sensitivity': 0.8608, 'specificity': 0.9744, 'mcc': 0.8409, 'precision': 0.8757, 'f1': 0.8682}"
+0.995,0.936395,0.9951,0.8185,9528,1994,dev OOF (seed 1) per model/<MODEL>_scores.npz,M1,"{'sensitivity': 0.7869, 'specificity': 0.9857, 'mcc': 0.8232, 'precision': 0.9203, 'f1': 0.8484}"
+0.99,0.823001,0.99,0.8666,9528,1994,dev OOF (seed 1) per model/<MODEL>_scores.npz,M2,"{'sensitivity': 0.8722, 'specificity': 0.9798, 'mcc': 0.8627, 'precision': 0.9003, 'f1': 0.886}"
+0.995,0.951772,0.9951,0.817,9528,1994,dev OOF (seed 1) per model/<MODEL>_scores.npz,M2,"{'sensitivity': 0.8267, 'specificity': 0.9893, 'mcc': 0.86, 'precision': 0.9417, 'f1': 0.8805}"
+0.99,0.952314,0.99,0.848,9528,1994,dev OOF (seed 1) per model/<MODEL>_scores.npz,M3,"{'sensitivity': 0.8153, 'specificity': 0.9893, 'mcc': 0.8526, 'precision': 0.941, 'f1': 0.8737}"
+0.995,0.99102,0.9951,0.7839,9528,1994,dev OOF (seed 1) per model/<MODEL>_scores.npz,M3,"{'sensitivity': 0.75, 'specificity': 0.9952, 'mcc': 0.8283, 'precision': 0.9706, 'f1': 0.8462}"

@@ -1,0 +1,4 @@
+split,model,source,n,n_pos,mean_score,frac_predicted_positive
+scrambled_test,M1,training log,15071,0,0.7753,0.7015
+scrambled_test,M2,training log,15071,0,0.711,0.6753
+scrambled_test,M3,training log,15071,0,0.6958,0.6564
