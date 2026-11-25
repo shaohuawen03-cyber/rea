@@ -36,10 +36,14 @@ PRIVATE_OUTPUT_PATTERNS = (
     "model_bundle_parts/",
     "PARTS_MANIFEST.json",
     # model-only archive: 15 x .pt plus the OOF tables. Small enough to slip past the
-    # 2 MiB rule, but still private weights on a public repo.
+    # 2 MiB rule, but the zip still must not land in a public repo.
     "dualamp_model_only.zip",
-    "model_only/",
+    # Per-sequence prediction tables: never published, not even as npz.
+    "_scores.npz",
 )
+# NOTE: individual *.pt files ARE collected into cloud-gpu/results so they can be
+# attached to a private delivery; .gitignore already blocks cloud-gpu/results/**/*.pt
+# from ever being committed.
 
 
 def _is_private_output(rel_path: str) -> bool:
