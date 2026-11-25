@@ -721,7 +721,15 @@ def _copy_small_outputs(src_root: str, dst_dir: str, skipped: list[str] | None =
             if _is_private_output(rel_check):
                 skipped.append(rel_check)
                 continue
-            if os.path.getsize(full) <= MAX_GIT_FILE_BYTES and not fn.endswith((".pth", ".safetensors", ".onnx", ".gguf")):
+            # Weights are collected on purpose (so they can be delivered privately);
+            # .gitignore keeps cloud-gpu/results/**/*.pt out of every commit.
+            weight = fn.endswith((".pt", ".pth", ".safetensors", ".onnx", ".gguf"))
+            if weight:
+                rel = os.path.relpath(full, src_root).replace(os.sep, "_")
+                shutil.copy2(full, os.path.join(dst_dir, rel))
+                copied.append(rel)
+                continue
+            if os.path.getsize(full) <= MAX_GIT_FILE_BYTES:
                 rel = os.path.relpath(full, src_root).replace(os.sep, "_")
                 shutil.copy2(full, os.path.join(dst_dir, rel))
                 copied.append(rel)
