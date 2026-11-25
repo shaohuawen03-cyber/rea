@@ -1,0 +1,12 @@
+{
+  "job_id": "dualamp-v2-1-package-r3c-fetch-3-20261124",
+  "provider": "kaggle",
+  "mode": "output",
+  "kernel_ref": "shaohuawen/dualamp-v2-1-package-r3c-20261124",
+  "copied_files": [
+    "dualamp-v2-1-package-r3c-20261124.log",
+    "v2_1_training_report.json"
+  ],
+  "cli_output": "Downloading v2_1_training_report.json to /tmp/kag_out_mr2i393z\n\nOutput file downloaded to /tmp/kag_out_mr2i393z/v2_1_training_report.json\nKernel log downloaded to /tmp/kag_out_mr2i393z/dualamp-v2-1-package-r3c-20261124.log",
+  "fetched_at_utc": "2026-11-25T07:09:54Z"
+}

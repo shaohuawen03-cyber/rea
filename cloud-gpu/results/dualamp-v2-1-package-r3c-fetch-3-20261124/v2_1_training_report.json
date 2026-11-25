@@ -1,0 +1,18 @@
+{
+  "stage": "dualamp_v2_1_training",
+  "dataset_version": "positive_core_v2_1_dramp",
+  "rule_version": "auto_evidence_v2_2.0",
+  "leanrea_commit": "f610dc00b1aec3ab948a5b77574af0e644259a13",
+  "started_utc": "2026-11-25T07:00:32.594959+00:00",
+  "training_started": false,
+  "upload_session_present": true,
+  "cohort": {
+    "positives": 14577,
+    "composition_decoys": 14572,
+    "positive_fasta_sha256": "9ca0d4076f6d61c16ad31b920afc9029ae463d3df3510049c9b6ac4366a8e40c"
+  },
+  "status": "FAILED_NOT_COMPLETED",
+  "error": "package-only mode needs a mounted prior output",
+  "traceback": "Traceback (most recent call last):\n  File \"/tmp/_payload.py\", line 463, in main\n    raise RuntimeError(\"package-only mode needs a mounted prior output\")\nRuntimeError: package-only mode needs a mounted prior output\n",
+  "finished_utc": "2026-11-25T07:01:00.685231+00:00"
+}

@@ -1,0 +1,46 @@
+[{"stream_name":"stdout","time":8.327765512,"data":"[pip] gdown: rc=0\n"}
+,{"stream_name":"stdout","time":10.104579102,"data":"[pip] requests: rc=0\n"}
+,{"stream_name":"stdout","time":12.54767858,"data":"[pip] fair-esm: rc=0\n"}
+,{"stream_name":"stdout","time":14.440773666,"data":"[pip] pyyaml: rc=0\n"}
+,{"stream_name":"stdout","time":18.258703808,"data":"[pip] biopython: rc=0\n"}
+,{"stream_name":"stdout","time":20.051651154,"data":"[pip] pandas: rc=0\n"}
+,{"stream_name":"stdout","time":21.89466346,"data":"[pip] scikit-learn: rc=0\n"}
+,{"stream_name":"stdout","time":23.67101434,"data":"[pip] matplotlib: rc=0\n"}
+,{"stream_name":"stderr","time":51.77674346,"data":"{\n"}
+,{"stream_name":"stderr","time":51.776775913,"data":"  \"stage\": \"dualamp_v2_1_training\",\n"}
+,{"stream_name":"stderr","time":51.776780059000004,"data":"  \"dataset_version\": \"positive_core_v2_1_dramp\",\n"}
+,{"stream_name":"stderr","time":51.776783333,"data":"  \"rule_version\": \"auto_evidence_v2_2.0\",\n"}
+,{"stream_name":"stderr","time":51.776786354,"data":"  \"leanrea_commit\": \"f610dc00b1aec3ab948a5b77574af0e644259a13\",\n"}
+,{"stream_name":"stderr","time":51.776789547,"data":"  \"started_utc\": \"2026-11-25T07:00:32.594959+00:00\",\n"}
+,{"stream_name":"stderr","time":51.776793351,"data":"  \"training_started\": false,\n"}
+,{"stream_name":"stderr","time":51.776811873,"data":"  \"upload_session_present\": true,\n"}
+,{"stream_name":"stderr","time":51.776817323,"data":"  \"cohort\": {\n"}
+,{"stream_name":"stderr","time":51.776822402,"data":"    \"positives\": 14577,\n"}
+,{"stream_name":"stderr","time":51.776827334000004,"data":"    \"composition_decoys\": 14572,\n"}
+,{"stream_name":"stderr","time":51.776832204,"data":"    \"positive_fasta_sha256\": \"9ca0d4076f6d61c16ad31b920afc9029ae463d3df3510049c9b6ac4366a8e40c\"\n"}
+,{"stream_name":"stderr","time":51.776836826,"data":"  },\n"}
+,{"stream_name":"stderr","time":51.776840854,"data":"  \"status\": \"FAILED_NOT_COMPLETED\",\n"}
+,{"stream_name":"stderr","time":51.776845201,"data":"  \"error\": \"package-only mode needs a mounted prior output\",\n"}
+,{"stream_name":"stderr","time":51.776849759,"data":"  \"traceback\": \"Traceback (most recent call last):\\n  File \\\"/tmp/_payload.py\\\", line 463, in main\\n    raise RuntimeError(\\\"package-only mode needs a mounted prior output\\\")\\nRuntimeError: package-only mode needs a mounted prior output\\n\",\n"}
+,{"stream_name":"stderr","time":51.776863544,"data":"  \"finished_utc\": \"2026-11-25T07:01:00.685231+00:00\"\n"}
+,{"stream_name":"stderr","time":51.776866921,"data":"}\n"}
+,{"stream_name":"stderr","time":52.035371679,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":52.035910837,"data":"  File \"/kaggle/src/script.py\", line 15, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":52.035926957,"data":"    runpy.run_path('/tmp/_payload.py', run_name='__main__')\n"}
+,{"stream_name":"stderr","time":52.03593289,"data":"    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":52.035937209,"data":"  File \"\u003cfrozen runpy\u003e\", line 294, in run_path\n"}
+,{"stream_name":"stderr","time":52.035941817,"data":"  File \"\u003cfrozen runpy\u003e\", line 98, in _run_module_code\n"}
+,{"stream_name":"stderr","time":52.035946203,"data":"  File \"\u003cfrozen runpy\u003e\", line 88, in _run_code\n"}
+,{"stream_name":"stderr","time":52.035950453,"data":"  File \"/tmp/_payload.py\", line 775, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":52.035954973,"data":"    sys.exit(main())\n"}
+,{"stream_name":"stderr","time":52.03596476,"data":"             ~~~~^^\n"}
+,{"stream_name":"stderr","time":52.035997462,"data":"  File \"/tmp/_payload.py\", line 463, in main\n"}
+,{"stream_name":"stderr","time":52.036000207,"data":"    raise RuntimeError(\"package-only mode needs a mounted prior output\")\n"}
+,{"stream_name":"stderr","time":52.036002817,"data":"RuntimeError: package-only mode needs a mounted prior output\n"}
+,{"stream_name":"stderr","time":54.481238339,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":54.481284703,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":54.940717397,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":54.940742297,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":56.262414632,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":57.869260965,"data":"[NbConvertApp] Writing 359931 bytes to __results__.html\n"}
+]
