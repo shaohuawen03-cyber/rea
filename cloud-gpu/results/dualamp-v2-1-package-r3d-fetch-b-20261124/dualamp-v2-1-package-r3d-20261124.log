@@ -1,0 +1,111 @@
+[{"stream_name":"stdout","time":5.914733228,"data":"[pip] gdown: rc=0\n"}
+,{"stream_name":"stdout","time":7.540621228,"data":"[pip] requests: rc=0\n"}
+,{"stream_name":"stdout","time":9.512311944,"data":"[pip] fair-esm: rc=0\n"}
+,{"stream_name":"stdout","time":11.098024012,"data":"[pip] pyyaml: rc=0\n"}
+,{"stream_name":"stdout","time":14.297512015,"data":"[pip] biopython: rc=0\n"}
+,{"stream_name":"stdout","time":15.957013522,"data":"[pip] pandas: rc=0\n"}
+,{"stream_name":"stdout","time":17.637951768,"data":"[pip] scikit-learn: rc=0\n"}
+,{"stream_name":"stdout","time":19.255391621,"data":"[pip] matplotlib: rc=0\n"}
+,{"stream_name":"stdout","time":67.793349615,"data":"[package-only] mounted items: ['__output__.json', '__results__.html', '__script__.ipynb', '__script__.py', 'custom.css', 'v2_1_progress.json', 'v2_1_training.log', 'v2_1_training_report.json']\n"}
+,{"stream_name":"stdout","time":67.79350625,"data":"[package-only] reusing the mounted run at /tmp/v21-ow_fuwmh/work\n"}
+,{"stream_name":"stdout","time":78.177842849,"data":"Downloading: \"https://dl.fbaipublicfiles.com/fair-esm/models/esm2_t12_35M_UR50D.pt\" to /root/.cache/torch/hub/checkpoints/esm2_t12_35M_UR50D.pt\n"}
+,{"stream_name":"stdout","time":78.764986694,"data":"Downloading: \"https://dl.fbaipublicfiles.com/fair-esm/regression/esm2_t12_35M_UR50D-contact-regression.pt\" to /root/.cache/torch/hub/checkpoints/esm2_t12_35M_UR50D-contact-regression.pt\n"}
+,{"stream_name":"stdout","time":80.694275624,"data":"[package] private files: 0\n"}
+,{"stream_name":"stderr","time":80.69592401,"data":"{\n"}
+,{"stream_name":"stderr","time":80.695937236,"data":"  \"stage\": \"dualamp_v2_1_training\",\n"}
+,{"stream_name":"stderr","time":80.69594182,"data":"  \"dataset_version\": \"positive_core_v2_1_dramp\",\n"}
+,{"stream_name":"stderr","time":80.695946018,"data":"  \"rule_version\": \"auto_evidence_v2_2.0\",\n"}
+,{"stream_name":"stderr","time":80.695949942,"data":"  \"leanrea_commit\": \"f610dc00b1aec3ab948a5b77574af0e644259a13\",\n"}
+,{"stream_name":"stderr","time":80.695954153,"data":"  \"started_utc\": \"2026-11-25T07:15:11.539128+00:00\",\n"}
+,{"stream_name":"stderr","time":80.695958171,"data":"  \"training_started\": true,\n"}
+,{"stream_name":"stderr","time":80.695962228,"data":"  \"upload_session_present\": false,\n"}
+,{"stream_name":"stderr","time":80.695967522,"data":"  \"cohort\": {\n"}
+,{"stream_name":"stderr","time":80.695972924,"data":"    \"positives\": 14577,\n"}
+,{"stream_name":"stderr","time":80.695978438,"data":"    \"composition_decoys\": 14572,\n"}
+,{"stream_name":"stderr","time":80.695983885,"data":"    \"positive_fasta_sha256\": \"9ca0d4076f6d61c16ad31b920afc9029ae463d3df3510049c9b6ac4366a8e40c\"\n"}
+,{"stream_name":"stderr","time":80.695988922,"data":"  },\n"}
+,{"stream_name":"stderr","time":80.695993044,"data":"  \"negatives\": {\n"}
+,{"stream_name":"stderr","time":80.696002993,"data":"    \"proteins_total\": 117172,\n"}
+,{"stream_name":"stderr","time":80.696007105,"data":"    \"keyword_excluded\": 18,\n"}
+,{"stream_name":"stderr","time":80.696011003,"data":"    \"fragments_raw\": 351462,\n"}
+,{"stream_name":"stderr","time":80.696015032,"data":"    \"fragments_standard_aa\": 351429,\n"}
+,{"stream_name":"stderr","time":80.696019066,"data":"    \"fragments_dedup\": 351119,\n"}
+,{"stream_name":"stderr","time":80.696023257,"data":"    \"fragments_hit_positive_4mer_gt08\": 31495,\n"}
+,{"stream_name":"stderr","time":80.696027436,"data":"    \"negatives_final\": 20000,\n"}
+,{"stream_name":"stderr","time":80.696031564,"data":"    \"seed\": 11,\n"}
+,{"stream_name":"stderr","time":80.696035656,"data":"    \"cap\": 20000,\n"}
+,{"stream_name":"stderr","time":80.696048736,"data":"    \"neg_mode\": \"standard\",\n"}
+,{"stream_name":"stderr","time":80.696052998,"data":"    \"seconds\": 10.6\n"}
+,{"stream_name":"stderr","time":80.69605722,"data":"  },\n"}
+,{"stream_name":"stderr","time":80.696061152,"data":"  \"manifest_sha256\": \"7762f1df48ba9dac45e8e6dcc84b971c47ec934a3658dbcba93dd38836b2ab78\",\n"}
+,{"stream_name":"stderr","time":80.696064492,"data":"  \"smoke_mode\": false,\n"}
+,{"stream_name":"stderr","time":80.696067532,"data":"  \"evaluation_stage\": \"driven via dualamp_lite.v4.pipeline.run_stage('evaluation')\",\n"}
+,{"stream_name":"stderr","time":80.696070669,"data":"  \"package_only\": true,\n"}
+,{"stream_name":"stderr","time":80.696073722,"data":"  \"reused_run_utc\": 1795590890.251,\n"}
+,{"stream_name":"stderr","time":80.696076847,"data":"  \"encoder_preflight\": {\n"}
+,{"stream_name":"stderr","time":80.69607995,"data":"    \"encoder\": \"fair-esm\",\n"}
+,{"stream_name":"stderr","time":80.69608316,"data":"    \"is_mock\": false,\n"}
+,{"stream_name":"stderr","time":80.696086124,"data":"    \"embed_dim\": 480,\n"}
+,{"stream_name":"stderr","time":80.696089351,"data":"    \"probe_shapes\": [\n"}
+,{"stream_name":"stderr","time":80.696092347,"data":"      [\n"}
+,{"stream_name":"stderr","time":80.696095475,"data":"        2,\n"}
+,{"stream_name":"stderr","time":80.696098386,"data":"        23,\n"}
+,{"stream_name":"stderr","time":80.696101463,"data":"        480\n"}
+,{"stream_name":"stderr","time":80.696104449,"data":"      ],\n"}
+,{"stream_name":"stderr","time":80.696107362,"data":"      [\n"}
+,{"stream_name":"stderr","time":80.696110337,"data":"        2,\n"}
+,{"stream_name":"stderr","time":80.696113326,"data":"        480\n"}
+,{"stream_name":"stderr","time":80.696116349,"data":"      ]\n"}
+,{"stream_name":"stderr","time":80.69611933,"data":"    ],\n"}
+,{"stream_name":"stderr","time":80.696122222,"data":"    \"finite\": true\n"}
+,{"stream_name":"stderr","time":80.696125235,"data":"  },\n"}
+,{"stream_name":"stderr","time":80.696128194,"data":"  \"status\": \"FAILED_NOT_COMPLETED\",\n"}
+,{"stream_name":"stderr","time":80.69613149,"data":"  \"completed_utc\": \"2026-11-25T07:16:12.964643+00:00\",\n"}
+,{"stream_name":"stderr","time":80.696134586,"data":"  \"code_commit\": \"be9f7cfa0168d490e168345b8318aa37f5ccd777\",\n"}
+,{"stream_name":"stderr","time":80.696137706,"data":"  \"dataset_summary\": {},\n"}
+,{"stream_name":"stderr","time":80.696140747,"data":"  \"metrics\": [],\n"}
+,{"stream_name":"stderr","time":80.696143882,"data":"  \"metrics_summary\": [],\n"}
+,{"stream_name":"stderr","time":80.696146996,"data":"  \"calibration_metrics\": [],\n"}
+,{"stream_name":"stderr","time":80.696150056,"data":"  \"calibration_bins\": [],\n"}
+,{"stream_name":"stderr","time":80.696153066,"data":"  \"calibration_source\": [],\n"}
+,{"stream_name":"stderr","time":80.696156196,"data":"  \"calibration_in_metrics\": [],\n"}
+,{"stream_name":"stderr","time":80.696159227,"data":"  \"fixed_specificity_operating_points\": [],\n"}
+,{"stream_name":"stderr","time":80.696162291,"data":"  \"fixed_specificity_source\": \"unavailable\",\n"}
+,{"stream_name":"stderr","time":80.69616544,"data":"  \"composition_challenge\": {\n"}
+,{"stream_name":"stderr","time":80.696168462,"data":"    \"rows\": [],\n"}
+,{"stream_name":"stderr","time":80.69617153,"data":"    \"max_frac_predicted_positive\": null,\n"}
+,{"stream_name":"stderr","time":80.696174703,"data":"    \"best_model_frac\": null,\n"}
+,{"stream_name":"stderr","time":80.696177758,"data":"    \"verdict\": \"NOT_EVALUATED\",\n"}
+,{"stream_name":"stderr","time":80.696184137,"data":"    \"criterion\": \"PASS only if every model keeps composition-decoy acceptance \u003c 10%\",\n"}
+,{"stream_name":"stderr","time":80.696188523,"data":"    \"note\": \"decoy sequences are length+composition matched shuffles of the positives; a high acceptance rate means the model reads composition, not order\"\n"}
+,{"stream_name":"stderr","time":80.696191908,"data":"  },\n"}
+,{"stream_name":"stderr","time":80.696194965,"data":"  \"calibration_bins_count\": 0,\n"}
+,{"stream_name":"stderr","time":80.69619798,"data":"  \"caveats\": [\n"}
+,{"stream_name":"stderr","time":80.696201141,"data":"    \"Positives are DRAMP-curated bacterial actives (TIER_B_LABEL: bacterial activity label + named target + PubMed reference). The bulk dumps do not carry per-record MIC values, so this is not a MIC-quantitative cohort.\",\n"}
+,{"stream_name":"stderr","time":80.696206364,"data":"    \"Negatives are UniProt bacterial-cytoplasm fragments: a weak negative label, not experimentally verified inactivity.\",\n"}
+,{"stream_name":"stderr","time":80.69620976,"data":"    \"The composition-matched challenge is reported as a challenge; a high flag rate is published as a failure mode, not hidden.\"\n"}
+,{"stream_name":"stderr","time":80.696213064,"data":"  ],\n"}
+,{"stream_name":"stderr","time":80.696216051,"data":"  \"error\": \"no trained checkpoint found for the private archive\",\n"}
+,{"stream_name":"stderr","time":80.696219326,"data":"  \"traceback\": \"Traceback (most recent call last):\\n  File \\\"/tmp/_payload.py\\\", line 725, in main\\n    raise RuntimeError(\\\"no trained checkpoint found for the private archive\\\")\\nRuntimeError: no trained checkpoint found for the private archive\\n\",\n"}
+,{"stream_name":"stderr","time":80.69622343,"data":"  \"finished_utc\": \"2026-11-25T07:16:12.966237+00:00\"\n"}
+,{"stream_name":"stderr","time":80.696226599,"data":"}\n"}
+,{"stream_name":"stderr","time":80.96508901199999,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":80.966068496,"data":"  File \"/kaggle/src/script.py\", line 15, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":80.96608381,"data":"    runpy.run_path('/tmp/_payload.py', run_name='__main__')\n"}
+,{"stream_name":"stderr","time":80.966091528,"data":"    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":80.966094129,"data":"  File \"\u003cfrozen runpy\u003e\", line 294, in run_path\n"}
+,{"stream_name":"stderr","time":80.966096836,"data":"  File \"\u003cfrozen runpy\u003e\", line 98, in _run_module_code\n"}
+,{"stream_name":"stderr","time":80.966099766,"data":"  File \"\u003cfrozen runpy\u003e\", line 88, in _run_code\n"}
+,{"stream_name":"stderr","time":80.966102269,"data":"  File \"/tmp/_payload.py\", line 775, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":80.966104815,"data":"    sys.exit(main())\n"}
+,{"stream_name":"stderr","time":80.966107174,"data":"             ~~~~^^\n"}
+,{"stream_name":"stderr","time":80.966109603,"data":"  File \"/tmp/_payload.py\", line 725, in main\n"}
+,{"stream_name":"stderr","time":80.966112117,"data":"    raise RuntimeError(\"no trained checkpoint found for the private archive\")\n"}
+,{"stream_name":"stderr","time":80.966114752,"data":"RuntimeError: no trained checkpoint found for the private archive\n"}
+,{"stream_name":"stderr","time":86.854387182,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":86.85441723,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":87.176200223,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":87.176243928,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":88.03477667,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":89.206294556,"data":"[NbConvertApp] Writing 359452 bytes to __results__.html\n"}
+]
