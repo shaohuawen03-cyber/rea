@@ -1,0 +1,9 @@
+{
+  "job_id": "dualamp-v2-1-full-r3-fetch-c2-20261124",
+  "provider": "kaggle",
+  "mode": "output",
+  "kernel_ref": "shaohuawen/dualamp-v2-1-full-r3-20261124",
+  "copied_files": [],
+  "cli_output": "",
+  "fetched_at_utc": "2026-11-25T03:40:03Z"
+}
