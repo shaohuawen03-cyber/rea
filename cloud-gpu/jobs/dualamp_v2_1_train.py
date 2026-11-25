@@ -712,6 +712,9 @@ def main() -> int:
                 "negative_semantics": "weak UniProt background, not experimental inactivity",
                 "evidence_tier": "TIER_B_LABEL",
             }, indent=2))
+        # Keep a copy in the kernel output so a consumed/expired upload session never
+        # forces another 90-minute GPU run just to ship the weights.
+        shutil.copy2(private_zip, Path(out) / "dualamp_v2_1_model_bundle.zip")
         if uri:
             report["private_model_bundle"] = upload(uri, private_zip)
         else:
