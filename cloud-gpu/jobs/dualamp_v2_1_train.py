@@ -748,8 +748,34 @@ def main() -> int:
                 "evidence_tier": "TIER_B_LABEL",
             }, indent=2))
         # Keep a copy in the kernel output so a consumed/expired upload session never
-        # forces another 90-minute GPU run just to ship the weights.
+        # forces another 90-minute GPU run just to ship the weights. The raw zip is
+        # ~760 MB, which the relay cannot route into a public repo, so also emit
+        # <2 MiB parts that CAN be reassembled byte-for-byte later.
         shutil.copy2(private_zip, Path(out) / "dualamp_v2_1_model_bundle.zip")
+        part_size = 1900 * 1024
+        parts_dir = Path(out) / "model_bundle_parts"
+        parts_dir.mkdir(parents=True, exist_ok=True)
+        part_hashes = []
+        with private_zip.open("rb") as src:
+            idx = 0
+            while True:
+                buf = src.read(part_size)
+                if not buf:
+                    break
+                part = parts_dir / f"part_{idx:03d}.bin"
+                part.write_bytes(buf)
+                part_hashes.append({"name": part.name, "bytes": len(buf),
+                                    "sha256": hashlib.sha256(buf).hexdigest()})
+                idx += 1
+        (parts_dir / "PARTS_MANIFEST.json").write_text(json.dumps({
+            "whole_sha256": sha(private_zip),
+            "whole_bytes": private_zip.stat().st_size,
+            "part_bytes": part_size,
+            "parts": part_hashes,
+        }, indent=2) + "\n", encoding="utf-8")
+        report["private_bundle_parts"] = {"count": len(part_hashes),
+                                          "part_bytes": part_size,
+                                          "dir": str(parts_dir)}
         if uri:
             report["private_model_bundle"] = upload(uri, private_zip)
         else:
