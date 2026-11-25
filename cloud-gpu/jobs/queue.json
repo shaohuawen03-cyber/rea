@@ -2008,7 +2008,7 @@
       "serve_minutes": 15.0,
       "wait": false,
       "timeout_sec": 3600,
-      "status": "pending",
+      "status": "pushed_async",
       "created_at_utc": "2026-11-25T06:48:47Z",
       "kernel_slug": "dualamp-v2-1-package-r3c-20261124",
       "env": {
@@ -2017,7 +2017,8 @@
       "inline_json": {
         "V21_INPUTS_JSON": "cloud-gpu/jobs/v21_inputs.json"
       },
-      "note": "Package-only r3c: retrains nothing, repackages from the delivery run and uploads the private zip (upload session confirmed live: upload_session_present=true last attempt)."
+      "note": "Package-only r3c: retrains nothing, repackages from the delivery run and uploads the private zip (upload session confirmed live: upload_session_present=true last attempt).",
+      "finished_at_utc": "2026-11-25T06:49:21Z"
     },
     {
       "id": "dualamp-v2-1-package-r3c-status-20261124",
@@ -2025,10 +2026,11 @@
       "mode": "status",
       "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
       "kernel_slug": "dualamp-v2-1-package-r3c-20261124",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-25T06:48:47Z",
-      "note": "Package-only r3c check."
+      "note": "Package-only r3c check.",
+      "finished_at_utc": "2026-11-25T06:49:22Z"
     },
     {
       "id": "dualamp-v2-1-package-r3c-fetch-20261124",
@@ -2036,10 +2038,11 @@
       "mode": "output",
       "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
       "kernel_slug": "dualamp-v2-1-package-r3c-20261124",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-25T06:48:47Z",
-      "note": "Package-only r3c check."
+      "note": "Package-only r3c check.",
+      "finished_at_utc": "2026-11-25T06:49:23Z"
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
