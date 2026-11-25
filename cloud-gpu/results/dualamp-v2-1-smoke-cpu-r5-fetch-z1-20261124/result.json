@@ -1,0 +1,14 @@
+{
+  "job_id": "dualamp-v2-1-smoke-cpu-r5-fetch-z1-20261124",
+  "provider": "kaggle",
+  "mode": "output",
+  "kernel_ref": "shaohuawen/dualamp-v2-1-smoke-cpu-r5-20261124",
+  "copied_files": [
+    "dualamp-v2-1-smoke-cpu-r5-20261124.log",
+    "v2_1_progress.json",
+    "v2_1_training.log",
+    "v2_1_training_report.json"
+  ],
+  "cli_output": "Downloading v2_1_progress.json to /tmp/kag_out_sa04u9b_\n\nOutput file downloaded to /tmp/kag_out_sa04u9b_/v2_1_progress.json\nDownloading v2_1_training.log to /tmp/kag_out_sa04u9b_\n\nOutput file downloaded to /tmp/kag_out_sa04u9b_/v2_1_training.log\nDownloading v2_1_training_report.json to /tmp/kag_out_sa04u9b_\n\nOutput file downloaded to /tmp/kag_out_sa04u9b_/v2_1_training_report.json\nKernel log downloaded to /tmp/kag_out_sa04u9b_/dualamp-v2-1-smoke-cpu-r5-20261124.log",
+  "fetched_at_utc": "2026-11-25T00:34:22Z"
+}
