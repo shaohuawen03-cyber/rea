@@ -1842,7 +1842,7 @@
       "serve_minutes": 15.0,
       "wait": false,
       "timeout_sec": 2400,
-      "status": "pending",
+      "status": "pushed_async",
       "created_at_utc": "2026-11-25T05:51:27Z",
       "kernel_slug": "dualamp-v2-1-package-r3-20261124",
       "kernel_sources": [
@@ -1854,7 +1854,8 @@
       "inline_json": {
         "V21_INPUTS_JSON": "cloud-gpu/jobs/v21_inputs.json"
       },
-      "note": "Package-only pass: mounts the delivery kernel's trained run, rebuilds the private zip, writes it to the kernel output and uploads it (fresh session). No retraining."
+      "note": "Package-only pass: mounts the delivery kernel's trained run, rebuilds the private zip, writes it to the kernel output and uploads it (fresh session). No retraining.",
+      "finished_at_utc": "2026-11-25T05:52:06Z"
     },
     {
       "id": "dualamp-v2-1-package-r3-status-20261124",
@@ -1862,10 +1863,11 @@
       "mode": "status",
       "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
       "kernel_slug": "dualamp-v2-1-package-r3-20261124",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-25T05:51:27Z",
-      "note": "Package-only check."
+      "note": "Package-only check.",
+      "finished_at_utc": "2026-11-25T05:52:07Z"
     },
     {
       "id": "dualamp-v2-1-package-r3-fetch-20261124",
@@ -1873,10 +1875,11 @@
       "mode": "output",
       "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
       "kernel_slug": "dualamp-v2-1-package-r3-20261124",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-25T05:51:27Z",
-      "note": "Package-only check."
+      "note": "Package-only check.",
+      "finished_at_utc": "2026-11-25T05:52:08Z"
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
