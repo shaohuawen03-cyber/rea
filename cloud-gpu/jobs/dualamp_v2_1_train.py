@@ -647,9 +647,9 @@ def main() -> int:
         metrics_path = (find(wd, "internal_test_metrics.csv")
                         or find(wd, "D10_test_metrics.csv")
                         or find(wd, "manuscript_D10_test_metrics.csv"))
-        if not metrics_path:
+        if not metrics_path and not package_only:
             raise RuntimeError("no test-metrics table produced by the pipeline")
-        metrics = csv_rows(metrics_path[0])
+        metrics = csv_rows(metrics_path[0]) if metrics_path else []
         summary_files = find(wd, "D10_test_summary.csv") or find(wd, "internal_test_summary.csv")
         summary = csv_rows(summary_files[0]) if summary_files else []
         dataset_files = find(wd, "dataset_summary.json") or find(wd, "D1_dataset_summary.json")
@@ -720,6 +720,7 @@ def main() -> int:
             root = wd / "run" / sub
             if root.exists():
                 private_files.extend(p for p in sorted(root.rglob("*")) if p.is_file())
+        print(f"[package] private files: {len(private_files)}", flush=True)
         if not any(p.suffix == ".pt" for p in private_files):
             raise RuntimeError("no trained checkpoint found for the private archive")
         private_zip = tmp / "dualamp_v2_1_model_bundle.zip"
