@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-25T03:05:54Z",
+  "updated_at_utc": "2026-11-25T03:09:43Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -1523,6 +1523,59 @@
       "created_at_utc": "2026-11-25T03:05:54Z",
       "note": "r7 check.",
       "finished_at_utc": "2026-11-25T03:06:42Z"
+    },
+    {
+      "id": "dualamp-v2-1-full-r3-20261124",
+      "provider": "kaggle",
+      "mode": "run",
+      "accelerator": "NvidiaTeslaT4",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
+      "script_args": [],
+      "extra_pip": [
+        "gdown",
+        "requests",
+        "fair-esm",
+        "pyyaml",
+        "biopython",
+        "pandas",
+        "scikit-learn",
+        "matplotlib"
+      ],
+      "serve_minutes": 15.0,
+      "wait": false,
+      "timeout_sec": 12600,
+      "status": "pushed_async",
+      "created_at_utc": "2026-11-25T03:09:43Z",
+      "kernel_slug": "dualamp-v2-1-full-r3-20261124",
+      "inline_json": {
+        "V21_INPUTS_JSON": "cloud-gpu/jobs/v21_inputs.json"
+      },
+      "note": "FULL v2.1 (delivery run): 14,577 positives + 20,000 weak negatives + 14,572 composition decoys, M1/M2/M3 x 5 seeds x 5 folds x 60 epochs, now with the calibration panel (Brier/ECE/reliability), fixed-specificity operating points and the composition verdict.",
+      "finished_at_utc": "2026-11-25T03:10:23Z"
+    },
+    {
+      "id": "dualamp-v2-1-full-r3-status-20261124",
+      "provider": "kaggle",
+      "mode": "status",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
+      "kernel_slug": "dualamp-v2-1-full-r3-20261124",
+      "status": "completed",
+      "wait": false,
+      "created_at_utc": "2026-11-25T03:09:43Z",
+      "note": "Full r3 status read.",
+      "finished_at_utc": "2026-11-25T03:10:24Z"
+    },
+    {
+      "id": "dualamp-v2-1-full-r3-fetch-20261124",
+      "provider": "kaggle",
+      "mode": "output",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
+      "kernel_slug": "dualamp-v2-1-full-r3-20261124",
+      "status": "completed",
+      "wait": false,
+      "created_at_utc": "2026-11-25T03:09:43Z",
+      "note": "Full r3 output fetch.",
+      "finished_at_utc": "2026-11-25T03:10:25Z"
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
