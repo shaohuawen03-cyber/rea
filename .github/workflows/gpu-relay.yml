@@ -250,6 +250,12 @@ jobs:
           dest_root = "cloud-gpu/results"
           os.makedirs(dest_root, exist_ok=True)
           max_bytes = 2 * 1024 * 1024
+          # Model weights are collected so they can be attached to a private delivery;
+          # .gitignore keeps cloud-gpu/results/**/*.pt out of the commit. Zips and
+          # per-sequence prediction tables never travel through here.
+          weight_ext = (".pt", ".pth", ".safetensors", ".onnx", ".gguf")
+          never = ("dualamp_v2_1_model_bundle.zip", "dualamp_model_only.zip", "_scores.npz")
+          kept_weights = []
           for entry in sorted(glob.glob(os.path.join(runs_root, "*"))):
               if not os.path.isdir(entry):
                   continue
@@ -259,8 +265,16 @@ jobs:
               for root, _, files in os.walk(entry):
                   for fn in files:
                       full = os.path.join(root, fn)
+                      if any(fn.endswith(n) or n in fn for n in never):
+                          continue
+                      if fn.endswith(weight_ext):
+                          shutil.copy2(full, os.path.join(dst, fn))
+                          kept_weights.append(fn)
+                          continue
                       if os.path.getsize(full) <= max_bytes:
                           shutil.copy2(full, os.path.join(dst, fn))
+          if kept_weights:
+              print(f"collected {len(kept_weights)} weight file(s) for private delivery: {kept_weights[:3]}")
           # Queue snapshot with final statuses + dispatch log tail.
           for src, name in (
               (os.path.join(runs_root, "queue.json"), "queue-final.json"),
