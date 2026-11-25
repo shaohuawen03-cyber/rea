@@ -1414,10 +1414,11 @@
       "mode": "status",
       "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
       "kernel_slug": "dualamp-v2-1-full-r2-20261124",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-25T02:10:17Z",
-      "note": "Full r2 check."
+      "note": "Full r2 check.",
+      "finished_at_utc": "2026-11-25T02:11:03Z"
     },
     {
       "id": "dualamp-v2-1-full-r2-fetch-a3-20261124",
@@ -1425,10 +1426,11 @@
       "mode": "output",
       "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
       "kernel_slug": "dualamp-v2-1-full-r2-20261124",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-25T02:10:17Z",
-      "note": "Full r2 check."
+      "note": "Full r2 check.",
+      "finished_at_utc": "2026-11-25T02:11:04Z"
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
