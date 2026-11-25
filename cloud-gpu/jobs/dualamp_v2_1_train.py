@@ -452,6 +452,16 @@ def main() -> int:
             raise RuntimeError(f"leanrea pin mismatch: {head}")
         pkg = leanrea / "dualamp-lite"
 
+        # A prior kernel output can be mounted read-only under /kaggle/input; the
+        # package-only pass rebuilds the private archive from it.
+        mounted_root = None
+        if (os.environ.get("V21_PACKAGE_ONLY") or "").strip() == "1":
+            for cand in sorted(Path("/kaggle/input").rglob("v2_1_training_report.json")):
+                mounted_root = cand.parent
+                break
+            if mounted_root is None:
+                raise RuntimeError("package-only mode needs a mounted prior output")
+
         wd = tmp / "work"
         data = wd / "data"
         data.mkdir(parents=True)
@@ -507,6 +517,7 @@ def main() -> int:
         folds = "2" if smoke else "5"
         report["smoke_mode"] = smoke
         env = {**os.environ, "PYTHONPATH": str(pkg)}
+        package_only = (os.environ.get("V21_PACKAGE_ONLY") or "").strip() == "1"
         steps = [
             [sys.executable, "-m", "dualamp_lite", "build", "--manifest", str(manifest),
              "--workdir", str(wd / "run"), "--cluster-method", "auto"],
@@ -557,6 +568,15 @@ def main() -> int:
         (tmp / "run_evaluation_stage.py").write_text(eval_payload["code"], encoding="utf-8")
         steps.insert(3, [sys.executable, str(tmp / "run_evaluation_stage.py")])
         report["evaluation_stage"] = "driven via dualamp_lite.v4.pipeline.run_stage('evaluation')"
+        if package_only:
+            # Re-packaging pass: the mounted kernel output already holds the trained run,
+            # so retraining (90 GPU-minutes) would be pure waste.
+            shutil.rmtree(wd, ignore_errors=True)
+            shutil.copytree(mounted_root, wd, dirs_exist_ok=True)
+            steps = []
+            report["package_only"] = True
+            report["reused_run_utc"] = (mounted_root / "v2_1_progress.json").stat().st_mtime
+            print(f"[package-only] reusing the mounted run at {wd}", flush=True)
         # Preflight the encoder: a missing/broken fair-esm must fail here with a clear
         # message instead of surfacing as "features exit 1" 20 minutes later.
         preflight = {}
