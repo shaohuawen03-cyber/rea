@@ -1631,10 +1631,11 @@
       "mode": "status",
       "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
       "kernel_slug": "dualamp-v2-1-full-r3-20261124",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-25T03:47:13Z",
-      "note": "Delivery run check after the envelope-lifecycle fix."
+      "note": "Delivery run check after the envelope-lifecycle fix.",
+      "finished_at_utc": "2026-11-25T03:47:48Z"
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
