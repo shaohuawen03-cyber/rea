@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-25T08:17:11Z",
+  "updated_at_utc": "2026-11-25T08:18:33Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -2203,6 +2203,28 @@
       },
       "note": "Weights run: the r3 zip was never copied into /kaggle/working and is gone. This rerun rebuilds it and writes dualamp_v2_1_model_bundle.zip into the persistent kernel output so it can be published without another training run.",
       "finished_at_utc": "2026-11-25T08:17:45Z"
+    },
+    {
+      "id": "dualamp-v2-1-weights-r4-status-20261125",
+      "provider": "kaggle",
+      "mode": "status",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
+      "kernel_slug": "dualamp-v2-1-weights-r4-20261125",
+      "status": "pending",
+      "wait": false,
+      "created_at_utc": "2026-11-25T08:18:33Z",
+      "note": "Weights run check."
+    },
+    {
+      "id": "dualamp-v2-1-weights-r4-fetch-20261125",
+      "provider": "kaggle",
+      "mode": "output",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
+      "kernel_slug": "dualamp-v2-1-weights-r4-20261125",
+      "status": "pending",
+      "wait": false,
+      "created_at_utc": "2026-11-25T08:18:33Z",
+      "note": "Weights run check."
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
