@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-25T00:18:27Z",
+  "updated_at_utc": "2026-11-25T00:18:33Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -1139,6 +1139,64 @@
       "wait": false,
       "created_at_utc": "2026-11-25T00:18:27Z",
       "note": "Fetch the r5 smoke report."
+    },
+    {
+      "id": "dualamp-v2-1-full-20261124",
+      "provider": "kaggle",
+      "mode": "run",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
+      "script_args": [],
+      "accelerator": "NvidiaTeslaT4",
+      "serve_minutes": 15.0,
+      "wait": false,
+      "timeout_sec": 12600,
+      "status": "pending",
+      "created_at_utc": "2026-11-25T00:18:33Z",
+      "kernel_slug": "dualamp-v2-1-full-20261124",
+      "note": "FULL v2.1 run: 14,577 frozen positives + 20,000 UniProt weak negatives + 14,572 composition decoys, M1/M2/M3 x seeds 1-5 x 5 folds x 60 epochs, plus the evaluation stage (Brier/ECE/Platt, challenge table) and the fixed-specificity operating points. (not smoke: V21_SMOKE is unset, so the frozen cohort and protocol apply)",
+      "extra_pip": [
+        "gdown",
+        "requests",
+        "fair-esm",
+        "pyyaml",
+        "biopython",
+        "pandas",
+        "scikit-learn",
+        "matplotlib"
+      ],
+      "inline_json": {
+        "V21_INPUTS_JSON": "cloud-gpu/jobs/v21_inputs.json"
+      }
+    },
+    {
+      "id": "dualamp-v2-1-full-status-20261124",
+      "provider": "kaggle",
+      "mode": "status",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
+      "script_args": [],
+      "accelerator": "NvidiaTeslaT4",
+      "serve_minutes": 15.0,
+      "wait": false,
+      "timeout_sec": 12600,
+      "status": "pending",
+      "created_at_utc": "2026-11-25T00:18:33Z",
+      "kernel_slug": "dualamp-v2-1-full-20261124",
+      "note": "Full-run status read."
+    },
+    {
+      "id": "dualamp-v2-1-full-fetch-20261124",
+      "provider": "kaggle",
+      "mode": "output",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
+      "script_args": [],
+      "accelerator": "NvidiaTeslaT4",
+      "serve_minutes": 15.0,
+      "wait": false,
+      "timeout_sec": 12600,
+      "status": "pending",
+      "created_at_utc": "2026-11-25T00:18:33Z",
+      "kernel_slug": "dualamp-v2-1-full-20261124",
+      "note": "Full-run output fetch."
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
