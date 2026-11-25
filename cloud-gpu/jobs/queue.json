@@ -2377,10 +2377,11 @@
       "mode": "status",
       "script_path": "cloud-gpu/jobs/dualamp_v2_1_extract_model.py",
       "kernel_slug": "dualamp-v2-1-model-only-r4-20261125",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-25T11:27:10Z",
-      "note": "Model-only extract check b."
+      "note": "Model-only extract check b.",
+      "finished_at_utc": "2026-11-25T11:27:43Z"
     },
     {
       "id": "dualamp-v2-1-model-only-r4-fetch-b",
@@ -2388,10 +2389,11 @@
       "mode": "output",
       "script_path": "cloud-gpu/jobs/dualamp_v2_1_extract_model.py",
       "kernel_slug": "dualamp-v2-1-model-only-r4-20261125",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-25T11:27:10Z",
-      "note": "Model-only extract check b."
+      "note": "Model-only extract check b.",
+      "finished_at_utc": "2026-11-25T11:27:51Z"
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
