@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-25T08:18:33Z",
+  "updated_at_utc": "2026-11-25T09:01:44Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -2227,6 +2227,28 @@
       "created_at_utc": "2026-11-25T08:18:33Z",
       "note": "Weights run check.",
       "finished_at_utc": "2026-11-25T08:19:07Z"
+    },
+    {
+      "id": "dualamp-v2-1-weights-r4-status-b-20261125",
+      "provider": "kaggle",
+      "mode": "status",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
+      "kernel_slug": "dualamp-v2-1-weights-r4-20261125",
+      "status": "pending",
+      "wait": false,
+      "created_at_utc": "2026-11-25T09:01:44Z",
+      "note": "Weights run queue watch."
+    },
+    {
+      "id": "dualamp-v2-1-weights-r4-status-c-20261125",
+      "provider": "kaggle",
+      "mode": "status",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
+      "kernel_slug": "dualamp-v2-1-weights-r4-20261125",
+      "status": "pending",
+      "wait": false,
+      "created_at_utc": "2026-11-25T09:01:44Z",
+      "note": "Weights run queue watch."
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
