@@ -22,6 +22,24 @@ REPORT = os.environ.get("V21_REPORT_JSON", "v2_1_training_report.json")
 BUNDLE = os.environ.get("V21_BUNDLE_ZIP", "dualamp_v2_1_model_bundle.zip")
 
 
+def locate(name: str) -> Path | None:
+    """Find a file in this kernel's output or in any mounted prior kernel output.
+
+    Kernel output does not survive between runs, so the bundle is mounted from the
+    training kernel via `kernel_sources` (read-only under /kaggle/input).
+    """
+    for root in (OUT, Path("/kaggle/input")):
+        if not root.exists():
+            continue
+        direct = root / name
+        if direct.exists():
+            return direct
+        hits = sorted(root.rglob(name))
+        if hits:
+            return hits[0]
+    return None
+
+
 def sha(path: Path) -> str:
     h = hashlib.sha256()
     with path.open("rb") as f:
@@ -57,11 +75,14 @@ def upload(uri: str, path: Path) -> dict:
 
 def main() -> int:
     uri = (os.environ.get("EVIDENCE_LEDGER_UPLOAD_URI") or "").strip()
-    bundle = OUT / BUNDLE
-    report_path = OUT / REPORT
-    if not bundle.exists():
-        raise SystemExit(f"no bundle at {bundle}")
-    payload = json.loads(report_path.read_text()) if report_path.exists() else {}
+    bundle = locate(BUNDLE)
+    report_path = locate(REPORT)
+    if bundle is None:
+        raise SystemExit(f"no {BUNDLE} in {OUT} or /kaggle/input")
+    if report_path is None:
+        raise SystemExit(f"no {REPORT} in {OUT} or /kaggle/input")
+    print(f"[locate] bundle={bundle} report={report_path}", flush=True)
+    payload = json.loads(report_path.read_text())
     expected = ((payload.get("private_model_bundle") or {}).get("local_sha256") or "").strip()
     actual = sha(bundle)
     if expected and expected != actual:

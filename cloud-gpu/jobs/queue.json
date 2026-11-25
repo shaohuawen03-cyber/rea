@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-25T05:27:33Z",
+  "updated_at_utc": "2026-11-25T05:31:03Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -1751,6 +1751,49 @@
       "created_at_utc": "2026-11-25T05:27:33Z",
       "note": "Upload job check.",
       "finished_at_utc": "2026-11-25T05:28:12Z"
+    },
+    {
+      "id": "dualamp-v2-1-upload-r3b-20261124",
+      "provider": "kaggle",
+      "mode": "run",
+      "accelerator": "NvidiaTeslaT4",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_upload_bundle.py",
+      "script_args": [],
+      "extra_pip": [
+        "requests"
+      ],
+      "serve_minutes": 15.0,
+      "wait": false,
+      "timeout_sec": 2400,
+      "status": "pending",
+      "created_at_utc": "2026-11-25T05:31:03Z",
+      "kernel_slug": "dualamp-v2-1-upload-r3b-20261124",
+      "kernel_sources": [
+        "shaohuawen/dualamp-v2-1-full-r3-20261124"
+      ],
+      "note": "Upload the private bundle, mounting the delivery kernel's output as a kernel source (/kaggle/input). No retraining; verifies the recorded sha256 before streaming."
+    },
+    {
+      "id": "dualamp-v2-1-upload-r3b-status-20261124",
+      "provider": "kaggle",
+      "mode": "status",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_upload_bundle.py",
+      "kernel_slug": "dualamp-v2-1-upload-r3b-20261124",
+      "status": "pending",
+      "wait": false,
+      "created_at_utc": "2026-11-25T05:31:03Z",
+      "note": "Upload r3b status."
+    },
+    {
+      "id": "dualamp-v2-1-upload-r3b-fetch-20261124",
+      "provider": "kaggle",
+      "mode": "output",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_upload_bundle.py",
+      "kernel_slug": "dualamp-v2-1-upload-r3b-20261124",
+      "status": "pending",
+      "wait": false,
+      "created_at_utc": "2026-11-25T05:31:03Z",
+      "note": "Upload r3b output fetch."
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
