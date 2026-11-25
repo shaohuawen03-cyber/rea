@@ -1,0 +1,47 @@
+{
+  "label": "v21-pre-smoke-after",
+  "captured_at_utc": "2026-11-25T03:39:45Z",
+  "refresh_at": "2026-11-28T00:00:00Z",
+  "source": "api.kaggle.com (exact seconds)",
+  "gpu": {
+    "used_seconds": 21443.735,
+    "used_hours": 5.9566,
+    "reserved_seconds": 0.0,
+    "total_seconds": 108000.0,
+    "total_hours": 30.0,
+    "remaining_seconds": 86556.265,
+    "remaining_hours": 24.0434
+  },
+  "tpu": {
+    "used_seconds": 0.0,
+    "used_hours": 0.0,
+    "reserved_seconds": 0.0,
+    "total_seconds": 72000.0,
+    "total_hours": 20.0,
+    "remaining_seconds": 72000.0,
+    "remaining_hours": 20.0
+  },
+  "delta": {
+    "from": "2026-11-25T03:39:44Z",
+    "to": "2026-11-25T03:39:45Z",
+    "accelerators": {
+      "gpu": {
+        "used_seconds_delta": 0.143,
+        "used_hours_delta": 0.0,
+        "used_seconds_before": 21443.592,
+        "used_seconds_after": 21443.735,
+        "remaining_hours_before": 24.0434,
+        "remaining_hours_after": 24.0434
+      },
+      "tpu": {
+        "used_seconds_delta": 0.0,
+        "used_hours_delta": 0.0,
+        "used_seconds_before": 0.0,
+        "used_seconds_after": 0.0,
+        "remaining_hours_before": 20.0,
+        "remaining_hours_after": 20.0
+      }
+    }
+  },
+  "errors": null
+}
