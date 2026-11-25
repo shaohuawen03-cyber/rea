@@ -28,6 +28,20 @@ QUEUE_DEFAULT = "cloud-gpu/jobs/queue.json"
 RUNS_DIR_DEFAULT = "cloud-gpu/runs"
 MAX_GIT_FILE_BYTES = 2 * 1024 * 1024  # Keep git artifacts <= 2 MiB; big weights go to Drive
 
+# Outputs that must never land in cloud-gpu/results: this repo is PUBLIC, and model
+# weights / lossless parts of them are private artefacts. They are handled by
+# stage_private_bundle.py instead, which uploads to a pre-authorized private target.
+PRIVATE_OUTPUT_PATTERNS = (
+    "dualamp_v2_1_model_bundle.zip",
+    "model_bundle_parts/",
+    "PARTS_MANIFEST.json",
+)
+
+
+def _is_private_output(rel_path: str) -> bool:
+    rel = rel_path.replace(os.sep, "/")
+    return any(pat in rel for pat in PRIVATE_OUTPUT_PATTERNS)
+
 
 def utc_now() -> str:
     return dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -637,6 +651,7 @@ def execute_kaggle_job(job: dict[str, Any], run_dir: str) -> dict[str, Any]:
     copied_files: list[str] = []
     final_status = "pushed_async"
 
+    withheld: list[str] = []
     if wait_for_completion:
         poll_timeout = int(job.get("timeout_sec", 9000))  # 全量 real 运行约 60-70min，默认 60min 会误判 pushed_async
         deadline = time.time() + poll_timeout
@@ -659,7 +674,10 @@ def execute_kaggle_job(job: dict[str, Any], run_dir: str) -> dict[str, Any]:
         tmp_out = tempfile.mkdtemp(prefix="kag_out_")
         try:
             run_cmd(["kaggle", "kernels", "output", kernel_ref, "-p", tmp_out, "-o"], env=kaggle_env, timeout=900)
-            copied_files = _copy_small_outputs(tmp_out, run_dir)
+            copied_files = _copy_small_outputs(tmp_out, run_dir, withheld)
+            if withheld:
+                print(f"[private] withheld {len(withheld)} private output(s) from git: "
+                      f"{withheld[:3]}{'...' if len(withheld) > 3 else ''}", flush=True)
         finally:
             shutil.rmtree(tmp_out, ignore_errors=True)
         if final_status == "failed":
@@ -674,6 +692,7 @@ def execute_kaggle_job(job: dict[str, Any], run_dir: str) -> dict[str, Any]:
         "kernel_url": f"https://www.kaggle.com/code/{kernel_ref}",
         "status": final_status,
         "copied_files": copied_files,
+        "private_outputs_withheld": len(withheld),
         "push_output": (pushed.stdout or "").strip()[:500],
         "updated_at_utc": utc_now(),
     }
@@ -683,11 +702,17 @@ def execute_kaggle_job(job: dict[str, Any], run_dir: str) -> dict[str, Any]:
     return payload
 
 
-def _copy_small_outputs(src_root: str, dst_dir: str) -> list[str]:
+def _copy_small_outputs(src_root: str, dst_dir: str, skipped: list[str] | None = None) -> list[str]:
     copied: list[str] = []
+    if skipped is None:
+        skipped = []
     for root, _, files in os.walk(src_root):
         for fn in files:
             full = os.path.join(root, fn)
+            rel_check = os.path.relpath(full, src_root)
+            if _is_private_output(rel_check):
+                skipped.append(rel_check)
+                continue
             if os.path.getsize(full) <= MAX_GIT_FILE_BYTES and not fn.endswith((".pth", ".safetensors", ".onnx", ".gguf")):
                 rel = os.path.relpath(full, src_root).replace(os.sep, "_")
                 shutil.copy2(full, os.path.join(dst_dir, rel))
