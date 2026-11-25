@@ -149,6 +149,191 @@ def operating_points(oof_rows: list[dict], targets: list[float]) -> list[dict]:
     return out
 
 
+# --------------------------------------------------------------------------- #
+# calibration / operating points computed from the pipeline's own score files
+# --------------------------------------------------------------------------- #
+def _np():
+    import numpy as np  # noqa: PLC0415
+    return np
+
+
+def _auc(y, p) -> float:
+    np = _np()
+    y = np.asarray(y).astype(int)
+    p = np.asarray(p, dtype=float)
+    pos, neg = p[y == 1], p[y == 0]
+    if len(pos) == 0 or len(neg) == 0:
+        return float("nan")
+    order = np.argsort(p)
+    ranks = np.empty(len(p), dtype=float)
+    ranks[order] = np.arange(1, len(p) + 1)
+    # average ranks for ties
+    _, inverse, counts = np.unique(p, return_inverse=True, return_counts=True)
+    sums = np.zeros(len(counts))
+    np.add.at(sums, inverse, ranks)
+    ranks = (sums / counts)[inverse]
+    return float((ranks[y == 1].sum() - len(pos) * (len(pos) + 1) / 2) / (len(pos) * len(neg)))
+
+
+def _brier(y, p) -> float:
+    np = _np()
+    y = np.asarray(y, dtype=float)
+    p = np.asarray(p, dtype=float)
+    return float(np.mean((p - y) ** 2))
+
+
+def _ece(y, p, bins: int = 10) -> tuple[float, list[dict]]:
+    np = _np()
+    y = np.asarray(y, dtype=int)
+    p = np.asarray(p, dtype=float)
+    edges = np.linspace(0.0, 1.0, bins + 1)
+    rows, total = [], 0.0
+    for i in range(bins):
+        lo, hi = edges[i], edges[i + 1]
+        m = (p >= lo) & (p < hi) if i < bins - 1 else (p >= lo) & (p <= hi)
+        if not m.any():
+            continue
+        conf, freq, n = float(p[m].mean()), float(y[m].mean()), int(m.sum())
+        rows.append({"bin_low": round(float(lo), 3), "bin_high": round(float(hi), 3),
+                     "n": n, "mean_predicted": round(conf, 4), "observed_rate": round(freq, 4)})
+        total += n / len(p) * abs(freq - conf)
+    return float(total), rows
+
+
+def _metrics_at(y, p, thr: float) -> dict:
+    np = _np()
+    y = np.asarray(y).astype(int)
+    pred = (np.asarray(p, dtype=float) >= thr).astype(int)
+    tp = int(((pred == 1) & (y == 1)).sum()); fp = int(((pred == 1) & (y == 0)).sum())
+    tn = int(((pred == 0) & (y == 0)).sum()); fn = int(((pred == 0) & (y == 1)).sum())
+    sens = tp / (tp + fn) if tp + fn else float("nan")
+    spec = tn / (tn + fp) if tn + fp else float("nan")
+    prec = tp / (tp + fp) if tp + fp else float("nan")
+    f1 = 2 * prec * sens / (prec + sens) if prec + sens else float("nan")
+    mcc_den = ((tp + fp) * (tp + fn) * (tn + fp) * (tn + fn)) ** 0.5
+    return {"threshold": round(float(thr), 6), "tp": tp, "fp": fp, "tn": tn, "fn": fn,
+            "sensitivity": round(sens, 4) if sens == sens else None,
+            "specificity": round(spec, 4) if spec == spec else None,
+            "precision": round(prec, 4) if prec == prec else None,
+            "f1": round(f1, 4) if f1 == f1 else None,
+            "mcc": round((tp * tn - fp * fn) / mcc_den, 4) if mcc_den else 0.0}
+
+
+def fixed_specificity_from_dev(dev_y, dev_p, targets=(0.99, 0.995)) -> list[dict]:
+    """Most sensitive dev cut that still reaches the target specificity."""
+    np = _np()
+    dev_y = np.asarray(dev_y).astype(int)
+    dev_p = np.asarray(dev_p, dtype=float)
+    neg = np.sort(dev_p[dev_y == 0])
+    pos = dev_p[dev_y == 1]
+    out = []
+    if len(neg) == 0 or len(pos) == 0:
+        return out
+    for target in targets:
+        thr = None
+        for cand in neg:                      # lowest negative score upwards
+            if float((neg < cand).mean()) >= target - 1e-12:
+                thr = float(cand)
+                break
+        if thr is None:
+            thr = float(neg.max())
+        out.append({"target_specificity": target,
+                    "dev_threshold": round(thr, 6),
+                    "dev_specificity": round(float((neg < thr).mean()), 4),
+                    "dev_sensitivity": round(float((pos >= thr).mean()), 4),
+                    "dev_n_neg": int(len(neg)), "dev_n_pos": int(len(pos)),
+                    "source": "dev OOF (seed 1) per model/<MODEL>_scores.npz"})
+    return out
+
+
+def calibration_block(work: Path) -> dict:
+    """Brier/ECE/reliability + fixed-specificity points from the score files.
+
+    leanrea's CLI never runs the V4 `evaluation` stage (no subcommand, and the stage
+    bootstrap needs a run id the CLI does not persist), so the calibration tables the
+    report needs are computed here from `model/<MODEL>_scores.npz`, which holds
+    per-seed test scores, the ensemble, the labels and the seed-1 dev OOF vector.
+    """
+    np = _np()
+    root = work / "run"
+    out: dict = {"per_model": [], "bins": [], "operating_points": [], "source": []}
+    for path in sorted((root / "model").glob("*_scores.npz")) if (root / "model").exists() else []:
+        model = path.name.split("_scores.npz")[0]
+        with np.load(path, allow_pickle=True) as z:
+            keys = set(z.files)
+            ens = z["test_ensemble"] if "test_ensemble" in keys else None
+            y = z["test_labels"] if "test_labels" in keys else None
+            if ens is None or y is None:
+                continue
+            ens = np.asarray(ens, dtype=float)
+            y = np.asarray(y).astype(int)
+            row = {"model": model, "n_test": int(len(y)), "n_pos": int(y.sum()),
+                   "auroc": round(_auc(y, ens), 4),
+                   "brier": round(_brier(y, ens), 5),
+                   "brier_ref_all_positive": round(float(y.mean() * (1 - y.mean())), 5)}
+            ece_val, bins = _ece(y, ens)
+            row["ece"] = round(ece_val, 5)
+            row["mean_predicted"] = round(float(ens.mean()), 4)
+            row["observed_rate"] = round(float(y.mean()), 4)
+            out["per_model"].append(row)
+            for b in bins:
+                out["bins"].append({"model": model, **b})
+            out["source"].append(f"model/{path.name}")
+            if "dev_oof_seed0" in keys and "dev_labels" in keys:
+                for pt in fixed_specificity_from_dev(z["dev_labels"], z["dev_oof_seed0"]):
+                    pt["model"] = model
+                    hit = _metrics_at(y, ens, pt["dev_threshold"])
+                    pt["test_at_dev_threshold"] = {k: hit[k] for k in
+                                                   ("sensitivity", "specificity", "mcc",
+                                                    "precision", "f1")}
+                    out["operating_points"].append(pt)
+    return out
+
+
+def composition_from_scores(work: Path, decoy_ids: set[str]) -> dict:
+    """Fraction of composition decoys accepted by each model, from the score archive.
+
+    The CLI prints this in the log (`external[scrambled] ...`) but writes no table, and
+    the V4 challenge table is unavailable. The test split is homology-grouped and holds
+    no decoys, so the decoy acceptance rate is taken from the recorded challenge log
+    lines; the raw per-sequence scores stay private.
+    """
+    return {"decoy_ids_available": bool(decoy_ids)}
+
+
+def composition_from_log(log_path: Path, models: list[str]) -> dict:
+    """Recover the composition-challenge numbers from the training log.
+
+    leanrea prints `external[scrambled] <MODEL>: {..., 'frac_predicted_positive': x}`
+    but writes no challenge table on the CLI path, and the frozen test split is
+    homology-grouped (it holds no decoys). The numbers below are those log lines:
+    aggregate only, no per-sequence scores.
+    """
+    import re
+    text = log_path.read_text(encoding="utf-8", errors="replace") if log_path.exists() else ""
+    rows = []
+    for m in re.finditer(r"external\[scrambled\]\s+(\w+):\s*\{([^}]*)\}", text):
+        model, body = m.group(1), m.group(2)
+        row = {"split": "scrambled_test", "model": model, "source": "training log"}
+        for key in ("n", "n_pos", "mean_score", "frac_predicted_positive"):
+            mm = re.search(rf"'{key}':\s*([-0-9.eE]+)", body)
+            if mm:
+                val = float(mm.group(1))
+                row[key] = int(val) if key in ("n", "n_pos") else round(val, 4)
+        if row.get("model"):
+            rows.append(row)
+    fracs = [r["frac_predicted_positive"] for r in rows if "frac_predicted_positive" in r]
+    verdict = "NOT_EVALUATED"
+    if fracs:
+        verdict = "PASS" if max(fracs) < 0.10 else "FAIL_COMPOSITION_SHORTCUT"
+    return {"rows": rows, "max_frac_predicted_positive": max(fracs) if fracs else None,
+            "best_model_frac": min(fracs) if fracs else None,
+            "verdict": verdict,
+            "criterion": "PASS only if every model keeps composition-decoy acceptance < 10%",
+            "note": "decoy sequences are length+composition matched shuffles of the positives; "
+                    "a high acceptance rate means the model reads composition, not order"}
+
+
 def composition_challenge(metrics: list[dict], extra_paths: list[Path]) -> dict:
     """Did the model accept composition-identical shuffles? Report it straight."""
     rows: list[dict] = []
@@ -460,6 +645,8 @@ def main() -> int:
 
         challenge_paths = [p for p in find(wd, "*.csv")
                            if p.name in ("challenge_sets.csv", "external_validation.csv")]
+        calib = calibration_block(wd)
+        challenge_log = composition_from_log(log_path, [r.get("model") for r in metrics])
         report.update({
             "status": "COMPLETED_V2_1_TRAINING",
             "completed_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
@@ -467,11 +654,26 @@ def main() -> int:
             "dataset_summary": dataset,
             "metrics": metrics,
             "metrics_summary": summary,
-            "calibration_metrics": [r for p in calib_metrics for r in csv_rows(p)],
-            "calibration_bins": [r for p in calib_bins for r in csv_rows(p)][:120],
-            "fixed_specificity_operating_points": operating_points(oof_rows, [0.99, 0.995]),
-            "fixed_specificity_source": "dev OOF" if oof_rows else "unavailable (no OOF table)",
-            "composition_challenge": composition_challenge(metrics, challenge_paths),
+            "calibration_metrics": ([r for p in calib_metrics for r in csv_rows(p)]
+                                    or calib["per_model"]),
+            "calibration_bins": ([r for p in calib_bins for r in csv_rows(p)][:120]
+                                 or calib["bins"][:120]),
+            "calibration_source": calib["source"],
+            # Brier/ECE belong in the headline test table, not only in the side table:
+            # a discriminative-but-miscalibrated model must be visible at a glance.
+            "calibration_in_metrics": [
+                {"model": r["model"], "n_test": r["n_test"], "n_pos": r["n_pos"],
+                 "auroc": r["auroc"], "brier": r["brier"], "ece": r["ece"],
+                 "mean_predicted": r["mean_predicted"], "observed_rate": r["observed_rate"]}
+                for r in calib["per_model"]],
+            "fixed_specificity_operating_points": (operating_points(oof_rows, [0.99, 0.995])
+                                                   or calib["operating_points"]),
+            "fixed_specificity_source": ("dev OOF table" if oof_rows
+                                         else "dev OOF vector in model/<MODEL>_scores.npz"
+                                         if calib["operating_points"] else "unavailable"),
+            "composition_challenge": (composition_challenge(metrics, challenge_paths)
+                                      if composition_challenge(metrics, challenge_paths)["rows"]
+                                      else challenge_log),
             "calibration_bins_count": len(
                 [r for p in calib_bins for r in csv_rows(p)]),
             "caveats": [
