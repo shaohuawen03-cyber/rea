@@ -1,0 +1,8 @@
+{
+  "job_id": "dualamp-v2-1-smoke-cpu-r6-status-w1-20261124",
+  "provider": "kaggle",
+  "mode": "status",
+  "kernel_ref": "shaohuawen/dualamp-v2-1-smoke-cpu-r6-20261124",
+  "status_output": "shaohuawen/dualamp-v2-1-smoke-cpu-r6-20261124 has status \"KernelWorkerStatus.ERROR\"",
+  "checked_at_utc": "2026-11-25T00:51:09Z"
+}
