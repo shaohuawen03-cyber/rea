@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-25T08:09:07Z",
+  "updated_at_utc": "2026-11-25T08:17:11Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -2174,6 +2174,34 @@
       "created_at_utc": "2026-11-25T08:09:07Z",
       "note": "Re-list the delivery run output to prove whether the 759 MB zip exists anywhere.",
       "finished_at_utc": "2026-11-25T08:09:46Z"
+    },
+    {
+      "id": "dualamp-v2-1-weights-r4-20261125",
+      "provider": "kaggle",
+      "mode": "run",
+      "accelerator": "NvidiaTeslaT4",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
+      "script_args": [],
+      "extra_pip": [
+        "gdown",
+        "requests",
+        "fair-esm",
+        "pyyaml",
+        "biopython",
+        "pandas",
+        "scikit-learn",
+        "matplotlib"
+      ],
+      "serve_minutes": 15.0,
+      "wait": false,
+      "timeout_sec": 12600,
+      "status": "pending",
+      "created_at_utc": "2026-11-25T08:17:11Z",
+      "kernel_slug": "dualamp-v2-1-weights-r4-20261125",
+      "inline_json": {
+        "V21_INPUTS_JSON": "cloud-gpu/jobs/v21_inputs.json"
+      },
+      "note": "Weights run: the r3 zip was never copied into /kaggle/working and is gone. This rerun rebuilds it and writes dualamp_v2_1_model_bundle.zip into the persistent kernel output so it can be published without another training run."
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
