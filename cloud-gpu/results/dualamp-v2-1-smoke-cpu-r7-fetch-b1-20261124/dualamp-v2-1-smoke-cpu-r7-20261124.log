@@ -1,0 +1,274 @@
+[{"stream_name":"stdout","time":6.583024247,"data":"[pip] gdown: rc=0\n"}
+,{"stream_name":"stdout","time":8.517822888,"data":"[pip] requests: rc=0\n"}
+,{"stream_name":"stdout","time":11.537022463,"data":"[pip] fair-esm: rc=0\n"}
+,{"stream_name":"stdout","time":13.471176659,"data":"[pip] pyyaml: rc=0\n"}
+,{"stream_name":"stdout","time":18.125426591,"data":"[pip] biopython: rc=0\n"}
+,{"stream_name":"stdout","time":20.081889191,"data":"[pip] pandas: rc=0\n"}
+,{"stream_name":"stdout","time":22.087433657,"data":"[pip] scikit-learn: rc=0\n"}
+,{"stream_name":"stdout","time":24.035170216,"data":"[pip] matplotlib: rc=0\n"}
+,{"stream_name":"stdout","time":64.382472586,"data":"Downloading: \"https://dl.fbaipublicfiles.com/fair-esm/models/esm2_t12_35M_UR50D.pt\" to /root/.cache/torch/hub/checkpoints/esm2_t12_35M_UR50D.pt\n"}
+,{"stream_name":"stdout","time":65.065596626,"data":"Downloading: \"https://dl.fbaipublicfiles.com/fair-esm/regression/esm2_t12_35M_UR50D-contact-regression.pt\" to /root/.cache/torch/hub/checkpoints/esm2_t12_35M_UR50D-contact-regression.pt\n"}
+,{"stream_name":"stdout","time":705.698025398,"data":"hon3 -m dualamp_lite build --manifest /tmp/v21-p5snmy1l/work/data/sources.yaml --workdir /tmp/v21-p5snmy1l/work/run --cluster-method auto\n"}
+,{"stream_name":"stdout","time":705.698085248,"data":"[02:47:38] INFO    reading sources from /tmp/v21-p5snmy1l/work/data/sources.yaml\n"}
+,{"stream_name":"stdout","time":705.698092656,"data":"[02:47:38] INFO      source dramp_v2_1_positives   layer=bacterial_amp        kept=  400 (from 400 rows)\n"}
+,{"stream_name":"stdout","time":705.698098291,"data":"[02:47:38] INFO      source uniprot_a_fragments    layer=negative_background  kept= 2000 (from 2000 rows)\n"}
+,{"stream_name":"stdout","time":705.698103919,"data":"[02:47:38] INFO      source composition_decoys_v2_1 layer=scrambled            kept=  400 (from 400 rows)\n"}
+,{"stream_name":"stdout","time":705.698109381,"data":"[02:47:38] INFO    after length/alphabet filtering: 2800 records\n"}
+,{"stream_name":"stdout","time":705.698114635,"data":"[02:47:41] INFO      dedup: 2800 records -\u003e 2800 unique sequences\n"}
+,{"stream_name":"stdout","time":705.698122135,"data":"[02:47:41] INFO      scrambled challenge set: +400 sequences\n"}
+,{"stream_name":"stdout","time":705.698132067,"data":"[02:47:41] WARNING   CD-HIT / MMseqs2 not found - using the built-in k-mer clustering fallback. Record this in the methods section (plan §5 requires naming the tool and params).\n"}
+,{"stream_name":"stdout","time":705.698161951,"data":"[02:47:47] INFO    clustering: kmer_fallback(k=3) at identity 0.40 / coverage 0.80 -\u003e 1558 clusters\n"}
+,{"stream_name":"stdout","time":705.698169999,"data":"[02:47:47] WARNING   156 homology clusters contain both labels - assigned to 'review' (never trained on)\n"}
+,{"stream_name":"stdout","time":705.698176401,"data":"[02:47:47] INFO      split sizes: {'train': 1351, 'scrambled': 800, 'review': 469, 'val': 290, 'test': 290}\n"}
+,{"stream_name":"stdout","time":705.698182679,"data":"[02:47:47] INFO    dataset written: 3200 sequences, 1558 clusters, test=290 (pos=26) - see /tmp/v21-p5snmy1l/work/run/dataset/dataset_all.csv\n"}
+,{"stream_name":"stdout","time":705.698188109,"data":"[02:47:47] INFO    step1 build_dataset finished in 9.2s\n"}
+,{"stream_name":"stdout","time":705.698193011,"data":"sequences=3200 clusters=1558 test=290\n"}
+,{"stream_name":"stdout","time":705.698198164,"data":"$ /usr/bin/python3 -m dualamp_lite features --workdir /tmp/v21-p5snmy1l/work/run --backend fair-esm --batch-size 64\n"}
+,{"stream_name":"stdout","time":705.698203463,"data":"[02:47:50] INFO    device: cpu\n"}
+,{"stream_name":"stdout","time":705.698229834,"data":"[02:47:53] INFO    biophys: 35 features, 4 pairs with |r| \u003e= 0.85 (see biophys_correlation.csv)\n"}
+,{"stream_name":"stdout","time":705.69827731,"data":"[02:47:53] INFO    feature backend: fair-esm\n"}
+,{"stream_name":"stdout","time":705.698284771,"data":"[02:48:38] INFO      train: 1351 x 50 x 480 (65.0 MB) in 44.1s -\u003e train_feat.npz\n"}
+,{"stream_name":"stdout","time":705.698289111,"data":"[02:48:50] INFO      val: 290 x 50 x 480 (14.0 MB) in 12.4s -\u003e val_feat.npz\n"}
+,{"stream_name":"stdout","time":705.698293106,"data":"[02:49:02] INFO      test: 290 x 50 x 480 (14.0 MB) in 12.2s -\u003e test_feat.npz\n"}
+,{"stream_name":"stdout","time":705.698299593,"data":"[02:49:21] INFO      scrambled: 800 x 50 x 480 (38.5 MB) in 18.8s -\u003e scrambled_feat.npz\n"}
+,{"stream_name":"stdout","time":705.698303894,"data":"[02:49:21] INFO    step2 extract_features finished in 92.9s\n"}
+,{"stream_name":"stdout","time":705.698307868,"data":"backend=fair-esm embed_dim=480 demo=False\n"}
+,{"stream_name":"stdout","time":705.698311892,"data":"$ /usr/bin/python3 -m dualamp_lite train --workdir /tmp/v21-p5snmy1l/work/run --models M1,M2,M3 --seeds 1 --folds 2 --epochs 2 --loss bce\n"}
+,{"stream_name":"stdout","time":705.698316133,"data":"[02:49:25] INFO    dev: 1641 peptides (146 pos) in 943 clusters | test: 290 peptides (26 pos) in 265 clusters\n"}
+,{"stream_name":"stdout","time":705.698320242,"data":"[02:49:25] INFO    training M1 ...\n"}
+,{"stream_name":"stdout","time":705.698324094,"data":"[02:49:38] INFO      M1 seed 1: dev OOF AUROC 0.815, test AUROC 0.952 MCC 0.614 (epochs=2)\n"}
+,{"stream_name":"stdout","time":705.698328217,"data":"[02:51:46] INFO    training M2 ...\n"}
+,{"stream_name":"stdout","time":705.698332042,"data":"[02:52:06] INFO      M2 seed 1: dev OOF AUROC 0.970, test AUROC 0.999 MCC 0.913 (epochs=2)\n"}
+,{"stream_name":"stdout","time":705.698336175,"data":"[02:54:13] INFO    training M3 ...\n"}
+,{"stream_name":"stdout","time":705.698342081,"data":"[02:54:34] INFO      M3 seed 1: dev OOF AUROC 0.972, test AUROC 0.999 MCC 0.941 (epochs=2)\n"}
+,{"stream_name":"stdout","time":705.698369191,"data":"[02:58:10] INFO      comparisons: 6 (BH-FDR controlled at 0.05)\n"}
+,{"stream_name":"stdout","time":705.698375272,"data":"[02:58:10] INFO      external[scrambled] M1: {'n': 800, 'n_pos': 0, 'mean_score': 0.6292079091072083, 'frac_predicted_positive': 0.5275}\n"}
+,{"stream_name":"stdout","time":705.698380411,"data":"[02:58:11] INFO      external[scrambled] M2: {'n': 800, 'n_pos': 0, 'mean_score': 0.1588834524154663, 'frac_predicted_positive': 0.11375}\n"}
+,{"stream_name":"stdout","time":705.698384687,"data":"[02:58:12] INFO      external[scrambled] M3: {'n': 800, 'n_pos': 0, 'mean_score': 0.3114253282546997, 'frac_predicted_positive': 0.22}\n"}
+,{"stream_name":"stdout","time":705.69838894,"data":"[02:58:12] INFO    wrote D10_test_metrics.csv and D9_ablation.csv\n"}
+,{"stream_name":"stdout","time":705.698392915,"data":"[02:58:12] INFO    step3 train_and_eval finished in 526.5s\n"}
+,{"stream_name":"stdout","time":705.698396756,"data":"models=['M1', 'M2', 'M3']\n"}
+,{"stream_name":"stdout","time":705.698400535,"data":"  M1           AUROC=0.952 MCC=0.614 AUPRC=0.791\n"}
+,{"stream_name":"stdout","time":705.698404359,"data":"  M2           AUROC=0.999 MCC=0.913 AUPRC=0.988\n"}
+,{"stream_name":"stdout","time":705.698408221,"data":"  M3           AUROC=0.999 MCC=0.941 AUPRC=0.989\n"}
+,{"stream_name":"stdout","time":705.69841199,"data":"$ /usr/bin/python3 /tmp/v21-p5snmy1l/run_evaluation_stage.py\n"}
+,{"stream_name":"stdout","time":705.698415974,"data":"workdir tree: ['ablation', 'baseline', 'cache', 'dataset', 'dataset/splits', 'features', 'figures', 'logs', 'manuscript', 'model']\n"}
+,{"stream_name":"stdout","time":705.698420133,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stdout","time":705.698434102,"data":"  File \"/tmp/v21-p5snmy1l/run_evaluation_stage.py\", line 24, in \u003cmodule\u003e\n"}
+,{"stream_name":"stdout","time":705.698445857,"data":"    assert run_id, f'no run id found under {root}'\n"}
+,{"stream_name":"stdout","time":705.698463999,"data":"           ^^^^^^\n"}
+,{"stream_name":"stdout","time":705.69846845,"data":"AssertionError: no run id found under /tmp/v21-p5snmy1l/work/run\n"}
+,{"stream_name":"stdout","time":705.698473072,"data":"\n"}
+,{"stream_name":"stdout","time":705.698477342,"data":"[warn] evaluation stage failed; continuing without its tables\n"}
+,{"stream_name":"stdout","time":732.11099769,"data":"{\n"}
+,{"stream_name":"stdout","time":732.111036919,"data":"  \"stage\": \"dualamp_v2_1_training\",\n"}
+,{"stream_name":"stdout","time":732.111041431,"data":"  \"dataset_version\": \"positive_core_v2_1_dramp\",\n"}
+,{"stream_name":"stdout","time":732.111044457,"data":"  \"rule_version\": \"auto_evidence_v2_2.0\",\n"}
+,{"stream_name":"stdout","time":732.111047551,"data":"  \"leanrea_commit\": \"f610dc00b1aec3ab948a5b77574af0e644259a13\",\n"}
+,{"stream_name":"stdout","time":732.111050356,"data":"  \"started_utc\": \"2026-11-25T02:46:56.279446+00:00\",\n"}
+,{"stream_name":"stdout","time":732.111053117,"data":"  \"training_started\": true,\n"}
+,{"stream_name":"stdout","time":732.111055834,"data":"  \"upload_session_present\": false,\n"}
+,{"stream_name":"stdout","time":732.111058757,"data":"  \"cohort\": {\n"}
+,{"stream_name":"stdout","time":732.111061458,"data":"    \"positives\": 14577,\n"}
+,{"stream_name":"stdout","time":732.111064219,"data":"    \"composition_decoys\": 14572,\n"}
+,{"stream_name":"stdout","time":732.111066963,"data":"    \"positive_fasta_sha256\": \"9ca0d4076f6d61c16ad31b920afc9029ae463d3df3510049c9b6ac4366a8e40c\"\n"}
+,{"stream_name":"stdout","time":732.111069937,"data":"  },\n"}
+,{"stream_name":"stdout","time":732.111072505,"data":"  \"negatives\": {\n"}
+,{"stream_name":"stdout","time":732.111075168,"data":"    \"proteins_total\": 117172,\n"}
+,{"stream_name":"stdout","time":732.111078013,"data":"    \"keyword_excluded\": 18,\n"}
+,{"stream_name":"stdout","time":732.111080847,"data":"    \"fragments_raw\": 351462,\n"}
+,{"stream_name":"stdout","time":732.111083571,"data":"    \"fragments_standard_aa\": 351429,\n"}
+,{"stream_name":"stdout","time":732.111086323,"data":"    \"fragments_dedup\": 351119,\n"}
+,{"stream_name":"stdout","time":732.111088958,"data":"    \"fragments_hit_positive_4mer_gt08\": 5,\n"}
+,{"stream_name":"stdout","time":732.111091639,"data":"    \"negatives_final\": 2000,\n"}
+,{"stream_name":"stdout","time":732.111094281,"data":"    \"seed\": 11,\n"}
+,{"stream_name":"stdout","time":732.111096989,"data":"    \"cap\": 2000,\n"}
+,{"stream_name":"stdout","time":732.111099597,"data":"    \"neg_mode\": \"standard\",\n"}
+,{"stream_name":"stdout","time":732.111102301,"data":"    \"seconds\": 11.9\n"}
+,{"stream_name":"stdout","time":732.111104953,"data":"  },\n"}
+,{"stream_name":"stdout","time":732.11110752,"data":"  \"manifest_sha256\": \"0dd1095d76b1353ef96ec02a28d445a03c37747cc76c73b133282f0f503e9f0e\",\n"}
+,{"stream_name":"stdout","time":732.111110436,"data":"  \"smoke_mode\": true,\n"}
+,{"stream_name":"stdout","time":732.111113085,"data":"  \"evaluation_stage\": \"driven via dualamp_lite.v4.pipeline.run_stage('evaluation')\",\n"}
+,{"stream_name":"stdout","time":732.11111586,"data":"  \"encoder_preflight\": {\n"}
+,{"stream_name":"stdout","time":732.111118488,"data":"    \"encoder\": \"fair-esm\",\n"}
+,{"stream_name":"stdout","time":732.111121145,"data":"    \"is_mock\": false,\n"}
+,{"stream_name":"stdout","time":732.111132727,"data":"    \"embed_dim\": 480,\n"}
+,{"stream_name":"stdout","time":732.111135573,"data":"    \"probe_shapes\": [\n"}
+,{"stream_name":"stdout","time":732.111138211,"data":"      [\n"}
+,{"stream_name":"stdout","time":732.111140761,"data":"        2,\n"}
+,{"stream_name":"stdout","time":732.111143293,"data":"        23,\n"}
+,{"stream_name":"stdout","time":732.111145854,"data":"        480\n"}
+,{"stream_name":"stdout","time":732.111148471,"data":"      ],\n"}
+,{"stream_name":"stdout","time":732.111151048,"data":"      [\n"}
+,{"stream_name":"stdout","time":732.111153614,"data":"        2,\n"}
+,{"stream_name":"stdout","time":732.111156169,"data":"        480\n"}
+,{"stream_name":"stdout","time":732.111158707,"data":"      ]\n"}
+,{"stream_name":"stdout","time":732.111161238,"data":"    ],\n"}
+,{"stream_name":"stdout","time":732.111163753,"data":"    \"finite\": true\n"}
+,{"stream_name":"stdout","time":732.111166346,"data":"  },\n"}
+,{"stream_name":"stdout","time":732.11116926,"data":"  \"steps\": {\n"}
+,{"stream_name":"stdout","time":732.111172425,"data":"    \"build\": {\n"}
+,{"stream_name":"stdout","time":732.111175022,"data":"      \"returncode\": 0,\n"}
+,{"stream_name":"stdout","time":732.111177706,"data":"      \"seconds\": 10.0\n"}
+,{"stream_name":"stdout","time":732.111180496,"data":"    },\n"}
+,{"stream_name":"stdout","time":732.111183122,"data":"    \"features\": {\n"}
+,{"stream_name":"stdout","time":732.111185762,"data":"      \"returncode\": 0,\n"}
+,{"stream_name":"stdout","time":732.111188429,"data":"      \"seconds\": 94.3\n"}
+,{"stream_name":"stdout","time":732.111191037,"data":"    },\n"}
+,{"stream_name":"stdout","time":732.111193542,"data":"    \"train\": {\n"}
+,{"stream_name":"stdout","time":732.111196119,"data":"      \"returncode\": 0,\n"}
+,{"stream_name":"stdout","time":732.111198808,"data":"      \"seconds\": 530.9\n"}
+,{"stream_name":"stdout","time":732.111201424,"data":"    },\n"}
+,{"stream_name":"stdout","time":732.111203962,"data":"    \"evaluation\": {\n"}
+,{"stream_name":"stdout","time":732.111206575,"data":"      \"returncode\": 1,\n"}
+,{"stream_name":"stdout","time":732.111209171,"data":"      \"seconds\": 4.5\n"}
+,{"stream_name":"stdout","time":732.11121245,"data":"    },\n"}
+,{"stream_name":"stdout","time":732.11121647,"data":"    \"report\": {\n"}
+,{"stream_name":"stdout","time":732.111219586,"data":"      \"returncode\": 0,\n"}
+,{"stream_name":"stdout","time":732.11122215,"data":"      \"seconds\": 22.0\n"}
+,{"stream_name":"stdout","time":732.111224765,"data":"    }\n"}
+,{"stream_name":"stdout","time":732.111227282,"data":"  },\n"}
+,{"stream_name":"stdout","time":732.11122976,"data":"  \"auxiliary_stage_errors\": {\n"}
+,{"stream_name":"stdout","time":732.11131058,"data":"    \"evaluation\": \":10] INFO      comparisons: 6 (BH-FDR controlled at 0.05)\\n[02:58:10] INFO      external[scrambled] M1: {'n': 800, 'n_pos': 0, 'mean_score': 0.6292079091072083, 'frac_predicted_positive': 0.5275}\\n[02:58:11] INFO      external[scrambled] M2: {'n': 800, 'n_pos': 0, 'mean_score': 0.1588834524154663, 'frac_predicted_positive': 0.11375}\\n[02:58:12] INFO      external[scrambled] M3: {'n': 800, 'n_pos': 0, 'mean_score': 0.3114253282546997, 'frac_predicted_positive': 0.22}\\n[02:58:12] INFO    wrote D10_test_metrics.csv and D9_ablation.csv\\n[02:58:12] INFO    step3 train_and_eval finished in 526.5s\\nmodels=['M1', 'M2', 'M3']\\n  M1           AUROC=0.952 MCC=0.614 AUPRC=0.791\\n  M2           AUROC=0.999 MCC=0.913 AUPRC=0.988\\n  M3           AUROC=0.999 MCC=0.941 AUPRC=0.989\\n$ /usr/bin/python3 /tmp/v21-p5snmy1l/run_evaluation_stage.py\\nworkdir tree: ['ablation', 'baseline', 'cache', 'dataset', 'dataset/splits', 'features', 'figures', 'logs', 'manuscript', 'model']\\nTraceback (most recent call last):\\n  File \\\"/tmp/v21-p5snmy1l/run_evaluation_stage.py\\\", line 24, in \u003cmodule\u003e\\n    assert run_id, f'no run id found under {root}'\\n           ^^^^^^\\nAssertionError: no run id found under /tmp/v21-p5snmy1l/work/run\\n\"\n"}
+,{"stream_name":"stdout","time":732.111332451,"data":"  },\n"}
+,{"stream_name":"stdout","time":732.111335201,"data":"  \"status\": \"COMPLETED_V2_1_TRAINING\",\n"}
+,{"stream_name":"stdout","time":732.11133797,"data":"  \"completed_utc\": \"2026-11-25T02:58:40.047363+00:00\",\n"}
+,{"stream_name":"stdout","time":732.11134072,"data":"  \"code_commit\": \"25137896b6d9a68670b43d4463b25ab4b8a9b030\",\n"}
+,{"stream_name":"stdout","time":732.111397267,"data":"  \"dataset_summary\": {\n"}
+,{"stream_name":"stdout","time":732.111401734,"data":"    \"cluster_method\": \"kmer_fallback(k=3)\",\n"}
+,{"stream_name":"stdout","time":732.111407733,"data":"    \"cluster_identity\": 0.4,\n"}
+,{"stream_name":"stdout","time":732.111412068,"data":"    \"cluster_coverage\": 0.8,\n"}
+,{"stream_name":"stdout","time":732.111417997,"data":"    \"n_clusters\": 1558,\n"}
+,{"stream_name":"stdout","time":732.111421777,"data":"    \"n_sequences\": 3200,\n"}
+,{"stream_name":"stdout","time":732.111426368,"data":"    \"layer_counts\": {\n"}
+,{"stream_name":"stdout","time":732.111430586,"data":"      \"negative_background\": 2000,\n"}
+,{"stream_name":"stdout","time":732.111435169,"data":"      \"scrambled\": 800,\n"}
+,{"stream_name":"stdout","time":732.111439422,"data":"      \"bacterial_amp\": 400\n"}
+,{"stream_name":"stdout","time":732.111443881,"data":"    },\n"}
+,{"stream_name":"stdout","time":732.111448502,"data":"    \"split_counts\": {\n"}
+,{"stream_name":"stdout","time":732.111452412,"data":"      \"train\": 1351,\n"}
+,{"stream_name":"stdout","time":732.111456257,"data":"      \"scrambled\": 800,\n"}
+,{"stream_name":"stdout","time":732.111460175,"data":"      \"review\": 469,\n"}
+,{"stream_name":"stdout","time":732.111464116,"data":"      \"test\": 290,\n"}
+,{"stream_name":"stdout","time":732.111475651,"data":"      \"val\": 290,\n"}
+,{"stream_name":"stdout","time":732.11147881,"data":"      \"dev\": 1641\n"}
+,{"stream_name":"stdout","time":732.111482018,"data":"    },\n"}
+,{"stream_name":"stdout","time":732.111484588,"data":"    \"split_positives\": {\n"}
+,{"stream_name":"stdout","time":732.111487234,"data":"      \"train\": 120,\n"}
+,{"stream_name":"stdout","time":732.111489879,"data":"      \"val\": 26,\n"}
+,{"stream_name":"stdout","time":732.111492624,"data":"      \"test\": 26,\n"}
+,{"stream_name":"stdout","time":732.111495276,"data":"      \"dev\": 0,\n"}
+,{"stream_name":"stdout","time":732.111497885,"data":"      \"external\": 0,\n"}
+,{"stream_name":"stdout","time":732.111500582,"data":"      \"external_homolog\": 0,\n"}
+,{"stream_name":"stdout","time":732.111503282,"data":"      \"scrambled\": 157,\n"}
+,{"stream_name":"stdout","time":732.111505875,"data":"      \"review\": 228\n"}
+,{"stream_name":"stdout","time":732.111508494,"data":"    },\n"}
+,{"stream_name":"stdout","time":732.111511022,"data":"    \"split_negatives\": {\n"}
+,{"stream_name":"stdout","time":732.111513735,"data":"      \"train\": 1231,\n"}
+,{"stream_name":"stdout","time":732.111516346,"data":"      \"val\": 264,\n"}
+,{"stream_name":"stdout","time":732.111518934,"data":"      \"test\": 264,\n"}
+,{"stream_name":"stdout","time":732.11152179,"data":"      \"dev\": 0,\n"}
+,{"stream_name":"stdout","time":732.111529044,"data":"      \"external\": 0,\n"}
+,{"stream_name":"stdout","time":732.11153201,"data":"      \"external_homolog\": 0,\n"}
+,{"stream_name":"stdout","time":732.111534613,"data":"      \"scrambled\": 643,\n"}
+,{"stream_name":"stdout","time":732.111537179,"data":"      \"review\": 241\n"}
+,{"stream_name":"stdout","time":732.11153973,"data":"    },\n"}
+,{"stream_name":"stdout","time":732.111542223,"data":"    \"external_homolog_overlap\": 0,\n"}
+,{"stream_name":"stdout","time":732.111544846,"data":"    \"dropped_records\": 0,\n"}
+,{"stream_name":"stdout","time":732.111547439,"data":"    \"drop_reasons\": {},\n"}
+,{"stream_name":"stdout","time":732.111550062,"data":"    \"inputs\": {\n"}
+,{"stream_name":"stdout","time":732.111552659,"data":"      \"manifest\": \"/tmp/v21-p5snmy1l/work/data/sources.yaml\",\n"}
+,{"stream_name":"stdout","time":732.111556556,"data":"      \"sha256\": \"0dd1095d76b1353ef96ec02a28d445a03c37747cc76c73b133282f0f503e9f0e\"\n"}
+,{"stream_name":"stdout","time":732.111559451,"data":"    },\n"}
+,{"stream_name":"stdout","time":732.111561941,"data":"    \"min_len\": 5,\n"}
+,{"stream_name":"stdout","time":732.111564528,"data":"    \"max_len\": 50,\n"}
+,{"stream_name":"stdout","time":732.111567109,"data":"    \"demo_mode\": false\n"}
+,{"stream_name":"stdout","time":732.111569728,"data":"  },\n"}
+,{"stream_name":"stdout","time":732.111572223,"data":"  \"calibration_metrics\": [\n"}
+,{"stream_name":"stdout","time":732.111574822,"data":"    {\n"}
+,{"stream_name":"stdout","time":732.111577311,"data":"      \"model\": \"M1\",\n"}
+,{"stream_name":"stdout","time":732.111579942,"data":"      \"n_test\": 290,\n"}
+,{"stream_name":"stdout","time":732.11158266,"data":"      \"n_pos\": 26,\n"}
+,{"stream_name":"stdout","time":732.111585282,"data":"      \"auroc\": 0.9521,\n"}
+,{"stream_name":"stdout","time":732.111587874,"data":"      \"brier\": 0.10566,\n"}
+,{"stream_name":"stdout","time":732.111590488,"data":"      \"brier_ref_all_positive\": 0.08162,\n"}
+,{"stream_name":"stdout","time":732.111593113,"data":"      \"ece\": 0.23135,\n"}
+,{"stream_name":"stdout","time":732.111595687,"data":"      \"mean_predicted\": 0.3187,\n"}
+,{"stream_name":"stdout","time":732.111598294,"data":"      \"observed_rate\": 0.0897\n"}
+,{"stream_name":"stdout","time":732.111600914,"data":"    },\n"}
+,{"stream_name":"stdout","time":732.111603405,"data":"    {\n"}
+,{"stream_name":"stdout","time":732.111605911,"data":"      \"model\": \"M2\",\n"}
+,{"stream_name":"stdout","time":732.111608531,"data":"      \"n_test\": 290,\n"}
+,{"stream_name":"stdout","time":732.111611124,"data":"      \"n_pos\": 26,\n"}
+,{"stream_name":"stdout","time":732.111613784,"data":"      \"auroc\": 0.9987,\n"}
+,{"stream_name":"stdout","time":732.111616401,"data":"      \"brier\": 0.00851,\n"}
+,{"stream_name":"stdout","time":732.111618994,"data":"      \"brier_ref_all_positive\": 0.08162,\n"}
+,{"stream_name":"stdout","time":732.111621651,"data":"      \"ece\": 0.01753,\n"}
+,{"stream_name":"stdout","time":732.111624234,"data":"      \"mean_predicted\": 0.0972,\n"}
+,{"stream_name":"stdout","time":732.111626827,"data":"      \"observed_rate\": 0.0897\n"}
+,{"stream_name":"stdout","time":732.111629505,"data":"    },\n"}
+,{"stream_name":"stdout","time":732.111631991,"data":"    {\n"}
+,{"stream_name":"stdout","time":732.111634471,"data":"      \"model\": \"M3\",\n"}
+,{"stream_name":"stdout","time":732.111637077,"data":"      \"n_test\": 290,\n"}
+,{"stream_name":"stdout","time":732.111639715,"data":"      \"n_pos\": 26,\n"}
+,{"stream_name":"stdout","time":732.111647177,"data":"      \"auroc\": 0.9988,\n"}
+,{"stream_name":"stdout","time":732.111649911,"data":"      \"brier\": 0.02139,\n"}
+,{"stream_name":"stdout","time":732.111652486,"data":"      \"brier_ref_all_positive\": 0.08162,\n"}
+,{"stream_name":"stdout","time":732.111655093,"data":"      \"ece\": 0.04066,\n"}
+,{"stream_name":"stdout","time":732.111657646,"data":"      \"mean_predicted\": 0.1295,\n"}
+,{"stream_name":"stdout","time":732.111660331,"data":"      \"observed_rate\": 0.0897\n"}
+,{"stream_name":"stdout","time":732.111662929,"data":"    }\n"}
+,{"stream_name":"stdout","time":732.111665419,"data":"  ],\n"}
+,{"stream_name":"stdout","time":732.111667899,"data":"  \"calibration_source\": [\n"}
+,{"stream_name":"stdout","time":732.111670497,"data":"    \"model/M1_scores.npz\",\n"}
+,{"stream_name":"stdout","time":732.111673122,"data":"    \"model/M2_scores.npz\",\n"}
+,{"stream_name":"stdout","time":732.111675734,"data":"    \"model/M3_scores.npz\"\n"}
+,{"stream_name":"stdout","time":732.111678358,"data":"  ],\n"}
+,{"stream_name":"stdout","time":732.111680845,"data":"  \"calibration_in_metrics\": [\n"}
+,{"stream_name":"stdout","time":732.111683462,"data":"    {\n"}
+,{"stream_name":"stdout","time":732.111685944,"data":"      \"model\": \"M1\",\n"}
+,{"stream_name":"stdout","time":732.111688552,"data":"      \"n_test\": 290,\n"}
+,{"stream_name":"stdout","time":732.11173459,"data":"      \"n_pos\": 26,\n"}
+,{"stream_name":"stdout","time":732.111737488,"data":"      \"auroc\": 0.9521,\n"}
+,{"stream_name":"stdout","time":732.111740072,"data":"      \"brier\": 0.10566,\n"}
+,{"stream_name":"stdout","time":732.111742637,"data":"      \"ece\": 0.23135,\n"}
+,{"stream_name":"stdout","time":732.111745257,"data":"      \"mean_predicted\": 0.3187,\n"}
+,{"stream_name":"stdout","time":732.111747848,"data":"      \"observed_rate\": 0.0897\n"}
+,{"stream_name":"stdout","time":732.111750451,"data":"    },\n"}
+,{"stream_name":"stdout","time":732.111752976,"data":"    {\n"}
+,{"stream_name":"stdout","time":732.111755589,"data":"      \"model\": \"M2\",\n"}
+,{"stream_name":"stdout","time":732.111758166,"data":"      \"n_test\": 290,\n"}
+,{"stream_name":"stdout","time":732.111760737,"data":"      \"n_pos\": 26,\n"}
+,{"stream_name":"stdout","time":732.111763364,"data":"      \"auroc\": 0.9987,\n"}
+,{"stream_name":"stdout","time":732.111765943,"data":"      \"brier\": 0.00851,\n"}
+,{"stream_name":"stdout","time":732.111768494,"data":"      \"ece\": 0.01753,\n"}
+,{"stream_name":"stdout","time":732.111771072,"data":"      \"mean_predicted\": 0.0972,\n"}
+,{"stream_name":"stdout","time":732.11177367,"data":"      \"observed_rate\": 0.0897\n"}
+,{"stream_name":"stdout","time":732.111776254,"data":"    },\n"}
+,{"stream_name":"stdout","time":732.111778773,"data":"    {\n"}
+,{"stream_name":"stdout","time":732.111781251,"data":"      \"model\": \"M3\",\n"}
+,{"stream_name":"stdout","time":732.111783834,"data":"      \"n_test\": 290,\n"}
+,{"stream_name":"stdout","time":732.111786405,"data":"      \"n_pos\": 26,\n"}
+,{"stream_name":"stdout","time":732.111788984,"data":"      \"auroc\": 0.9988,\n"}
+,{"stream_name":"stdout","time":732.11179157,"data":"      \"brier\": 0.02139,\n"}
+,{"stream_name":"stdout","time":732.111794124,"data":"      \"ece\": 0.04066,\n"}
+,{"stream_name":"stdout","time":732.111797165,"data":"      \"mean_predicted\": 0.1295,\n"}
+,{"stream_name":"stdout","time":732.111799788,"data":"      \"observed_rate\": 0.0897\n"}
+,{"stream_name":"stdout","time":732.111802457,"data":"    }\n"}
+,{"stream_name":"stdout","time":732.111805107,"data":"  ],\n"}
+,{"stream_name":"stdout","time":732.111810639,"data":"  \"fixed_specificity_operating_points\": [\n"}
+,{"stream_name":"stdout","time":732.111813531,"data":"    {\n"}
+,{"stream_name":"stdout","time":732.111816162,"data":"      \"target_specificity\": 0.99,\n"}
+,{"stream_name":"stdout","time":732.111818839,"data":"      \"dev_threshold\": 0.658715,\n"}
+,{"stream_name":"stdout","time":732.111821484,"data":"      \"dev_specificity\": 0.9906,\n"}
+,{"stream_name":"stdout","time":732.11182414,"data":"      \"dev_sensitivity\": 0.3425,\n"}
+,{"stream_name":"stdout","time":732.11182674,"data":"      \"dev_n_neg\": 1495,\n"}
+,{"stream_name":"stdout","time":732.111829338,"data":"      \"dev_n_pos\": 146,\n"}
+,{"stream_name":"stdout","time":732.111831954,"data":"      \"source\": \"dev OOF (seed 1) per model/\u003cMODE\n"}
+,{"stream_name":"stderr","time":735.552866705,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":735.552902531,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":735.901333923,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":735.901394884,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":736.908558283,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":738.297139094,"data":"[NbConvertApp] Writing 355947 bytes to __results__.html\n"}
+]

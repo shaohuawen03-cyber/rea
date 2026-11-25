@@ -1,0 +1,72 @@
+{
+  "stage": "dualamp_v2_1_training",
+  "dataset_version": "positive_core_v2_1_dramp",
+  "rule_version": "auto_evidence_v2_2.0",
+  "leanrea_commit": "f610dc00b1aec3ab948a5b77574af0e644259a13",
+  "started_utc": "2026-11-25T02:46:56.279446+00:00",
+  "training_started": true,
+  "upload_session_present": false,
+  "cohort": {
+    "positives": 14577,
+    "composition_decoys": 14572,
+    "positive_fasta_sha256": "9ca0d4076f6d61c16ad31b920afc9029ae463d3df3510049c9b6ac4366a8e40c"
+  },
+  "negatives": {
+    "proteins_total": 117172,
+    "keyword_excluded": 18,
+    "fragments_raw": 351462,
+    "fragments_standard_aa": 351429,
+    "fragments_dedup": 351119,
+    "fragments_hit_positive_4mer_gt08": 5,
+    "negatives_final": 2000,
+    "seed": 11,
+    "cap": 2000,
+    "neg_mode": "standard",
+    "seconds": 11.9
+  },
+  "manifest_sha256": "0dd1095d76b1353ef96ec02a28d445a03c37747cc76c73b133282f0f503e9f0e",
+  "smoke_mode": true,
+  "evaluation_stage": "driven via dualamp_lite.v4.pipeline.run_stage('evaluation')",
+  "encoder_preflight": {
+    "encoder": "fair-esm",
+    "is_mock": false,
+    "embed_dim": 480,
+    "probe_shapes": [
+      [
+        2,
+        23,
+        480
+      ],
+      [
+        2,
+        480
+      ]
+    ],
+    "finite": true
+  },
+  "steps": {
+    "build": {
+      "returncode": 0,
+      "seconds": 10.0
+    },
+    "features": {
+      "returncode": 0,
+      "seconds": 94.3
+    },
+    "train": {
+      "returncode": 0,
+      "seconds": 530.9
+    },
+    "evaluation": {
+      "returncode": 1,
+      "seconds": 4.5
+    },
+    "report": {
+      "returncode": 0,
+      "seconds": 22.0
+    }
+  },
+  "auxiliary_stage_errors": {
+    "evaluation": ":10] INFO      comparisons: 6 (BH-FDR controlled at 0.05)\n[02:58:10] INFO      external[scrambled] M1: {'n': 800, 'n_pos': 0, 'mean_score': 0.6292079091072083, 'frac_predicted_positive': 0.5275}\n[02:58:11] INFO      external[scrambled] M2: {'n': 800, 'n_pos': 0, 'mean_score': 0.1588834524154663, 'frac_predicted_positive': 0.11375}\n[02:58:12] INFO      external[scrambled] M3: {'n': 800, 'n_pos': 0, 'mean_score': 0.3114253282546997, 'frac_predicted_positive': 0.22}\n[02:58:12] INFO    wrote D10_test_metrics.csv and D9_ablation.csv\n[02:58:12] INFO    step3 train_and_eval finished in 526.5s\nmodels=['M1', 'M2', 'M3']\n  M1           AUROC=0.952 MCC=0.614 AUPRC=0.791\n  M2           AUROC=0.999 MCC=0.913 AUPRC=0.988\n  M3           AUROC=0.999 MCC=0.941 AUPRC=0.989\n$ /usr/bin/python3 /tmp/v21-p5snmy1l/run_evaluation_stage.py\nworkdir tree: ['ablation', 'baseline', 'cache', 'dataset', 'dataset/splits', 'features', 'figures', 'logs', 'manuscript', 'model']\nTraceback (most recent call last):\n  File \"/tmp/v21-p5snmy1l/run_evaluation_stage.py\", line 24, in <module>\n    assert run_id, f'no run id found under {root}'\n           ^^^^^^\nAssertionError: no run id found under /tmp/v21-p5snmy1l/work/run\n"
+  }
+}
