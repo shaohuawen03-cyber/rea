@@ -571,8 +571,16 @@ def main() -> int:
         if package_only:
             # Re-packaging pass: the mounted kernel output already holds the trained run,
             # so retraining (90 GPU-minutes) would be pure waste.
+            # the mounted output holds the run *contents*, not a nested work/run tree
             shutil.rmtree(wd, ignore_errors=True)
-            shutil.copytree(mounted_root, wd, dirs_exist_ok=True)
+            wd.mkdir(parents=True, exist_ok=True)
+            for item in mounted_root.iterdir():
+                target = wd / item.name
+                if item.is_dir():
+                    shutil.copytree(item, target, dirs_exist_ok=True)
+                else:
+                    shutil.copy2(item, target)
+            print(f"[package-only] mounted items: {sorted(p.name for p in wd.iterdir())}", flush=True)
             steps = []
             report["package_only"] = True
             report["reused_run_utc"] = (mounted_root / "v2_1_progress.json").stat().st_mtime

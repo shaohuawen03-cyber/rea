@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-25T06:10:16Z",
+  "updated_at_utc": "2026-11-25T06:13:59Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -1904,6 +1904,62 @@
       "created_at_utc": "2026-11-25T06:10:16Z",
       "note": "Package-only check 2.",
       "finished_at_utc": "2026-11-25T06:10:53Z"
+    },
+    {
+      "id": "dualamp-v2-1-package-r3b-20261124",
+      "provider": "kaggle",
+      "mode": "run",
+      "accelerator": "NvidiaTeslaT4",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
+      "script_args": [],
+      "extra_pip": [
+        "gdown",
+        "requests",
+        "fair-esm",
+        "pyyaml",
+        "biopython",
+        "pandas",
+        "scikit-learn",
+        "matplotlib"
+      ],
+      "serve_minutes": 15.0,
+      "wait": false,
+      "timeout_sec": 2400,
+      "status": "pending",
+      "created_at_utc": "2026-11-25T06:13:59Z",
+      "kernel_slug": "dualamp-v2-1-package-r3b-20261124",
+      "kernel_sources": [
+        "shaohuawen/dualamp-v2-1-full-r3-20261124"
+      ],
+      "env": {
+        "V21_PACKAGE_ONLY": "1"
+      },
+      "inline_json": {
+        "V21_INPUTS_JSON": "cloud-gpu/jobs/v21_inputs.json"
+      },
+      "note": "Package-only pass r3b: mounts the trained run, flattens it into work/, rebuilds and uploads the private zip."
+    },
+    {
+      "id": "dualamp-v2-1-package-r3b-status-20261124",
+      "provider": "kaggle",
+      "mode": "status",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
+      "kernel_slug": "dualamp-v2-1-package-r3b-20261124",
+      "status": "pending",
+      "wait": false,
+      "created_at_utc": "2026-11-25T06:13:59Z",
+      "note": "Package-only r3b check."
+    },
+    {
+      "id": "dualamp-v2-1-package-r3b-fetch-20261124",
+      "provider": "kaggle",
+      "mode": "output",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
+      "kernel_slug": "dualamp-v2-1-package-r3b-20261124",
+      "status": "pending",
+      "wait": false,
+      "created_at_utc": "2026-11-25T06:13:59Z",
+      "note": "Package-only r3b check."
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
