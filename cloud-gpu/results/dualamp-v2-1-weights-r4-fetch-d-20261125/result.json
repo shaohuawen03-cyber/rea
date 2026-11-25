@@ -1,0 +1,14 @@
+{
+  "job_id": "dualamp-v2-1-weights-r4-fetch-d-20261125",
+  "provider": "kaggle",
+  "mode": "output",
+  "kernel_ref": "shaohuawen/dualamp-v2-1-weights-r4-20261125",
+  "copied_files": [
+    "dualamp-v2-1-weights-r4-20261125.log",
+    "v2_1_progress.json",
+    "v2_1_training.log",
+    "v2_1_training_report.json"
+  ],
+  "cli_output": "Downloading dualamp_v2_1_model_bundle.zip to /tmp/kag_out_50umi1ne\n\nOutput file downloaded to /tmp/kag_out_50umi1ne/dualamp_v2_1_model_bundle.zip\nDownloading v2_1_progress.json to /tmp/kag_out_50umi1ne\n\nOutput file downloaded to /tmp/kag_out_50umi1ne/v2_1_progress.json\nDownloading v2_1_training.log to /tmp/kag_out_50umi1ne\n\nOutput file downloaded to /tmp/kag_out_50umi1ne/v2_1_training.log\nDownloading v2_1_training_report.json to /tmp/kag_out_50umi1ne\n\nOutput file downloaded to /tmp/kag_out_50umi1ne/v2_1_training_report.json\nKernel log downloaded to /tmp/kag_out_50umi1ne/dualamp-v2-1-weights-r4",
+  "fetched_at_utc": "2026-11-25T10:38:24Z"
+}

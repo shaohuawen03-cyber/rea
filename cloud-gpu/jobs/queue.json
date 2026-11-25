@@ -2306,10 +2306,11 @@
       "mode": "status",
       "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
       "kernel_slug": "dualamp-v2-1-weights-r4-20261125",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-25T10:37:42Z",
-      "note": "Weights run watch f / fetch d."
+      "note": "Weights run watch f / fetch d.",
+      "finished_at_utc": "2026-11-25T10:38:16Z"
     },
     {
       "id": "dualamp-v2-1-weights-r4-fetch-d-20261125",
@@ -2317,10 +2318,11 @@
       "mode": "output",
       "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
       "kernel_slug": "dualamp-v2-1-weights-r4-20261125",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-25T10:37:42Z",
-      "note": "Weights run watch f / fetch d."
+      "note": "Weights run watch f / fetch d.",
+      "finished_at_utc": "2026-11-25T10:38:24Z"
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
