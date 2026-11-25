@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-25T03:39:16Z",
+  "updated_at_utc": "2026-11-25T03:47:13Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -1624,6 +1624,17 @@
       "created_at_utc": "2026-11-25T03:39:16Z",
       "note": "Delivery run check (envelope refresh push).",
       "finished_at_utc": "2026-11-25T03:40:03Z"
+    },
+    {
+      "id": "dualamp-v2-1-full-r3-status-c3-20261124",
+      "provider": "kaggle",
+      "mode": "status",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
+      "kernel_slug": "dualamp-v2-1-full-r3-20261124",
+      "status": "pending",
+      "wait": false,
+      "created_at_utc": "2026-11-25T03:47:13Z",
+      "note": "Delivery run check after the envelope-lifecycle fix."
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"

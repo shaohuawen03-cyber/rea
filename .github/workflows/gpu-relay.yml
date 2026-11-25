@@ -77,6 +77,27 @@ jobs:
           restore-keys: |
             gpu-relay-vault-
 
+      - name: Gate isolated jobs (envelope-only pushes skip the shared queue)
+        id: gate
+        run: |
+          # A push that *only* touches cloud-gpu/secrets/* is an envelope top-up, not a
+          # dispatch: replaying the queue there would re-run finished work. Any push that
+          # also changes queue.json is a real dispatch and must run.
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ -n "${{ inputs.only_id }}" ]; then
+            echo "run_queue=true" >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.event_name }}" = "push" ]; then
+            changed="$(git show --pretty=format: --name-only HEAD 2>/dev/null | sed '/^$/d')"
+            if echo "$changed" | grep -q '^cloud-gpu/jobs/queue.json$'; then
+              echo "run_queue=true" >> "$GITHUB_OUTPUT"
+            elif echo "$changed" | grep -q '^cloud-gpu/secrets/'; then
+              echo "run_queue=false" >> "$GITHUB_OUTPUT"
+            else
+              echo "run_queue=true" >> "$GITHUB_OUTPUT"
+            fi
+          else
+            echo "run_queue=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Prepare keypair, credentials and one-time envelopes
         id: vault
         env:
@@ -116,6 +137,9 @@ jobs:
 
           # Consume one-time envelopes: KAGGLE_API_TOKEN.enc / KAGGLE_API_JSON.enc /
           # COLAB_ADC_JSON.enc / VAULT_JSON.enc / anything else lands in GITHUB_ENV by name.
+          # Envelopes are single use, but only a *dispatch* consumes them: a skipped queue
+          # has no consumer, and deleting the envelope there silently starved later runs.
+          RUN_QUEUE="${{ steps.gate.outputs.run_queue }}"
           shopt -s nullglob
           for enc_file in cloud-gpu/secrets/*.enc; do
             name="$(basename "$enc_file" .enc)"
@@ -143,7 +167,11 @@ jobs:
                   echo "$name=$val" >> "$GITHUB_ENV"
                   ;;
               esac
-              git rm -f --ignore-unmatch "$enc_file" >/dev/null 2>&1 || rm -f "$enc_file"
+              if [ "$RUN_QUEUE" = "true" ]; then
+                git rm -f --ignore-unmatch "$enc_file" >/dev/null 2>&1 || rm -f "$enc_file"
+              else
+                echo "keeping $enc_file: no queue dispatch in this run"
+              fi
             else
               echo "warning: could not decrypt $enc_file (wrong relay key?) — leaving in place" >&2
             fi
@@ -183,27 +211,6 @@ jobs:
         with:
           path: ~/.gpu-relay
           key: gpu-relay-vault-${{ github.run_id }}
-
-      - name: Gate isolated jobs (envelope-only pushes skip the shared queue)
-        id: gate
-        run: |
-          # A push that *only* touches cloud-gpu/secrets/* is an envelope top-up, not a
-          # dispatch: replaying the queue there would re-run finished work. Any push that
-          # also changes queue.json is a real dispatch and must run.
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ -n "${{ inputs.only_id }}" ]; then
-            echo "run_queue=true" >> "$GITHUB_OUTPUT"
-          elif [ "${{ github.event_name }}" = "push" ]; then
-            changed="$(git show --pretty=format: --name-only HEAD 2>/dev/null | sed '/^$/d')"
-            if echo "$changed" | grep -q '^cloud-gpu/jobs/queue.json$'; then
-              echo "run_queue=true" >> "$GITHUB_OUTPUT"
-            elif echo "$changed" | grep -q '^cloud-gpu/secrets/'; then
-              echo "run_queue=false" >> "$GITHUB_OUTPUT"
-            else
-              echo "run_queue=true" >> "$GITHUB_OUTPUT"
-            fi
-          else
-            echo "run_queue=true" >> "$GITHUB_OUTPUT"
-          fi
 
       - name: Execute GPU job queue (private run dir outside git)
         if: steps.gate.outputs.run_queue == 'true'
