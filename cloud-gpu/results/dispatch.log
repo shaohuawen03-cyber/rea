@@ -1,2 +1,5 @@
-=== Running job dualamp-v2-1-smoke-cpu-r4-status-y2-20261124 (kaggle / status) ===
-=== Running job dualamp-v2-1-smoke-cpu-r4-fetch-y2-20261124 (kaggle / output) ===
+=== Running job dualamp-v2-1-smoke-cpu-r5-20261124 (kaggle / run) ===
+=== Running job dualamp-v2-1-smoke-cpu-r5-fetch-20261124 (kaggle / output) ===
+=== Running job dualamp-v2-1-full-20261124 (kaggle / run) ===
+=== Running job dualamp-v2-1-full-status-20261124 (kaggle / status) ===
+=== Running job dualamp-v2-1-full-fetch-20261124 (kaggle / output) ===

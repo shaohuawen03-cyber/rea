@@ -1,0 +1,8 @@
+{
+  "job_id": "dualamp-v2-1-full-status-20261124",
+  "provider": "kaggle",
+  "mode": "status",
+  "kernel_ref": "shaohuawen/dualamp-v2-1-full-20261124",
+  "status_output": "shaohuawen/dualamp-v2-1-full-20261124 has status \"KernelWorkerStatus.RUNNING\"",
+  "checked_at_utc": "2026-11-25T00:19:02Z"
+}
