@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-25T11:37:00Z",
+  "updated_at_utc": "2026-11-25T11:44:26Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -2453,6 +2453,18 @@
       "created_at_utc": "2026-11-25T11:37:00Z",
       "note": "Collect the .pt files (gitignored) so the weights can be delivered privately.",
       "finished_at_utc": "2026-11-25T11:38:22Z"
+    },
+    {
+      "id": "dualamp-v2-1-model-only-r4-output-b-20261125",
+      "provider": "kaggle",
+      "mode": "output",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_extract_model.py",
+      "kernel_slug": "dualamp-v2-1-model-only-r4-20261125",
+      "status": "completed",
+      "wait": false,
+      "created_at_utc": "2026-11-25T11:44:26Z",
+      "note": "Collect the 15 .pt weights now that the collector accepts them.",
+      "finished_at_utc": "2026-11-25T11:45:17Z"
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
