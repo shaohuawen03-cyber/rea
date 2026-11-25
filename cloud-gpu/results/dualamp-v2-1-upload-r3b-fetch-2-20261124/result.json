@@ -1,0 +1,11 @@
+{
+  "job_id": "dualamp-v2-1-upload-r3b-fetch-2-20261124",
+  "provider": "kaggle",
+  "mode": "output",
+  "kernel_ref": "shaohuawen/dualamp-v2-1-upload-r3b-20261124",
+  "copied_files": [
+    "dualamp-v2-1-upload-r3b-20261124.log"
+  ],
+  "cli_output": "Kernel log downloaded to /tmp/kag_out_kt5fkfzj/dualamp-v2-1-upload-r3b-20261124.log",
+  "fetched_at_utc": "2026-11-25T05:48:35Z"
+}
