@@ -1765,13 +1765,14 @@
       "serve_minutes": 15.0,
       "wait": false,
       "timeout_sec": 2400,
-      "status": "pending",
+      "status": "pushed_async",
       "created_at_utc": "2026-11-25T05:31:03Z",
       "kernel_slug": "dualamp-v2-1-upload-r3b-20261124",
       "kernel_sources": [
         "shaohuawen/dualamp-v2-1-full-r3-20261124"
       ],
-      "note": "Upload the private bundle, mounting the delivery kernel's output as a kernel source (/kaggle/input). No retraining; verifies the recorded sha256 before streaming."
+      "note": "Upload the private bundle, mounting the delivery kernel's output as a kernel source (/kaggle/input). No retraining; verifies the recorded sha256 before streaming.",
+      "finished_at_utc": "2026-11-25T05:31:38Z"
     },
     {
       "id": "dualamp-v2-1-upload-r3b-status-20261124",
@@ -1779,10 +1780,11 @@
       "mode": "status",
       "script_path": "cloud-gpu/jobs/dualamp_v2_1_upload_bundle.py",
       "kernel_slug": "dualamp-v2-1-upload-r3b-20261124",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-25T05:31:03Z",
-      "note": "Upload r3b status."
+      "note": "Upload r3b status.",
+      "finished_at_utc": "2026-11-25T05:31:39Z"
     },
     {
       "id": "dualamp-v2-1-upload-r3b-fetch-20261124",
@@ -1790,10 +1792,11 @@
       "mode": "output",
       "script_path": "cloud-gpu/jobs/dualamp_v2_1_upload_bundle.py",
       "kernel_slug": "dualamp-v2-1-upload-r3b-20261124",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-25T05:31:03Z",
-      "note": "Upload r3b output fetch."
+      "note": "Upload r3b output fetch.",
+      "finished_at_utc": "2026-11-25T05:31:40Z"
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
