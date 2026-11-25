@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-25T05:14:03Z",
+  "updated_at_utc": "2026-11-25T05:18:05Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -1708,6 +1708,25 @@
       "created_at_utc": "2026-11-25T05:14:03Z",
       "note": "Delivery run check d3.",
       "finished_at_utc": "2026-11-25T05:14:37Z"
+    },
+    {
+      "id": "dualamp-v2-1-upload-r3-20261124",
+      "provider": "kaggle",
+      "mode": "run",
+      "accelerator": "NvidiaTeslaT4",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_upload_bundle.py",
+      "script_args": [],
+      "extra_pip": [
+        "requests"
+      ],
+      "serve_minutes": 15.0,
+      "wait": false,
+      "timeout_sec": 2400,
+      "status": "pushed_async",
+      "created_at_utc": "2026-11-25T05:18:05Z",
+      "kernel_slug": "dualamp-v2-1-upload-r3-20261124",
+      "note": "Re-run the delivery kernel only to upload the private bundle with a fresh session (~1 min alive; training is skipped, the bundle is read from the previous run's output).",
+      "finished_at_utc": "2026-11-25T05:18:40Z"
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
