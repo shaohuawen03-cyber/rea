@@ -35,6 +35,10 @@ PRIVATE_OUTPUT_PATTERNS = (
     "dualamp_v2_1_model_bundle.zip",
     "model_bundle_parts/",
     "PARTS_MANIFEST.json",
+    # model-only archive: 15 x .pt plus the OOF tables. Small enough to slip past the
+    # 2 MiB rule, but still private weights on a public repo.
+    "dualamp_model_only.zip",
+    "model_only/",
 )
 
 
