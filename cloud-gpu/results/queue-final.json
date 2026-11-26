@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-26T09:43:30Z",
+  "updated_at_utc": "2026-11-26T09:59:47Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -2755,6 +2755,64 @@
       "created_at_utc": "2026-11-26T09:43:30Z",
       "note": "v4 smoke check b.",
       "finished_at_utc": "2026-11-26T09:44:03Z"
+    },
+    {
+      "id": "dualamp-v4-smoke-b-20261126",
+      "provider": "kaggle",
+      "mode": "run",
+      "accelerator": "CPU",
+      "script_path": "cloud-gpu/jobs/dualamp_v4_train.py",
+      "script_args": [],
+      "extra_pip": [
+        "gdown",
+        "requests",
+        "fair-esm",
+        "pyyaml",
+        "biopython",
+        "pandas",
+        "scikit-learn",
+        "matplotlib"
+      ],
+      "serve_minutes": 15.0,
+      "wait": false,
+      "timeout_sec": 5400,
+      "status": "pushed_async",
+      "created_at_utc": "2026-11-26T09:59:47Z",
+      "kernel_slug": "dualamp-v4-smoke-b-20261126",
+      "env": {
+        "V21_SMOKE": "1",
+        "V4_HARDNEG_FRAC": "0.5",
+        "V4_HARDNEG_CAP": "1000"
+      },
+      "inline_json": {
+        "V21_INPUTS_JSON": "cloud-gpu/jobs/v21_inputs.json"
+      },
+      "note": "v4 smoke retry: helper functions now defined before main().",
+      "finished_at_utc": "2026-11-26T10:00:28Z"
+    },
+    {
+      "id": "dualamp-v4-smoke-b-20261126-status",
+      "provider": "kaggle",
+      "mode": "status",
+      "script_path": "cloud-gpu/jobs/dualamp_v4_train.py",
+      "kernel_slug": "dualamp-v4-smoke-b-20261126",
+      "status": "completed",
+      "wait": false,
+      "created_at_utc": "2026-11-26T09:59:47Z",
+      "note": "v4 smoke-b check.",
+      "finished_at_utc": "2026-11-26T10:00:30Z"
+    },
+    {
+      "id": "dualamp-v4-smoke-b-20261126-fetch",
+      "provider": "kaggle",
+      "mode": "output",
+      "script_path": "cloud-gpu/jobs/dualamp_v4_train.py",
+      "kernel_slug": "dualamp-v4-smoke-b-20261126",
+      "status": "completed",
+      "wait": false,
+      "created_at_utc": "2026-11-26T09:59:47Z",
+      "note": "v4 smoke-b check.",
+      "finished_at_utc": "2026-11-26T10:00:31Z"
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"

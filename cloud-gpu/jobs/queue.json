@@ -2776,7 +2776,7 @@
       "serve_minutes": 15.0,
       "wait": false,
       "timeout_sec": 5400,
-      "status": "pending",
+      "status": "pushed_async",
       "created_at_utc": "2026-11-26T09:59:47Z",
       "kernel_slug": "dualamp-v4-smoke-b-20261126",
       "env": {
@@ -2787,7 +2787,8 @@
       "inline_json": {
         "V21_INPUTS_JSON": "cloud-gpu/jobs/v21_inputs.json"
       },
-      "note": "v4 smoke retry: helper functions now defined before main()."
+      "note": "v4 smoke retry: helper functions now defined before main().",
+      "finished_at_utc": "2026-11-26T10:00:28Z"
     },
     {
       "id": "dualamp-v4-smoke-b-20261126-status",
@@ -2795,10 +2796,11 @@
       "mode": "status",
       "script_path": "cloud-gpu/jobs/dualamp_v4_train.py",
       "kernel_slug": "dualamp-v4-smoke-b-20261126",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-26T09:59:47Z",
-      "note": "v4 smoke-b check."
+      "note": "v4 smoke-b check.",
+      "finished_at_utc": "2026-11-26T10:00:30Z"
     },
     {
       "id": "dualamp-v4-smoke-b-20261126-fetch",
@@ -2806,10 +2808,11 @@
       "mode": "output",
       "script_path": "cloud-gpu/jobs/dualamp_v4_train.py",
       "kernel_slug": "dualamp-v4-smoke-b-20261126",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-26T09:59:47Z",
-      "note": "v4 smoke-b check."
+      "note": "v4 smoke-b check.",
+      "finished_at_utc": "2026-11-26T10:00:31Z"
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
