@@ -1,0 +1,76 @@
+{
+  "tag_name": "dualamp-v2.1-weights-15-files-20261126",
+  "name": "DualAMP v2.1 weights - 15 individual checkpoints (M1/M2/M3 x 5 seeds)",
+  "published_at": "2026-11-26T01:49:00Z",
+  "body": "> ⚠️ **candidate_v1_pilot_weights，不是 positive_core_v2，不可入论文；阈值内嵌于每个 .pt。**\n\n| 项 | 值 |\n| --- | --- |\n| 口径 | candidate_v1（未 Review_Result 回填） |\n| 来源 | gpu-relay run 43842046392 → kernel shaohuawen/dualamp-real5-20261116 |\n| 训练 commit | 8a2d232 |\n| 阳性 SHA256 | 7b6ea12136623e85218ba78cfd4b713985a3122b24c61650e536e724b768aa1d |\n| 模型 | M1 / M2 / M3 × seeds 1–5（60 ep，5 fold）；M0_RF 为 sklearn，未导出 .pt |\n| 测试 AUROC | M1 0.9767–0.9791 / M2 0.9796–0.9809 / M3 0.9770–0.9803 |\n\n内容：`model/`（15 × .pt）+ `features/biophys_scaler.joblib` + `meta/`（summary、D10/D11/D15、ablation、log、result.json）+ `SHA256SUMS.txt` + `export_manifest.json`。\n\n注意：测试集已参与模型比较，不是盲测；positive_core_v2 冻结后仍需正式重训并更新本 release。\n",
+  "assets": [
+    {
+      "name": "export_manifest.json",
+      "size": 5362
+    },
+    {
+      "name": "M1_seed1.pt",
+      "size": 496487
+    },
+    {
+      "name": "M1_seed2.pt",
+      "size": 496487
+    },
+    {
+      "name": "M1_seed3.pt",
+      "size": 496487
+    },
+    {
+      "name": "M1_seed4.pt",
+      "size": 496487
+    },
+    {
+      "name": "M1_seed5.pt",
+      "size": 496487
+    },
+    {
+      "name": "M2_seed1.pt",
+      "size": 1988851
+    },
+    {
+      "name": "M2_seed2.pt",
+      "size": 1988851
+    },
+    {
+      "name": "M2_seed3.pt",
+      "size": 1988851
+    },
+    {
+      "name": "M2_seed4.pt",
+      "size": 1988851
+    },
+    {
+      "name": "M2_seed5.pt",
+      "size": 1988851
+    },
+    {
+      "name": "M3_seed1.pt",
+      "size": 2033511
+    },
+    {
+      "name": "M3_seed2.pt",
+      "size": 2033511
+    },
+    {
+      "name": "M3_seed3.pt",
+      "size": 2033511
+    },
+    {
+      "name": "M3_seed4.pt",
+      "size": 2033511
+    },
+    {
+      "name": "M3_seed5.pt",
+      "size": 2033511
+    },
+    {
+      "name": "SHA256SUMS.txt",
+      "size": 2604
+    }
+  ]
+}
