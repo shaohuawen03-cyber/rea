@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-26T14:21:29Z",
+  "updated_at_utc": "2026-11-26T14:28:51Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -3095,6 +3095,50 @@
       "created_at_utc": "2026-11-26T14:21:29Z",
       "note": "v4 bundle sha poll.",
       "finished_at_utc": "2026-11-26T14:22:03Z"
+    },
+    {
+      "id": "dualamp-v4-model-only-20261126",
+      "provider": "kaggle",
+      "mode": "run",
+      "accelerator": "CPU",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_extract_model.py",
+      "script_args": [],
+      "extra_pip": [],
+      "serve_minutes": 15.0,
+      "wait": false,
+      "timeout_sec": 3600,
+      "created_at_utc": "2026-11-26T14:28:51Z",
+      "kernel_slug": "dualamp-v4-model-only-20261126",
+      "status": "pending",
+      "kernel_sources": [
+        "shaohuawen/dualamp-v4-full-20261126"
+      ],
+      "env": {
+        "V21_SOURCE_KERNEL": "dualamp-v4-full-20261126"
+      },
+      "note": "CPU-only, no training: extract the v4 model-only archive (15 x .pt + provenance) out of the v4 training kernel output so the weights can be published as individual assets."
+    },
+    {
+      "id": "dualamp-v4-model-only-20261126-status",
+      "provider": "kaggle",
+      "mode": "status",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_extract_model.py",
+      "kernel_slug": "dualamp-v4-model-only-20261126",
+      "status": "pending",
+      "wait": false,
+      "created_at_utc": "2026-11-26T14:28:51Z",
+      "note": "v4 model-only extract poll."
+    },
+    {
+      "id": "dualamp-v4-model-only-20261126-fetch",
+      "provider": "kaggle",
+      "mode": "output",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_extract_model.py",
+      "kernel_slug": "dualamp-v4-model-only-20261126",
+      "status": "pending",
+      "wait": false,
+      "created_at_utc": "2026-11-26T14:28:51Z",
+      "note": "v4 model-only extract poll."
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
