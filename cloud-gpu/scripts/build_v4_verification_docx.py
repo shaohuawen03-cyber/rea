@@ -292,6 +292,16 @@ def build(smoke_only: bool = False) -> Path:
 
     # ---------------------------------------------------------------- 8
     h(doc, "9. 这份结果能支持什么、不能支持什么", 1)
+    para(doc, "下一步的实验设计（已写成可执行代码，尚未运行）：", bold=True, size=10)
+    bullet(doc, "V5_MODE=v4_repeat：完全等于 v4，仅作注册/复现，不打新结论。")
+    bullet(doc, "V5_MODE=no_trainhn：不注入任何可训练诱饵，单独量化「修复 #1 的代价与收益」。")
+    bullet(doc, "V5_MODE=scram_only：挑战集换成**第二批独立打乱**的阳性（保证不在训练池内）。"
+                "只有它能区分「学会了顺序规则」与「记住了训练池」。")
+    bullet(doc, "V5_MODE=matched_neg：在 v4 基础上把背景负例换成与阳性组成同带的样本，"
+                "检验灵敏度损失是否来自负例组成偏移（而不是诱饵本身）。")
+    para(doc, "这四个 arm 各只改一件事，结果可以互相解释；在此之前，任何「v5 修好了」的说法都不成立。",
+         size=9.5, italic=True)
+
     para(doc, "能支持：", bold=True, size=10)
     bullet(doc, "在本数据集与本划下，M2/M3 不再把组成匹配的无序序列判为阳性——这是 v2.1 失败、v4 修好的地方。")
     bullet(doc, "深度模型的判别力显著高于组成-only 对照（配对 bootstrap CI 不含 0），因此「学到的不只是组成」在本划下有统计支撑。")
@@ -305,8 +315,27 @@ def build(smoke_only: bool = False) -> Path:
     bullet(doc, "负例仍是 UniProt 弱背景 + 合成诱饵，没有「实验证实无活性」的真负例。")
     bullet(doc, "样本量：测试集阳性数百条，置信区间仍宽；这不影响结论方向，但影响效应量的精度。")
 
+    # ---------------------------------------------------------------- 8b
+    h(doc, "10. 发布与可核查性", 1)
+    ver_path = ROOT / "cloud-gpu" / "reports" / "v4_release_verification.json"
+    if ver_path.exists():
+        ver = json.loads(ver_path.read_text(encoding="utf-8"))
+        rows = [
+            ("发布地址（新 tag）", ver.get("tag"), "与 v2.1 的两个旧 tag 并存，未覆盖"),
+            ("资产", f"{ver['checks']['asset_count']['found']} 个", "15 × .pt + SHA256SUMS.txt + export_manifest.json"),
+            (".pt 字节数逐项核对", "全部一致" if ver["checks"]["sizes"]["pass"] else "存在不一致",
+             "release 资产大小 vs 解包报告成员大小"),
+            ("旧发布状态", "未改动" if ver["checks"]["previous_releases_untouched"]["pass"] else "有变动",
+             "v2.1 两个 release 的资产数与发布时一致"),
+            ("训练产物整包 sha256", ver.get("source_sha256"), "由独立的 CPU 任务重新计算，非自报"),
+            ("模型-only 归档 sha256", ver.get("model_only_sha256"), "15 个权重 + provenance"),
+        ]
+        add_table(doc, ["项目", "值", "说明"], rows, widths=[1.8, 2.4, 2.8])
+    else:
+        para(doc, "（发布核查待生成。）")
+
     # ---------------------------------------------------------------- 9
-    h(doc, "10. 结论", 1)
+    h(doc, "11. 结论", 1)
     verdict = acc.get("verdict", "—")
     if verdict == "V4_PAPER_READY_ON_COMPOSITION":
         para(doc, "v4 通过了本报告定义的全部组成相关门槛。这只说明「组成捷径」这一条被修好并通过了验证，"

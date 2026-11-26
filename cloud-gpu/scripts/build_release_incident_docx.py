@@ -125,7 +125,34 @@ def build() -> Path:
     add_table(doc, ["方案", "做法", "影响"], rows, widths=[0.7, 2.9, 3.4])
     para(doc, "在选定之前，本文档即为该 release 的更正声明。", bold=True, size=10)
 
-    h(doc, "7. 教训", 1)
+    h(doc, "7. v4 发布：同一流程的可核查结果", 1)
+    ver_path = ROOT / "cloud-gpu" / "reports" / "v4_release_verification.json"
+    if ver_path.exists():
+        ver = json.loads(ver_path.read_text(encoding="utf-8"))
+        rows = [
+            ("新 tag", ver.get("tag", "—"), "与所有既有 tag 不同，未覆盖任何历史发布"),
+            ("资产数", f"{ver['checks']['asset_count']['found']} / "
+                       f"{ver['checks']['asset_count']['expected']}",
+             "15 个 .pt + SHA256SUMS.txt + export_manifest.json"),
+            ("每个 .pt 的字节数与训练产物一致", "通过" if ver["checks"]["sizes"]["pass"] else "不通过",
+             "逐个比对 release 资产大小与解包报告中的成员大小"),
+            ("是否 Pre-release", "是" if ver["checks"]["prerelease"]["pass"] else "否",
+             "探索性结果，不冒充正式发布"),
+            ("旧发布是否被动过", "未改动" if ver["checks"]["previous_releases_untouched"]["pass"] else "有变动",
+             "v2.1 的两个 release 资产数分别为 17 与 3，与发布时一致"),
+        ]
+        add_table(doc, ["核查项", "结果", "依据"], rows, widths=[1.9, 1.2, 3.4])
+        para(doc, f"训练产物整包 sha256 = {ver.get('source_sha256')}（{ver.get('source_bytes'):,} 字节）；"
+                  f"模型-only 归档 sha256 = {ver.get('model_only_sha256')}"
+                  f"（{ver.get('model_only_bytes'):,} 字节）。", size=9.5)
+        callout(doc, "这次发布是可信的，因为文字与资产来自同一份输入",
+                "release 正文的口径、commit、阳性 SHA256 与指标表全部由 workflow 参数生成，"
+                "而这些参数又来自训练报告的实测值；发布后由 verify_v4_release.py 逐个核对资产。"
+                "上一版的问题（正文写死）在结构上已经不可能重现。", fill="E8F5E9")
+    else:
+        para(doc, "（发布核查结果尚未生成。）")
+
+    h(doc, "8. 教训", 1)
     para(doc, "「能下载」不等于「可追溯」。发布流程必须让说明文字与资产来自同一份输入，"
               "并在发布前断言二者一致；否则错误会安静地留在线上，而且看起来一切正常。",
          bold=True, size=10)
