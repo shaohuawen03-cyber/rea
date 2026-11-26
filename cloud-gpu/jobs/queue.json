@@ -2593,13 +2593,14 @@
       "serve_minutes": 15.0,
       "wait": false,
       "timeout_sec": 12600,
-      "status": "pending",
+      "status": "pushed_async",
       "created_at_utc": "2026-11-26T01:40:02Z",
       "kernel_slug": "dualamp-v3-repro-20261126",
       "inline_json": {
         "V21_INPUTS_JSON": "cloud-gpu/jobs/v21_inputs.json"
       },
-      "note": "v3 reproducibility run: same pinned cohort/protocol as r3+r4. Third independent execution; if all three agree the pipeline is reproducible and the v2.1 numbers stand."
+      "note": "v3 reproducibility run: same pinned cohort/protocol as r3+r4. Third independent execution; if all three agree the pipeline is reproducible and the v2.1 numbers stand.",
+      "finished_at_utc": "2026-11-26T01:40:37Z"
     },
     {
       "id": "dualamp-v3-repro-20261126-status",
@@ -2607,10 +2608,11 @@
       "mode": "status",
       "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
       "kernel_slug": "dualamp-v3-repro-20261126",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-26T01:40:02Z",
-      "note": "v3 check."
+      "note": "v3 check.",
+      "finished_at_utc": "2026-11-26T01:40:38Z"
     },
     {
       "id": "dualamp-v3-repro-20261126-fetch",
@@ -2618,10 +2620,11 @@
       "mode": "output",
       "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
       "kernel_slug": "dualamp-v3-repro-20261126",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-26T01:40:02Z",
-      "note": "v3 check."
+      "note": "v3 check.",
+      "finished_at_utc": "2026-11-26T01:40:39Z"
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
