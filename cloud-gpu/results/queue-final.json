@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-26T13:50:00Z",
+  "updated_at_utc": "2026-11-26T14:21:29Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -3048,6 +3048,53 @@
       "created_at_utc": "2026-11-26T13:50:00Z",
       "note": "v4 full poll 4.",
       "finished_at_utc": "2026-11-26T13:51:58Z"
+    },
+    {
+      "id": "v4-bundle-sha-20261126",
+      "provider": "kaggle",
+      "mode": "run",
+      "accelerator": "CPU",
+      "script_path": "cloud-gpu/jobs/v4_bundle_sha.py",
+      "script_args": [],
+      "extra_pip": [],
+      "serve_minutes": 15.0,
+      "wait": false,
+      "timeout_sec": 3600,
+      "created_at_utc": "2026-11-26T14:21:29Z",
+      "kernel_slug": "v4-bundle-sha-20261126",
+      "status": "pushed_async",
+      "kernel_sources": [
+        "shaohuawen/dualamp-v4-full-20261126"
+      ],
+      "env": {
+        "V4_SOURCE_KERNEL": "dualamp-v4-full-20261126"
+      },
+      "note": "CPU-only: independently re-hash the v4 private bundle from the training kernel output so the release can quote a verifiable sha256.",
+      "finished_at_utc": "2026-11-26T14:22:01Z"
+    },
+    {
+      "id": "v4-bundle-sha-20261126-status",
+      "provider": "kaggle",
+      "mode": "status",
+      "script_path": "cloud-gpu/jobs/v4_bundle_sha.py",
+      "kernel_slug": "v4-bundle-sha-20261126",
+      "status": "completed",
+      "wait": false,
+      "created_at_utc": "2026-11-26T14:21:29Z",
+      "note": "v4 bundle sha poll.",
+      "finished_at_utc": "2026-11-26T14:22:02Z"
+    },
+    {
+      "id": "v4-bundle-sha-20261126-fetch",
+      "provider": "kaggle",
+      "mode": "output",
+      "script_path": "cloud-gpu/jobs/v4_bundle_sha.py",
+      "kernel_slug": "v4-bundle-sha-20261126",
+      "status": "completed",
+      "wait": false,
+      "created_at_utc": "2026-11-26T14:21:29Z",
+      "note": "v4 bundle sha poll.",
+      "finished_at_utc": "2026-11-26T14:22:03Z"
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
