@@ -102,11 +102,18 @@ jobs:
           if [ "${{ inputs.publish_mode }}" = "individual" ]; then
             # One asset per checkpoint: the release page must list every .pt so a
             # reviewer can verify "M1/M2/M3 x 5 seeds" without unpacking anything.
+            mkdir -p /tmp/assets_name
             gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --prerelease \
               --title "$TITLE" --notes-file /tmp/release_notes.md
             n=0
             for f in /tmp/pkg/model/*.pt; do
-              gh release upload "$TAG" "$f" --repo "$GITHUB_REPOSITORY" --clobber
+              # pack_release_assets strips a leading "model_", which turned
+              # model_M1_seed1.pt into only_model_M1_seed1.pt. Normalise back to
+              # M<k>_seed<s>.pt so the asset names are unambiguous.
+              base="$(basename "$f")"
+              clean="$(printf '%s' "$base" | sed -E 's/^(only_)?model_//')"
+              cp "$f" "/tmp/assets_name/$clean"
+              gh release upload "$TAG" "/tmp/assets_name/$clean" --repo "$GITHUB_REPOSITORY" --clobber
               n=$((n + 1))
             done
             gh release upload "$TAG" /tmp/pkg/SHA256SUMS.txt /tmp/pkg/export_manifest.json \
