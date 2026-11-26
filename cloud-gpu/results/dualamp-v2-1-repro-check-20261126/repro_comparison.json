@@ -1,0 +1,133 @@
+{
+  "generated_utc": "2026-11-26T04:09:36Z",
+  "purpose": "three-run reproducibility check for v2.1",
+  "reports": {
+    "r3": {
+      "path": "cloud-gpu/results/dualamp-v2-1-full-r3-fetch-d3-20261124/v2_1_training_report.json",
+      "sha256": "3fe800f7959d0b0bd9acf0b343756dcbf335225d054c41a8e0f755d9a9eaf8b5",
+      "status": "COMPLETED_V2_1_TRAINING",
+      "bundle_bytes": 759753038,
+      "bundle_sha256": "9247b18cb9539cd954c48060b513c47aa2d42c51b4e581530096323ee339b465"
+    },
+    "r4": {
+      "path": "cloud-gpu/results/dualamp-v2-1-weights-r4-fetch-d-20261125/v2_1_training_report.json",
+      "sha256": "88340c8b5c0472ebdc53efee2dc11c876af320fc1c8fb5b3722da6a4e5c6428e",
+      "status": "COMPLETED_V2_1_TRAINING",
+      "bundle_bytes": 759753019,
+      "bundle_sha256": "334bf49ca87ff704ae29900335cc05b4766290b85f32b58eaec0b60f9b09bf3c"
+    },
+    "v3": {
+      "path": "cloud-gpu/results/dualamp-v3-repro-fetch-c/v2_1_training_report.json",
+      "sha256": "f4a0a132218498558c71563ea70807434ea68caafb5d575272d5f9e997300085",
+      "status": "COMPLETED_V2_1_TRAINING",
+      "bundle_bytes": 759753039,
+      "bundle_sha256": "088bcd2fa46a622f3a10b6a88334d35885f0c0e4b2b68c6a4c3142ae1cd813cd"
+    }
+  },
+  "models": {
+    "M1": {
+      "r3": {
+        "auroc": 0.9832249472716457,
+        "mcc": 0.8491688754588634,
+        "sensitivity": 0.8778409090909091,
+        "specificity": 0.9732302201070792,
+        "brier": 0.05119,
+        "ece": 0.05973
+      },
+      "r4": {
+        "auroc": 0.9832249472716457,
+        "mcc": 0.8495210303672882,
+        "sensitivity": 0.8806818181818182,
+        "specificity": 0.9726353361094586,
+        "brier": 0.05119,
+        "ece": 0.05973
+      },
+      "v3": {
+        "auroc": 0.9832249472716457,
+        "mcc": 0.8491688754588634,
+        "sensitivity": 0.8778409090909091,
+        "specificity": 0.9732302201070792,
+        "brier": 0.05119,
+        "ece": 0.05973
+      },
+      "auroc_spread": 0.0,
+      "brier_spread": 0.0
+    },
+    "M2": {
+      "r3": {
+        "auroc": 0.9889439457033152,
+        "mcc": 0.8728756557244065,
+        "sensitivity": 0.8948863636363636,
+        "specificity": 0.9779892920880429,
+        "brier": 0.03088,
+        "ece": 0.02465
+      },
+      "r4": {
+        "auroc": 0.9889439457033152,
+        "mcc": 0.8728756557244065,
+        "sensitivity": 0.8948863636363636,
+        "specificity": 0.9779892920880429,
+        "brier": 0.03088,
+        "ece": 0.02465
+      },
+      "v3": {
+        "auroc": 0.9889439457033152,
+        "mcc": 0.8728756557244065,
+        "sensitivity": 0.8948863636363636,
+        "specificity": 0.9779892920880429,
+        "brier": 0.03088,
+        "ece": 0.02465
+      },
+      "auroc_spread": 0.0,
+      "brier_spread": 0.0
+    },
+    "M3": {
+      "r3": {
+        "auroc": 0.9893072981450436,
+        "mcc": 0.8641217137119439,
+        "sensitivity": 0.8693181818181818,
+        "specificity": 0.9809637120761452,
+        "brier": 0.03023,
+        "ece": 0.02383
+      },
+      "r4": {
+        "auroc": 0.9893072981450436,
+        "mcc": 0.8641217137119439,
+        "sensitivity": 0.8693181818181818,
+        "specificity": 0.9809637120761452,
+        "brier": 0.03023,
+        "ece": 0.02383
+      },
+      "v3": {
+        "auroc": 0.9893072981450436,
+        "mcc": 0.8641217137119439,
+        "sensitivity": 0.8693181818181818,
+        "specificity": 0.9809637120761452,
+        "brier": 0.03023,
+        "ece": 0.02383
+      },
+      "auroc_spread": 0.0,
+      "brier_spread": 0.0
+    }
+  },
+  "composition_challenge": {
+    "r3": {
+      "verdict": "FAIL_COMPOSITION_SHORTCUT",
+      "max_frac_predicted_positive": 0.7015
+    },
+    "r4": {
+      "verdict": "FAIL_COMPOSITION_SHORTCUT",
+      "max_frac_predicted_positive": 0.7024
+    },
+    "v3": {
+      "verdict": "FAIL_COMPOSITION_SHORTCUT",
+      "max_frac_predicted_positive": 0.7015
+    }
+  },
+  "verdict": {
+    "reproducible": true,
+    "auroc_identical_across_runs": true,
+    "calibration_identical": true,
+    "composition_challenge_failed_in_all_runs": true
+  }
+}

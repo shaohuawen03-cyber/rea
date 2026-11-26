@@ -1,0 +1,4 @@
+model,n_seeds,test_auroc_seed_mean,test_auroc_seed_sd,source
+M3,,0.9879667811367693,0.0005094275663519427,headline metric row (seed-level table absent in the report)
+M2,,0.9872753974906712,0.00049947041215653,headline metric row (seed-level table absent in the report)
+M1,,0.9831911470445082,0.00038593177200333057,headline metric row (seed-level table absent in the report)

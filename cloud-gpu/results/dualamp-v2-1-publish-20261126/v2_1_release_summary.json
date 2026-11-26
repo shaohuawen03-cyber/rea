@@ -1,0 +1,231 @@
+{
+  "release_candidate": "v2.1.0-exploratory",
+  "tier": "V2_1_EXPLORATORY",
+  "release_blockers": [
+    "composition challenge failed (model accepts composition-matched shuffles)"
+  ],
+  "generated_utc": "2026-11-26T04:09:30Z",
+  "source_report": "cloud-gpu/results/dualamp-v3-repro-fetch-c/v2_1_training_report.json",
+  "source_report_sha256": "f4a0a132218498558c71563ea70807434ea68caafb5d575272d5f9e997300085",
+  "kernel": "shaohuawen/dualamp-v3-repro-fetch-c",
+  "kernel_url": "https://www.kaggle.com/code/shaohuawen/dualamp-v3-repro-fetch-c",
+  "code_commit": "38e0e57cdd18410fe207e1689189764372a2e365",
+  "leanrea_commit": "f610dc00b1aec3ab948a5b77574af0e644259a13",
+  "dataset": {
+    "version": "positive_core_v2_1_dramp",
+    "rule_version": "auto_evidence_v2_2.0",
+    "cohort": {
+      "positives": 14577,
+      "composition_decoys": 14572,
+      "positive_fasta_sha256": "9ca0d4076f6d61c16ad31b920afc9029ae463d3df3510049c9b6ac4366a8e40c"
+    },
+    "negative_semantics": {
+      "proteins_total": 117172,
+      "keyword_excluded": 18,
+      "fragments_raw": 351462,
+      "fragments_standard_aa": 351429,
+      "fragments_dedup": 351119,
+      "fragments_hit_positive_4mer_gt08": 31495,
+      "negatives_final": 20000,
+      "seed": 11,
+      "cap": 20000,
+      "neg_mode": "standard",
+      "seconds": 10.0
+    },
+    "smoke_mode": false
+  },
+  "protocol": {
+    "models": [
+      "M1",
+      "M2",
+      "M3"
+    ],
+    "role": {
+      "M1": "primary",
+      "M2": "primary",
+      "M3": "control (ablation arm)"
+    },
+    "seeds": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "folds": 5,
+    "epochs_setting": 60,
+    "loss": "bce",
+    "threshold_source": "0.5 for the headline row; fixed-specificity thresholds from dev OOF",
+    "test": "internal_test (held-out, no cluster overlap with train/val)",
+    "smoke_mode": false,
+    "encoder": "fair-esm esm2_t12_35M_UR50D layer 12 (480-d)",
+    "leanrea_commit": "f610dc00b1aec3ab948a5b77574af0e644259a13",
+    "reconstructed": true,
+    "provenance": "filled at publish time; mirrors run_provenance (seeds 1-5, folds 5, epochs 60, M1-M3)"
+  },
+  "encoder": {
+    "encoder": "fair-esm",
+    "is_mock": false,
+    "embed_dim": 480,
+    "probe_shapes": [
+      [
+        2,
+        23,
+        480
+      ],
+      [
+        2,
+        480
+      ]
+    ],
+    "finite": true
+  },
+  "calibration": {
+    "rows": 3,
+    "note": "Brier / ECE / Platt(dev OOF) come from leanrea calibration_metrics.csv"
+  },
+  "composition_challenge": {
+    "verdict": "FAIL_COMPOSITION_SHORTCUT",
+    "max_frac_predicted_positive": 0.7015
+  },
+  "fixed_specificity_operating_points": [
+    {
+      "target_specificity": 0.99,
+      "dev_threshold": 0.836127,
+      "dev_specificity": 0.99,
+      "dev_sensitivity": 0.8781,
+      "dev_n_neg": 9528,
+      "dev_n_pos": 1994,
+      "source": "dev OOF (seed 1) per model/<MODEL>_scores.npz",
+      "model": "M1",
+      "test_at_dev_threshold": {
+        "sensitivity": 0.8608,
+        "specificity": 0.9744,
+        "mcc": 0.8409,
+        "precision": 0.8757,
+        "f1": 0.8682
+      }
+    },
+    {
+      "target_specificity": 0.995,
+      "dev_threshold": 0.933283,
+      "dev_specificity": 0.9951,
+      "dev_sensitivity": 0.822,
+      "dev_n_neg": 9528,
+      "dev_n_pos": 1994,
+      "source": "dev OOF (seed 1) per model/<MODEL>_scores.npz",
+      "model": "M1",
+      "test_at_dev_threshold": {
+        "sensitivity": 0.7926,
+        "specificity": 0.9845,
+        "mcc": 0.8234,
+        "precision": 0.9148,
+        "f1": 0.8493
+      }
+    },
+    {
+      "target_specificity": 0.99,
+      "dev_threshold": 0.823001,
+      "dev_specificity": 0.99,
+      "dev_sensitivity": 0.8666,
+      "dev_n_neg": 9528,
+      "dev_n_pos": 1994,
+      "source": "dev OOF (seed 1) per model/<MODEL>_scores.npz",
+      "model": "M2",
+      "test_at_dev_threshold": {
+        "sensitivity": 0.8722,
+        "specificity": 0.9798,
+        "mcc": 0.8627,
+        "precision": 0.9003,
+        "f1": 0.886
+      }
+    },
+    {
+      "target_specificity": 0.995,
+      "dev_threshold": 0.951772,
+      "dev_specificity": 0.9951,
+      "dev_sensitivity": 0.817,
+      "dev_n_neg": 9528,
+      "dev_n_pos": 1994,
+      "source": "dev OOF (seed 1) per model/<MODEL>_scores.npz",
+      "model": "M2",
+      "test_at_dev_threshold": {
+        "sensitivity": 0.8267,
+        "specificity": 0.9893,
+        "mcc": 0.86,
+        "precision": 0.9417,
+        "f1": 0.8805
+      }
+    },
+    {
+      "target_specificity": 0.99,
+      "dev_threshold": 0.952314,
+      "dev_specificity": 0.99,
+      "dev_sensitivity": 0.848,
+      "dev_n_neg": 9528,
+      "dev_n_pos": 1994,
+      "source": "dev OOF (seed 1) per model/<MODEL>_scores.npz",
+      "model": "M3",
+      "test_at_dev_threshold": {
+        "sensitivity": 0.8153,
+        "specificity": 0.9893,
+        "mcc": 0.8526,
+        "precision": 0.941,
+        "f1": 0.8737
+      }
+    },
+    {
+      "target_specificity": 0.995,
+      "dev_threshold": 0.99102,
+      "dev_specificity": 0.9951,
+      "dev_sensitivity": 0.7839,
+      "dev_n_neg": 9528,
+      "dev_n_pos": 1994,
+      "source": "dev OOF (seed 1) per model/<MODEL>_scores.npz",
+      "model": "M3",
+      "test_at_dev_threshold": {
+        "sensitivity": 0.75,
+        "specificity": 0.9952,
+        "mcc": 0.8283,
+        "precision": 0.9706,
+        "f1": 0.8462
+      }
+    }
+  ],
+  "caveats": [
+    "Positives are DRAMP-curated bacterial actives (TIER_B_LABEL: bacterial activity label + named target + PubMed reference). The bulk dumps do not carry per-record MIC values, so this is not a MIC-quantitative cohort.",
+    "Negatives are UniProt bacterial-cytoplasm fragments: a weak negative label, not experimentally verified inactivity.",
+    "The composition-matched challenge is reported as a challenge; a high flag rate is published as a failure mode, not hidden."
+  ],
+  "steps": {
+    "build": {
+      "returncode": 0,
+      "seconds": 255.9
+    },
+    "features": {
+      "returncode": 0,
+      "seconds": 53.7
+    },
+    "train": {
+      "returncode": 0,
+      "seconds": 5626.3
+    },
+    "evaluation": {
+      "returncode": 1,
+      "seconds": 3.8
+    },
+    "report": {
+      "returncode": 0,
+      "seconds": 36.3
+    }
+  },
+  "files": [
+    "README.md",
+    "v2_1_calibration.csv",
+    "v2_1_challenge_sets.csv",
+    "v2_1_metrics_summary.csv",
+    "v2_1_operating_points.csv",
+    "v2_1_release_summary.json",
+    "v2_1_test_metrics.csv"
+  ]
+}
