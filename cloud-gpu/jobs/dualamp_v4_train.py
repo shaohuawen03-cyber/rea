@@ -496,15 +496,6 @@ def _v4_acceptance(report: dict, metrics: list[dict], challenge: dict) -> dict:
     return crit
 
 
-def _eval_tree_present(run_root: Path) -> bool:
-    """Does the v4 evaluation stage have anything to read on this CLI path?"""
-    latest = run_root / "latest_run.txt"
-    if latest.exists() and (run_root / "runs" / latest.read_text().strip()).exists():
-        return True
-    runs = run_root / "runs"
-    return runs.exists() and any(c.is_dir() for c in runs.iterdir())
-
-
 def _multiset(seq: str) -> str:
     return "".join(sorted(str(seq).upper()))
 
@@ -1172,6 +1163,14 @@ def main() -> int:
 
         # leanrea publishes results/<run_id>/internal_test_metrics.csv plus a manuscript copy
         # (D10_...); accept both spellings so a leanrea bump cannot silently break the summary.
+        gate_report: dict = {}
+        gate_file = Path(out) / "v4_evaluation_gate.json"
+        if gate_file.exists():
+            try:
+                gate_report = json.loads(gate_file.read_text(encoding="utf-8"))
+            except Exception:  # noqa: BLE001
+                gate_report = {"raw": gate_file.read_text(errors="replace")[:500]}
+
         metrics_path = (find(wd, "internal_test_metrics.csv")
                         or find(wd, "D10_test_metrics.csv")
                         or find(wd, "manuscript_D10_test_metrics.csv"))
@@ -1219,6 +1218,7 @@ def main() -> int:
             "completed_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
             "code_commit": code_sha,
             "dataset_summary": dataset,
+            "evaluation_stage": gate_report or {"evaluation_stage": "unknown"},
             "metrics": metrics,
             "metrics_summary": summary,
             "calibration_metrics": ([r for p in calib_metrics for r in csv_rows(p)]
