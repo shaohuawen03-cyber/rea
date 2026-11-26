@@ -3109,14 +3109,15 @@
       "timeout_sec": 3600,
       "created_at_utc": "2026-11-26T14:28:51Z",
       "kernel_slug": "dualamp-v4-model-only-20261126",
-      "status": "pending",
+      "status": "pushed_async",
       "kernel_sources": [
         "shaohuawen/dualamp-v4-full-20261126"
       ],
       "env": {
         "V21_SOURCE_KERNEL": "dualamp-v4-full-20261126"
       },
-      "note": "CPU-only, no training: extract the v4 model-only archive (15 x .pt + provenance) out of the v4 training kernel output so the weights can be published as individual assets."
+      "note": "CPU-only, no training: extract the v4 model-only archive (15 x .pt + provenance) out of the v4 training kernel output so the weights can be published as individual assets.",
+      "finished_at_utc": "2026-11-26T14:29:25Z"
     },
     {
       "id": "dualamp-v4-model-only-20261126-status",
@@ -3124,10 +3125,11 @@
       "mode": "status",
       "script_path": "cloud-gpu/jobs/dualamp_v2_1_extract_model.py",
       "kernel_slug": "dualamp-v4-model-only-20261126",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-26T14:28:51Z",
-      "note": "v4 model-only extract poll."
+      "note": "v4 model-only extract poll.",
+      "finished_at_utc": "2026-11-26T14:29:26Z"
     },
     {
       "id": "dualamp-v4-model-only-20261126-fetch",
@@ -3135,10 +3137,11 @@
       "mode": "output",
       "script_path": "cloud-gpu/jobs/dualamp_v2_1_extract_model.py",
       "kernel_slug": "dualamp-v4-model-only-20261126",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-26T14:28:51Z",
-      "note": "v4 model-only extract poll."
+      "note": "v4 model-only extract poll.",
+      "finished_at_utc": "2026-11-26T14:29:28Z"
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
