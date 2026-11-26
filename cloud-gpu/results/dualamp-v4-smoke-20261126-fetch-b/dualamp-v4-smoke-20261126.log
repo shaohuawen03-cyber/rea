@@ -1,0 +1,168 @@
+[{"stream_name":"stdout","time":6.761181065,"data":"[pip] gdown: rc=0\n"}
+,{"stream_name":"stdout","time":8.6714106,"data":"[pip] requests: rc=0\n"}
+,{"stream_name":"stdout","time":11.164001475,"data":"[pip] fair-esm: rc=0\n"}
+,{"stream_name":"stdout","time":13.107822782,"data":"[pip] pyyaml: rc=0\n"}
+,{"stream_name":"stdout","time":17.211441862,"data":"[pip] biopython: rc=0\n"}
+,{"stream_name":"stdout","time":19.14548347,"data":"[pip] pandas: rc=0\n"}
+,{"stream_name":"stdout","time":21.098478505,"data":"[pip] scikit-learn: rc=0\n"}
+,{"stream_name":"stdout","time":23.073846325,"data":"[pip] matplotlib: rc=0\n"}
+,{"stream_name":"stdout","time":44.040301468,"data":"[v4] decoy pool 14572 -\u003e hard negatives 1000 (trainable) + challenge 13572 (held out)\n"}
+,{"stream_name":"stdout","time":62.188443336,"data":"Downloading: \"https://dl.fbaipublicfiles.com/fair-esm/models/esm2_t12_35M_UR50D.pt\" to /root/.cache/torch/hub/checkpoints/esm2_t12_35M_UR50D.pt\n"}
+,{"stream_name":"stdout","time":63.123679556,"data":"Downloading: \"https://dl.fbaipublicfiles.com/fair-esm/regression/esm2_t12_35M_UR50D-contact-regression.pt\" to /root/.cache/torch/hub/checkpoints/esm2_t12_35M_UR50D-contact-regression.pt\n"}
+,{"stream_name":"stdout","time":680.227617288,"data":"    reading sources from /tmp/v21-a9zbi448/work/data/sources.yaml\n"}
+,{"stream_name":"stdout","time":680.227668199,"data":"[09:05:18] INFO      source dramp_v2_1_positives   layer=bacterial_amp        kept=  400 (from 400 rows)\n"}
+,{"stream_name":"stdout","time":680.227672918,"data":"[09:05:18] INFO      source uniprot_a_fragments    layer=negative_background  kept= 2000 (from 2000 rows)\n"}
+,{"stream_name":"stdout","time":680.227676484,"data":"[09:05:18] INFO      source composition_hard_negatives_v4 layer=hard_negative        kept=  200 (from 200 rows)\n"}
+,{"stream_name":"stdout","time":680.227679708,"data":"[09:05:18] INFO      source composition_challenge_v4 layer=scrambled            kept=  200 (from 200 rows)\n"}
+,{"stream_name":"stdout","time":680.227683015,"data":"[09:05:18] INFO    after length/alphabet filtering: 2800 records\n"}
+,{"stream_name":"stdout","time":680.227686173,"data":"[09:05:21] INFO      dedup: 2800 records -\u003e 2800 unique sequences\n"}
+,{"stream_name":"stdout","time":680.227689547,"data":"[09:05:21] INFO      scrambled challenge set: +400 sequences\n"}
+,{"stream_name":"stdout","time":680.227692598,"data":"[09:05:21] WARNING   CD-HIT / MMseqs2 not found - using the built-in k-mer clustering fallback. Record this in the methods section (plan §5 requires naming the tool and params).\n"}
+,{"stream_name":"stdout","time":680.227696423,"data":"[09:05:26] INFO    clustering: kmer_fallback(k=3) at identity 0.40 / coverage 0.80 -\u003e 1573 clusters\n"}
+,{"stream_name":"stdout","time":680.22769965,"data":"[09:05:27] WARNING   165 homology clusters contain both labels - assigned to 'review' (never trained on)\n"}
+,{"stream_name":"stdout","time":680.227702855,"data":"[09:05:28] INFO      split sizes: {'train': 1437, 'scrambled': 600, 'review': 548, 'val': 308, 'test': 307}\n"}
+,{"stream_name":"stdout","time":680.227706056,"data":"[09:05:28] INFO    dataset written: 3200 sequences, 1573 clusters, test=307 (pos=21) - see /tmp/v21-a9zbi448/work/run/dataset/dataset_all.csv\n"}
+,{"stream_name":"stdout","time":680.227709299,"data":"[09:05:28] INFO    step1 build_dataset finished in 10.0s\n"}
+,{"stream_name":"stdout","time":680.227712145,"data":"sequences=3200 clusters=1573 test=307\n"}
+,{"stream_name":"stdout","time":680.227714996,"data":"$ /usr/bin/python3 -m dualamp_lite features --workdir /tmp/v21-a9zbi448/work/run --backend fair-esm --batch-size 64\n"}
+,{"stream_name":"stdout","time":680.227718009,"data":"[09:05:30] INFO    device: cpu\n"}
+,{"stream_name":"stdout","time":680.227738286,"data":"[09:05:34] INFO    biophys: 35 features, 4 pairs with |r| \u003e= 0.85 (see biophys_correlation.csv)\n"}
+,{"stream_name":"stdout","time":680.227741303,"data":"[09:05:34] INFO    feature backend: fair-esm\n"}
+,{"stream_name":"stdout","time":680.227743655,"data":"[09:06:18] INFO      train: 1437 x 50 x 480 (69.2 MB) in 43.7s -\u003e train_feat.npz\n"}
+,{"stream_name":"stdout","time":680.227746149,"data":"[09:06:29] INFO      val: 308 x 50 x 480 (14.8 MB) in 11.1s -\u003e val_feat.npz\n"}
+,{"stream_name":"stdout","time":680.227748564,"data":"[09:06:40] INFO      test: 307 x 50 x 480 (14.8 MB) in 11.3s -\u003e test_feat.npz\n"}
+,{"stream_name":"stdout","time":680.227751156,"data":"[09:06:52] INFO      scrambled: 600 x 50 x 480 (28.9 MB) in 11.2s -\u003e scrambled_feat.npz\n"}
+,{"stream_name":"stdout","time":680.227754893,"data":"[09:06:52] INFO    step2 extract_features finished in 82.8s\n"}
+,{"stream_name":"stdout","time":680.227757316,"data":"backend=fair-esm embed_dim=480 demo=False\n"}
+,{"stream_name":"stdout","time":680.227759675,"data":"$ /usr/bin/python3 -m dualamp_lite train --workdir /tmp/v21-a9zbi448/work/run --models M1,M2,M3 --seeds 1 --folds 2 --epochs 2 --loss bce\n"}
+,{"stream_name":"stdout","time":680.227762761,"data":"[09:06:55] INFO    dev: 1745 peptides (121 pos) in 982 clusters | test: 307 peptides (21 pos) in 274 clusters\n"}
+,{"stream_name":"stdout","time":680.227765243,"data":"[09:06:55] INFO    training M1 ...\n"}
+,{"stream_name":"stdout","time":680.227767753,"data":"[09:07:08] INFO      M1 seed 1: dev OOF AUROC 0.709, test AUROC 0.912 MCC 0.515 (epochs=2)\n"}
+,{"stream_name":"stdout","time":680.227770291,"data":"[09:09:11] INFO    training M2 ...\n"}
+,{"stream_name":"stdout","time":680.227772553,"data":"[09:09:30] INFO      M2 seed 1: dev OOF AUROC 0.912, test AUROC 0.993 MCC 0.816 (epochs=2)\n"}
+,{"stream_name":"stdout","time":680.227774939,"data":"[09:11:36] INFO    training M3 ...\n"}
+,{"stream_name":"stdout","time":680.227777342,"data":"[09:11:56] INFO      M3 seed 1: dev OOF AUROC 0.913, test AUROC 0.993 MCC 0.827 (epochs=2)\n"}
+,{"stream_name":"stdout","time":680.227779718,"data":"[09:15:27] INFO      comparisons: 6 (BH-FDR controlled at 0.05)\n"}
+,{"stream_name":"stdout","time":680.227782666,"data":"[09:15:27] INFO      external[scrambled] M1: {'n': 600, 'n_pos': 0, 'mean_score': 0.617139995098114, 'frac_predicted_positive': 0.6283333333333333}\n"}
+,{"stream_name":"stdout","time":680.227785251,"data":"[09:15:28] INFO      external[scrambled] M2: {'n': 600, 'n_pos': 0, 'mean_score': 0.1415589153766632, 'frac_predicted_positive': 0.09666666666666666}\n"}
+,{"stream_name":"stdout","time":680.227787978,"data":"[09:15:28] INFO      external[scrambled] M3: {'n': 600, 'n_pos': 0, 'mean_score': 0.16381606459617615, 'frac_predicted_positive': 0.10833333333333334}\n"}
+,{"stream_name":"stdout","time":680.227790577,"data":"[09:15:28] INFO    wrote D10_test_metrics.csv and D9_ablation.csv\n"}
+,{"stream_name":"stdout","time":680.227792918,"data":"[09:15:28] INFO    step3 train_and_eval finished in 512.8s\n"}
+,{"stream_name":"stdout","time":680.227795275,"data":"models=['M1', 'M2', 'M3']\n"}
+,{"stream_name":"stdout","time":680.227798061,"data":"  M1           AUROC=0.912 MCC=0.515 AUPRC=0.445\n"}
+,{"stream_name":"stdout","time":680.227800445,"data":"  M2           AUROC=0.993 MCC=0.816 AUPRC=0.875\n"}
+,{"stream_name":"stdout","time":680.227802926,"data":"  M3           AUROC=0.993 MCC=0.827 AUPRC=0.881\n"}
+,{"stream_name":"stdout","time":680.22780525,"data":"$ /usr/bin/python3 /tmp/v21-a9zbi448/run_evaluation_stage.py\n"}
+,{"stream_name":"stdout","time":680.227807646,"data":"workdir tree: ['ablation', 'baseline', 'cache', 'dataset', 'dataset/splits', 'features', 'figures', 'logs', 'manuscript', 'model']\n"}
+,{"stream_name":"stdout","time":680.22781263,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stdout","time":680.2278151,"data":"  File \"/tmp/v21-a9zbi448/run_evaluation_stage.py\", line 24, in \u003cmodule\u003e\n"}
+,{"stream_name":"stdout","time":680.227817683,"data":"    assert run_id, f'no run id found under {root}'\n"}
+,{"stream_name":"stdout","time":680.227819997,"data":"           ^^^^^^\n"}
+,{"stream_name":"stdout","time":680.227822224,"data":"AssertionError: no run id found under /tmp/v21-a9zbi448/work/run\n"}
+,{"stream_name":"stdout","time":680.2278248,"data":"\n"}
+,{"stream_name":"stdout","time":680.227827132,"data":"[warn] evaluation stage failed; continuing without its tables\n"}
+,{"stream_name":"stderr","time":702.336032302,"data":"{\n"}
+,{"stream_name":"stderr","time":702.336068017,"data":"  \"stage\": \"dualamp_v4_training\",\n"}
+,{"stream_name":"stderr","time":702.336072256,"data":"  \"dataset_version\": \"positive_core_v2_1_dramp_v4_hardneg\",\n"}
+,{"stream_name":"stderr","time":702.336075015,"data":"  \"rule_version\": \"auto_evidence_v2_2.0\",\n"}
+,{"stream_name":"stderr","time":702.33607749,"data":"  \"leanrea_commit\": \"f610dc00b1aec3ab948a5b77574af0e644259a13\",\n"}
+,{"stream_name":"stderr","time":702.33608015,"data":"  \"started_utc\": \"2026-11-26T09:04:36.899750+00:00\",\n"}
+,{"stream_name":"stderr","time":702.336082784,"data":"  \"training_started\": true,\n"}
+,{"stream_name":"stderr","time":702.336085189,"data":"  \"upload_session_present\": false,\n"}
+,{"stream_name":"stderr","time":702.336087609,"data":"  \"cohort\": {\n"}
+,{"stream_name":"stderr","time":702.336089908,"data":"    \"positives\": 14577,\n"}
+,{"stream_name":"stderr","time":702.336092707,"data":"    \"composition_decoys\": 14572,\n"}
+,{"stream_name":"stderr","time":702.336095132,"data":"    \"positive_fasta_sha256\": \"9ca0d4076f6d61c16ad31b920afc9029ae463d3df3510049c9b6ac4366a8e40c\"\n"}
+,{"stream_name":"stderr","time":702.336097728,"data":"  },\n"}
+,{"stream_name":"stderr","time":702.336099948,"data":"  \"v4_decoy_split\": {\n"}
+,{"stream_name":"stderr","time":702.33610248,"data":"    \"decoy_pool_total\": 14572,\n"}
+,{"stream_name":"stderr","time":702.336104832,"data":"    \"hard_negatives_trainable\": 1000,\n"}
+,{"stream_name":"stderr","time":702.336107351,"data":"    \"challenge_held_out\": 13572,\n"}
+,{"stream_name":"stderr","time":702.33610965,"data":"    \"overlap\": 0,\n"}
+,{"stream_name":"stderr","time":702.336112213,"data":"    \"hardneg_frac\": 0.5,\n"}
+,{"stream_name":"stderr","time":702.336114554,"data":"    \"negative_share_policy\": \"0.5\"\n"}
+,{"stream_name":"stderr","time":702.336117067,"data":"  },\n"}
+,{"stream_name":"stderr","time":702.336119315,"data":"  \"negatives\": {\n"}
+,{"stream_name":"stderr","time":702.336121592,"data":"    \"proteins_total\": 117172,\n"}
+,{"stream_name":"stderr","time":702.336123974,"data":"    \"keyword_excluded\": 18,\n"}
+,{"stream_name":"stderr","time":702.336126329,"data":"    \"fragments_raw\": 351462,\n"}
+,{"stream_name":"stderr","time":702.336128637,"data":"    \"fragments_standard_aa\": 351429,\n"}
+,{"stream_name":"stderr","time":702.336131166,"data":"    \"fragments_dedup\": 351119,\n"}
+,{"stream_name":"stderr","time":702.336133522,"data":"    \"fragments_hit_positive_4mer_gt08\": 5,\n"}
+,{"stream_name":"stderr","time":702.336135912,"data":"    \"negatives_final\": 2000,\n"}
+,{"stream_name":"stderr","time":702.336138246,"data":"    \"seed\": 11,\n"}
+,{"stream_name":"stderr","time":702.336140517,"data":"    \"cap\": 2000,\n"}
+,{"stream_name":"stderr","time":702.33615045,"data":"    \"neg_mode\": \"standard\",\n"}
+,{"stream_name":"stderr","time":702.33615322,"data":"    \"seconds\": 11.4\n"}
+,{"stream_name":"stderr","time":702.336155672,"data":"  },\n"}
+,{"stream_name":"stderr","time":702.336158367,"data":"  \"manifest_sha256\": \"552c386122336b0febd9edd09fe3764df5423814bc6f866b2a52ebee51837927\",\n"}
+,{"stream_name":"stderr","time":702.336161056,"data":"  \"smoke_mode\": true,\n"}
+,{"stream_name":"stderr","time":702.336163454,"data":"  \"evaluation_stage\": \"driven via dualamp_lite.v4.pipeline.run_stage('evaluation')\",\n"}
+,{"stream_name":"stderr","time":702.336165926,"data":"  \"encoder_preflight\": {\n"}
+,{"stream_name":"stderr","time":702.336168318,"data":"    \"encoder\": \"fair-esm\",\n"}
+,{"stream_name":"stderr","time":702.336170769,"data":"    \"is_mock\": false,\n"}
+,{"stream_name":"stderr","time":702.33617305,"data":"    \"embed_dim\": 480,\n"}
+,{"stream_name":"stderr","time":702.336175304,"data":"    \"probe_shapes\": [\n"}
+,{"stream_name":"stderr","time":702.336177783,"data":"      [\n"}
+,{"stream_name":"stderr","time":702.336180876,"data":"        2,\n"}
+,{"stream_name":"stderr","time":702.336184769,"data":"        23,\n"}
+,{"stream_name":"stderr","time":702.3361873,"data":"        480\n"}
+,{"stream_name":"stderr","time":702.336189537,"data":"      ],\n"}
+,{"stream_name":"stderr","time":702.336191858,"data":"      [\n"}
+,{"stream_name":"stderr","time":702.33619406,"data":"        2,\n"}
+,{"stream_name":"stderr","time":702.336196279,"data":"        480\n"}
+,{"stream_name":"stderr","time":702.336198928,"data":"      ]\n"}
+,{"stream_name":"stderr","time":702.336201222,"data":"    ],\n"}
+,{"stream_name":"stderr","time":702.336203466,"data":"    \"finite\": true\n"}
+,{"stream_name":"stderr","time":702.336205791,"data":"  },\n"}
+,{"stream_name":"stderr","time":702.336207972,"data":"  \"steps\": {\n"}
+,{"stream_name":"stderr","time":702.336210376,"data":"    \"build\": {\n"}
+,{"stream_name":"stderr","time":702.336212655,"data":"      \"returncode\": 0,\n"}
+,{"stream_name":"stderr","time":702.336214995,"data":"      \"seconds\": 10.8\n"}
+,{"stream_name":"stderr","time":702.336217817,"data":"    },\n"}
+,{"stream_name":"stderr","time":702.336220046,"data":"    \"features\": {\n"}
+,{"stream_name":"stderr","time":702.336222462,"data":"      \"returncode\": 0,\n"}
+,{"stream_name":"stderr","time":702.336225157,"data":"      \"seconds\": 84.1\n"}
+,{"stream_name":"stderr","time":702.336227663,"data":"    },\n"}
+,{"stream_name":"stderr","time":702.336231132,"data":"    \"train\": {\n"}
+,{"stream_name":"stderr","time":702.336233955,"data":"      \"returncode\": 0,\n"}
+,{"stream_name":"stderr","time":702.336236224,"data":"      \"seconds\": 517.0\n"}
+,{"stream_name":"stderr","time":702.33623883,"data":"    },\n"}
+,{"stream_name":"stderr","time":702.336241051,"data":"    \"evaluation\": {\n"}
+,{"stream_name":"stderr","time":702.336243447,"data":"      \"returncode\": 1,\n"}
+,{"stream_name":"stderr","time":702.336245726,"data":"      \"seconds\": 4.2\n"}
+,{"stream_name":"stderr","time":702.336248049,"data":"    },\n"}
+,{"stream_name":"stderr","time":702.336250275,"data":"    \"report\": {\n"}
+,{"stream_name":"stderr","time":702.33625258,"data":"      \"returncode\": 0,\n"}
+,{"stream_name":"stderr","time":702.336254849,"data":"      \"seconds\": 22.0\n"}
+,{"stream_name":"stderr","time":702.336257322,"data":"    }\n"}
+,{"stream_name":"stderr","time":702.33625955,"data":"  },\n"}
+,{"stream_name":"stderr","time":702.33626175,"data":"  \"auxiliary_stage_errors\": {\n"}
+,{"stream_name":"stderr","time":702.336270346,"data":"    \"evaluation\": \"ontrolled at 0.05)\\n[09:15:27] INFO      external[scrambled] M1: {'n': 600, 'n_pos': 0, 'mean_score': 0.617139995098114, 'frac_predicted_positive': 0.6283333333333333}\\n[09:15:28] INFO      external[scrambled] M2: {'n': 600, 'n_pos': 0, 'mean_score': 0.1415589153766632, 'frac_predicted_positive': 0.09666666666666666}\\n[09:15:28] INFO      external[scrambled] M3: {'n': 600, 'n_pos': 0, 'mean_score': 0.16381606459617615, 'frac_predicted_positive': 0.10833333333333334}\\n[09:15:28] INFO    wrote D10_test_metrics.csv and D9_ablation.csv\\n[09:15:28] INFO    step3 train_and_eval finished in 512.8s\\nmodels=['M1', 'M2', 'M3']\\n  M1           AUROC=0.912 MCC=0.515 AUPRC=0.445\\n  M2           AUROC=0.993 MCC=0.816 AUPRC=0.875\\n  M3           AUROC=0.993 MCC=0.827 AUPRC=0.881\\n$ /usr/bin/python3 /tmp/v21-a9zbi448/run_evaluation_stage.py\\nworkdir tree: ['ablation', 'baseline', 'cache', 'dataset', 'dataset/splits', 'features', 'figures', 'logs', 'manuscript', 'model']\\nTraceback (most recent call last):\\n  File \\\"/tmp/v21-a9zbi448/run_evaluation_stage.py\\\", line 24, in \u003cmodule\u003e\\n    assert run_id, f'no run id found under {root}'\\n           ^^^^^^\\nAssertionError: no run id found under /tmp/v21-a9zbi448/work/run\\n\"\n"}
+,{"stream_name":"stderr","time":702.336281758,"data":"  },\n"}
+,{"stream_name":"stderr","time":702.336283994,"data":"  \"status\": \"FAILED_NOT_COMPLETED\",\n"}
+,{"stream_name":"stderr","time":702.336286466,"data":"  \"error\": \"name '_composition_control_safe' is not defined\",\n"}
+,{"stream_name":"stderr","time":702.336353481,"data":"  \"traceback\": \"Traceback (most recent call last):\\n  File \\\"/tmp/_payload.py\\\", line 768, in main\\n    \\\"v4_composition_control\\\": _composition_control_safe(wd, report),\\n                              ^^^^^^^^^^^^^^^^^^^^^^^^^\\nNameError: name '_composition_control_safe' is not defined\\n\",\n"}
+,{"stream_name":"stderr","time":702.336359846,"data":"  \"finished_utc\": \"2026-11-26T09:15:56.140887+00:00\"\n"}
+,{"stream_name":"stderr","time":702.336362388,"data":"}\n"}
+,{"stream_name":"stderr","time":702.610887595,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":702.611378746,"data":"  File \"/kaggle/src/script.py\", line 15, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":702.611412898,"data":"    runpy.run_path('/tmp/_payload.py', run_name='__main__')\n"}
+,{"stream_name":"stderr","time":702.611418006,"data":"    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":702.611422074,"data":"  File \"\u003cfrozen runpy\u003e\", line 294, in run_path\n"}
+,{"stream_name":"stderr","time":702.611426034,"data":"  File \"\u003cfrozen runpy\u003e\", line 98, in _run_module_code\n"}
+,{"stream_name":"stderr","time":702.611429938,"data":"  File \"\u003cfrozen runpy\u003e\", line 88, in _run_code\n"}
+,{"stream_name":"stderr","time":702.611434406,"data":"  File \"/tmp/_payload.py\", line 874, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":702.611438517,"data":"    sys.exit(main())\n"}
+,{"stream_name":"stderr","time":702.611442138,"data":"             ~~~~^^\n"}
+,{"stream_name":"stderr","time":702.611445811,"data":"  File \"/tmp/_payload.py\", line 768, in main\n"}
+,{"stream_name":"stderr","time":702.61144982,"data":"    \"v4_composition_control\": _composition_control_safe(wd, report),\n"}
+,{"stream_name":"stderr","time":702.611453383,"data":"                              ^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":702.611455829,"data":"NameError: name '_composition_control_safe' is not defined\n"}
+,{"stream_name":"stderr","time":705.565993339,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":705.56605371,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":705.910003486,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":705.910031981,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":706.875819689,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":708.2720527,"data":"[NbConvertApp] Writing 383976 bytes to __results__.html\n"}
+]
