@@ -1,0 +1,13 @@
+{
+  "job_id": "dualamp-v2-1-model-only-r6-20261125",
+  "provider": "kaggle",
+  "mode": "run",
+  "accelerator": "CPU",
+  "kernel_ref": "shaohuawen/dualamp-v2-1-model-only-r6-20261125",
+  "kernel_url": "https://www.kaggle.com/code/shaohuawen/dualamp-v2-1-model-only-r6-20261125",
+  "status": "pushed_async",
+  "copied_files": [],
+  "private_outputs_withheld": 0,
+  "push_output": "Kernel version 1 successfully pushed.  Please check progress at https://www.kaggle.com/code/shaohuawen/dualamp-v2-1-model-only-r6-20261125",
+  "updated_at_utc": "2026-11-26T00:40:33Z"
+}

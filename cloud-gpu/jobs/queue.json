@@ -2489,7 +2489,7 @@
       "serve_minutes": 15.0,
       "wait": false,
       "timeout_sec": 3600,
-      "status": "pending",
+      "status": "pushed_async",
       "created_at_utc": "2026-11-26T00:39:51Z",
       "kernel_slug": "dualamp-v2-1-model-only-r6-20261125",
       "kernel_sources": [
@@ -2498,7 +2498,8 @@
       "env": {
         "V21_SOURCE_KERNEL": "dualamp-v2-1-model-only-r4-20261125"
       },
-      "note": "CPU only: put the 27 MB model-only archive in a fresh output so it is downloadable."
+      "note": "CPU only: put the 27 MB model-only archive in a fresh output so it is downloadable.",
+      "finished_at_utc": "2026-11-26T00:40:33Z"
     },
     {
       "id": "dualamp-v2-1-model-only-r6-20261125-status",
@@ -2506,10 +2507,11 @@
       "mode": "status",
       "script_path": "cloud-gpu/jobs/dualamp_v2_1_extract_model.py",
       "kernel_slug": "dualamp-v2-1-model-only-r6-20261125",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-26T00:39:51Z",
-      "note": "model-only r6 check."
+      "note": "model-only r6 check.",
+      "finished_at_utc": "2026-11-26T00:40:33Z"
     },
     {
       "id": "dualamp-v2-1-model-only-r6-20261125-fetch",
@@ -2517,10 +2519,11 @@
       "mode": "output",
       "script_path": "cloud-gpu/jobs/dualamp_v2_1_extract_model.py",
       "kernel_slug": "dualamp-v2-1-model-only-r6-20261125",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-26T00:39:51Z",
-      "note": "model-only r6 check."
+      "note": "model-only r6 check.",
+      "finished_at_utc": "2026-11-26T00:40:34Z"
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
