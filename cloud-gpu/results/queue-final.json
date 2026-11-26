@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-26T11:00:22Z",
+  "updated_at_utc": "2026-11-26T11:15:40Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -2895,6 +2895,30 @@
       "created_at_utc": "2026-11-26T11:00:22Z",
       "note": "v4 smoke-c poll.",
       "finished_at_utc": "2026-11-26T11:01:06Z"
+    },
+    {
+      "id": "dualamp-v4-smoke-c-20261126-status-2",
+      "provider": "kaggle",
+      "mode": "status",
+      "script_path": "cloud-gpu/jobs/dualamp_v4_train.py",
+      "kernel_slug": "dualamp-v4-smoke-c-20261126",
+      "status": "completed",
+      "wait": false,
+      "created_at_utc": "2026-11-26T11:15:40Z",
+      "note": "v4 smoke-c poll 2.",
+      "finished_at_utc": "2026-11-26T11:16:21Z"
+    },
+    {
+      "id": "dualamp-v4-smoke-c-20261126-fetch-2",
+      "provider": "kaggle",
+      "mode": "output",
+      "script_path": "cloud-gpu/jobs/dualamp_v4_train.py",
+      "kernel_slug": "dualamp-v4-smoke-c-20261126",
+      "status": "completed",
+      "wait": false,
+      "created_at_utc": "2026-11-26T11:15:40Z",
+      "note": "v4 smoke-c poll 2.",
+      "finished_at_utc": "2026-11-26T11:16:52Z"
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"

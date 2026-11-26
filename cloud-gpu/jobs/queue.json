@@ -2902,10 +2902,11 @@
       "mode": "status",
       "script_path": "cloud-gpu/jobs/dualamp_v4_train.py",
       "kernel_slug": "dualamp-v4-smoke-c-20261126",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-26T11:15:40Z",
-      "note": "v4 smoke-c poll 2."
+      "note": "v4 smoke-c poll 2.",
+      "finished_at_utc": "2026-11-26T11:16:21Z"
     },
     {
       "id": "dualamp-v4-smoke-c-20261126-fetch-2",
@@ -2913,10 +2914,11 @@
       "mode": "output",
       "script_path": "cloud-gpu/jobs/dualamp_v4_train.py",
       "kernel_slug": "dualamp-v4-smoke-c-20261126",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-26T11:15:40Z",
-      "note": "v4 smoke-c poll 2."
+      "note": "v4 smoke-c poll 2.",
+      "finished_at_utc": "2026-11-26T11:16:52Z"
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"

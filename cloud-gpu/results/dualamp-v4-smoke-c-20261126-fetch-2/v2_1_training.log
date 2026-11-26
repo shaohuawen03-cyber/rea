@@ -1,0 +1,51 @@
+$ /usr/bin/python3 -m dualamp_lite build --manifest /tmp/v21-wb3m4_tj/work/data/sources.yaml --workdir /tmp/v21-wb3m4_tj/work/run --cluster-method auto
+[11:02:07] INFO    reading sources from /tmp/v21-wb3m4_tj/work/data/sources.yaml
+[11:02:07] INFO      source dramp_v2_1_positives   layer=bacterial_amp        kept=  400 (from 400 rows)
+[11:02:07] INFO      source uniprot_a_fragments    layer=negative_background  kept= 2000 (from 2000 rows)
+[11:02:07] INFO      source composition_hard_negatives_v4 layer=hard_negative        kept=  200 (from 200 rows)
+[11:02:07] INFO      source composition_challenge_v4 layer=scrambled            kept=  200 (from 200 rows)
+[11:02:07] INFO    after length/alphabet filtering: 2800 records
+[11:02:10] INFO      dedup: 2800 records -> 2800 unique sequences
+[11:02:10] INFO      scrambled challenge set: +400 sequences
+[11:02:10] WARNING   CD-HIT / MMseqs2 not found - using the built-in k-mer clustering fallback. Record this in the methods section (plan §5 requires naming the tool and params).
+[11:02:14] INFO    clustering: kmer_fallback(k=3) at identity 0.40 / coverage 0.80 -> 1573 clusters
+[11:02:14] WARNING   165 homology clusters contain both labels - assigned to 'review' (never trained on)
+[11:02:15] INFO      split sizes: {'train': 1437, 'scrambled': 600, 'review': 548, 'val': 308, 'test': 307}
+[11:02:15] INFO    dataset written: 3200 sequences, 1573 clusters, test=307 (pos=21) - see /tmp/v21-wb3m4_tj/work/run/dataset/dataset_all.csv
+[11:02:15] INFO    step1 build_dataset finished in 8.3s
+sequences=3200 clusters=1573 test=307
+$ /usr/bin/python3 -m dualamp_lite features --workdir /tmp/v21-wb3m4_tj/work/run --backend fair-esm --batch-size 64
+[11:02:17] INFO    device: cuda
+[11:02:19] INFO    biophys: 35 features, 4 pairs with |r| >= 0.85 (see biophys_correlation.csv)
+[11:02:19] INFO    feature backend: fair-esm
+[11:02:23] INFO      train: 1437 x 50 x 480 (69.2 MB) in 2.8s -> train_feat.npz
+[11:02:23] INFO      val: 308 x 50 x 480 (14.8 MB) in 0.5s -> val_feat.npz
+[11:02:24] INFO      test: 307 x 50 x 480 (14.8 MB) in 0.5s -> test_feat.npz
+[11:02:24] INFO      scrambled: 600 x 50 x 480 (28.9 MB) in 0.7s -> scrambled_feat.npz
+[11:02:24] INFO    step2 extract_features finished in 8.8s
+backend=fair-esm embed_dim=480 demo=False
+$ /usr/bin/python3 -m dualamp_lite train --workdir /tmp/v21-wb3m4_tj/work/run --models M1,M2,M3 --seeds 1 --folds 2 --epochs 2 --loss bce
+[11:02:30] INFO    dev: 1745 peptides (121 pos) in 982 clusters | test: 307 peptides (21 pos) in 274 clusters
+[11:02:30] INFO    training M1 ...
+[11:02:43] INFO      M1 seed 1: dev OOF AUROC 0.749, test AUROC 0.908 MCC 0.481 (epochs=2)
+[11:04:34] INFO    training M2 ...
+[11:04:44] INFO      M2 seed 1: dev OOF AUROC 0.920, test AUROC 0.996 MCC 0.841 (epochs=2)
+[11:06:38] INFO    training M3 ...
+[11:06:44] INFO      M3 seed 1: dev OOF AUROC 0.944, test AUROC 0.997 MCC 0.841 (epochs=2)
+[11:09:54] INFO      comparisons: 6 (BH-FDR controlled at 0.05)
+[11:09:55] INFO      external[scrambled] M1: {'n': 600, 'n_pos': 0, 'mean_score': 0.6232638359069824, 'frac_predicted_positive': 0.6366666666666667}
+[11:09:55] INFO      external[scrambled] M2: {'n': 600, 'n_pos': 0, 'mean_score': 0.10699405521154404, 'frac_predicted_positive': 0.06166666666666667}
+[11:09:55] INFO      external[scrambled] M3: {'n': 600, 'n_pos': 0, 'mean_score': 0.09871668368577957, 'frac_predicted_positive': 0.056666666666666664}
+[11:09:55] INFO    wrote D10_test_metrics.csv and D9_ablation.csv
+[11:09:55] INFO    step3 train_and_eval finished in 444.6s
+models=['M1', 'M2', 'M3']
+  M1           AUROC=0.908 MCC=0.481 AUPRC=0.468
+  M2           AUROC=0.996 MCC=0.841 AUPRC=0.936
+  M3           AUROC=0.997 MCC=0.841 AUPRC=0.952
+$ /usr/bin/python3 /tmp/v21-wb3m4_tj/run_evaluation_stage.py
+{"evaluation_stage": "not_applicable", "reason": "no runs/<run_id> tree on this CLI path", "workdir_dirs": ["ablation", "baseline", "cache", "dataset", "features", "figures", "logs", "manuscript", "model"]}
+
+$ /usr/bin/python3 -m dualamp_lite report --workdir /tmp/v21-wb3m4_tj/work/run
+[11:10:15] INFO    report written: /tmp/v21-wb3m4_tj/work/run/manuscript/D10_evaluation_report.md
+report: /tmp/v21-wb3m4_tj/work/run/manuscript/D10_evaluation_report.md
+manifest: /tmp/v21-wb3m4_tj/work/run/manuscript/D15_input_sha256.tsv (42 files)

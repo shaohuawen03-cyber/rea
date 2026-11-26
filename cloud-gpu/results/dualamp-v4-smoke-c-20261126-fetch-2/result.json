@@ -1,0 +1,15 @@
+{
+  "job_id": "dualamp-v4-smoke-c-20261126-fetch-2",
+  "provider": "kaggle",
+  "mode": "output",
+  "kernel_ref": "shaohuawen/dualamp-v4-smoke-c-20261126",
+  "copied_files": [
+    "dualamp-v4-smoke-c-20261126.log",
+    "v2_1_progress.json",
+    "v2_1_training.log",
+    "v2_1_training_report.json",
+    "v4_evaluation_gate.json"
+  ],
+  "cli_output": "Downloading dualamp_v2_1_model_bundle.zip to /tmp/kag_out_oo1m77kj\n\nOutput file downloaded to /tmp/kag_out_oo1m77kj/dualamp_v2_1_model_bundle.zip\nDownloading PARTS_MANIFEST.json to /tmp/kag_out_oo1m77kj/model_bundle_parts\n\nOutput file downloaded to /tmp/kag_out_oo1m77kj/model_bundle_parts/PARTS_MANIFEST.json\nDownloading part_000.bin to /tmp/kag_out_oo1m77kj/model_bundle_parts\n\nOutput file downloaded to /tmp/kag_out_oo1m77kj/model_bundle_parts/part_000.bin\nDownloading part_001.bin to /tmp/kag_out_oo1m77kj/model_bundle_parts\n\nOutput file downloaded to /tmp/kag_out_oo1m77kj/model_bundle_parts/par",
+  "fetched_at_utc": "2026-11-26T11:16:52Z"
+}
