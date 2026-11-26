@@ -387,6 +387,153 @@ def composition_challenge(metrics: list[dict], extra_paths: list[Path]) -> dict:
             "verdict": verdict}
 
 
+def _v4_acceptance(report: dict, metrics: list[dict], challenge: dict) -> dict:
+    """Did v4 actually fix the thing it was built to fix?
+
+    Deliberately strict and self-reported: a run that lowers the decoy acceptance
+    from 70% to 40% is an improvement but still not论文-usable, and this returns
+    that honestly instead of declaring victory.
+    """
+    crit = {}
+    frac = (challenge or {}).get("max_frac_predicted_positive")
+    crit["decoy_acceptance"] = frac
+    crit["decoy_acceptance_target"] = 0.10
+    crit["decoy_acceptance_pass"] = (frac is not None and frac < 0.10)
+
+    ctrl = report.get("v4_composition_control") or {}
+    ctrl_auroc = ctrl.get("auroc")
+    best = max((float(m.get("auroc") or 0) for m in metrics), default=0.0)
+    crit["composition_only_auroc"] = ctrl_auroc
+    crit["best_deep_auroc"] = best
+    # A composition-only baseline above 0.90 means the deep model has little
+    # headroom that is genuinely sequence-order driven.
+    crit["composition_only_auroc_target"] = 0.90
+    crit["composition_only_pass"] = (ctrl_auroc is not None and ctrl_auroc < 0.90)
+
+    test_rows = [m for m in metrics if str(m.get("split", "internal_test")) == "internal_test"]
+    n_pos = max((int(float(m.get("n_pos") or 0)) for m in test_rows), default=0)
+    crit["test_positives"] = n_pos
+    crit["test_positives_target"] = 100
+    crit["test_positives_pass"] = n_pos >= 100
+
+    split_info = report.get("v4_decoy_split") or {}
+    crit["decoy_split_overlap"] = split_info.get("overlap")
+    crit["decoy_split_pass"] = split_info.get("overlap") == 0
+
+    passes = [v for k, v in crit.items() if k.endswith("_pass")]
+    crit["all_pass"] = bool(passes) and all(passes)
+    if crit["all_pass"]:
+        crit["verdict"] = "V4_PAPER_READY_ON_COMPOSITION"
+    elif crit["decoy_acceptance_pass"] or (
+            crit["decoy_acceptance"] is not None and crit["decoy_acceptance"] < 0.40):
+        crit["verdict"] = "V4_IMPROVED_BUT_NOT_READY"
+    else:
+        crit["verdict"] = "V4_STILL_HAS_COMPOSITION_SHORTCUT"
+    crit["note"] = ("Passing these gates is necessary, not sufficient: an external "
+                    "benchmark (AMPBenchmark multi-negative) and wet-lab hit rate are "
+                    "still required before any paper claim.")
+    return crit
+
+
+def _composition_control_safe(work: Path, report: dict) -> dict:
+    """Never let the diagnostic take the run down; record why if it fails."""
+    try:
+        out = composition_control(work)
+        return out
+    except Exception as exc:  # noqa: BLE001
+        return {"status": "error", "error": f"{type(exc).__name__}: {str(exc)[:300]}"}
+
+
+def composition_control(work: Path, seed: int = 20261126) -> dict:
+    """How much of the AUROC can amino-acid composition alone explain?
+
+    A logistic regression on 20-dimensional amino-acid frequencies, trained on the
+    exact same train/test split the deep models use. If this control reaches high
+    AUROC, the headline number is not evidence of sequence-order learning.
+
+    This is the quantitative version of the composition challenge: the challenge
+    says "the model accepts shuffled sequences", the control says "and composition
+    alone reproduces X% of the measured AUROC".
+    """
+    np = _np()
+    from sklearn.linear_model import LogisticRegression  # noqa: PLC0415
+    from sklearn.preprocessing import StandardScaler  # noqa: PLC0415
+
+    splits = work / "run" / "dataset" / "splits"
+    if not splits.exists():
+        splits = work / "dataset" / "splits"
+    if not splits.exists():
+        return {"status": "no_splits"}
+
+    def load(split: str):
+        import pandas as pd  # noqa: PLC0415
+        path = splits / f"{split}.csv"
+        if not path.exists():
+            return None
+        df = pd.read_csv(path)
+        if not {"seq", "label"} <= set(df.columns):
+            return None
+        return df
+
+    tr, te = load("train"), load("test")
+    if tr is None or te is None or te.empty:
+        return {"status": "no_split_files"}
+
+    aa = "ACDEFGHIKLMNPQRSTVWY"
+
+    def encode(seqs):
+        rows = []
+        for s in seqs:
+            s = str(s).upper()
+            n = max(len(s), 1)
+            rows.append([s.count(a) / n for a in aa])
+        return np.asarray(rows, dtype=float)
+
+    y_tr, y_te = tr["label"].to_numpy().astype(int), te["label"].to_numpy().astype(int)
+    if len(set(y_te.tolist())) < 2:
+        return {"status": "test_needs_both_classes"}
+
+    x_tr, x_te = encode(tr["seq"]), encode(te["seq"])
+    scaler = StandardScaler().fit(x_tr)
+    clf = LogisticRegression(max_iter=2000, random_state=seed)
+    clf.fit(scaler.transform(x_tr), y_tr)
+    p = clf.predict_proba(scaler.transform(x_te))[:, 1]
+
+    auroc = float(_auc(y_te, p))
+    brier = float(_brier(y_te, p))
+    coef = {a: float(c) for a, c in zip(aa, clf.coef_[0])}
+    top = sorted(coef.items(), key=lambda kv: -abs(kv[1]))[:5]
+    out = {
+        "status": "ok",
+        "method": "logistic regression on 20-dim amino-acid frequency",
+        "n_train": int(len(y_tr)),
+        "n_test": int(len(y_te)),
+        "n_pos_test": int(y_te.sum()),
+        "auroc": auroc,
+        "brier": brier,
+        "top_coefficients": [{"aa": a, "coef": c} for a, c in top],
+        "reading": ("If this control's AUROC approaches the deep models' AUROC, the "
+                    "measured discrimination is explainable by composition alone."),
+    }
+    # Compare against the deep models on the same split, when their metrics exist.
+    report_paths = list(work.rglob("*results.json")) + list(work.rglob("*metrics*.json"))
+    deep = {}
+    for path in report_paths[:50]:
+        try:
+            blob = json.loads(path.read_text(encoding="utf-8"))
+        except Exception:  # noqa: BLE001
+            continue
+        if isinstance(blob, dict) and "auroc" in blob:
+            deep[path.parent.name or path.stem] = float(blob["auroc"])
+    if deep:
+        best = max(deep.values())
+        out["deep_models_seen"] = deep
+        out["best_deep_auroc"] = best
+        out["composition_share_of_best_auroc"] = auroc / best if best else None
+        out["auroc_gap"] = best - auroc
+    return out
+
+
 def main() -> int:
     out = Path("/kaggle/working")
     out.mkdir(parents=True, exist_ok=True)
@@ -877,148 +1024,3 @@ if __name__ == "__main__":
 # --------------------------------------------------------------------------- #
 # v4 fix #3: composition-only control
 # --------------------------------------------------------------------------- #
-def _v4_acceptance(report: dict, metrics: list[dict], challenge: dict) -> dict:
-    """Did v4 actually fix the thing it was built to fix?
-
-    Deliberately strict and self-reported: a run that lowers the decoy acceptance
-    from 70% to 40% is an improvement but still not论文-usable, and this returns
-    that honestly instead of declaring victory.
-    """
-    crit = {}
-    frac = (challenge or {}).get("max_frac_predicted_positive")
-    crit["decoy_acceptance"] = frac
-    crit["decoy_acceptance_target"] = 0.10
-    crit["decoy_acceptance_pass"] = (frac is not None and frac < 0.10)
-
-    ctrl = report.get("v4_composition_control") or {}
-    ctrl_auroc = ctrl.get("auroc")
-    best = max((float(m.get("auroc") or 0) for m in metrics), default=0.0)
-    crit["composition_only_auroc"] = ctrl_auroc
-    crit["best_deep_auroc"] = best
-    # A composition-only baseline above 0.90 means the deep model has little
-    # headroom that is genuinely sequence-order driven.
-    crit["composition_only_auroc_target"] = 0.90
-    crit["composition_only_pass"] = (ctrl_auroc is not None and ctrl_auroc < 0.90)
-
-    test_rows = [m for m in metrics if str(m.get("split", "internal_test")) == "internal_test"]
-    n_pos = max((int(float(m.get("n_pos") or 0)) for m in test_rows), default=0)
-    crit["test_positives"] = n_pos
-    crit["test_positives_target"] = 100
-    crit["test_positives_pass"] = n_pos >= 100
-
-    split_info = report.get("v4_decoy_split") or {}
-    crit["decoy_split_overlap"] = split_info.get("overlap")
-    crit["decoy_split_pass"] = split_info.get("overlap") == 0
-
-    passes = [v for k, v in crit.items() if k.endswith("_pass")]
-    crit["all_pass"] = bool(passes) and all(passes)
-    if crit["all_pass"]:
-        crit["verdict"] = "V4_PAPER_READY_ON_COMPOSITION"
-    elif crit["decoy_acceptance_pass"] or (
-            crit["decoy_acceptance"] is not None and crit["decoy_acceptance"] < 0.40):
-        crit["verdict"] = "V4_IMPROVED_BUT_NOT_READY"
-    else:
-        crit["verdict"] = "V4_STILL_HAS_COMPOSITION_SHORTCUT"
-    crit["note"] = ("Passing these gates is necessary, not sufficient: an external "
-                    "benchmark (AMPBenchmark multi-negative) and wet-lab hit rate are "
-                    "still required before any paper claim.")
-    return crit
-
-
-def _composition_control_safe(work: Path, report: dict) -> dict:
-    """Never let the diagnostic take the run down; record why if it fails."""
-    try:
-        out = composition_control(work)
-        return out
-    except Exception as exc:  # noqa: BLE001
-        return {"status": "error", "error": f"{type(exc).__name__}: {str(exc)[:300]}"}
-
-
-def composition_control(work: Path, seed: int = 20261126) -> dict:
-    """How much of the AUROC can amino-acid composition alone explain?
-
-    A logistic regression on 20-dimensional amino-acid frequencies, trained on the
-    exact same train/test split the deep models use. If this control reaches high
-    AUROC, the headline number is not evidence of sequence-order learning.
-
-    This is the quantitative version of the composition challenge: the challenge
-    says "the model accepts shuffled sequences", the control says "and composition
-    alone reproduces X% of the measured AUROC".
-    """
-    np = _np()
-    from sklearn.linear_model import LogisticRegression  # noqa: PLC0415
-    from sklearn.preprocessing import StandardScaler  # noqa: PLC0415
-
-    splits = work / "run" / "dataset" / "splits"
-    if not splits.exists():
-        splits = work / "dataset" / "splits"
-    if not splits.exists():
-        return {"status": "no_splits"}
-
-    def load(split: str):
-        import pandas as pd  # noqa: PLC0415
-        path = splits / f"{split}.csv"
-        if not path.exists():
-            return None
-        df = pd.read_csv(path)
-        if not {"seq", "label"} <= set(df.columns):
-            return None
-        return df
-
-    tr, te = load("train"), load("test")
-    if tr is None or te is None or te.empty:
-        return {"status": "no_split_files"}
-
-    aa = "ACDEFGHIKLMNPQRSTVWY"
-
-    def encode(seqs):
-        rows = []
-        for s in seqs:
-            s = str(s).upper()
-            n = max(len(s), 1)
-            rows.append([s.count(a) / n for a in aa])
-        return np.asarray(rows, dtype=float)
-
-    y_tr, y_te = tr["label"].to_numpy().astype(int), te["label"].to_numpy().astype(int)
-    if len(set(y_te.tolist())) < 2:
-        return {"status": "test_needs_both_classes"}
-
-    x_tr, x_te = encode(tr["seq"]), encode(te["seq"])
-    scaler = StandardScaler().fit(x_tr)
-    clf = LogisticRegression(max_iter=2000, random_state=seed)
-    clf.fit(scaler.transform(x_tr), y_tr)
-    p = clf.predict_proba(scaler.transform(x_te))[:, 1]
-
-    auroc = float(_auc(y_te, p))
-    brier = float(_brier(y_te, p))
-    coef = {a: float(c) for a, c in zip(aa, clf.coef_[0])}
-    top = sorted(coef.items(), key=lambda kv: -abs(kv[1]))[:5]
-    out = {
-        "status": "ok",
-        "method": "logistic regression on 20-dim amino-acid frequency",
-        "n_train": int(len(y_tr)),
-        "n_test": int(len(y_te)),
-        "n_pos_test": int(y_te.sum()),
-        "auroc": auroc,
-        "brier": brier,
-        "top_coefficients": [{"aa": a, "coef": c} for a, c in top],
-        "reading": ("If this control's AUROC approaches the deep models' AUROC, the "
-                    "measured discrimination is explainable by composition alone."),
-    }
-    # Compare against the deep models on the same split, when their metrics exist.
-    report_paths = list(work.rglob("*results.json")) + list(work.rglob("*metrics*.json"))
-    deep = {}
-    for path in report_paths[:50]:
-        try:
-            blob = json.loads(path.read_text(encoding="utf-8"))
-        except Exception:  # noqa: BLE001
-            continue
-        if isinstance(blob, dict) and "auroc" in blob:
-            deep[path.parent.name or path.stem] = float(blob["auroc"])
-    if deep:
-        best = max(deep.values())
-        out["deep_models_seen"] = deep
-        out["best_deep_auroc"] = best
-        out["composition_share_of_best_auroc"] = auroc / best if best else None
-        out["auroc_gap"] = best - auroc
-    return out
