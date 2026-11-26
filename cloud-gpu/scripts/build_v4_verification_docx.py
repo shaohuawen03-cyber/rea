@@ -24,19 +24,31 @@ ROOT = Path("/home/user/rea")
 RESULTS = ROOT / "cloud-gpu" / "results"
 MODELS = ["M1", "M2", "M3"]
 
-RUNS = {
-    "v2.1": ("dualamp-v2-1-weights-r4-fetch-d-20261125", "v2.1 原模型（已发布）", "2026-11-25"),
-    "smoke": ("dualamp-v4-smoke-c-20261126-fetch-2", "v4 冒烟验证（2 epoch / 1 seed）", "2026-11-26"),
-    "full": ("dualamp-v4-full-20261126-fetch-2", "v4 全量训练（60 epoch / 5 seeds / 5 folds）", "2026-11-26"),
+LABELS = {
+    "v2.1": "v2.1 原模型（已发布）",
+    "smoke": "v4 冒烟验证（2 epoch / 1 seed）",
+    "full": "v4 全量训练（60 epoch / 5 seeds / 5 folds）",
+}
+#: fetch directories are versioned (fetch, fetch-2, ...); always read the newest one
+PREFIX = {
+    "v2.1": "dualamp-v2-1-weights-r4-fetch",
+    "smoke": "dualamp-v4-smoke-c-20261126-fetch",
+    "full": "dualamp-v4-full-20261126-fetch",
 }
 
 
-def load_report(run: str) -> dict | None:
-    rel, _, _ = RUNS[run]
-    path = RESULTS / rel / "v2_1_training_report.json"
-    if not path.exists():
+def _newest(prefix: str) -> Path | None:
+    cands = [d for d in RESULTS.iterdir()
+             if d.is_dir() and d.name.startswith(prefix)
+             and (d / "v2_1_training_report.json").exists()]
+    if not cands:
         return None
-    return json.loads(path.read_text(encoding="utf-8"))
+    return max(cands, key=lambda d: (d / "v2_1_training_report.json").stat().st_mtime)
+
+
+def load_report(run: str) -> dict | None:
+    path = _newest(PREFIX[run])
+    return json.loads((path / "v2_1_training_report.json").read_text(encoding="utf-8")) if path else None
 
 
 def decoy_rows(rep: dict) -> dict[str, float]:
@@ -58,6 +70,22 @@ def auroc_rows(rep: dict) -> dict[str, float]:
         except (TypeError, ValueError):
             continue
     return out
+
+
+def sens_at_spec(rep: dict, model: str, target: float) -> dict | None:
+    for op in rep.get("fixed_specificity_operating_points") or []:
+        if str(op.get("model", "")).upper() != model:
+            continue
+        if abs(float(op.get("target_specificity", 0)) - target) < 1e-9:
+            hit = op.get("test_at_dev_threshold") or {}
+            return {
+                "dev_threshold": op.get("dev_threshold"),
+                "dev_sensitivity": op.get("dev_sensitivity"),
+                "test_sensitivity": hit.get("sensitivity"),
+                "test_specificity": hit.get("specificity"),
+                "test_precision": hit.get("precision"),
+            }
+    return None
 
 
 def pct(x: float | None) -> str:
@@ -101,7 +129,7 @@ def build(smoke_only: bool = False) -> Path:
     meta = doc.add_paragraph()
     meta.alignment = WD_ALIGN_PARAGRAPH.CENTER
     meta.add_run(
-        f"生成日期：2026-11-26　|　数据来源：{RUNS['full' if full else 'smoke'][1]}\n"
+        f"生成日期：2026-11-26　|　数据来源：{LABELS['full' if full else 'smoke']}\n"
         f"leanrea: {main.get('leanrea_commit', '—')}　|　训练 commit: {main.get('code_commit', '—')}\n"
         "所有数字由本脚本从训练报告 JSON 读取，不手工填写。"
     ).font.size = Pt(9)
@@ -179,8 +207,36 @@ def build(smoke_only: bool = False) -> Path:
         para(doc, "解读：深度模型的判别力显著高于「只读组成」的对照，差值区间不含 0。"
                   "这才是「学到序列顺序」的第一份定量证据；v2.1 无法给出这一步。", bold=True, size=10)
 
+    # ---------------------------------------------------------------- 4b
+    h(doc, "5. 代价：固定特异度下灵敏度大幅下降", 1)
+    para(doc, "修掉组成捷径不是免费的。组成捷径之所以让 v2.1 的数字好看，正是因为它把「像抗菌肽」"
+              "等同于「是抗菌肽」。一旦这个捷径被训练压制，模型在固定特异度下能认出的真阳性就变少了。"
+              "下表把两代模型放在同一把尺子上：阈值全部取自 dev OOF（不看测试集），特异度目标相同。")
+    rows = []
+    for m in MODELS:
+        for target in (0.99, 0.995):
+            a = sens_at_spec(v21, m, target)
+            b = sens_at_spec(main, m, target)
+            rows.append((f"{m} @ spec {target:.3f}",
+                         pct(a.get("test_sensitivity")) if a else "—",
+                         pct(b.get("test_sensitivity")) if b else "—",
+                         f"{(b['test_sensitivity'] - a['test_sensitivity']) * 100:+.1f} pt"
+                         if a and b and a.get("test_sensitivity") is not None
+                         and b.get("test_sensitivity") is not None else "—",
+                         f"{float(a['dev_threshold']):.4f} → {float(b['dev_threshold']):.4f}"
+                         if a and b and a.get("dev_threshold") is not None
+                         and b.get("dev_threshold") is not None else "—"))
+    add_table(doc, ["模型 / 特异度目标", "v2.1 灵敏度", "v4 灵敏度", "变化", "dev 阈值"], rows,
+              widths=[1.7, 1.1, 1.1, 1.0, 1.6])
+    callout(doc, "这条下降必须写进论文，不能只报 AUROC",
+            "AUROC 只下降约 0.04（0.989 → 0.950），但固定特异度下的灵敏度从约 0.85 掉到约 0.45–0.49，"
+            "几乎腰斩。原因不是模型变差，而是 v2.1 的一部分「灵敏度」本来就是靠组成捷径拿到的"
+            "（对组成匹配诱饵同样判阳）。任何只报 AUROC 的对照都会把这次修复看成小幅退步，"
+            "从而得出错误结论。正确的写法是：v4 牺牲了表观灵敏度，换来的是对无序序列不再误判。",
+            fill="FFF4E5")
+
     # ---------------------------------------------------------------- 5
-    h(doc, "5. 数据划分与泄漏审计", 1)
+    h(doc, "6. 数据划分与泄漏审计", 1)
     rows = [
         ("诱饵池总数", f"{split.get('decoy_pool_total', 0):,}", "组成匹配诱饵（阳性序列的排列）"),
         ("可训练硬负例", f"{split.get('hard_negatives_trainable', 0):,}", "注入 hard_negative 层，参与训练"),
@@ -198,7 +254,7 @@ def build(smoke_only: bool = False) -> Path:
     add_table(doc, ["项目", "数值", "说明"], rows, widths=[2.4, 1.4, 3.0])
 
     # ---------------------------------------------------------------- 6
-    h(doc, "6. 验收门槛的自动裁决", 1)
+    h(doc, "7. 验收门槛的自动裁决", 1)
     gates = [
         ("诱饵接受率（主模型）< 0.10", pct(acc.get("headline_decoy_acceptance")),
          "通过" if acc.get("headline_decoy_acceptance_pass") else "未通过"),
@@ -214,7 +270,7 @@ def build(smoke_only: bool = False) -> Path:
     para(doc, str(acc.get("note", "")), size=9.5, italic=True)
 
     # ---------------------------------------------------------------- 7
-    h(doc, "7. 校准与固定特异度工作点", 1)
+    h(doc, "8. 校准与固定特异度工作点", 1)
     calib = {(r.get("model") or "").upper(): r for r in (main.get("calibration_in_metrics") or [])}
     rows = []
     for m in MODELS:
@@ -235,7 +291,7 @@ def build(smoke_only: bool = False) -> Path:
                   rows, widths=[0.9, 1.1, 1.1, 1.3, 1.3, 1.3])
 
     # ---------------------------------------------------------------- 8
-    h(doc, "8. 这份结果能支持什么、不能支持什么", 1)
+    h(doc, "9. 这份结果能支持什么、不能支持什么", 1)
     para(doc, "能支持：", bold=True, size=10)
     bullet(doc, "在本数据集与本划下，M2/M3 不再把组成匹配的无序序列判为阳性——这是 v2.1 失败、v4 修好的地方。")
     bullet(doc, "深度模型的判别力显著高于组成-only 对照（配对 bootstrap CI 不含 0），因此「学到的不只是组成」在本划下有统计支撑。")
@@ -250,13 +306,13 @@ def build(smoke_only: bool = False) -> Path:
     bullet(doc, "样本量：测试集阳性数百条，置信区间仍宽；这不影响结论方向，但影响效应量的精度。")
 
     # ---------------------------------------------------------------- 9
-    h(doc, "9. 结论", 1)
+    h(doc, "10. 结论", 1)
     verdict = acc.get("verdict", "—")
     if verdict == "V4_PAPER_READY_ON_COMPOSITION":
         para(doc, "v4 通过了本报告定义的全部组成相关门槛。这只说明「组成捷径」这一条被修好并通过了验证，"
                   "不说明模型可以直接写进论文当作结论——外部基准与实验验证仍是必需项。", bold=True, size=10)
     else:
-        para(doc, f"v4 尚未通过全部门槛（{verdict}）。下面第 8 节列出的缺口在补齐前，"
+        para(doc, f"v4 尚未通过全部门槛（{verdict}）。下面第 9 节列出的缺口在补齐前，"
                   "本模型只能作为探索性结果发布，不能称为「高分 SCI 支持的发表版模型」。", bold=True, size=10)
 
     doc.add_paragraph()
