@@ -725,6 +725,9 @@ def main() -> int:
             rel = str(f.relative_to(wd / "run")).split("/")[0]
             breakdown[rel] = breakdown.get(rel, 0) + f.stat().st_size
         report["private_bundle_breakdown"] = breakdown
+        report["private_bundle_model_files"] = sorted(
+            str(f.relative_to(wd / "run")) for f in private_files
+            if f.suffix == ".pt")
         print(f"[package] private files: {len(private_files)}", flush=True)
         print(f"[package] bytes by directory: {breakdown}", flush=True)
         if not any(p.suffix == ".pt" for p in private_files):
