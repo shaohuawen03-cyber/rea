@@ -2863,13 +2863,14 @@
       "id": "dualamp-v4-smoke-c-20261126",
       "mode": "run",
       "kernel_slug": "dualamp-v4-smoke-c-20261126",
-      "status": "pending",
+      "status": "pushed_async",
       "note": "v4 smoke c: acceptance gate now reads the control it computed, per-model decoy numbers, leakage-free composition control with paired bootstrap, evaluation gate, hard-negative composition audit.",
       "env": {
         "V21_SMOKE": "1",
         "V4_HARDNEG_FRAC": "0.5",
         "V4_HARDNEG_CAP": "1000"
-      }
+      },
+      "finished_at_utc": "2026-11-26T11:01:04Z"
     },
     {
       "id": "dualamp-v4-smoke-c-20261126-status",
@@ -2877,10 +2878,11 @@
       "mode": "status",
       "script_path": "cloud-gpu/jobs/dualamp_v4_train.py",
       "kernel_slug": "dualamp-v4-smoke-c-20261126",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-26T11:00:22Z",
-      "note": "v4 smoke-c poll."
+      "note": "v4 smoke-c poll.",
+      "finished_at_utc": "2026-11-26T11:01:05Z"
     },
     {
       "id": "dualamp-v4-smoke-c-20261126-fetch",
@@ -2888,10 +2890,11 @@
       "mode": "output",
       "script_path": "cloud-gpu/jobs/dualamp_v4_train.py",
       "kernel_slug": "dualamp-v4-smoke-c-20261126",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-26T11:00:22Z",
-      "note": "v4 smoke-c poll."
+      "note": "v4 smoke-c poll.",
+      "finished_at_utc": "2026-11-26T11:01:06Z"
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
