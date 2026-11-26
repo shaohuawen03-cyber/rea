@@ -1,0 +1,132 @@
+{
+  "stage": "dualamp_v2_1_model_only_extract",
+  "source_kernel": "dualamp-v4-full-20261126",
+  "status": "COMPLETED_MODEL_ONLY_EXTRACT",
+  "source_bytes": 630965727,
+  "source_sha256": "86e08ad0074dc16bd3b72b086de904a1d9871c40d52724d04d99a278e23ee113",
+  "model_only_bytes": 26965852,
+  "model_only_sha256": "8937d9a36373549629813d91b61dbd7fee7262fdeab07b12e6152ea7d3e835e5",
+  "members": [
+    {
+      "name": "model/M1_results.json",
+      "bytes": 10937,
+      "sha256": "ccb92209e322e6a049253857c3184d3459a06b7796509819ac7735bc402187d4"
+    },
+    {
+      "name": "model/M1_scores.npz",
+      "bytes": 458980,
+      "sha256": "3664ceecf24c1e442662c87c53f049027ef4107f6d2226004931e76ff79f2feb"
+    },
+    {
+      "name": "model/M1_seed1.pt",
+      "bytes": 496487,
+      "sha256": "bc55e72a820d25e5c0ac76879b10429380eefd83ffcd6f67212aa908d6840da7"
+    },
+    {
+      "name": "model/M1_seed2.pt",
+      "bytes": 496487,
+      "sha256": "acec740f45e988b5365643dbb9dfe18493f8d0e3a87305be29409a3be4088e55"
+    },
+    {
+      "name": "model/M1_seed3.pt",
+      "bytes": 496487,
+      "sha256": "e363100b95342098f9299aafecdd3441ec679defa096c1fbb9cb7596bda6c5a3"
+    },
+    {
+      "name": "model/M1_seed4.pt",
+      "bytes": 496487,
+      "sha256": "d4c2b9e27c6e1f80cda5d8885e43bd8717aeb077099a3d308d73dba7a7d14bc9"
+    },
+    {
+      "name": "model/M1_seed5.pt",
+      "bytes": 496487,
+      "sha256": "f9cfcae86f12e4db5161485b9f45b8dce25cf243199f0b8c786a88f67013996a"
+    },
+    {
+      "name": "model/M2_results.json",
+      "bytes": 10884,
+      "sha256": "a11bf210d9abf7da4be7613149c31a1e1811868c32fee13fc76ec0374c2b2071"
+    },
+    {
+      "name": "model/M2_scores.npz",
+      "bytes": 458980,
+      "sha256": "127c955ffd7309a41fb1954e9836894599fbe17389689a2ab283cf9101afc15a"
+    },
+    {
+      "name": "model/M2_seed1.pt",
+      "bytes": 1988851,
+      "sha256": "8f31ade086fb67bb53a4eb8a77635f183ae3d71f3f488834a7087f47234a3b9d"
+    },
+    {
+      "name": "model/M2_seed2.pt",
+      "bytes": 1988851,
+      "sha256": "0376bedc4c468e28e473e6c941ddedf2066444ea9cb530a082f91497fe4345a1"
+    },
+    {
+      "name": "model/M2_seed3.pt",
+      "bytes": 1988851,
+      "sha256": "3131fb9ea3a39995f1341376fe4891faab8a7839b7e9865b10735ea2eb37b2b7"
+    },
+    {
+      "name": "model/M2_seed4.pt",
+      "bytes": 1988851,
+      "sha256": "3091e2e00c7530a9b4e53d919f9e98dcc185d8e18aedddf06b5371bd4fa3cad6"
+    },
+    {
+      "name": "model/M2_seed5.pt",
+      "bytes": 1988851,
+      "sha256": "439c3a616227f27f423957d85f9f8799113c0bf898961ffb0e85ea76959f0d26"
+    },
+    {
+      "name": "model/M3_results.json",
+      "bytes": 10891,
+      "sha256": "b67047c8d6a8c34cadbda9947bc5db7d7066083294cdac1bb31caaf9d6724a82"
+    },
+    {
+      "name": "model/M3_scores.npz",
+      "bytes": 458980,
+      "sha256": "4c04ba3482e0a07965498f2f418e9370bef6506fa8a584c8c9153773e01f89cc"
+    },
+    {
+      "name": "model/M3_seed1.pt",
+      "bytes": 2033511,
+      "sha256": "3aca4b4aa43ebc921e9a613be5533fd6f2b16365c13856e8fbecf6931709d774"
+    },
+    {
+      "name": "model/M3_seed2.pt",
+      "bytes": 2033511,
+      "sha256": "a2c28e467609c92945e1613ff1777caeda78bc2d9967d9c7e4f2d33de1f59b79"
+    },
+    {
+      "name": "model/M3_seed3.pt",
+      "bytes": 2033511,
+      "sha256": "ea82c90cc42aa055dcddee4707b81ac67fe9cd0abe42027f8f6a66281ffb0f7f"
+    },
+    {
+      "name": "model/M3_seed4.pt",
+      "bytes": 2033511,
+      "sha256": "ff6e592261ee0922b295c7cd0793109dfe7355c00f87a3f54c4495d546de8716"
+    },
+    {
+      "name": "model/M3_seed5.pt",
+      "bytes": 2033511,
+      "sha256": "38e7e6728121308931c18acde4592f1fb6bd1ca15df443c89ae6917442576282"
+    },
+    {
+      "name": "model/train_summary.json",
+      "bytes": 40282,
+      "sha256": "808eae82e5e2a26f924422a29a71947c129cdf9404f4b2e333cb52f3c0cc3ce3"
+    },
+    {
+      "name": "reports/positive_core_v2_1_ledger.tsv",
+      "bytes": 2918253,
+      "sha256": "09df9dd7e1056b8fbb6215576fdc87b689143877c4be56a4e6af11e4a21604f1"
+    },
+    {
+      "name": "run_provenance.json",
+      "bytes": 664,
+      "sha256": "c4b54467f1517a21b92c23f477a82a00b7a70079a43bd65fb9a20cc008d3c696"
+    }
+  ],
+  "note": "model/ carries the trained weights and OOF score tables; the 1.4 GB features/ embedding cache is deliberately excluded because it is recomputable from the same encoder."
+}

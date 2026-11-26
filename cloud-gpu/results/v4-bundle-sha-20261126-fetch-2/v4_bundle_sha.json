@@ -1,0 +1,9 @@
+{
+  "stage": "v4_bundle_sha",
+  "source_kernel": "dualamp-v4-full-20261126",
+  "status": "OK",
+  "source": "whole zip",
+  "path": "/kaggle/input/notebooks/shaohuawen/dualamp-v4-full-20261126/dualamp_v2_1_model_bundle.zip",
+  "bytes": 630965727,
+  "sha256": "86e08ad0074dc16bd3b72b086de904a1d9871c40d52724d04d99a278e23ee113"
+}

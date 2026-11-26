@@ -3149,10 +3149,11 @@
       "mode": "status",
       "script_path": "cloud-gpu/jobs/v4_bundle_sha.py",
       "kernel_slug": "v4-bundle-sha-20261126",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-26T14:47:10Z",
-      "note": "poll 2."
+      "note": "poll 2.",
+      "finished_at_utc": "2026-11-26T14:47:46Z"
     },
     {
       "id": "v4-bundle-sha-20261126-fetch-2",
@@ -3160,10 +3161,11 @@
       "mode": "output",
       "script_path": "cloud-gpu/jobs/v4_bundle_sha.py",
       "kernel_slug": "v4-bundle-sha-20261126",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-26T14:47:10Z",
-      "note": "poll 2."
+      "note": "poll 2.",
+      "finished_at_utc": "2026-11-26T14:47:47Z"
     },
     {
       "id": "dualamp-v4-model-only-20261126-status-2",
@@ -3171,10 +3173,11 @@
       "mode": "status",
       "script_path": "cloud-gpu/jobs/dualamp_v2_1_extract_model.py",
       "kernel_slug": "dualamp-v4-model-only-20261126",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-26T14:47:10Z",
-      "note": "poll 2."
+      "note": "poll 2.",
+      "finished_at_utc": "2026-11-26T14:47:48Z"
     },
     {
       "id": "dualamp-v4-model-only-20261126-fetch-2",
@@ -3182,10 +3185,11 @@
       "mode": "output",
       "script_path": "cloud-gpu/jobs/dualamp_v2_1_extract_model.py",
       "kernel_slug": "dualamp-v4-model-only-20261126",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-26T14:47:10Z",
-      "note": "poll 2."
+      "note": "poll 2.",
+      "finished_at_utc": "2026-11-26T14:47:59Z"
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"

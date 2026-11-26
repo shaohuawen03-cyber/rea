@@ -1,0 +1,12 @@
+{
+  "job_id": "v4-bundle-sha-20261126-fetch-2",
+  "provider": "kaggle",
+  "mode": "output",
+  "kernel_ref": "shaohuawen/v4-bundle-sha-20261126",
+  "copied_files": [
+    "v4-bundle-sha-20261126.log",
+    "v4_bundle_sha.json"
+  ],
+  "cli_output": "Downloading v4_bundle_sha.json to /tmp/kag_out_7c67g53u\n\nOutput file downloaded to /tmp/kag_out_7c67g53u/v4_bundle_sha.json\nKernel log downloaded to /tmp/kag_out_7c67g53u/v4-bundle-sha-20261126.log",
+  "fetched_at_utc": "2026-11-26T14:47:47Z"
+}

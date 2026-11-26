@@ -1,0 +1,20 @@
+[{"stream_name":"stdout","time":1.199630861,"data":"[extract] mounted items: ['notebooks']\n"}
+,{"stream_name":"stdout","time":1.373470966,"data":"[extract] bundle /kaggle/input/notebooks/shaohuawen/dualamp-v4-full-20261126/dualamp_v2_1_model_bundle.zip bytes=630965727\n"}
+,{"stream_name":"stdout","time":1.899059826,"data":"[extract] members: 45\n"}
+,{"stream_name":"stdout","time":6.158938387,"data":"{\n"}
+,{"stream_name":"stdout","time":6.159063303,"data":"  \"stage\": \"dualamp_v2_1_model_only_extract\",\n"}
+,{"stream_name":"stdout","time":6.159069407,"data":"  \"source_kernel\": \"dualamp-v4-full-20261126\",\n"}
+,{"stream_name":"stdout","time":6.1590739,"data":"  \"status\": \"COMPLETED_MODEL_ONLY_EXTRACT\",\n"}
+,{"stream_name":"stdout","time":6.159077969,"data":"  \"source_bytes\": 630965727,\n"}
+,{"stream_name":"stdout","time":6.159082422,"data":"  \"source_sha256\": \"86e08ad0074dc16bd3b72b086de904a1d9871c40d52724d04d99a278e23ee113\",\n"}
+,{"stream_name":"stdout","time":6.159087327,"data":"  \"model_only_bytes\": 26965852,\n"}
+,{"stream_name":"stdout","time":6.159091821,"data":"  \"model_only_sha256\": \"8937d9a36373549629813d91b61dbd7fee7262fdeab07b12e6152ea7d3e835e5\",\n"}
+,{"stream_name":"stdout","time":6.159096976,"data":"  \"note\": \"model/ carries the trained weights and OOF score tables; the 1.4 GB features/ embedding cache is deliberately excluded because it is recomputable from the same encoder.\"\n"}
+,{"stream_name":"stdout","time":6.159101997,"data":"}\n"}
+,{"stream_name":"stderr","time":9.014906756,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":9.014942443,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":9.403869854,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":9.403898736,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":11.578965839,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":12.810236719,"data":"[NbConvertApp] Writing 286087 bytes to __results__.html\n"}
+]

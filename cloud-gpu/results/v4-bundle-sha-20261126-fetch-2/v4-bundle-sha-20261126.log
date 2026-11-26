@@ -1,0 +1,19 @@
+[{"stream_name":"stdout","time":1.546166301,"data":"[sha] mounted top: ['notebooks']\n"}
+,{"stream_name":"stdout","time":1.546338875,"data":"[sha] bundle candidates: ['/kaggle/input/notebooks/shaohuawen/dualamp-v4-full-20261126/dualamp_v2_1_model_bundle.zip']\n"}
+,{"stream_name":"stdout","time":1.5463463499999999,"data":"[sha] parts dirs: ['/kaggle/input/notebooks/shaohuawen/dualamp-v4-full-20261126/model_bundle_parts']\n"}
+,{"stream_name":"stdout","time":5.498483579,"data":"{\n"}
+,{"stream_name":"stdout","time":5.49853059,"data":"  \"stage\": \"v4_bundle_sha\",\n"}
+,{"stream_name":"stdout","time":5.49853738,"data":"  \"source_kernel\": \"dualamp-v4-full-20261126\",\n"}
+,{"stream_name":"stdout","time":5.498542501,"data":"  \"status\": \"OK\",\n"}
+,{"stream_name":"stdout","time":5.498546841,"data":"  \"source\": \"whole zip\",\n"}
+,{"stream_name":"stdout","time":5.498551545,"data":"  \"path\": \"/kaggle/input/notebooks/shaohuawen/dualamp-v4-full-20261126/dualamp_v2_1_model_bundle.zip\",\n"}
+,{"stream_name":"stdout","time":5.498556156,"data":"  \"bytes\": 630965727,\n"}
+,{"stream_name":"stdout","time":5.498560923,"data":"  \"sha256\": \"86e08ad0074dc16bd3b72b086de904a1d9871c40d52724d04d99a278e23ee113\"\n"}
+,{"stream_name":"stdout","time":5.498565559,"data":"}\n"}
+,{"stream_name":"stderr","time":8.595813482,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":8.595860564,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":9.000819074,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":9.000851403,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":11.130516553,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":12.576493202,"data":"[NbConvertApp] Writing 279949 bytes to __results__.html\n"}
+]
