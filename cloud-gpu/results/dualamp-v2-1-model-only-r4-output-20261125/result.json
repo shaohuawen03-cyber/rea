@@ -1,5 +1,5 @@
 {
-  "job_id": "dualamp-v2-1-model-only-r4-output-20261125",
+  "job_id": "dualamp-v2-1-model-only-r4-output-20261125/pts",
   "provider": "kaggle",
   "mode": "output",
   "kernel_ref": "shaohuawen/dualamp-v2-1-model-only-r4-20261125",
@@ -27,6 +27,6 @@
     "model_only_report.json",
     "model_only_run_provenance.json"
   ],
-  "cli_output": "Downloading dualamp_model_only.zip to /tmp/kag_out_s4bh16hl\n\nOutput file downloaded to /tmp/kag_out_s4bh16hl/dualamp_model_only.zip\nDownloading M1_results.json to /tmp/kag_out_s4bh16hl/model_only/model\n\nOutput file downloaded to /tmp/kag_out_s4bh16hl/model_only/model/M1_results.json\nDownloading M1_scores.npz to /tmp/kag_out_s4bh16hl/model_only/model\n\nOutput file downloaded to /tmp/kag_out_s4bh16hl/model_only/model/M1_scores.npz\nDownloading M1_seed1.pt to /tmp/kag_out_s4bh16hl/model_only/model\n\nOutput file downloaded to /tmp/kag_out_s4bh16hl/model_only/model/M1_seed1.pt\nDownloading M1_seed2.pt ",
-  "fetched_at_utc": "2026-11-25T11:38:22Z"
+  "cli_output": "Downloading dualamp_model_only.zip to /tmp/kag_out_4we_6z3m\n\nOutput file downloaded to /tmp/kag_out_4we_6z3m/dualamp_model_only.zip\nDownloading M1_results.json to /tmp/kag_out_4we_6z3m/model_only/model\n\nOutput file downloaded to /tmp/kag_out_4we_6z3m/model_only/model/M1_results.json\nDownloading M1_scores.npz to /tmp/kag_out_4we_6z3m/model_only/model\n\nOutput file downloaded to /tmp/kag_out_4we_6z3m/model_only/model/M1_scores.npz\nDownloading M1_seed1.pt to /tmp/kag_out_4we_6z3m/model_only/model\n\nOutput file downloaded to /tmp/kag_out_4we_6z3m/model_only/model/M1_seed1.pt\nDownloading M1_seed2.pt ",
+  "fetched_at_utc": "2026-11-26T01:24:32Z"
 }

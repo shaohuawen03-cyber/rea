@@ -2567,10 +2567,11 @@
       "mode": "output",
       "script_path": "cloud-gpu/jobs/dualamp_v2_1_extract_model.py",
       "kernel_slug": "dualamp-v2-1-model-only-r4-20261125",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-26T01:23:41Z",
-      "note": "Collect the 15 .pt weights into the authorised results path."
+      "note": "Collect the 15 .pt weights into the authorised results path.",
+      "finished_at_utc": "2026-11-26T01:24:32Z"
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
