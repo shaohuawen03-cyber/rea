@@ -2656,10 +2656,11 @@
       "mode": "status",
       "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
       "kernel_slug": "dualamp-v3-repro-20261126",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-26T03:51:05Z",
-      "note": "v3 check c."
+      "note": "v3 check c.",
+      "finished_at_utc": "2026-11-26T03:51:55Z"
     },
     {
       "id": "dualamp-v3-repro-fetch-c",
@@ -2667,10 +2668,11 @@
       "mode": "output",
       "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
       "kernel_slug": "dualamp-v3-repro-20261126",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-26T03:51:05Z",
-      "note": "v3 check c."
+      "note": "v3 check c.",
+      "finished_at_utc": "2026-11-26T03:53:36Z"
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
