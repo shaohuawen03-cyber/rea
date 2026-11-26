@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-25T11:51:20Z",
+  "updated_at_utc": "2026-11-26T00:39:51Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -2477,6 +2477,50 @@
       "created_at_utc": "2026-11-25T11:51:20Z",
       "note": "Third collect attempt: relay now carries weights past the 2 MiB gate.",
       "finished_at_utc": "2026-11-25T11:51:57Z"
+    },
+    {
+      "id": "dualamp-v2-1-model-only-r6-20261125",
+      "provider": "kaggle",
+      "mode": "run",
+      "accelerator": "CPU",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_extract_model.py",
+      "script_args": [],
+      "extra_pip": [],
+      "serve_minutes": 15.0,
+      "wait": false,
+      "timeout_sec": 3600,
+      "status": "pending",
+      "created_at_utc": "2026-11-26T00:39:51Z",
+      "kernel_slug": "dualamp-v2-1-model-only-r6-20261125",
+      "kernel_sources": [
+        "shaohuawen/dualamp-v2-1-model-only-r4-20261125"
+      ],
+      "env": {
+        "V21_SOURCE_KERNEL": "dualamp-v2-1-model-only-r4-20261125"
+      },
+      "note": "CPU only: put the 27 MB model-only archive in a fresh output so it is downloadable."
+    },
+    {
+      "id": "dualamp-v2-1-model-only-r6-20261125-status",
+      "provider": "kaggle",
+      "mode": "status",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_extract_model.py",
+      "kernel_slug": "dualamp-v2-1-model-only-r6-20261125",
+      "status": "pending",
+      "wait": false,
+      "created_at_utc": "2026-11-26T00:39:51Z",
+      "note": "model-only r6 check."
+    },
+    {
+      "id": "dualamp-v2-1-model-only-r6-20261125-fetch",
+      "provider": "kaggle",
+      "mode": "output",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_extract_model.py",
+      "kernel_slug": "dualamp-v2-1-model-only-r6-20261125",
+      "status": "pending",
+      "wait": false,
+      "created_at_utc": "2026-11-26T00:39:51Z",
+      "note": "model-only r6 check."
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
