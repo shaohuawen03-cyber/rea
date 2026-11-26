@@ -1,0 +1,15 @@
+[{"stream_name":"stdout","time":1.121334919,"data":"[extract] mounted items: ['notebooks']\n"}
+,{"stream_name":"stdout","time":1.6527782800000002,"data":"{\n"}
+,{"stream_name":"stdout","time":1.652811262,"data":"  \"stage\": \"dualamp_v2_1_model_only_extract\",\n"}
+,{"stream_name":"stdout","time":1.652816922,"data":"  \"source_kernel\": \"dualamp-v2-1-model-only-r4-20261125\",\n"}
+,{"stream_name":"stdout","time":1.652821271,"data":"  \"status\": \"COPIED_EXISTING\",\n"}
+,{"stream_name":"stdout","time":1.652825408,"data":"  \"bytes\": 27010365,\n"}
+,{"stream_name":"stdout","time":1.65282942,"data":"  \"sha256\": \"a6bf08a03464e6eec49a55c7fb9d6d11a847036961896bb604ad102846b2f7c9\"\n"}
+,{"stream_name":"stdout","time":1.652833835,"data":"}\n"}
+,{"stream_name":"stderr","time":4.399138192,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":4.399176274,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":4.761458765,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":4.761488374,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":6.592867623,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":7.768414756,"data":"[NbConvertApp] Writing 286098 bytes to __results__.html\n"}
+]
