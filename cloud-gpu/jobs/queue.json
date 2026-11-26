@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-26T10:25:34Z",
+  "updated_at_utc": "2026-11-26T11:00:22Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -2837,6 +2837,61 @@
       "created_at_utc": "2026-11-26T10:25:34Z",
       "note": "v4 smoke-b poll.",
       "finished_at_utc": "2026-11-26T10:26:24Z"
+    },
+    {
+      "provider": "kaggle",
+      "accelerator": "NvidiaTeslaT4",
+      "script_path": "cloud-gpu/jobs/dualamp_v4_train.py",
+      "script_args": [],
+      "extra_pip": [
+        "gdown",
+        "requests",
+        "fair-esm",
+        "pyyaml",
+        "biopython",
+        "pandas",
+        "scikit-learn",
+        "matplotlib"
+      ],
+      "serve_minutes": 15.0,
+      "wait": false,
+      "timeout_sec": 12600,
+      "created_at_utc": "2026-11-26T11:00:22Z",
+      "inline_json": {
+        "V21_INPUTS_JSON": "cloud-gpu/jobs/v21_inputs.json"
+      },
+      "id": "dualamp-v4-smoke-c-20261126",
+      "mode": "run",
+      "kernel_slug": "dualamp-v4-smoke-c-20261126",
+      "status": "pending",
+      "note": "v4 smoke c: acceptance gate now reads the control it computed, per-model decoy numbers, leakage-free composition control with paired bootstrap, evaluation gate, hard-negative composition audit.",
+      "env": {
+        "V21_SMOKE": "1",
+        "V4_HARDNEG_FRAC": "0.5",
+        "V4_HARDNEG_CAP": "1000"
+      }
+    },
+    {
+      "id": "dualamp-v4-smoke-c-20261126-status",
+      "provider": "kaggle",
+      "mode": "status",
+      "script_path": "cloud-gpu/jobs/dualamp_v4_train.py",
+      "kernel_slug": "dualamp-v4-smoke-c-20261126",
+      "status": "pending",
+      "wait": false,
+      "created_at_utc": "2026-11-26T11:00:22Z",
+      "note": "v4 smoke-c poll."
+    },
+    {
+      "id": "dualamp-v4-smoke-c-20261126-fetch",
+      "provider": "kaggle",
+      "mode": "output",
+      "script_path": "cloud-gpu/jobs/dualamp_v4_train.py",
+      "kernel_slug": "dualamp-v4-smoke-c-20261126",
+      "status": "pending",
+      "wait": false,
+      "created_at_utc": "2026-11-26T11:00:22Z",
+      "note": "v4 smoke-c poll."
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"

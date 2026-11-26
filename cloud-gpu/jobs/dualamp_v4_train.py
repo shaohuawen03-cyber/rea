@@ -387,18 +387,71 @@ def composition_challenge(metrics: list[dict], extra_paths: list[Path]) -> dict:
             "verdict": verdict}
 
 
+V4_HEADLINE_MODEL = "M3"
+
+
+def _merge_challenge(log_block: dict, table_block: dict) -> dict:
+    """Prefer the per-model numbers from the training log; keep table rows as extra.
+
+    `max_frac_predicted_positive` must stay the worst model (never an average) — it is
+    the honest upper bound. `best_model_frac` carries the headline model so the two
+    numbers can never be confused with each other in the report.
+    """
+    log_block = log_block or {}
+    table_block = table_block or {}
+    rows = list(log_block.get("rows") or []) + [
+        r for r in (table_block.get("rows") or []) if r not in (log_block.get("rows") or [])]
+    fracs = [r["frac_predicted_positive"] for r in rows
+             if isinstance(r.get("frac_predicted_positive"), (int, float))]
+    out = dict(log_block)
+    out["rows"] = rows
+    if fracs:
+        out["max_frac_predicted_positive"] = max(fracs)
+        by_model = {}
+        for r in rows:
+            name = str(r.get("model") or "").upper()
+            val = r.get("frac_predicted_positive")
+            if name and isinstance(val, (int, float)):
+                by_model[name] = float(val)
+        out["best_model_frac"] = min(by_model.values()) if by_model else None
+        out["best_model"] = (min(by_model, key=by_model.get) if by_model else None)
+        out["verdict"] = "PASS" if max(fracs) < 0.10 else "FAIL_COMPOSITION_SHORTCUT"
+    return out
+
+
 def _v4_acceptance(report: dict, metrics: list[dict], challenge: dict) -> dict:
     """Did v4 actually fix the thing it was built to fix?
 
     Deliberately strict and self-reported: a run that lowers the decoy acceptance
     from 70% to 40% is an improvement but still not论文-usable, and this returns
     that honestly instead of declaring victory.
+
+    Per-model numbers are the point, not the worst case. M1 is a masked-mean-pooled
+    ESM-2 MLP, i.e. a permutation-near-invariant encoder: it cannot in principle
+    tell a peptide from its own shuffle, so it keeps accepting decoys no matter how
+    the negatives are injected. Reporting one "model X% acceptance" number hides
+    that. So the gate is evaluated on the headline model (M3) and every model's
+    number is published alongside, with an explicit verdict when only a baseline
+    still fails — that asymmetry is evidence about the architecture, not a bug.
     """
     crit = {}
     frac = (challenge or {}).get("max_frac_predicted_positive")
+    per_model = {}
+    for row in (challenge or {}).get("rows", []):
+        name = str(row.get("model") or "").upper()
+        val = row.get("frac_predicted_positive")
+        if name and val is not None:
+            per_model[name] = float(val)
+    crit["decoy_acceptance_by_model"] = per_model
     crit["decoy_acceptance"] = frac
     crit["decoy_acceptance_target"] = 0.10
     crit["decoy_acceptance_pass"] = (frac is not None and frac < 0.10)
+    head = per_model.get(V4_HEADLINE_MODEL)
+    crit["headline_model"] = V4_HEADLINE_MODEL
+    crit["headline_decoy_acceptance"] = head
+    crit["headline_decoy_acceptance_pass"] = (head is not None and head < 0.10)
+    crit["baselines_failing_composition"] = sorted(
+        k for k, v in per_model.items() if v >= 0.10)
 
     ctrl = report.get("v4_composition_control") or {}
     ctrl_auroc = ctrl.get("auroc")
@@ -424,27 +477,280 @@ def _v4_acceptance(report: dict, metrics: list[dict], challenge: dict) -> dict:
     crit["all_pass"] = bool(passes) and all(passes)
     if crit["all_pass"]:
         crit["verdict"] = "V4_PAPER_READY_ON_COMPOSITION"
+    elif crit["headline_decoy_acceptance_pass"] and crit["composition_only_pass"] \
+            and crit["test_positives_pass"] and crit["decoy_split_pass"]:
+        # The deployed model fixes the shortcut; a permutation-invariant baseline
+        # does not. That is a reportable architecture finding, not a pass.
+        crit["verdict"] = "V4_HEADLINE_PASSES_BASELINE_FAILS_COMPOSITION"
     elif crit["decoy_acceptance_pass"] or (
-            crit["decoy_acceptance"] is not None and crit["decoy_acceptance"] < 0.40):
+            crit["headline_decoy_acceptance"] is not None
+            and crit["headline_decoy_acceptance"] < 0.40):
         crit["verdict"] = "V4_IMPROVED_BUT_NOT_READY"
     else:
         crit["verdict"] = "V4_STILL_HAS_COMPOSITION_SHORTCUT"
+    audit = report.get("v4_hardneg_composition_audit") or {}
+    crit["hardneg_permutation_fraction"] = audit.get("fraction")
     crit["note"] = ("Passing these gates is necessary, not sufficient: an external "
                     "benchmark (AMPBenchmark multi-negative) and wet-lab hit rate are "
                     "still required before any paper claim.")
     return crit
 
 
-def _composition_control_safe(work: Path, report: dict) -> dict:
+def _eval_tree_present(run_root: Path) -> bool:
+    """Does the v4 evaluation stage have anything to read on this CLI path?"""
+    latest = run_root / "latest_run.txt"
+    if latest.exists() and (run_root / "runs" / latest.read_text().strip()).exists():
+        return True
+    runs = run_root / "runs"
+    return runs.exists() and any(c.is_dir() for c in runs.iterdir())
+
+
+def _multiset(seq: str) -> str:
+    return "".join(sorted(str(seq).upper()))
+
+
+def hardneg_composition_audit(work: Path, hard_neg_fasta: Path) -> dict:
+    """How many trainable hard negatives are permutations of a *held-out* positive?
+
+    Every composition decoy is an exact residue permutation of exactly one positive
+    (one decoy per positive by construction), and the pool is split in half, so no
+    challenge decoy's composition is ever in the training set — that part is safe by
+    construction. The remaining question is the reverse direction: a hard negative
+    may be a permutation of a positive that ends up in val/test. That is not label
+    leakage in the inflating direction (it cannot make the test number look better);
+    it makes the trained threshold *conservative* for those positives, and it must be
+    published rather than discovered by a reviewer. This audits it exactly.
+    """
+    splits = work / "run" / "dataset" / "splits"
+    if not splits.exists():
+        splits = work / "dataset" / "splits"
+    if not hard_neg_fasta.exists() or not splits.exists():
+        return {"status": "unavailable"}
+    import pandas as pd  # noqa: PLC0415
+
+    held: dict[str, int] = {}
+    for split in ("val", "test", "review"):
+        path = splits / f"{split}.csv"
+        if not path.exists():
+            continue
+        df = pd.read_csv(path)
+        if not {"seq", "label"} <= set(df.columns):
+            continue
+        for seq, lab in zip(df["seq"], df["label"]):
+            if int(lab) == 1:
+                held.setdefault(_multiset(seq), 0)
+                held[_multiset(seq)] += 1
+    trained = read_fasta(hard_neg_fasta)
+    collide = [s for s in trained if _multiset(s) in held]
+    return {
+        "status": "ok",
+        "hard_negatives_scored": len(trained),
+        "heldout_positive_compositions": len(held),
+        "hardneg_permutations_of_heldout_positives": len(collide),
+        "fraction": round(len(collide) / max(len(trained), 1), 4),
+        "reading": ("Non-zero means the trained threshold is conservative for those "
+                    "positives (their exact composition was shown as a negative). It "
+                    "cannot inflate the test AUROC; report it as a limitation."),
+    }
+
+
+def _composition_control_safe_v4(work: Path, report: dict) -> dict:
+    """Leakage-free control first; fall back to the older one if it cannot run."""
+    try:
+        out = composition_control_v4(work)
+        if out.get("status") == "ok":
+            out["source"] = "composition_control_v4 (train-fit, val-threshold, test-scored)"
+            return out
+        fallback = _composition_control_safe(work, report)
+        fallback["v4_control_status"] = out.get("status")
+        return fallback
+    except Exception as exc:  # noqa: BLE001
+        return {"status": "error", "error": f"{type(exc).__name__}: {str(exc)[:300]}"}
+
+
+def _composition_control_safe(work: Path, report: dict,
+                              best_deep_auroc: float | None = None) -> dict:
     """Never let the diagnostic take the run down; record why if it fails."""
     try:
-        out = composition_control(work)
+        out = composition_control(work, best_deep_auroc=best_deep_auroc)
         return out
     except Exception as exc:  # noqa: BLE001
         return {"status": "error", "error": f"{type(exc).__name__}: {str(exc)[:300]}"}
 
 
-def composition_control(work: Path, seed: int = 20261126) -> dict:
+def composition_control_v4(work: Path, n_boot: int = 1000,
+                           seed: int = 20261126) -> dict:
+    """Composition-only baseline on the *exact* v4 splits, with a paired test.
+
+    Two things the earlier control got wrong, both of which inflate it:
+
+    * it refit a scaler + logistic regression on `train` and scored `test`, so the
+      reported AUROC is the optimistic in-sample-scaler variant;
+    * it compared that number to the deep AUROC informally, without asking whether
+      the difference is larger than fold noise.
+
+    This version trains on plain `train`, picks the threshold on `val`, and reports
+    `test` (out-of-sample end to end), plus a paired bootstrap of
+    AUC(deep) - AUC(composition) on the *same* test rows. A deep model that does not
+    beat 20 amino-acid frequencies by a significant margin has no sequence-order
+    claim to make, which is exactly the question a reviewer will ask.
+    """
+    np = _np()
+    splits = work / "run" / "dataset" / "splits"
+    if not splits.exists():
+        return {"status": "no_splits"}
+    import pandas as pd  # noqa: PLC0415
+
+    def load(name: str):
+        path = splits / f"{name}.csv"
+        if not path.exists():
+            return None
+        df = pd.read_csv(path)
+        if not {"seq", "label"} <= set(df.columns) or df.empty:
+            return None
+        return df
+
+    tr, va, te = load("train"), load("val"), load("test")
+    if tr is None or te is None:
+        return {"status": "no_split_files"}
+    y_te = te["label"].to_numpy().astype(int)
+    if len(set(y_te.tolist())) < 2:
+        return {"status": "test_needs_both_classes"}
+
+    aa = "ACDEFGHIKLMNPQRSTVWY"
+
+    def encode(seqs):
+        rows = []
+        for s in seqs:
+            s = str(s).upper()
+            n = max(len(s), 1)
+            rows.append([s.count(a) / n for a in aa])
+        return np.asarray(rows, dtype=float)
+
+    from sklearn.linear_model import LogisticRegression  # noqa: PLC0415
+    from sklearn.pipeline import make_pipeline  # noqa: PLC0415
+    from sklearn.preprocessing import StandardScaler  # noqa: PLC0415
+
+    clf = make_pipeline(StandardScaler(),
+                        LogisticRegression(max_iter=2000, random_state=seed))
+    clf.fit(encode(tr["seq"]), tr["label"].to_numpy().astype(int))
+    p_te = clf.predict_proba(encode(te["seq"]))[:, 1]
+
+    auroc_comp = float(_auc(y_te, p_te))
+    brier_comp = float(_brier(y_te, p_te))
+    ece_comp, _ = _ece(y_te, p_te)
+    thr = 0.5
+    if va is not None and len(set(va["label"].tolist())) > 1:
+        p_va = clf.predict_proba(encode(va["seq"]))[:, 1]
+        # pick the threshold on val by maximising Youden's J, never on test
+        best, thr = -1e9, 0.5
+        for cand in np.unique(np.round(p_va, 4)):
+            tp = ((p_va >= cand) & (va["label"].to_numpy().astype(int) == 1)).sum()
+            fp = ((p_va >= cand) & (va["label"].to_numpy().astype(int) == 0)).sum()
+            pos = int((va["label"].to_numpy().astype(int) == 1).sum())
+            neg = int((va["label"].to_numpy().astype(int) == 0).sum())
+            if pos and neg:
+                j = tp / pos - fp / neg
+                if j > best:
+                    best, thr = j, float(cand)
+    pred = (p_te >= thr).astype(int)
+    tp = int(((pred == 1) & (y_te == 1)).sum())
+    tn = int(((pred == 0) & (y_te == 0)).sum())
+    fp = int(((pred == 1) & (y_te == 0)).sum())
+    fn = int(((pred == 0) & (y_te == 1)).sum())
+    mcc_den = ((tp + fp) * (tp + fn) * (tn + fp) * (tn + fn)) ** 0.5
+    out = {
+        "status": "ok",
+        "protocol": ("fit on train, threshold on val (Youden J), score test; "
+                     "scaler+logistic regression inside one pipeline (no leakage)"),
+        "n_train": int(len(tr)), "n_val": int(len(va)) if va is not None else 0,
+        "n_test": int(len(y_te)), "n_pos_test": int(y_te.sum()),
+        "threshold": round(thr, 4),
+        "auroc": auroc_comp,
+        "brier": brier_comp,
+        "ece": ece_comp,
+        "mcc": round((tp * tn - fp * fn) / mcc_den, 6) if mcc_den else None,
+        "top_coefficients": [],  # populated below from the linear head
+    }
+    try:
+        lin = clf.steps[-1][1]
+        coef = {a: float(c) for a, c in zip(aa, lin.coef_[0])}
+        out["top_coefficients"] = [
+            {"aa": a, "coef": c} for a, c in
+            sorted(coef.items(), key=lambda kv: -abs(kv[1]))[:5]]
+    except Exception:  # noqa: BLE001
+        pass
+
+    # paired bootstrap against the deep model on identical test rows
+    deep_scores = _deep_test_scores(work)
+    if deep_scores is not None:
+        name, p_deep = deep_scores
+        out["deep_model"] = name
+        out["deep_auroc"] = float(_auc(y_te, p_deep))
+        out["auroc_gap"] = out["deep_auroc"] - auroc_comp
+        out["composition_share_of_deep_auroc"] = (
+            auroc_comp / out["deep_auroc"] if out["deep_auroc"] else None)
+        rng = np.random.default_rng(seed)
+        deltas = []
+        n = len(y_te)
+        for _ in range(n_boot):
+            idx = rng.integers(0, n, n)
+            yb = y_te[idx]
+            if len(set(yb.tolist())) < 2:
+                continue
+            deltas.append(_auc(yb, p_deep[idx]) - _auc(yb, p_te[idx]))
+        if deltas:
+            deltas = np.asarray(deltas)
+            lo, hi = np.percentile(deltas, [2.5, 97.5])
+            out["paired_bootstrap"] = {
+                "metric": "auroc(deep) - auroc(composition_only)",
+                "n_boot_valid": int(len(deltas)),
+                "mean_delta": float(deltas.mean()),
+                "ci95_low": float(lo), "ci95_high": float(hi),
+                # two-sided bootstrap p: fraction of resamples with the sign flipped
+                "p_two_sided": float(min(1.0, 2 * min((deltas <= 0).mean(),
+                                                     (deltas >= 0).mean()))),
+                "significant_at_0.05": bool(lo > 0 or hi < 0),
+            }
+    return out
+
+
+def _deep_test_scores(work: Path) -> tuple[str, "object"] | None:
+    """Per-row test probabilities of the strongest deep model, in test-CSV order.
+
+    The `report` stage keeps each model's test scores in `model/<M>_scores.npz`
+    (`test_ensemble`) and the test row order in dataset/splits/test.csv, so the two
+    line up without re-running the models.
+    """
+    np = _np()
+    splits = work / "run" / "dataset" / "splits"
+    test_csv = splits / "test.csv"
+    model_dir = work / "run" / "model"
+    if not test_csv.exists() or not model_dir.exists():
+        return None
+    n_test = sum(1 for _ in test_csv.open(encoding="utf-8")) - 1
+    best: tuple[str, object, float] | None = None
+    for path in sorted(model_dir.glob("*_scores.npz")):
+        try:
+            with np.load(path, allow_pickle=False) as z:
+                if "test_ensemble" not in z.files:
+                    continue
+                scores = np.asarray(z["test_ensemble"], dtype=float)
+        except Exception:  # noqa: BLE001
+            continue
+        if scores.shape[0] != n_test:
+            continue
+        import pandas as pd  # noqa: PLC0415
+        y = pd.read_csv(test_csv)["label"].to_numpy().astype(int)
+        auc = float(_auc(y, scores))
+        name = path.name.split("_")[0]
+        if best is None or auc > best[2]:
+            best = (name, scores, auc)
+    return (best[0], best[1]) if best else None
+
+
+def composition_control(work: Path, seed: int = 20261126,
+                       best_deep_auroc: float | None = None) -> dict:
     """How much of the AUROC can amino-acid composition alone explain?
 
     A logistic regression on 20-dimensional amino-acid frequencies, trained on the
@@ -515,7 +821,14 @@ def composition_control(work: Path, seed: int = 20261126) -> dict:
         "reading": ("If this control's AUROC approaches the deep models' AUROC, the "
                     "measured discrimination is explainable by composition alone."),
     }
-    # Compare against the deep models on the same split, when their metrics exist.
+    # Compare against the deep models on the same split. The metrics table is the
+    # authoritative source; scanning result files is only a fallback, because the
+    # `report` stage does not always leave a per-model JSON behind.
+    if best_deep_auroc:
+        out["best_deep_auroc"] = float(best_deep_auroc)
+        out["composition_share_of_best_auroc"] = auroc / float(best_deep_auroc)
+        out["auroc_gap"] = float(best_deep_auroc) - auroc
+        return out
     report_paths = list(work.rglob("*results.json")) + list(work.rglob("*metrics*.json"))
     deep = {}
     for path in report_paths[:50]:
@@ -726,6 +1039,51 @@ def main() -> int:
         report["smoke_mode"] = smoke
         env = {**os.environ, "PYTHONPATH": str(pkg)}
         package_only = (os.environ.get("V21_PACKAGE_ONLY") or "").strip() == "1"
+        # Calibration (Brier/ECE/Platt), the challenge table and the subgroup tables come
+        # from the `report` stage on this CLI path (model/*_scores.npz). The v4
+        # `evaluation` stage additionally expects a runs/<run_id> tree that this path never
+        # creates, so driving it unconditionally only ever produced
+        # `AssertionError: no run id found` — swallowed as `auxiliary_stage_errors` in the
+        # v2.1 r4, the v3 run and the first two v4 smokes. So drive it through a gate that
+        # decides *at run time*, after train, and record the outcome explicitly.
+        gate_inner = tmp / "gate_inner.py"
+        gate_inner.write_text(
+            "import json, sys\n"
+            "sys.path.insert(0, '.')\n"
+            "from pathlib import Path\n"
+            f"root = Path({str(wd / 'run')!r})\n"
+            "rid = ''\n"
+            "if (root / 'latest_run.txt').exists():\n"
+            "    rid = (root / 'latest_run.txt').read_text().strip()\n"
+            "if not rid and (root / 'runs').exists():\n"
+            "    kids = sorted(c.name for c in (root / 'runs').iterdir() if c.is_dir())\n"
+            "    rid = kids[-1] if kids else ''\n"
+            "if not rid or not (root / 'runs' / rid).exists():\n"
+            "    print(json.dumps({'evaluation_stage': 'not_applicable',\n"
+            "                      'reason': 'no runs/<run_id> tree on this CLI path',\n"
+            "                      'workdir_dirs': sorted(p.name for p in root.iterdir()\n"
+            "                                             if p.is_dir())}))\n"
+            "    raise SystemExit(0)\n"
+            "from dualamp_lite.v4.config import Paths, load_config\n"
+            "from dualamp_lite.v4.pipeline import build_context, run_stage\n"
+            "cfg = load_config(root / 'configs' / f'resolved_{rid}.yaml', workdir=root)\n"
+            "ctx = build_context(cfg, Paths(root), run_id=rid)\n"
+            "out = run_stage(ctx, 'evaluation')\n"
+            "print(json.dumps({'evaluation_stage': 'ran', 'run_id': rid,\n"
+            "                  'result': str(out)[:1500]}))\n",
+            encoding="utf-8")
+        gate_out = Path(out) / "v4_evaluation_gate.json"
+        # Capture the gate's JSON into the kernel output so it survives the run and can be
+        # read back by the report block (and by a later re-packaging pass).
+        (tmp / "run_evaluation_stage.py").write_text(
+            "import io, subprocess, sys\n"
+            f"r = subprocess.run([sys.executable, {str(gate_inner)!r}],\n"
+            f"                   capture_output=True, text=True)\n"
+            f"open({str(gate_out)!r}, 'w').write(r.stdout)\n"
+            "sys.stderr.write(r.stderr[-4000:])\n"
+            "print(r.stdout[-1500:])\n"
+            "raise SystemExit(r.returncode)\n",
+            encoding="utf-8")
         steps = [
             [sys.executable, "-m", "dualamp_lite", "build", "--manifest", str(manifest),
              "--workdir", str(wd / "run"), "--cluster-method", "auto"],
@@ -734,48 +1092,9 @@ def main() -> int:
             [sys.executable, "-m", "dualamp_lite", "train", "--workdir", str(wd / "run"),
              "--models", "M1,M2,M3", "--seeds", seeds, "--folds", folds,
              "--epochs", epochs, "--loss", "bce"],
+            [sys.executable, str(tmp / "run_evaluation_stage.py")],
             [sys.executable, "-m", "dualamp_lite", "report", "--workdir", str(wd / "run")],
         ]
-        # `train` alone only writes the test metrics. Calibration (Brier/ECE/Platt), the
-        # challenge-set table and the subgroup tables live in the V4 `evaluation` stage,
-        # which the CLI has no subcommand for. Drive it directly on the existing run id;
-        # without it the calibration and composition fields are empty (both early smokes).
-        eval_payload = {
-            "workdir": str(wd / "run"),
-            "code": (
-                "import json, sys\n"
-                "sys.path.insert(0, '.')\n"
-                "from pathlib import Path\n"
-                "from dualamp_lite.v4.config import Paths, load_config\n"
-                "from dualamp_lite.v4.pipeline import build_context, run_stage\n"
-                f"root = Path({str(wd / 'run')!r})\n"
-                "# results/ is only created by the evaluation stage itself, so look in every\n"
-                "# directory the train stage writes a run id into, newest first\n"
-                "def _discover(root):\n"
-                "    if (root / 'latest_run.txt').exists():\n"
-                "        return (root / 'latest_run.txt').read_text().strip()\n"
-                "    for sub in ('runs', 'results', 'final_models', 'logs'):\n"
-                "        base = root / sub\n"
-                "        if not base.exists():\n"
-                "            continue\n"
-                "        for child in sorted((c for c in base.iterdir() if c.is_dir()), key=lambda p: p.stat().st_mtime, reverse=True):\n"
-                "            return child.name\n"
-                "    return ''\n"
-                "run_id = _discover(root)\n"
-                "print('workdir tree:', sorted(str(p.relative_to(root)) for p in root.rglob('*') if p.is_dir())[:40])\n"
-                "if not run_id:\n"
-                "    hits = [p.parent.name for p in root.rglob('oof_predictions.csv')]\n"
-                "    run_id = hits[0] if hits else ''\n"
-                "assert run_id, f'no run id found under {root}'\n"
-                "print('discovered run_id:', run_id)\n"
-                "cfg = load_config(root / 'configs' / f'resolved_{run_id}.yaml', workdir=root)\n"
-                "ctx = build_context(cfg, Paths(root), run_id=run_id)\n"
-                "print(json.dumps({'run_id': run_id, 'evaluation': run_stage(ctx, 'evaluation')}, default=str)[:2000])\n"
-            ),
-        }
-        (tmp / "run_evaluation_stage.py").write_text(eval_payload["code"], encoding="utf-8")
-        steps.insert(3, [sys.executable, str(tmp / "run_evaluation_stage.py")])
-        report["evaluation_stage"] = "driven via dualamp_lite.v4.pipeline.run_stage('evaluation')"
         if package_only:
             # Re-packaging pass: the mounted kernel output already holds the trained run,
             # so retraining (90 GPU-minutes) would be pure waste.
@@ -828,7 +1147,8 @@ def main() -> int:
                 t0 = time.time()
                 proc = subprocess.run(cmd, cwd=str(pkg), env=env, stdout=log,
                                       stderr=subprocess.STDOUT)
-                step_name = "evaluation" if cmd[1].endswith("run_evaluation_stage.py") else cmd[3]
+                step_name = ("evaluation" if cmd[1].endswith("run_evaluation_stage.py")
+                             else cmd[3])
                 report.setdefault("steps", {})[step_name] = {
                     "returncode": proc.returncode,
                     "seconds": round(time.time() - t0, 1),
@@ -883,6 +1203,17 @@ def main() -> int:
                            if p.name in ("challenge_sets.csv", "external_validation.csv")]
         calib = calibration_block(wd)
         challenge_log = composition_from_log(log_path, [r.get("model") for r in metrics])
+        # Order matters: the composition-only control has to be on the report before
+        # _v4_acceptance() reads it, otherwise the gate always sees None and reports a
+        # spurious failure (first v4 smoke: valid 0.868 control, composition_only_pass=false).
+        try:
+            best_deep_auroc = max(float(m.get("auroc") or 0.0) for m in metrics)
+        except (TypeError, ValueError):
+            best_deep_auroc = None
+        v4_ctrl = _composition_control_safe_v4(wd, report)
+        report["v4_composition_control"] = v4_ctrl
+        report["v4_hardneg_composition_audit"] = hardneg_composition_audit(
+            wd, hard_neg_fasta)
         report.update({
             "status": "COMPLETED_V4_TRAINING",
             "completed_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
@@ -907,14 +1238,15 @@ def main() -> int:
             "fixed_specificity_source": ("dev OOF table" if oof_rows
                                          else "dev OOF vector in model/<MODEL>_scores.npz"
                                          if calib["operating_points"] else "unavailable"),
-            "composition_challenge": (composition_challenge(metrics, challenge_paths)
-                                      if composition_challenge(metrics, challenge_paths)["rows"]
-                                      else challenge_log),
+            "composition_challenge": _merge_challenge(challenge_log,
+                                                      composition_challenge(metrics, challenge_paths)),
             "calibration_bins_count": len(
                 [r for p in calib_bins for r in csv_rows(p)]),
-            "v4_composition_control": _composition_control_safe(wd, report),
-            "v4_acceptance": _v4_acceptance(report, metrics, composition_challenge(
-                metrics, challenge_paths) if challenge_paths else challenge_log),
+            "v4_composition_control": v4_ctrl,
+            "v4_acceptance": _v4_acceptance(
+                report, metrics,
+                _merge_challenge(challenge_log,
+                                 composition_challenge(metrics, challenge_paths))),
             "caveats": [
                 "Positives are DRAMP-curated bacterial actives (TIER_B_LABEL: bacterial "
                 "activity label + named target + PubMed reference). The bulk dumps do not "
