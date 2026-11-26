@@ -40,6 +40,30 @@ on:
         description: 'tarball (one archive) or individual (one asset per .pt)'
         required: false
         default: 'tarball'
+      label_note:
+        description: 'One-line honesty label printed at the top of the release notes'
+        required: false
+        default: 'exploratory - not validated for publication'
+      provenance_kernel:
+        description: 'Kernel slug the artifact came from'
+        required: false
+        default: ''
+      provenance_commit:
+        description: 'Training commit'
+        required: false
+        default: ''
+      provenance_sha256:
+        description: 'Positive FASTA sha256 of the training cohort'
+        required: false
+        default: ''
+      provenance_models:
+        description: 'Model/seeds description'
+        required: false
+        default: 'M1,M2,M3 x seeds 1-5 (60 epochs, 5 folds)'
+      metrics_table:
+        description: 'Markdown metrics block for the release body (multi-line)'
+        required: false
+        default: ''
 
 permissions:
   contents: write   # create the release + upload assets
@@ -67,6 +91,13 @@ jobs:
 
       - name: Package weights + provenance
         id: pkg
+        env:
+          LABEL_NOTE: ${{ inputs.label_note }}
+          PROVENANCE_KERNEL: ${{ inputs.provenance_kernel }}
+          PROVENANCE_COMMIT: ${{ inputs.provenance_commit }}
+          PROVENANCE_POS_SHA256: ${{ inputs.provenance_sha256 }}
+          PROVENANCE_MODELS: ${{ inputs.provenance_models }}
+          PROVENANCE_RUN: gpu-relay run ${{ inputs.run_id }}
         run: |
           set -euo pipefail
           python3 cloud-gpu/scripts/pack_release_assets.py /tmp/weights-src /tmp/pkg "${{ inputs.release_tag }}" "${{ inputs.expected_pt }}"
@@ -77,23 +108,29 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG: ${{ inputs.release_tag }}
           TITLE: ${{ inputs.release_title }}
+          LABEL_NOTE: ${{ inputs.label_note }}
+          METRICS_TABLE: ${{ inputs.metrics_table }}
+          P_KERNEL: ${{ inputs.provenance_kernel }}
+          P_COMMIT: ${{ inputs.provenance_commit }}
+          P_SHA: ${{ inputs.provenance_sha256 }}
+          P_MODELS: ${{ inputs.provenance_models }}
         run: |
           set -euo pipefail
           {
-            echo '> ⚠️ **candidate_v1_pilot_weights，不是 positive_core_v2，不可入论文；阈值内嵌于每个 .pt。**'
+            echo "> ⚠️ **$LABEL_NOTE**"
             echo ''
             echo '| 项 | 值 |'
             echo '| --- | --- |'
-            echo '| 口径 | candidate_v1（未 Review_Result 回填） |'
-            echo '| 来源 | gpu-relay run 43842046392 → kernel shaohuawen/dualamp-real5-20261116 |'
-            echo '| 训练 commit | 8a2d232 |'
-            echo '| 阳性 SHA256 | 7b6ea12136623e85218ba78cfd4b713985a3122b24c61650e536e724b768aa1d |'
-            echo '| 模型 | M1 / M2 / M3 × seeds 1–5（60 ep，5 fold）；M0_RF 为 sklearn，未导出 .pt |'
-            echo '| 测试 AUROC | M1 0.9767–0.9791 / M2 0.9796–0.9809 / M3 0.9770–0.9803 |'
+            echo "| 来源内核 | $P_KERNEL |"
+            echo "| 训练 commit | $P_COMMIT |"
+            echo "| 阳性 SHA256 | $P_SHA |"
+            echo "| 模型 | $P_MODELS |"
             echo ''
-            echo '内容：`model/`（15 × .pt）+ `features/biophys_scaler.joblib` + `meta/`（summary、D10/D11/D15、ablation、log、result.json）+ `SHA256SUMS.txt` + `export_manifest.json`。'
+            printf '%s\n' "$METRICS_TABLE"
             echo ''
-            echo '注意：测试集已参与模型比较，不是盲测；positive_core_v2 冻结后仍需正式重训并更新本 release。'
+            echo '内容：`model/`（每个 .pt 一个独立资产）+ `features/biophys_scaler.joblib` + `meta/` + `SHA256SUMS.txt` + `export_manifest.json`。'
+            echo ''
+            echo '阈值内嵌于每个 .pt；ESM-2 主干不随权重发布（推理时按 fair-esm 重新加载）。'
           } > /tmp/release_notes.md
           if gh release view "$TAG" >/dev/null 2>&1; then
             echo "::error::release tag $TAG already exists — refusing to overwrite"
