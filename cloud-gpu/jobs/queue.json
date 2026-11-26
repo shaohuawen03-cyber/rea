@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-26T01:40:02Z",
+  "updated_at_utc": "2026-11-26T01:50:26Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -2625,6 +2625,28 @@
       "created_at_utc": "2026-11-26T01:40:02Z",
       "note": "v3 check.",
       "finished_at_utc": "2026-11-26T01:40:39Z"
+    },
+    {
+      "id": "dualamp-v3-repro-status-b",
+      "provider": "kaggle",
+      "mode": "status",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
+      "kernel_slug": "dualamp-v3-repro-20261126",
+      "status": "pending",
+      "wait": false,
+      "created_at_utc": "2026-11-26T01:50:26Z",
+      "note": "v3 check b."
+    },
+    {
+      "id": "dualamp-v3-repro-fetch-b",
+      "provider": "kaggle",
+      "mode": "output",
+      "script_path": "cloud-gpu/jobs/dualamp_v2_1_train.py",
+      "kernel_slug": "dualamp-v3-repro-20261126",
+      "status": "pending",
+      "wait": false,
+      "created_at_utc": "2026-11-26T01:50:26Z",
+      "note": "v3 check b."
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
