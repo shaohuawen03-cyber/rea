@@ -1,0 +1,55 @@
+$ /usr/bin/python3 -m dualamp_lite build --manifest /tmp/v21-c1pol40t/work/data/sources.yaml --workdir /tmp/v21-c1pol40t/work/run --cluster-method auto
+[10:01:39] INFO    reading sources from /tmp/v21-c1pol40t/work/data/sources.yaml
+[10:01:39] INFO      source dramp_v2_1_positives   layer=bacterial_amp        kept=  400 (from 400 rows)
+[10:01:40] INFO      source uniprot_a_fragments    layer=negative_background  kept= 2000 (from 2000 rows)
+[10:01:40] INFO      source composition_hard_negatives_v4 layer=hard_negative        kept=  200 (from 200 rows)
+[10:01:40] INFO      source composition_challenge_v4 layer=scrambled            kept=  200 (from 200 rows)
+[10:01:40] INFO    after length/alphabet filtering: 2800 records
+[10:01:43] INFO      dedup: 2800 records -> 2800 unique sequences
+[10:01:43] INFO      scrambled challenge set: +400 sequences
+[10:01:43] WARNING   CD-HIT / MMseqs2 not found - using the built-in k-mer clustering fallback. Record this in the methods section (plan §5 requires naming the tool and params).
+[10:01:48] INFO    clustering: kmer_fallback(k=3) at identity 0.40 / coverage 0.80 -> 1573 clusters
+[10:01:48] WARNING   165 homology clusters contain both labels - assigned to 'review' (never trained on)
+[10:01:49] INFO      split sizes: {'train': 1437, 'scrambled': 600, 'review': 548, 'val': 308, 'test': 307}
+[10:01:49] INFO    dataset written: 3200 sequences, 1573 clusters, test=307 (pos=21) - see /tmp/v21-c1pol40t/work/run/dataset/dataset_all.csv
+[10:01:49] INFO    step1 build_dataset finished in 9.4s
+sequences=3200 clusters=1573 test=307
+$ /usr/bin/python3 -m dualamp_lite features --workdir /tmp/v21-c1pol40t/work/run --backend fair-esm --batch-size 64
+[10:01:51] INFO    device: cpu
+[10:01:54] INFO    biophys: 35 features, 4 pairs with |r| >= 0.85 (see biophys_correlation.csv)
+[10:01:54] INFO    feature backend: fair-esm
+[10:02:45] INFO      train: 1437 x 50 x 480 (69.2 MB) in 50.6s -> train_feat.npz
+[10:02:58] INFO      val: 308 x 50 x 480 (14.8 MB) in 13.0s -> val_feat.npz
+[10:03:11] INFO      test: 307 x 50 x 480 (14.8 MB) in 13.4s -> test_feat.npz
+[10:03:24] INFO      scrambled: 600 x 50 x 480 (28.9 MB) in 12.5s -> scrambled_feat.npz
+[10:03:24] INFO    step2 extract_features finished in 93.9s
+backend=fair-esm embed_dim=480 demo=False
+$ /usr/bin/python3 -m dualamp_lite train --workdir /tmp/v21-c1pol40t/work/run --models M1,M2,M3 --seeds 1 --folds 2 --epochs 2 --loss bce
+[10:03:28] INFO    dev: 1745 peptides (121 pos) in 982 clusters | test: 307 peptides (21 pos) in 274 clusters
+[10:03:28] INFO    training M1 ...
+[10:03:40] INFO      M1 seed 1: dev OOF AUROC 0.710, test AUROC 0.912 MCC 0.538 (epochs=2)
+[10:05:50] INFO    training M2 ...
+[10:06:12] INFO      M2 seed 1: dev OOF AUROC 0.912, test AUROC 0.993 MCC 0.816 (epochs=2)
+[10:08:23] INFO    training M3 ...
+[10:08:45] INFO      M3 seed 1: dev OOF AUROC 0.913, test AUROC 0.993 MCC 0.827 (epochs=2)
+[10:12:34] INFO      comparisons: 6 (BH-FDR controlled at 0.05)
+[10:12:35] INFO      external[scrambled] M1: {'n': 600, 'n_pos': 0, 'mean_score': 0.617139995098114, 'frac_predicted_positive': 0.5983333333333334}
+[10:12:35] INFO      external[scrambled] M2: {'n': 600, 'n_pos': 0, 'mean_score': 0.1415589153766632, 'frac_predicted_positive': 0.09666666666666666}
+[10:12:36] INFO      external[scrambled] M3: {'n': 600, 'n_pos': 0, 'mean_score': 0.16381606459617615, 'frac_predicted_positive': 0.10833333333333334}
+[10:12:36] INFO    wrote D10_test_metrics.csv and D9_ablation.csv
+[10:12:36] INFO    step3 train_and_eval finished in 548.3s
+models=['M1', 'M2', 'M3']
+  M1           AUROC=0.912 MCC=0.538 AUPRC=0.445
+  M2           AUROC=0.993 MCC=0.816 AUPRC=0.875
+  M3           AUROC=0.993 MCC=0.827 AUPRC=0.881
+$ /usr/bin/python3 /tmp/v21-c1pol40t/run_evaluation_stage.py
+workdir tree: ['ablation', 'baseline', 'cache', 'dataset', 'dataset/splits', 'features', 'figures', 'logs', 'manuscript', 'model']
+Traceback (most recent call last):
+  File "/tmp/v21-c1pol40t/run_evaluation_stage.py", line 24, in <module>
+    assert run_id, f'no run id found under {root}'
+           ^^^^^^
+AssertionError: no run id found under /tmp/v21-c1pol40t/work/run
+$ /usr/bin/python3 -m dualamp_lite report --workdir /tmp/v21-c1pol40t/work/run
+[10:12:59] INFO    report written: /tmp/v21-c1pol40t/work/run/manuscript/D10_evaluation_report.md
+report: /tmp/v21-c1pol40t/work/run/manuscript/D10_evaluation_report.md
+manifest: /tmp/v21-c1pol40t/work/run/manuscript/D15_input_sha256.tsv (42 files)
