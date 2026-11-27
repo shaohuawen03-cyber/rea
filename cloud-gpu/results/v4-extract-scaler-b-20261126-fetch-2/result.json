@@ -1,0 +1,12 @@
+{
+  "job_id": "v4-extract-scaler-b-20261126-fetch-2",
+  "provider": "kaggle",
+  "mode": "output",
+  "kernel_ref": "shaohuawen/v4-extract-scaler-b-20261126",
+  "copied_files": [
+    "extract_scaler_report.json",
+    "v4-extract-scaler-b-20261126.log"
+  ],
+  "cli_output": "Downloading extract_scaler_report.json to /tmp/kag_out_99drrsnj\n\nOutput file downloaded to /tmp/kag_out_99drrsnj/extract_scaler_report.json\nKernel log downloaded to /tmp/kag_out_99drrsnj/v4-extract-scaler-b-20261126.log",
+  "fetched_at_utc": "2026-11-27T02:55:02Z"
+}
