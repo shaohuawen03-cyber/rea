@@ -1,0 +1,85 @@
+[{"stream_name":"stdout","time":4.560316182,"data":"[pip] gdown: rc=0\n"}
+,{"stream_name":"stdout","time":6.132669855,"data":"[pip] requests: rc=0\n"}
+,{"stream_name":"stdout","time":8.650539632,"data":"[pip] fair-esm: rc=0\n"}
+,{"stream_name":"stdout","time":10.240929371,"data":"[pip] pyyaml: rc=0\n"}
+,{"stream_name":"stdout","time":13.933256475,"data":"[pip] biopython: rc=0\n"}
+,{"stream_name":"stdout","time":15.545882471,"data":"[pip] pandas: rc=0\n"}
+,{"stream_name":"stdout","time":17.127871899,"data":"[pip] scikit-learn: rc=0\n"}
+,{"stream_name":"stdout","time":18.724748934,"data":"[pip] joblib: rc=0\n"}
+,{"stream_name":"stderr","time":49.989169776,"data":"/tmp/_payload.py:367: DeprecationWarning: Python 3.14 will, by default, filter extracted tar archives and reject files or modify their metadata. Use the filter argument to control this behavior.\n"}
+,{"stream_name":"stderr","time":49.989203599,"data":"  tar.extractall(tmp / \"negds_x\")\n"}
+,{"stream_name":"stdout","time":58.118379325,"data":"Downloading: \"https://dl.fbaipublicfiles.com/fair-esm/models/esm2_t12_35M_UR50D.pt\" to /root/.cache/torch/hub/checkpoints/esm2_t12_35M_UR50D.pt\n"}
+,{"stream_name":"stdout","time":58.56972261,"data":"Downloading: \"https://dl.fbaipublicfiles.com/fair-esm/regression/esm2_t12_35M_UR50D-contact-regression.pt\" to /root/.cache/torch/hub/checkpoints/esm2_t12_35M_UR50D-contact-regression.pt\n"}
+,{"stream_name":"stdout","time":79.181947217,"data":"{\n"}
+,{"stream_name":"stdout","time":79.18198001,"data":"  \"stage\": \"amp_benchmark_external\",\n"}
+,{"stream_name":"stdout","time":79.181986948,"data":"  \"status\": \"FAILED\",\n"}
+,{"stream_name":"stdout","time":79.181991746,"data":"  \"leanrea_commit\": \"f610dc00b1aec3ab948a5b77574af0e644259a13\",\n"}
+,{"stream_name":"stdout","time":79.181996443,"data":"  \"max_per_class\": 4000,\n"}
+,{"stream_name":"stdout","time":79.182000939,"data":"  \"cohort\": {\n"}
+,{"stream_name":"stdout","time":79.182005351,"data":"    \"positives\": 14577,\n"}
+,{"stream_name":"stdout","time":79.182010005,"data":"    \"decoys\": 14572,\n"}
+,{"stream_name":"stdout","time":79.182020413,"data":"    \"positive_sha256\": \"9ca0d4076f6d61c16ad31b920afc9029ae463d3df3510049c9b6ac4366a8e40c\",\n"}
+,{"stream_name":"stdout","time":79.182024098,"data":"    \"bundle_sha256\": \"d5dce04e7763dc1abe9cdcf2729de1701cccdf6c893a903e6aee2319058936bd\"\n"}
+,{"stream_name":"stdout","time":79.182027308,"data":"  },\n"}
+,{"stream_name":"stdout","time":79.182030297,"data":"  \"checkpoints\": [\n"}
+,{"stream_name":"stdout","time":79.182033333,"data":"    \"M1_seed1.pt\",\n"}
+,{"stream_name":"stdout","time":79.182036545,"data":"    \"M1_seed2.pt\",\n"}
+,{"stream_name":"stdout","time":79.18203959,"data":"    \"M1_seed3.pt\",\n"}
+,{"stream_name":"stdout","time":79.182042617,"data":"    \"M1_seed4.pt\",\n"}
+,{"stream_name":"stdout","time":79.182045653,"data":"    \"M1_seed5.pt\",\n"}
+,{"stream_name":"stdout","time":79.182049223,"data":"    \"M2_seed1.pt\",\n"}
+,{"stream_name":"stdout","time":79.182080883,"data":"    \"M2_seed2.pt\",\n"}
+,{"stream_name":"stdout","time":79.182086222,"data":"    \"M2_seed3.pt\",\n"}
+,{"stream_name":"stdout","time":79.18209134,"data":"    \"M2_seed4.pt\",\n"}
+,{"stream_name":"stdout","time":79.182096493,"data":"    \"M2_seed5.pt\",\n"}
+,{"stream_name":"stdout","time":79.182101347,"data":"    \"M3_seed1.pt\",\n"}
+,{"stream_name":"stdout","time":79.182105712,"data":"    \"M3_seed2.pt\",\n"}
+,{"stream_name":"stdout","time":79.182110077,"data":"    \"M3_seed3.pt\",\n"}
+,{"stream_name":"stdout","time":79.182114508,"data":"    \"M3_seed4.pt\",\n"}
+,{"stream_name":"stdout","time":79.182129586,"data":"    \"M3_seed5.pt\"\n"}
+,{"stream_name":"stdout","time":79.182133406,"data":"  ],\n"}
+,{"stream_name":"stdout","time":79.182136767,"data":"  \"checkpoint_source\": {\n"}
+,{"stream_name":"stdout","time":79.182140283,"data":"    \"loose_mounted\": 0,\n"}
+,{"stream_name":"stdout","time":79.182145366,"data":"    \"from_bundle\": 15,\n"}
+,{"stream_name":"stdout","time":79.182159165,"data":"    \"bundle\": \"dualamp_v2_1_model_bundle.zip\"\n"}
+,{"stream_name":"stdout","time":79.182161931,"data":"  },\n"}
+,{"stream_name":"stdout","time":79.182177814,"data":"  \"negatives\": {\n"}
+,{"stream_name":"stdout","time":79.182181924,"data":"    \"proteins_total\": 117172,\n"}
+,{"stream_name":"stdout","time":79.182186038,"data":"    \"keyword_excluded\": 18,\n"}
+,{"stream_name":"stdout","time":79.182190027,"data":"    \"fragments_raw\": 351462,\n"}
+,{"stream_name":"stdout","time":79.182194265,"data":"    \"fragments_standard_aa\": 351429,\n"}
+,{"stream_name":"stdout","time":79.182198146,"data":"    \"fragments_dedup\": 351119,\n"}
+,{"stream_name":"stdout","time":79.182201713,"data":"    \"fragments_hit_positive_4mer_gt08\": 31495,\n"}
+,{"stream_name":"stdout","time":79.18220537,"data":"    \"negatives_final\": 4000,\n"}
+,{"stream_name":"stdout","time":79.182208853,"data":"    \"seed\": 11,\n"}
+,{"stream_name":"stdout","time":79.18221227,"data":"    \"cap\": 4000,\n"}
+,{"stream_name":"stdout","time":79.18221571,"data":"    \"neg_mode\": \"standard\",\n"}
+,{"stream_name":"stdout","time":79.182219302,"data":"    \"seconds\": 10.6\n"}
+,{"stream_name":"stdout","time":79.182222765,"data":"  },\n"}
+,{"stream_name":"stdout","time":79.182226093,"data":"  \"dbaasp\": {\n"}
+,{"stream_name":"stdout","time":79.182229515,"data":"    \"n_raw\": 13404,\n"}
+,{"stream_name":"stdout","time":79.182232964,"data":"    \"n_usable\": 9534,\n"}
+,{"stream_name":"stdout","time":79.182236417,"data":"    \"source\": \"BioGenies/NegativeDatasets data/dbaasp.csv\"\n"}
+,{"stream_name":"stdout","time":79.182240097,"data":"  },\n"}
+,{"stream_name":"stdout","time":79.1822434,"data":"  \"encoder\": {\n"}
+,{"stream_name":"stdout","time":79.182246853,"data":"    \"name\": \"fair-esm\",\n"}
+,{"stream_name":"stdout","time":79.182274788,"data":"    \"embed_dim\": 0,\n"}
+,{"stream_name":"stdout","time":79.182279465,"data":"    \"is_mock\": false\n"}
+,{"stream_name":"stdout","time":79.182283582,"data":"  },\n"}
+,{"stream_name":"stdout","time":79.182287762,"data":"  \"biophys_scaler\": {\n"}
+,{"stream_name":"stdout","time":79.18229191,"data":"    \"status\": \"missing\",\n"}
+,{"stream_name":"stdout","time":79.182295647,"data":"    \"reason\": \"training-fitted biophys scaler not mounted; M3 dropped from external tables rather than refitting it\"\n"}
+,{"stream_name":"stdout","time":79.182299493,"data":"  },\n"}
+,{"stream_name":"stdout","time":79.18230273,"data":"  \"m3_excluded\": {\n"}
+,{"stream_name":"stdout","time":79.182306223,"data":"    \"reason\": \"training-fitted biophys scaler not mounted; M3 dropped from external tables rather than refitting it\",\n"}
+,{"stream_name":"stdout","time":79.182310077,"data":"    \"dropped_checkpoints\": []\n"}
+,{"stream_name":"stdout","time":79.182313538,"data":"  },\n"}
+,{"stream_name":"stdout","time":79.182316907,"data":"  \"error\": \"TypeError: ~ (operator.invert) is only implemented on integer and Boolean-type tensors\"\n"}
+,{"stream_name":"stdout","time":79.182320689,"data":"}\n"}
+,{"stream_name":"stderr","time":85.507623866,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":85.507700587,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":85.740291899,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":85.740319934,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":86.499041143,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":87.398373367,"data":"[NbConvertApp] Writing 324114 bytes to __results__.html\n"}
+]
