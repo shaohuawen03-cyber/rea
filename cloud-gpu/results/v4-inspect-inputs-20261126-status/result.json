@@ -1,0 +1,8 @@
+{
+  "job_id": "v4-inspect-inputs-20261126-status",
+  "provider": "kaggle",
+  "mode": "status",
+  "kernel_ref": "shaohuawen/v4-inspect-inputs-20261126",
+  "status_output": "shaohuawen/v4-inspect-inputs-20261126 has status \"KernelWorkerStatus.RUNNING\"",
+  "checked_at_utc": "2026-11-27T02:20:02Z"
+}
