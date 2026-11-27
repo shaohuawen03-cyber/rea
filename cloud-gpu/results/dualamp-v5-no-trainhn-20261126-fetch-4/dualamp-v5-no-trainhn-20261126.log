@@ -1,0 +1,260 @@
+[{"stream_name":"stdout","time":4.087534232,"data":"[pip] gdown: rc=0\n"}
+,{"stream_name":"stdout","time":5.656473342,"data":"[pip] requests: rc=0\n"}
+,{"stream_name":"stdout","time":7.654783606,"data":"[pip] fair-esm: rc=0\n"}
+,{"stream_name":"stdout","time":9.21235806,"data":"[pip] pyyaml: rc=0\n"}
+,{"stream_name":"stdout","time":12.849143602,"data":"[pip] biopython: rc=0\n"}
+,{"stream_name":"stdout","time":14.416308743,"data":"[pip] pandas: rc=0\n"}
+,{"stream_name":"stdout","time":16.027386813,"data":"[pip] scikit-learn: rc=0\n"}
+,{"stream_name":"stdout","time":17.615315751,"data":"[pip] matplotlib: rc=0\n"}
+,{"stream_name":"stdout","time":38.099034262,"data":"[v4] decoy pool 14572 -\u003e hard negatives 0 (trainable) + challenge 14572 (held out)\n"}
+,{"stream_name":"stdout","time":54.122423313,"data":"Downloading: \"https://dl.fbaipublicfiles.com/fair-esm/models/esm2_t12_35M_UR50D.pt\" to /root/.cache/torch/hub/checkpoints/esm2_t12_35M_UR50D.pt\n"}
+,{"stream_name":"stdout","time":57.233616459,"data":"Downloading: \"https://dl.fbaipublicfiles.com/fair-esm/regression/esm2_t12_35M_UR50D-contact-regression.pt\" to /root/.cache/torch/hub/checkpoints/esm2_t12_35M_UR50D-contact-regression.pt\n"}
+,{"stream_name":"stdout","time":5867.276453393,"data":"[package] private files: 43\n"}
+,{"stream_name":"stdout","time":5867.276504422,"data":"[package] bytes by directory: {'model': 24121529, 'features': 1460094742, 'dataset': 16663909}\n"}
+,{"stream_name":"stdout","time":5901.099295379,"data":"{\n"}
+,{"stream_name":"stdout","time":5901.099317831,"data":"  \"stage\": \"dualamp_v4_training\",\n"}
+,{"stream_name":"stdout","time":5901.099323655,"data":"  \"dataset_version\": \"positive_core_v2_1_dramp_v4_hardneg\",\n"}
+,{"stream_name":"stdout","time":5901.099328983,"data":"  \"rule_version\": \"auto_evidence_v2_2.0\",\n"}
+,{"stream_name":"stdout","time":5901.099334459,"data":"  \"leanrea_commit\": \"f610dc00b1aec3ab948a5b77574af0e644259a13\",\n"}
+,{"stream_name":"stdout","time":5901.099339252,"data":"  \"started_utc\": \"2026-11-27T06:10:38.783931+00:00\",\n"}
+,{"stream_name":"stdout","time":5901.099344355,"data":"  \"training_started\": true,\n"}
+,{"stream_name":"stdout","time":5901.099349353,"data":"  \"upload_session_present\": false,\n"}
+,{"stream_name":"stdout","time":5901.099354344,"data":"  \"cohort\": {\n"}
+,{"stream_name":"stdout","time":5901.099358983,"data":"    \"positives\": 14577,\n"}
+,{"stream_name":"stdout","time":5901.09936374,"data":"    \"composition_decoys\": 14572,\n"}
+,{"stream_name":"stdout","time":5901.099368149,"data":"    \"positive_fasta_sha256\": \"9ca0d4076f6d61c16ad31b920afc9029ae463d3df3510049c9b6ac4366a8e40c\"\n"}
+,{"stream_name":"stdout","time":5901.099372921,"data":"  },\n"}
+,{"stream_name":"stdout","time":5901.099377432,"data":"  \"v4_decoy_split\": {\n"}
+,{"stream_name":"stdout","time":5901.0993821,"data":"    \"decoy_pool_total\": 14572,\n"}
+,{"stream_name":"stdout","time":5901.09938677,"data":"    \"hard_negatives_trainable\": 0,\n"}
+,{"stream_name":"stdout","time":5901.099391167,"data":"    \"challenge_held_out\": 14572,\n"}
+,{"stream_name":"stdout","time":5901.099395321,"data":"    \"overlap\": 0,\n"}
+,{"stream_name":"stdout","time":5901.099399464,"data":"    \"hardneg_frac\": 0.5,\n"}
+,{"stream_name":"stdout","time":5901.099403861,"data":"    \"negative_share_policy\": \"0.5\",\n"}
+,{"stream_name":"stdout","time":5901.099408445,"data":"    \"v5_mode\": \"no_trainhn\"\n"}
+,{"stream_name":"stdout","time":5901.099413335,"data":"  },\n"}
+,{"stream_name":"stdout","time":5901.099417974,"data":"  \"v5_mode\": \"no_trainhn\",\n"}
+,{"stream_name":"stdout","time":5901.099422907,"data":"  \"negatives\": {\n"}
+,{"stream_name":"stdout","time":5901.09943563,"data":"    \"proteins_total\": 117172,\n"}
+,{"stream_name":"stdout","time":5901.09943954,"data":"    \"keyword_excluded\": 18,\n"}
+,{"stream_name":"stdout","time":5901.099443123,"data":"    \"fragments_raw\": 351462,\n"}
+,{"stream_name":"stdout","time":5901.099449218,"data":"    \"fragments_standard_aa\": 351429,\n"}
+,{"stream_name":"stdout","time":5901.099452704,"data":"    \"fragments_dedup\": 351119,\n"}
+,{"stream_name":"stdout","time":5901.099456221,"data":"    \"fragments_hit_positive_4mer_gt08\": 31495,\n"}
+,{"stream_name":"stdout","time":5901.09945984,"data":"    \"negatives_final\": 20000,\n"}
+,{"stream_name":"stdout","time":5901.09946335,"data":"    \"seed\": 11,\n"}
+,{"stream_name":"stdout","time":5901.099466864,"data":"    \"cap\": 20000,\n"}
+,{"stream_name":"stdout","time":5901.099470339,"data":"    \"neg_mode\": \"standard\",\n"}
+,{"stream_name":"stdout","time":5901.099474127,"data":"    \"seconds\": 10.0\n"}
+,{"stream_name":"stdout","time":5901.099477899,"data":"  },\n"}
+,{"stream_name":"stdout","time":5901.099481547,"data":"  \"manifest_sha256\": \"c183939e392a47d0f0b933eb91f8094130b29772e2757252132d77cdbde83eb7\",\n"}
+,{"stream_name":"stdout","time":5901.099485667,"data":"  \"smoke_mode\": false,\n"}
+,{"stream_name":"stdout","time":5901.099489537,"data":"  \"encoder_preflight\": {\n"}
+,{"stream_name":"stdout","time":5901.099493415,"data":"    \"encoder\": \"fair-esm\",\n"}
+,{"stream_name":"stdout","time":5901.099497549,"data":"    \"is_mock\": false,\n"}
+,{"stream_name":"stdout","time":5901.099501302,"data":"    \"embed_dim\": 480,\n"}
+,{"stream_name":"stdout","time":5901.099505125,"data":"    \"probe_shapes\": [\n"}
+,{"stream_name":"stdout","time":5901.099508925,"data":"      [\n"}
+,{"stream_name":"stdout","time":5901.099513612,"data":"        2,\n"}
+,{"stream_name":"stdout","time":5901.099517388,"data":"        23,\n"}
+,{"stream_name":"stdout","time":5901.09952111,"data":"        480\n"}
+,{"stream_name":"stdout","time":5901.099525359,"data":"      ],\n"}
+,{"stream_name":"stdout","time":5901.099529139,"data":"      [\n"}
+,{"stream_name":"stdout","time":5901.099532845,"data":"        2,\n"}
+,{"stream_name":"stdout","time":5901.099536557,"data":"        480\n"}
+,{"stream_name":"stdout","time":5901.099539821,"data":"      ]\n"}
+,{"stream_name":"stdout","time":5901.099543157,"data":"    ],\n"}
+,{"stream_name":"stdout","time":5901.099546487,"data":"    \"finite\": true\n"}
+,{"stream_name":"stdout","time":5901.099550036,"data":"  },\n"}
+,{"stream_name":"stdout","time":5901.09955374,"data":"  \"steps\": {\n"}
+,{"stream_name":"stdout","time":5901.099557589,"data":"    \"build\": {\n"}
+,{"stream_name":"stdout","time":5901.099561385,"data":"      \"returncode\": 0,\n"}
+,{"stream_name":"stdout","time":5901.09956528,"data":"      \"seconds\": 252.4\n"}
+,{"stream_name":"stdout","time":5901.099568797,"data":"    },\n"}
+,{"stream_name":"stdout","time":5901.099572477,"data":"    \"features\": {\n"}
+,{"stream_name":"stdout","time":5901.099576398,"data":"      \"returncode\": 0,\n"}
+,{"stream_name":"stdout","time":5901.0995803,"data":"      \"seconds\": 48.5\n"}
+,{"stream_name":"stdout","time":5901.09958419,"data":"    },\n"}
+,{"stream_name":"stdout","time":5901.099587795,"data":"    \"train\": {\n"}
+,{"stream_name":"stdout","time":5901.099591504,"data":"      \"returncode\": 0,\n"}
+,{"stream_name":"stdout","time":5901.099595283,"data":"      \"seconds\": 5483.5\n"}
+,{"stream_name":"stdout","time":5901.099598992,"data":"    },\n"}
+,{"stream_name":"stdout","time":5901.099602599,"data":"    \"evaluation\": {\n"}
+,{"stream_name":"stdout","time":5901.099609552,"data":"      \"returncode\": 0,\n"}
+,{"stream_name":"stdout","time":5901.099613444,"data":"      \"seconds\": 0.2\n"}
+,{"stream_name":"stdout","time":5901.099617263,"data":"    },\n"}
+,{"stream_name":"stdout","time":5901.099620296,"data":"    \"report\": {\n"}
+,{"stream_name":"stdout","time":5901.099623846,"data":"      \"returncode\": 0,\n"}
+,{"stream_name":"stdout","time":5901.099627647,"data":"      \"seconds\": 21.9\n"}
+,{"stream_name":"stdout","time":5901.099631402,"data":"    }\n"}
+,{"stream_name":"stdout","time":5901.099635057,"data":"  },\n"}
+,{"stream_name":"stdout","time":5901.099638497,"data":"  \"v4_composition_control\": {\n"}
+,{"stream_name":"stdout","time":5901.099642416,"data":"    \"status\": \"ok\",\n"}
+,{"stream_name":"stdout","time":5901.099646482,"data":"    \"protocol\": \"fit on train, threshold on val (Youden J), score test; scaler+logistic regression inside one pipeline (no leakage)\",\n"}
+,{"stream_name":"stdout","time":5901.099650349,"data":"    \"n_train\": 9713,\n"}
+,{"stream_name":"stdout","time":5901.099654023,"data":"    \"n_val\": 2082,\n"}
+,{"stream_name":"stdout","time":5901.099657799,"data":"    \"n_test\": 2081,\n"}
+,{"stream_name":"stdout","time":5901.099673586,"data":"    \"n_pos_test\": 400,\n"}
+,{"stream_name":"stdout","time":5901.099677849,"data":"    \"threshold\": 0.1589,\n"}
+,{"stream_name":"stdout","time":5901.099681288,"data":"    \"auroc\": 0.9359979179060083,\n"}
+,{"stream_name":"stdout","time":5901.099684707,"data":"    \"brier\": 0.05387875634906566,\n"}
+,{"stream_name":"stdout","time":5901.099689184,"data":"    \"ece\": 0.01308469115919761,\n"}
+,{"stream_name":"stdout","time":5901.099693127,"data":"    \"mcc\": 0.688481,\n"}
+,{"stream_name":"stdout","time":5901.099696885,"data":"    \"top_coefficients\": [\n"}
+,{"stream_name":"stdout","time":5901.099700423,"data":"      {\n"}
+,{"stream_name":"stdout","time":5901.099704019,"data":"        \"aa\": \"E\",\n"}
+,{"stream_name":"stdout","time":5901.099708022,"data":"        \"coef\": -1.5571389813766343\n"}
+,{"stream_name":"stdout","time":5901.099711969,"data":"      },\n"}
+,{"stream_name":"stdout","time":5901.099715601,"data":"      {\n"}
+,{"stream_name":"stdout","time":5901.099719194,"data":"        \"aa\": \"W\",\n"}
+,{"stream_name":"stdout","time":5901.099722923,"data":"        \"coef\": 1.3905339067586848\n"}
+,{"stream_name":"stdout","time":5901.099726594,"data":"      },\n"}
+,{"stream_name":"stdout","time":5901.099730251,"data":"      {\n"}
+,{"stream_name":"stdout","time":5901.099733909,"data":"        \"aa\": \"C\",\n"}
+,{"stream_name":"stdout","time":5901.099737263,"data":"        \"coef\": 1.3062938126247148\n"}
+,{"stream_name":"stdout","time":5901.099741254,"data":"      },\n"}
+,{"stream_name":"stdout","time":5901.099744956,"data":"      {\n"}
+,{"stream_name":"stdout","time":5901.099748975,"data":"        \"aa\": \"D\",\n"}
+,{"stream_name":"stdout","time":5901.099752584,"data":"        \"coef\": -0.8683113857920824\n"}
+,{"stream_name":"stdout","time":5901.099756716,"data":"      },\n"}
+,{"stream_name":"stdout","time":5901.099760155,"data":"      {\n"}
+,{"stream_name":"stdout","time":5901.099763429,"data":"        \"aa\": \"G\",\n"}
+,{"stream_name":"stdout","time":5901.099766996,"data":"        \"coef\": -0.6375868907335285\n"}
+,{"stream_name":"stdout","time":5901.099770892,"data":"      }\n"}
+,{"stream_name":"stdout","time":5901.099774412,"data":"    ],\n"}
+,{"stream_name":"stdout","time":5901.099777937,"data":"    \"deep_model\": \"M2\",\n"}
+,{"stream_name":"stdout","time":5901.099781848,"data":"    \"deep_auroc\": 0.9901279000594884,\n"}
+,{"stream_name":"stdout","time":5901.09978978,"data":"    \"auroc_gap\": 0.05412998215348008,\n"}
+,{"stream_name":"stdout","time":5901.099793666,"data":"    \"composition_share_of_deep_auroc\": 0.94533031323506,\n"}
+,{"stream_name":"stdout","time":5901.09979762,"data":"    \"paired_bootstrap\": {\n"}
+,{"stream_name":"stdout","time":5901.099801381,"data":"      \"metric\": \"auroc(deep) - auroc(composition_only)\",\n"}
+,{"stream_name":"stdout","time":5901.099805475,"data":"      \"n_boot_valid\": 1000,\n"}
+,{"stream_name":"stdout","time":5901.099809293,"data":"      \"mean_delta\": 0.05505698586885666,\n"}
+,{"stream_name":"stdout","time":5901.0998131,"data":"      \"ci95_low\": 0.039367490642446414,\n"}
+,{"stream_name":"stdout","time":5901.099816718,"data":"      \"ci95_high\": 0.0740703202379962,\n"}
+,{"stream_name":"stdout","time":5901.099820536,"data":"      \"p_two_sided\": 0.0,\n"}
+,{"stream_name":"stdout","time":5901.099824248,"data":"      \"significant_at_0.05\": true\n"}
+,{"stream_name":"stdout","time":5901.099827588,"data":"    },\n"}
+,{"stream_name":"stdout","time":5901.0998311,"data":"    \"source\": \"composition_control_v4 (train-fit, val-threshold, test-scored)\"\n"}
+,{"stream_name":"stdout","time":5901.099834874,"data":"  },\n"}
+,{"stream_name":"stdout","time":5901.099838431,"data":"  \"v4_hardneg_composition_audit\": {\n"}
+,{"stream_name":"stdout","time":5901.099842267,"data":"    \"status\": \"ok\",\n"}
+,{"stream_name":"stdout","time":5901.099846236,"data":"    \"hard_negatives_scored\": 0,\n"}
+,{"stream_name":"stdout","time":5901.099850084,"data":"    \"heldout_positive_compositions\": 12075,\n"}
+,{"stream_name":"stdout","time":5901.099853985,"data":"    \"hardneg_permutations_of_heldout_positives\": 0,\n"}
+,{"stream_name":"stdout","time":5901.099857544,"data":"    \"fraction\": 0.0,\n"}
+,{"stream_name":"stdout","time":5901.099861355,"data":"    \"reading\": \"Non-zero means the trained threshold is conservative for those positives (their exact composition was shown as a negative). It cannot inflate the test AUROC; report it as a limitation.\"\n"}
+,{"stream_name":"stdout","time":5901.099867103,"data":"  },\n"}
+,{"stream_name":"stdout","time":5901.099870612,"data":"  \"status\": \"COMPLETED_V4_TRAINING\",\n"}
+,{"stream_name":"stdout","time":5901.099874492,"data":"  \"completed_utc\": \"2026-11-27T07:48:08.420610+00:00\",\n"}
+,{"stream_name":"stdout","time":5901.099878315,"data":"  \"code_commit\": \"35984167c6f135cfc896e662dfd4a3b314d49683\",\n"}
+,{"stream_name":"stdout","time":5901.09988217,"data":"  \"dataset_summary\": {\n"}
+,{"stream_name":"stdout","time":5901.099885838,"data":"    \"cluster_method\": \"kmer_fallback(k=3)\",\n"}
+,{"stream_name":"stdout","time":5901.099889919,"data":"    \"cluster_identity\": 0.4,\n"}
+,{"stream_name":"stdout","time":5901.09989379,"data":"    \"cluster_coverage\": 0.8,\n"}
+,{"stream_name":"stdout","time":5901.099897598,"data":"    \"n_clusters\": 7469,\n"}
+,{"stream_name":"stdout","time":5901.09990142,"data":"    \"n_sequences\": 49648,\n"}
+,{"stream_name":"stdout","time":5901.099905126,"data":"    \"layer_counts\": {\n"}
+,{"stream_name":"stdout","time":5901.099908546,"data":"      \"negative_background\": 20000,\n"}
+,{"stream_name":"stdout","time":5901.09991239,"data":"      \"scrambled\": 15071,\n"}
+,{"stream_name":"stdout","time":5901.09991603,"data":"      \"bacterial_amp\": 14577\n"}
+,{"stream_name":"stdout","time":5901.099919522,"data":"    },\n"}
+,{"stream_name":"stdout","time":5901.099923184,"data":"    \"split_counts\": {\n"}
+,{"stream_name":"stdout","time":5901.099926955,"data":"      \"review\": 20701,\n"}
+,{"stream_name":"stdout","time":5901.099934607,"data":"      \"scrambled\": 15071,\n"}
+,{"stream_name":"stdout","time":5901.099938289,"data":"      \"train\": 9713,\n"}
+,{"stream_name":"stdout","time":5901.099942602,"data":"      \"val\": 2082,\n"}
+,{"stream_name":"stdout","time":5901.099946365,"data":"      \"test\": 2081,\n"}
+,{"stream_name":"stdout","time":5901.099950009,"data":"      \"dev\": 11795\n"}
+,{"stream_name":"stdout","time":5901.099953662,"data":"    },\n"}
+,{"stream_name":"stdout","time":5901.099957352,"data":"    \"split_positives\": {\n"}
+,{"stream_name":"stdout","time":5901.099961131,"data":"      \"train\": 1868,\n"}
+,{"stream_name":"stdout","time":5901.099964986,"data":"      \"val\": 401,\n"}
+,{"stream_name":"stdout","time":5901.099968552,"data":"      \"test\": 400,\n"}
+,{"stream_name":"stdout","time":5901.099972107,"data":"      \"dev\": 0,\n"}
+,{"stream_name":"stdout","time":5901.099975825,"data":"      \"external\": 0,\n"}
+,{"stream_name":"stdout","time":5901.099980175,"data":"      \"external_homolog\": 0,\n"}
+,{"stream_name":"stdout","time":5901.099984002,"data":"      \"scrambled\": 8011,\n"}
+,{"stream_name":"stdout","time":5901.099987739,"data":"      \"review\": 11908\n"}
+,{"stream_name":"stdout","time":5901.099991565,"data":"    },\n"}
+,{"stream_name":"stdout","time":5901.099995431,"data":"    \"split_negatives\": {\n"}
+,{"stream_name":"stdout","time":5901.09999923,"data":"      \"train\": 7845,\n"}
+,{"stream_name":"stdout","time":5901.100002609,"data":"      \"val\": 1681,\n"}
+,{"stream_name":"stdout","time":5901.100006053,"data":"      \"test\": 1681,\n"}
+,{"stream_name":"stdout","time":5901.100009832,"data":"      \"dev\": 0,\n"}
+,{"stream_name":"stdout","time":5901.100013498,"data":"      \"external\": 0,\n"}
+,{"stream_name":"stdout","time":5901.100017284,"data":"      \"external_homolog\": 0,\n"}
+,{"stream_name":"stdout","time":5901.100021166,"data":"      \"scrambled\": 7060,\n"}
+,{"stream_name":"stdout","time":5901.100024939,"data":"      \"review\": 8793\n"}
+,{"stream_name":"stdout","time":5901.100028812,"data":"    },\n"}
+,{"stream_name":"stdout","time":5901.100032286,"data":"    \"external_homolog_overlap\": 0,\n"}
+,{"stream_name":"stdout","time":5901.100035785,"data":"    \"dropped_records\": 1,\n"}
+,{"stream_name":"stdout","time":5901.10003952,"data":"    \"drop_reasons\": {\n"}
+,{"stream_name":"stdout","time":5901.10004326,"data":"      \"empty_source\": 1\n"}
+,{"stream_name":"stdout","time":5901.100046992,"data":"    },\n"}
+,{"stream_name":"stdout","time":5901.100050697,"data":"    \"inputs\": {\n"}
+,{"stream_name":"stdout","time":5901.100054502,"data":"      \"manifest\": \"/tmp/v21-24ndqaex/work/data/sources.yaml\",\n"}
+,{"stream_name":"stdout","time":5901.100058665,"data":"      \"sha256\": \"c183939e392a47d0f0b933eb91f8094130b29772e2757252132d77cdbde83eb7\"\n"}
+,{"stream_name":"stdout","time":5901.100062492,"data":"    },\n"}
+,{"stream_name":"stdout","time":5901.100065708,"data":"    \"min_len\": 5,\n"}
+,{"stream_name":"stdout","time":5901.100069477,"data":"    \"max_len\": 50,\n"}
+,{"stream_name":"stdout","time":5901.100073529,"data":"    \"demo_mode\": false\n"}
+,{"stream_name":"stdout","time":5901.10007714,"data":"  },\n"}
+,{"stream_name":"stdout","time":5901.100080571,"data":"  \"evaluation_stage\": {\n"}
+,{"stream_name":"stdout","time":5901.100084421,"data":"    \"evaluation_stage\": \"not_applicable\",\n"}
+,{"stream_name":"stdout","time":5901.100088399,"data":"    \"reason\": \"no runs/\u003crun_id\u003e tree on this CLI path\",\n"}
+,{"stream_name":"stdout","time":5901.100092924,"data":"    \"workdir_dirs\": [\n"}
+,{"stream_name":"stdout","time":5901.100099029,"data":"      \"ablation\",\n"}
+,{"stream_name":"stdout","time":5901.100103012,"data":"      \"baseline\",\n"}
+,{"stream_name":"stdout","time":5901.100106835,"data":"      \"cache\",\n"}
+,{"stream_name":"stdout","time":5901.100110563,"data":"      \"dataset\",\n"}
+,{"stream_name":"stdout","time":5901.100114372,"data":"      \"features\",\n"}
+,{"stream_name":"stdout","time":5901.100118168,"data":"      \"figures\",\n"}
+,{"stream_name":"stdout","time":5901.100122087,"data":"      \"logs\",\n"}
+,{"stream_name":"stdout","time":5901.100125774,"data":"      \"manuscript\",\n"}
+,{"stream_name":"stdout","time":5901.100129202,"data":"      \"model\"\n"}
+,{"stream_name":"stdout","time":5901.100132892,"data":"    ]\n"}
+,{"stream_name":"stdout","time":5901.100136359,"data":"  },\n"}
+,{"stream_name":"stdout","time":5901.100139946,"data":"  \"calibration_metrics\": [\n"}
+,{"stream_name":"stdout","time":5901.100143758,"data":"    {\n"}
+,{"stream_name":"stdout","time":5901.100147422,"data":"      \"model\": \"M1\",\n"}
+,{"stream_name":"stdout","time":5901.100151365,"data":"      \"n_test\": 2081,\n"}
+,{"stream_name":"stdout","time":5901.100155137,"data":"      \"n_pos\": 400,\n"}
+,{"stream_name":"stdout","time":5901.100158559,"data":"      \"auroc\": 0.9866,\n"}
+,{"stream_name":"stdout","time":5901.100161821,"data":"      \"brier\": 0.04112,\n"}
+,{"stream_name":"stdout","time":5901.100165247,"data":"      \"brier_ref_all_positive\": 0.15527,\n"}
+,{"stream_name":"stdout","time":5901.100168954,"data":"      \"ece\": 0.04506,\n"}
+,{"stream_name":"stdout","time":5901.100172607,"data":"      \"mean_predicted\": 0.2373,\n"}
+,{"stream_name":"stdout","time":5901.100176494,"data":"      \"observed_rate\": 0.1922\n"}
+,{"stream_name":"stdout","time":5901.100180335,"data":"    },\n"}
+,{"stream_name":"stdout","time":5901.100184032,"data":"    {\n"}
+,{"stream_name":"stdout","time":5901.100187665,"data":"      \"model\": \"M2\",\n"}
+,{"stream_name":"stdout","time":5901.100191654,"data":"      \"n_test\": 2081,\n"}
+,{"stream_name":"stdout","time":5901.100195319,"data":"      \"n_pos\": 400,\n"}
+,{"stream_name":"stdout","time":5901.100198662,"data":"      \"auroc\": 0.9901,\n"}
+,{"stream_name":"stdout","time":5901.100202416,"data":"      \"brier\": 0.02773,\n"}
+,{"stream_name":"stdout","time":5901.100206419,"data":"      \"brier_ref_all_positive\": 0.15527,\n"}
+,{"stream_name":"stdout","time":5901.100229191,"data":"      \"ece\": 0.02287,\n"}
+,{"stream_name":"stdout","time":5901.100235949,"data":"      \"mean_predicted\": 0.1917,\n"}
+,{"stream_name":"stdout","time":5901.10023978,"data":"      \"observed_rate\": 0.1922\n"}
+,{"stream_name":"stdout","time":5901.100243287,"data":"    },\n"}
+,{"stream_name":"stdout","time":5901.100246625,"data":"    {\n"}
+,{"stream_name":"stdout","time":5901.100250155,"data":"      \"model\": \"M3\",\n"}
+,{"stream_name":"stdout","time":5901.100253995,"data":"      \"n_test\": 2081,\n"}
+,{"stream_name":"stdout","time":5901.100257816,"data":"      \"n_pos\": 400,\n"}
+,{"stream_name":"stdout","time":5901.100261539,"data":"      \"auroc\": 0.9899,\n"}
+,{"stream_name":"stdout","time":5901.100265525,"data":"      \"brier\": 0.02811,\n"}
+,{"stream_name":"stdout","time":5901.100269334,"data":"      \"brier_ref_all_positive\": 0.15527,\n"}
+,{"stream_name":"stdout","time":5901.100272749,"data":"      \"ece\": 0.02,\n"}
+,{"stream_name":"stdout","time":5901.100276246,"data":"      \"mean_predicted\": 0.1957,\n"}
+,{"stream_name":"stdout","time":5901.100279825,"data":"      \"observed_rate\": 0.1922\n"}
+,{"stream_name":"stdout","time":5901.100287161,"data":"    }\n"}
+,{"stream_name":"stdout","time":5901.100290963,"data":"  ],\n"}
+,{"stream_name":"stdout","time":5901.100294616,"data":"  \"calibr\n"}
+,{"stream_name":"stderr","time":5903.969920866,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":5903.969944557,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":5904.3149789,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":5904.315002889,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":5905.062580422,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":5905.942891446,"data":"[NbConvertApp] Writing 426199 bytes to __results__.html\n"}
+]

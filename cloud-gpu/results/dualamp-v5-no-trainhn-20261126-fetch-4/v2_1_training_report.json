@@ -1,0 +1,840 @@
+{
+  "stage": "dualamp_v4_training",
+  "dataset_version": "positive_core_v2_1_dramp_v4_hardneg",
+  "rule_version": "auto_evidence_v2_2.0",
+  "leanrea_commit": "f610dc00b1aec3ab948a5b77574af0e644259a13",
+  "started_utc": "2026-11-27T06:10:38.783931+00:00",
+  "training_started": true,
+  "upload_session_present": false,
+  "cohort": {
+    "positives": 14577,
+    "composition_decoys": 14572,
+    "positive_fasta_sha256": "9ca0d4076f6d61c16ad31b920afc9029ae463d3df3510049c9b6ac4366a8e40c"
+  },
+  "v4_decoy_split": {
+    "decoy_pool_total": 14572,
+    "hard_negatives_trainable": 0,
+    "challenge_held_out": 14572,
+    "overlap": 0,
+    "hardneg_frac": 0.5,
+    "negative_share_policy": "0.5",
+    "v5_mode": "no_trainhn"
+  },
+  "v5_mode": "no_trainhn",
+  "negatives": {
+    "proteins_total": 117172,
+    "keyword_excluded": 18,
+    "fragments_raw": 351462,
+    "fragments_standard_aa": 351429,
+    "fragments_dedup": 351119,
+    "fragments_hit_positive_4mer_gt08": 31495,
+    "negatives_final": 20000,
+    "seed": 11,
+    "cap": 20000,
+    "neg_mode": "standard",
+    "seconds": 10.0
+  },
+  "manifest_sha256": "c183939e392a47d0f0b933eb91f8094130b29772e2757252132d77cdbde83eb7",
+  "smoke_mode": false,
+  "encoder_preflight": {
+    "encoder": "fair-esm",
+    "is_mock": false,
+    "embed_dim": 480,
+    "probe_shapes": [
+      [
+        2,
+        23,
+        480
+      ],
+      [
+        2,
+        480
+      ]
+    ],
+    "finite": true
+  },
+  "steps": {
+    "build": {
+      "returncode": 0,
+      "seconds": 252.4
+    },
+    "features": {
+      "returncode": 0,
+      "seconds": 48.5
+    },
+    "train": {
+      "returncode": 0,
+      "seconds": 5483.5
+    },
+    "evaluation": {
+      "returncode": 0,
+      "seconds": 0.2
+    },
+    "report": {
+      "returncode": 0,
+      "seconds": 21.9
+    }
+  },
+  "v4_composition_control": {
+    "status": "ok",
+    "protocol": "fit on train, threshold on val (Youden J), score test; scaler+logistic regression inside one pipeline (no leakage)",
+    "n_train": 9713,
+    "n_val": 2082,
+    "n_test": 2081,
+    "n_pos_test": 400,
+    "threshold": 0.1589,
+    "auroc": 0.9359979179060083,
+    "brier": 0.05387875634906566,
+    "ece": 0.01308469115919761,
+    "mcc": 0.688481,
+    "top_coefficients": [
+      {
+        "aa": "E",
+        "coef": -1.5571389813766343
+      },
+      {
+        "aa": "W",
+        "coef": 1.3905339067586848
+      },
+      {
+        "aa": "C",
+        "coef": 1.3062938126247148
+      },
+      {
+        "aa": "D",
+        "coef": -0.8683113857920824
+      },
+      {
+        "aa": "G",
+        "coef": -0.6375868907335285
+      }
+    ],
+    "deep_model": "M2",
+    "deep_auroc": 0.9901279000594884,
+    "auroc_gap": 0.05412998215348008,
+    "composition_share_of_deep_auroc": 0.94533031323506,
+    "paired_bootstrap": {
+      "metric": "auroc(deep) - auroc(composition_only)",
+      "n_boot_valid": 1000,
+      "mean_delta": 0.05505698586885666,
+      "ci95_low": 0.039367490642446414,
+      "ci95_high": 0.0740703202379962,
+      "p_two_sided": 0.0,
+      "significant_at_0.05": true
+    },
+    "source": "composition_control_v4 (train-fit, val-threshold, test-scored)"
+  },
+  "v4_hardneg_composition_audit": {
+    "status": "ok",
+    "hard_negatives_scored": 0,
+    "heldout_positive_compositions": 12075,
+    "hardneg_permutations_of_heldout_positives": 0,
+    "fraction": 0.0,
+    "reading": "Non-zero means the trained threshold is conservative for those positives (their exact composition was shown as a negative). It cannot inflate the test AUROC; report it as a limitation."
+  },
+  "status": "COMPLETED_V4_TRAINING",
+  "completed_utc": "2026-11-27T07:48:08.420610+00:00",
+  "code_commit": "35984167c6f135cfc896e662dfd4a3b314d49683",
+  "dataset_summary": {
+    "cluster_method": "kmer_fallback(k=3)",
+    "cluster_identity": 0.4,
+    "cluster_coverage": 0.8,
+    "n_clusters": 7469,
+    "n_sequences": 49648,
+    "layer_counts": {
+      "negative_background": 20000,
+      "scrambled": 15071,
+      "bacterial_amp": 14577
+    },
+    "split_counts": {
+      "review": 20701,
+      "scrambled": 15071,
+      "train": 9713,
+      "val": 2082,
+      "test": 2081,
+      "dev": 11795
+    },
+    "split_positives": {
+      "train": 1868,
+      "val": 401,
+      "test": 400,
+      "dev": 0,
+      "external": 0,
+      "external_homolog": 0,
+      "scrambled": 8011,
+      "review": 11908
+    },
+    "split_negatives": {
+      "train": 7845,
+      "val": 1681,
+      "test": 1681,
+      "dev": 0,
+      "external": 0,
+      "external_homolog": 0,
+      "scrambled": 7060,
+      "review": 8793
+    },
+    "external_homolog_overlap": 0,
+    "dropped_records": 1,
+    "drop_reasons": {
+      "empty_source": 1
+    },
+    "inputs": {
+      "manifest": "/tmp/v21-24ndqaex/work/data/sources.yaml",
+      "sha256": "c183939e392a47d0f0b933eb91f8094130b29772e2757252132d77cdbde83eb7"
+    },
+    "min_len": 5,
+    "max_len": 50,
+    "demo_mode": false
+  },
+  "evaluation_stage": {
+    "evaluation_stage": "not_applicable",
+    "reason": "no runs/<run_id> tree on this CLI path",
+    "workdir_dirs": [
+      "ablation",
+      "baseline",
+      "cache",
+      "dataset",
+      "features",
+      "figures",
+      "logs",
+      "manuscript",
+      "model"
+    ]
+  },
+  "metrics": [
+    {
+      "model": "M2",
+      "family": "torch",
+      "n_test": "2081",
+      "threshold": "0.6662138",
+      "seconds": "1700.9",
+      "n_pos": "400",
+      "auroc": "0.9901279000594884",
+      "auroc_ci_low": "0.985143089898157",
+      "auroc_ci_high": "0.993988269894682",
+      "auprc": "0.9680430217267026",
+      "auprc_ci_low": "0.9530988634739096",
+      "auprc_ci_high": "0.9791857566364005",
+      "mcc": "0.8889384583426407",
+      "mcc_ci_low": "0.8607939611498246",
+      "mcc_ci_high": "0.9144768170863041",
+      "f1": "0.9097839898348158",
+      "f1_ci_low": "0.8847580492722575",
+      "f1_ci_high": "0.9311263782764291",
+      "precision": "0.9250645994832042",
+      "precision_ci_low": "0.8922639527574685",
+      "precision_ci_high": "0.9522701443345835",
+      "sensitivity": "0.895",
+      "sensitivity_ci_low": "0.861355855564886",
+      "sensitivity_ci_high": "0.9265419148658637",
+      "specificity": "0.9827483640690066",
+      "specificity_ci_low": "0.9757234197149013",
+      "specificity_ci_high": "0.9888374530455276",
+      "accuracy": "0.9658817876021144",
+      "accuracy_ci_low": "0.9575171503349359",
+      "accuracy_ci_high": "0.9738845479118557",
+      "mean_score": "0.19172619134210353",
+      "frac_predicted_positive": "0.18596828447861605",
+      "auroc_delong_ci_low": "0.985871097639727",
+      "auroc_delong_ci_high": "0.9943847024792497",
+      "test_auroc_seed_mean": "0.989510261748959",
+      "test_auroc_seed_sd": "0.0004948560242673014"
+    },
+    {
+      "model": "M3",
+      "family": "torch",
+      "n_test": "2081",
+      "threshold": "0.8027722",
+      "seconds": "1732.3",
+      "n_pos": "400",
+      "auroc": "0.9899486912552052",
+      "auroc_ci_low": "0.9849890358247971",
+      "auroc_ci_high": "0.9938898003209373",
+      "auprc": "0.9665415967689626",
+      "auprc_ci_low": "0.950841011566071",
+      "auprc_ci_high": "0.9784184162227232",
+      "mcc": "0.8831296989735555",
+      "mcc_ci_low": "0.8541029057635104",
+      "mcc_ci_high": "0.9109026761561514",
+      "f1": "0.9038961038961039",
+      "f1_ci_low": "0.8781792143192058",
+      "f1_ci_high": "0.9270720878806891",
+      "precision": "0.9405405405405406",
+      "precision_ci_low": "0.9112422173127134",
+      "precision_ci_high": "0.9655193594848768",
+      "sensitivity": "0.87",
+      "sensitivity_ci_low": "0.831947841119919",
+      "sensitivity_ci_high": "0.9056245209351346",
+      "specificity": "0.9869125520523498",
+      "specificity_ci_low": "0.9807917397728322",
+      "specificity_ci_high": "0.9923712272168453",
+      "accuracy": "0.964440172993753",
+      "accuracy_ci_low": "0.9556824043788986",
+      "accuracy_ci_high": "0.9731289210474231",
+      "mean_score": "0.1956976922927946",
+      "frac_predicted_positive": "0.17779913503123498",
+      "auroc_delong_ci_low": "0.9857315373977144",
+      "auroc_delong_ci_high": "0.9941658451126961",
+      "test_auroc_seed_mean": "0.9894864663890541",
+      "test_auroc_seed_sd": "0.0004656216156429591"
+    },
+    {
+      "model": "M1",
+      "family": "torch",
+      "n_test": "2081",
+      "threshold": "0.7827558",
+      "seconds": "1918.9",
+      "n_pos": "400",
+      "auroc": "0.9866493158834028",
+      "auroc_ci_low": "0.9805908535655612",
+      "auroc_ci_high": "0.9913186874450132",
+      "auprc": "0.9567300769146128",
+      "auprc_ci_low": "0.9383677241170788",
+      "auprc_ci_high": "0.970732488559152",
+      "mcc": "0.8674156353077317",
+      "mcc_ci_low": "0.8337430522602779",
+      "mcc_ci_high": "0.8977217957859437",
+      "f1": "0.8925410872313527",
+      "f1_ci_low": "0.8641556517989388",
+      "f1_ci_high": "0.9177333927119904",
+      "precision": "0.9028132992327366",
+      "precision_ci_low": "0.8654917734751386",
+      "precision_ci_high": "0.9359348189415041",
+      "sensitivity": "0.8825",
+      "sensitivity_ci_low": "0.8443260533225482",
+      "sensitivity_ci_high": "0.9181420172917186",
+      "specificity": "0.9773944080904223",
+      "specificity_ci_low": "0.9688404814877135",
+      "specificity_ci_high": "0.9850128868197308",
+      "accuracy": "0.9591542527630946",
+      "accuracy_ci_low": "0.9493725813496854",
+      "accuracy_ci_high": "0.9684673521835427",
+      "mean_score": "0.2372793074094805",
+      "frac_predicted_positive": "0.18789043728976454",
+      "auroc_delong_ci_low": "0.9818255675488881",
+      "auroc_delong_ci_high": "0.9914730642179175",
+      "test_auroc_seed_mean": "0.9864979179060084",
+      "test_auroc_seed_sd": "0.0006988545189984816"
+    }
+  ],
+  "metrics_summary": [],
+  "calibration_metrics": [
+    {
+      "model": "M1",
+      "n_test": 2081,
+      "n_pos": 400,
+      "auroc": 0.9866,
+      "brier": 0.04112,
+      "brier_ref_all_positive": 0.15527,
+      "ece": 0.04506,
+      "mean_predicted": 0.2373,
+      "observed_rate": 0.1922
+    },
+    {
+      "model": "M2",
+      "n_test": 2081,
+      "n_pos": 400,
+      "auroc": 0.9901,
+      "brier": 0.02773,
+      "brier_ref_all_positive": 0.15527,
+      "ece": 0.02287,
+      "mean_predicted": 0.1917,
+      "observed_rate": 0.1922
+    },
+    {
+      "model": "M3",
+      "n_test": 2081,
+      "n_pos": 400,
+      "auroc": 0.9899,
+      "brier": 0.02811,
+      "brier_ref_all_positive": 0.15527,
+      "ece": 0.02,
+      "mean_predicted": 0.1957,
+      "observed_rate": 0.1922
+    }
+  ],
+  "calibration_bins": [
+    {
+      "model": "M1",
+      "bin_low": 0.0,
+      "bin_high": 0.1,
+      "n": 1406,
+      "mean_predicted": 0.01,
+      "observed_rate": 0.0036
+    },
+    {
+      "model": "M1",
+      "bin_low": 0.1,
+      "bin_high": 0.2,
+      "n": 94,
+      "mean_predicted": 0.1465,
+      "observed_rate": 0.0426
+    },
+    {
+      "model": "M1",
+      "bin_low": 0.2,
+      "bin_high": 0.3,
+      "n": 47,
+      "mean_predicted": 0.2514,
+      "observed_rate": 0.1277
+    },
+    {
+      "model": "M1",
+      "bin_low": 0.3,
+      "bin_high": 0.4,
+      "n": 43,
+      "mean_predicted": 0.3455,
+      "observed_rate": 0.2093
+    },
+    {
+      "model": "M1",
+      "bin_low": 0.4,
+      "bin_high": 0.5,
+      "n": 22,
+      "mean_predicted": 0.4451,
+      "observed_rate": 0.1364
+    },
+    {
+      "model": "M1",
+      "bin_low": 0.5,
+      "bin_high": 0.6,
+      "n": 34,
+      "mean_predicted": 0.5523,
+      "observed_rate": 0.1176
+    },
+    {
+      "model": "M1",
+      "bin_low": 0.6,
+      "bin_high": 0.7,
+      "n": 28,
+      "mean_predicted": 0.6651,
+      "observed_rate": 0.4286
+    },
+    {
+      "model": "M1",
+      "bin_low": 0.7,
+      "bin_high": 0.8,
+      "n": 20,
+      "mean_predicted": 0.7497,
+      "observed_rate": 0.3
+    },
+    {
+      "model": "M1",
+      "bin_low": 0.8,
+      "bin_high": 0.9,
+      "n": 35,
+      "mean_predicted": 0.856,
+      "observed_rate": 0.5143
+    },
+    {
+      "model": "M1",
+      "bin_low": 0.9,
+      "bin_high": 1.0,
+      "n": 352,
+      "mean_predicted": 0.986,
+      "observed_rate": 0.946
+    },
+    {
+      "model": "M2",
+      "bin_low": 0.0,
+      "bin_high": 0.1,
+      "n": 1639,
+      "mean_predicted": 0.0013,
+      "observed_rate": 0.0128
+    },
+    {
+      "model": "M2",
+      "bin_low": 0.1,
+      "bin_high": 0.2,
+      "n": 14,
+      "mean_predicted": 0.1676,
+      "observed_rate": 0.3571
+    },
+    {
+      "model": "M2",
+      "bin_low": 0.2,
+      "bin_high": 0.3,
+      "n": 8,
+      "mean_predicted": 0.2495,
+      "observed_rate": 0.25
+    },
+    {
+      "model": "M2",
+      "bin_low": 0.3,
+      "bin_high": 0.4,
+      "n": 17,
+      "mean_predicted": 0.3545,
+      "observed_rate": 0.2353
+    },
+    {
+      "model": "M2",
+      "bin_low": 0.4,
+      "bin_high": 0.5,
+      "n": 4,
+      "mean_predicted": 0.4527,
+      "observed_rate": 1.0
+    },
+    {
+      "model": "M2",
+      "bin_low": 0.5,
+      "bin_high": 0.6,
+      "n": 8,
+      "mean_predicted": 0.5447,
+      "observed_rate": 0.625
+    },
+    {
+      "model": "M2",
+      "bin_low": 0.6,
+      "bin_high": 0.7,
+      "n": 8,
+      "mean_predicted": 0.6551,
+      "observed_rate": 0.375
+    },
+    {
+      "model": "M2",
+      "bin_low": 0.7,
+      "bin_high": 0.8,
+      "n": 20,
+      "mean_predicted": 0.749,
+      "observed_rate": 0.6
+    },
+    {
+      "model": "M2",
+      "bin_low": 0.8,
+      "bin_high": 0.9,
+      "n": 11,
+      "mean_predicted": 0.8638,
+      "observed_rate": 0.6364
+    },
+    {
+      "model": "M2",
+      "bin_low": 0.9,
+      "bin_high": 1.0,
+      "n": 352,
+      "mean_predicted": 0.9958,
+      "observed_rate": 0.9574
+    },
+    {
+      "model": "M3",
+      "bin_low": 0.0,
+      "bin_high": 0.1,
+      "n": 1620,
+      "mean_predicted": 0.0027,
+      "observed_rate": 0.0117
+    },
+    {
+      "model": "M3",
+      "bin_low": 0.1,
+      "bin_high": 0.2,
+      "n": 22,
+      "mean_predicted": 0.1496,
+      "observed_rate": 0.2273
+    },
+    {
+      "model": "M3",
+      "bin_low": 0.2,
+      "bin_high": 0.3,
+      "n": 14,
+      "mean_predicted": 0.2579,
+      "observed_rate": 0.1429
+    },
+    {
+      "model": "M3",
+      "bin_low": 0.3,
+      "bin_high": 0.4,
+      "n": 20,
+      "mean_predicted": 0.3527,
+      "observed_rate": 0.35
+    },
+    {
+      "model": "M3",
+      "bin_low": 0.4,
+      "bin_high": 0.5,
+      "n": 7,
+      "mean_predicted": 0.4582,
+      "observed_rate": 0.4286
+    },
+    {
+      "model": "M3",
+      "bin_low": 0.5,
+      "bin_high": 0.6,
+      "n": 4,
+      "mean_predicted": 0.5583,
+      "observed_rate": 0.75
+    },
+    {
+      "model": "M3",
+      "bin_low": 0.6,
+      "bin_high": 0.7,
+      "n": 9,
+      "mean_predicted": 0.651,
+      "observed_rate": 0.6667
+    },
+    {
+      "model": "M3",
+      "bin_low": 0.7,
+      "bin_high": 0.8,
+      "n": 15,
+      "mean_predicted": 0.748,
+      "observed_rate": 0.4667
+    },
+    {
+      "model": "M3",
+      "bin_low": 0.8,
+      "bin_high": 0.9,
+      "n": 14,
+      "mean_predicted": 0.8525,
+      "observed_rate": 0.6429
+    },
+    {
+      "model": "M3",
+      "bin_low": 0.9,
+      "bin_high": 1.0,
+      "n": 356,
+      "mean_predicted": 0.9955,
+      "observed_rate": 0.9522
+    }
+  ],
+  "calibration_source": [
+    "model/M1_scores.npz",
+    "model/M2_scores.npz",
+    "model/M3_scores.npz"
+  ],
+  "calibration_in_metrics": [
+    {
+      "model": "M1",
+      "n_test": 2081,
+      "n_pos": 400,
+      "auroc": 0.9866,
+      "brier": 0.04112,
+      "ece": 0.04506,
+      "mean_predicted": 0.2373,
+      "observed_rate": 0.1922
+    },
+    {
+      "model": "M2",
+      "n_test": 2081,
+      "n_pos": 400,
+      "auroc": 0.9901,
+      "brier": 0.02773,
+      "ece": 0.02287,
+      "mean_predicted": 0.1917,
+      "observed_rate": 0.1922
+    },
+    {
+      "model": "M3",
+      "n_test": 2081,
+      "n_pos": 400,
+      "auroc": 0.9899,
+      "brier": 0.02811,
+      "ece": 0.02,
+      "mean_predicted": 0.1957,
+      "observed_rate": 0.1922
+    }
+  ],
+  "fixed_specificity_operating_points": [
+    {
+      "target_specificity": 0.99,
+      "dev_threshold": 0.812129,
+      "dev_specificity": 0.99,
+      "dev_sensitivity": 0.8916,
+      "dev_n_neg": 9526,
+      "dev_n_pos": 2269,
+      "source": "dev OOF (seed 1) per model/<MODEL>_scores.npz",
+      "model": "M1",
+      "test_at_dev_threshold": {
+        "sensitivity": 0.8775,
+        "specificity": 0.9792,
+        "mcc": 0.8685,
+        "precision": 0.9093,
+        "f1": 0.8931
+      }
+    },
+    {
+      "target_specificity": 0.995,
+      "dev_threshold": 0.920782,
+      "dev_specificity": 0.9951,
+      "dev_sensitivity": 0.8444,
+      "dev_n_neg": 9526,
+      "dev_n_pos": 2269,
+      "source": "dev OOF (seed 1) per model/<MODEL>_scores.npz",
+      "model": "M1",
+      "test_at_dev_threshold": {
+        "sensitivity": 0.8075,
+        "specificity": 0.9905,
+        "mcc": 0.8515,
+        "precision": 0.9528,
+        "f1": 0.8742
+      }
+    },
+    {
+      "target_specificity": 0.99,
+      "dev_threshold": 0.765279,
+      "dev_specificity": 0.99,
+      "dev_sensitivity": 0.8867,
+      "dev_n_neg": 9526,
+      "dev_n_pos": 2269,
+      "source": "dev OOF (seed 1) per model/<MODEL>_scores.npz",
+      "model": "M2",
+      "test_at_dev_threshold": {
+        "sensitivity": 0.8725,
+        "specificity": 0.9869,
+        "mcc": 0.8848,
+        "precision": 0.9407,
+        "f1": 0.9053
+      }
+    },
+    {
+      "target_specificity": 0.995,
+      "dev_threshold": 0.943396,
+      "dev_specificity": 0.9951,
+      "dev_sensitivity": 0.8444,
+      "dev_n_neg": 9526,
+      "dev_n_pos": 2269,
+      "source": "dev OOF (seed 1) per model/<MODEL>_scores.npz",
+      "model": "M2",
+      "test_at_dev_threshold": {
+        "sensitivity": 0.825,
+        "specificity": 0.9917,
+        "mcc": 0.8663,
+        "precision": 0.9593,
+        "f1": 0.8871
+      }
+    },
+    {
+      "target_specificity": 0.99,
+      "dev_threshold": 0.959319,
+      "dev_specificity": 0.99,
+      "dev_sensitivity": 0.8806,
+      "dev_n_neg": 9526,
+      "dev_n_pos": 2269,
+      "source": "dev OOF (seed 1) per model/<MODEL>_scores.npz",
+      "model": "M3",
+      "test_at_dev_threshold": {
+        "sensitivity": 0.82,
+        "specificity": 0.9911,
+        "mcc": 0.8614,
+        "precision": 0.9563,
+        "f1": 0.8829
+      }
+    },
+    {
+      "target_specificity": 0.995,
+      "dev_threshold": 0.991138,
+      "dev_specificity": 0.9951,
+      "dev_sensitivity": 0.8083,
+      "dev_n_neg": 9526,
+      "dev_n_pos": 2269,
+      "source": "dev OOF (seed 1) per model/<MODEL>_scores.npz",
+      "model": "M3",
+      "test_at_dev_threshold": {
+        "sensitivity": 0.77,
+        "specificity": 0.9941,
+        "mcc": 0.8368,
+        "precision": 0.9686,
+        "f1": 0.8579
+      }
+    }
+  ],
+  "fixed_specificity_source": "dev OOF vector in model/<MODEL>_scores.npz",
+  "composition_challenge": {
+    "rows": [
+      {
+        "split": "scrambled_test",
+        "model": "M1",
+        "source": "training log",
+        "n": 15071,
+        "n_pos": 0,
+        "mean_score": 0.7715,
+        "frac_predicted_positive": 0.7082
+      },
+      {
+        "split": "scrambled_test",
+        "model": "M2",
+        "source": "training log",
+        "n": 15071,
+        "n_pos": 0,
+        "mean_score": 0.7021,
+        "frac_predicted_positive": 0.6818
+      },
+      {
+        "split": "scrambled_test",
+        "model": "M3",
+        "source": "training log",
+        "n": 15071,
+        "n_pos": 0,
+        "mean_score": 0.7118,
+        "frac_predicted_positive": 0.6587
+      }
+    ],
+    "max_frac_predicted_positive": 0.7082,
+    "best_model_frac": 0.6587,
+    "verdict": "FAIL_COMPOSITION_SHORTCUT",
+    "criterion": "PASS only if every model keeps composition-decoy acceptance < 10%",
+    "note": "decoy sequences are length+composition matched shuffles of the positives; a high acceptance rate means the model reads composition, not order",
+    "best_model": "M3"
+  },
+  "calibration_bins_count": 0,
+  "v4_acceptance": {
+    "decoy_acceptance_by_model": {
+      "M1": 0.7082,
+      "M2": 0.6818,
+      "M3": 0.6587
+    },
+    "decoy_acceptance": 0.7082,
+    "decoy_acceptance_target": 0.1,
+    "decoy_acceptance_pass": false,
+    "headline_model": "M3",
+    "headline_decoy_acceptance": 0.6587,
+    "headline_decoy_acceptance_pass": false,
+    "baselines_failing_composition": [
+      "M1",
+      "M2",
+      "M3"
+    ],
+    "composition_only_auroc": 0.9359979179060083,
+    "best_deep_auroc": 0.9901279000594884,
+    "composition_only_auroc_target": 0.9,
+    "composition_only_pass": false,
+    "test_positives": 400,
+    "test_positives_target": 100,
+    "test_positives_pass": true,
+    "decoy_split_overlap": 0,
+    "decoy_split_pass": true,
+    "all_pass": false,
+    "verdict": "V4_STILL_HAS_COMPOSITION_SHORTCUT",
+    "hardneg_permutation_fraction": 0.0,
+    "note": "Passing these gates is necessary, not sufficient: an external benchmark (AMPBenchmark multi-negative) and wet-lab hit rate are still required before any paper claim."
+  },
+  "caveats": [
+    "Positives are DRAMP-curated bacterial actives (TIER_B_LABEL: bacterial activity label + named target + PubMed reference). The bulk dumps do not carry per-record MIC values, so this is not a MIC-quantitative cohort.",
+    "Negatives are UniProt bacterial-cytoplasm fragments: a weak negative label, not experimentally verified inactivity.",
+    "The composition-matched challenge is reported as a challenge; a high flag rate is published as a failure mode, not hidden."
+  ],
+  "private_bundle_breakdown": {
+    "model": 24121529,
+    "features": 1460094742,
+    "dataset": 16663909
+  },
+  "private_bundle_model_files": [
+    "model/M1_seed1.pt",
+    "model/M1_seed2.pt",
+    "model/M1_seed3.pt",
+    "model/M1_seed4.pt",
+    "model/M1_seed5.pt",
+    "model/M2_seed1.pt",
+    "model/M2_seed2.pt",
+    "model/M2_seed3.pt",
+    "model/M2_seed4.pt",
+    "model/M2_seed5.pt",
+    "model/M3_seed1.pt",
+    "model/M3_seed2.pt",
+    "model/M3_seed3.pt",
+    "model/M3_seed4.pt",
+    "model/M3_seed5.pt"
+  ],
+  "private_bundle_export": {
+    "skipped": "V5_SKIP_BUNDLE=1 (arm run)"
+  }
+}

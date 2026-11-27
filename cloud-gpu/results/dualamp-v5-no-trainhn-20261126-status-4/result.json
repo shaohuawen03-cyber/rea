@@ -1,0 +1,8 @@
+{
+  "job_id": "dualamp-v5-no-trainhn-20261126-status-4",
+  "provider": "kaggle",
+  "mode": "status",
+  "kernel_ref": "shaohuawen/dualamp-v5-no-trainhn-20261126",
+  "status_output": "shaohuawen/dualamp-v5-no-trainhn-20261126 has status \"KernelWorkerStatus.COMPLETE\"",
+  "checked_at_utc": "2026-11-27T08:01:38Z"
+}

@@ -1,0 +1,16 @@
+{
+  "job_id": "dualamp-v5-no-trainhn-20261126-fetch-4",
+  "provider": "kaggle",
+  "mode": "output",
+  "kernel_ref": "shaohuawen/dualamp-v5-no-trainhn-20261126",
+  "copied_files": [
+    "dualamp-v5-no-trainhn-20261126.log",
+    "v2_1_progress.json",
+    "v2_1_training.log",
+    "v2_1_training_report.json",
+    "v4_evaluation_gate.json",
+    "v5_arm_summary.json"
+  ],
+  "cli_output": "Downloading v2_1_progress.json to /tmp/kag_out_n9fsdfwn\n\nOutput file downloaded to /tmp/kag_out_n9fsdfwn/v2_1_progress.json\nDownloading v2_1_training.log to /tmp/kag_out_n9fsdfwn\n\nOutput file downloaded to /tmp/kag_out_n9fsdfwn/v2_1_training.log\nDownloading v2_1_training_report.json to /tmp/kag_out_n9fsdfwn\n\nOutput file downloaded to /tmp/kag_out_n9fsdfwn/v2_1_training_report.json\nDownloading v4_evaluation_gate.json to /tmp/kag_out_n9fsdfwn\n\nOutput file downloaded to /tmp/kag_out_n9fsdfwn/v4_evaluation_gate.json\nDownloading v5_arm_summary.json to /tmp/kag_out_n9fsdfwn\n\nOutput file downloaded t",
+  "fetched_at_utc": "2026-11-27T08:01:41Z"
+}
