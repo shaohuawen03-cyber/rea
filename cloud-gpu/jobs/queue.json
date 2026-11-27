@@ -4063,10 +4063,11 @@
       "mode": "status",
       "script_path": "cloud-gpu/jobs/amp_calibration_forensics.py",
       "kernel_slug": "amp-calib-forensics-c-20261126",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-27T10:53:37Z",
-      "note": "forensics c poll 2."
+      "note": "forensics c poll 2.",
+      "finished_at_utc": "2026-11-27T10:54:15Z"
     },
     {
       "id": "amp-calib-forensics-c-20261126-fetch-2",
@@ -4074,10 +4075,11 @@
       "mode": "output",
       "script_path": "cloud-gpu/jobs/amp_calibration_forensics.py",
       "kernel_slug": "amp-calib-forensics-c-20261126",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-27T10:53:37Z",
-      "note": "forensics c poll 2."
+      "note": "forensics c poll 2.",
+      "finished_at_utc": "2026-11-27T10:54:16Z"
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
