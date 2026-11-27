@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-27T09:00:28Z",
+  "updated_at_utc": "2026-11-27T09:25:36Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -3926,6 +3926,57 @@
       "created_at_utc": "2026-11-27T09:00:28Z",
       "note": "forensics poll 2.",
       "finished_at_utc": "2026-11-27T09:01:04Z"
+    },
+    {
+      "id": "amp-calib-forensics-b-20261126",
+      "provider": "kaggle",
+      "mode": "run",
+      "accelerator": "NvidiaTeslaT4",
+      "script_path": "cloud-gpu/jobs/amp_calibration_forensics.py",
+      "script_args": [],
+      "extra_pip": [
+        "gdown",
+        "requests",
+        "fair-esm",
+        "pyyaml",
+        "biopython",
+        "pandas",
+        "scikit-learn",
+        "joblib"
+      ],
+      "serve_minutes": 15.0,
+      "wait": false,
+      "timeout_sec": 12600,
+      "created_at_utc": "2026-11-27T09:25:36Z",
+      "kernel_slug": "amp-calib-forensics-b-20261126",
+      "status": "pending",
+      "kernel_sources": [
+        "shaohuawen/dualamp-v4-full-20261126"
+      ],
+      "note": "Threshold forensics retry: only the v4 bundle is mounted (the v5 control's numbers are read from the repo), so the job no longer needs two kernel attachments.",
+      "finished_at_utc": "2026-11-27T08:32:38Z"
+    },
+    {
+      "id": "amp-calib-forensics-b-20261126-status",
+      "provider": "kaggle",
+      "mode": "status",
+      "script_path": "cloud-gpu/jobs/amp_calibration_forensics.py",
+      "kernel_slug": "amp-calib-forensics-b-20261126",
+      "status": "pending",
+      "wait": false,
+      "created_at_utc": "2026-11-27T09:25:36Z",
+      "note": "forensics b poll."
+    },
+    {
+      "id": "amp-calib-forensics-b-20261126-fetch",
+      "provider": "kaggle",
+      "mode": "output",
+      "script_path": "cloud-gpu/jobs/amp_calibration_forensics.py",
+      "kernel_slug": "amp-calib-forensics-b-20261126",
+      "status": "pending",
+      "wait": false,
+      "created_at_utc": "2026-11-27T09:25:36Z",
+      "note": "forensics b poll."
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"

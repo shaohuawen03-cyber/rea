@@ -46,10 +46,6 @@ INPUT = Path("/kaggle/input")
 LEANREA = "https://github.com/hukeying85-ux/leanrea"
 LEANREA_REV = "f610dc00b1aec3ab948a5b77574af0e644259a13"
 POSITIVE_SHA = "9ca0d4076f6d61c16ad31b920afc9029ae463d3df3510049c9b6ac4366a8e40c"
-ARMS = {
-    "v4": "dualamp-v4-full-20261126",
-    "no_trainhn": "dualamp-v5-no-trainhn-20261126",
-}
 N_EACH = 2500
 
 
@@ -125,16 +121,10 @@ def main() -> int:
     tmp = Path(tempfile.mkdtemp(prefix="forensics-", dir="/tmp"))
     try:
         # ---------------------------------------------------------------- inputs
-        reports = {}
-        for arm, slug in ARMS.items():
-            hits = sorted(INPUT.rglob(f"**/{slug}/v2_1_training_report.json"))
-            if not hits:
-                hits = [p for p in INPUT.rglob("v2_1_training_report.json")
-                        if slug in str(p)]
-            if not hits:
-                raise RuntimeError(f"{arm}: training report not mounted ({slug})")
-            reports[arm] = json.loads(hits[0].read_text())
-            report["arms"].setdefault(arm, {})["report_path"] = str(hits[0])
+        # Only the v4 bundle is needed. The v5 control's *aggregate* numbers are already
+        # in the repo (results/dualamp-v5-no-trainhn-.../v2_1_training_report.json) and
+        # are quoted from there; mounting that kernel merely to read its JSON would add
+        # a dependency for no measurement.
 
         # --------------------------------------------------- positives + decoys
         positives = None
