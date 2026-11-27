@@ -270,7 +270,11 @@ def main() -> int:
         scaler, scaler_audit = _scaler_for_m3()
         report["biophys_scaler"] = scaler_audit
         if scaler is None:
-            dropped = [c for c in checkpoints if "_M3_" in c.name or "_M3." in c.name]
+            # Checkpoints are named M1_seed1.pt / M2_seed1.pt / M3_seed1.pt, so match on
+            # the prefix. An earlier filter looked for "_M3_" inside the name, matched
+            # nothing, and let M3 through with a zero-width physio block - which crashes
+            # in the first LayerNorm instead of being dropped.
+            dropped = [c for c in checkpoints if c.name.upper().startswith("M3")]
             checkpoints = [c for c in checkpoints if c not in dropped]
             report["m3_excluded"] = {"reason": scaler_audit.get("reason"),
                                      "dropped_checkpoints": [c.name for c in dropped]}
@@ -343,13 +347,33 @@ def _scaler_for_m3():
     training split only), so a missing scaler is reported as a failure to evaluate M3,
     never papered over.
     """
-    scaler_files = sorted(Path("/kaggle/input").rglob("*biophys_scaler.joblib"))
-    if not scaler_files:
-        return (None, {"status": "missing",
-                       "reason": "training-fitted biophys scaler not mounted; M3 dropped "
-                                 "from external tables rather than refitting it"})
+    import io  # noqa: PLC0415
     import joblib  # noqa: PLC0415
-    return joblib.load(scaler_files[0]), {"status": "ok", "source": str(scaler_files[0])}
+
+    loose = sorted(Path("/kaggle/input").rglob("*biophys_scaler*.joblib"))
+    if loose:
+        return joblib.load(loose[0]), {"status": "ok", "source": str(loose[0]),
+                                       "provenance": "mounted file"}
+    # The training kernel ships the scaler inside its bundle zip, and rglob cannot see
+    # inside a zip - which is why the first two attempts concluded "missing" while the
+    # scaler was in fact mounted the whole time.
+    for zpath in sorted(Path("/kaggle/input").rglob("*.zip")):
+        try:
+            with zipfile.ZipFile(zpath) as z:
+                for name in z.namelist():
+                    base = Path(name).name
+                    if base.endswith(".joblib") and "scaler" in base.lower():
+                        with z.open(name) as src:
+                            blob = src.read()
+                        return joblib.load(io.BytesIO(blob)), {
+                            "status": "ok", "source": f"{zpath.name}:{name}",
+                            "bytes": len(blob), "provenance": "inside mounted bundle"}
+        except zipfile.BadZipFile:
+            continue
+    return (None, {"status": "missing",
+                   "reason": "training-fitted biophys scaler not found as a file or inside "
+                             "any mounted zip; M3 dropped from external tables rather than "
+                             "refitting it"})
 
 
 def _download_dbaasp(repo: Path, tmp: Path) -> list[str]:
