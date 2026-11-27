@@ -1,0 +1,12 @@
+{
+  "job_id": "amp-calib-forensics-20261126-fetch-2",
+  "provider": "kaggle",
+  "mode": "output",
+  "kernel_ref": "shaohuawen/amp-calib-forensics-20261126",
+  "copied_files": [
+    "amp-calib-forensics-20261126.log",
+    "amp_calibration_forensics.json"
+  ],
+  "cli_output": "Downloading amp_calibration_forensics.json to /tmp/kag_out_x1bsp7o_\n\nOutput file downloaded to /tmp/kag_out_x1bsp7o_/amp_calibration_forensics.json\nKernel log downloaded to /tmp/kag_out_x1bsp7o_/amp-calib-forensics-20261126.log",
+  "fetched_at_utc": "2026-11-27T09:01:04Z"
+}

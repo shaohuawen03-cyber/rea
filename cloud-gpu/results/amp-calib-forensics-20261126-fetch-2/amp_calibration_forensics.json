@@ -1,0 +1,11 @@
+{
+  "stage": "amp_calibration_forensics",
+  "arms": {
+    "v4": {
+      "report_path": "/kaggle/input/notebooks/shaohuawen/dualamp-v4-full-20261126/v2_1_training_report.json"
+    }
+  },
+  "status": "FAILED",
+  "error": "RuntimeError: no_trainhn: training report not mounted (dualamp-v5-no-trainhn-20261126)",
+  "traceback": "Traceback (most recent call last):\n  File \"/tmp/_payload.py\", line 135, in main\n    raise RuntimeError(f\"{arm}: training report not mounted ({slug})\")\nRuntimeError: no_trainhn: training report not mounted (dualamp-v5-no-trainhn-20261126)\n"
+}

@@ -1,0 +1,39 @@
+[{"stream_name":"stdout","time":5.928592461,"data":"[pip] gdown: rc=0\n"}
+,{"stream_name":"stdout","time":7.592752248,"data":"[pip] requests: rc=0\n"}
+,{"stream_name":"stdout","time":9.778997236,"data":"[pip] fair-esm: rc=0\n"}
+,{"stream_name":"stdout","time":11.530601496,"data":"[pip] pyyaml: rc=0\n"}
+,{"stream_name":"stdout","time":15.026797064,"data":"[pip] biopython: rc=0\n"}
+,{"stream_name":"stdout","time":16.670550513,"data":"[pip] pandas: rc=0\n"}
+,{"stream_name":"stdout","time":18.323751178,"data":"[pip] scikit-learn: rc=0\n"}
+,{"stream_name":"stdout","time":20.001722881,"data":"[pip] joblib: rc=0\n"}
+,{"stream_name":"stderr","time":20.370196794,"data":"{\n"}
+,{"stream_name":"stderr","time":20.370224962,"data":"  \"stage\": \"amp_calibration_forensics\",\n"}
+,{"stream_name":"stderr","time":20.370229975,"data":"  \"arms\": {\n"}
+,{"stream_name":"stderr","time":20.370234316,"data":"    \"v4\": {\n"}
+,{"stream_name":"stderr","time":20.370238731,"data":"      \"report_path\": \"/kaggle/input/notebooks/shaohuawen/dualamp-v4-full-20261126/v2_1_training_report.json\"\n"}
+,{"stream_name":"stderr","time":20.370243706,"data":"    }\n"}
+,{"stream_name":"stderr","time":20.370247769,"data":"  },\n"}
+,{"stream_name":"stderr","time":20.37025119,"data":"  \"status\": \"FAILED\",\n"}
+,{"stream_name":"stderr","time":20.370254829,"data":"  \"error\": \"RuntimeError: no_trainhn: training report not mounted (dualamp-v5-no-trainhn-20261126)\",\n"}
+,{"stream_name":"stderr","time":20.37025922,"data":"  \"traceback\": \"Traceback (most recent call last):\\n  File \\\"/tmp/_payload.py\\\", line 135, in main\\n    raise RuntimeError(f\\\"{arm}: training report not mounted ({slug})\\\")\\nRuntimeError: no_trainhn: training report not mounted (dualamp-v5-no-trainhn-20261126)\\n\"\n"}
+,{"stream_name":"stderr","time":20.370265309,"data":"}\n"}
+,{"stream_name":"stderr","time":20.37090259,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":20.371622378,"data":"  File \"/kaggle/src/script.py\", line 15, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":20.371651037,"data":"    runpy.run_path('/tmp/_payload.py', run_name='__main__')\n"}
+,{"stream_name":"stderr","time":20.371655935,"data":"    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":20.37165982,"data":"  File \"\u003cfrozen runpy\u003e\", line 294, in run_path\n"}
+,{"stream_name":"stderr","time":20.371664021,"data":"  File \"\u003cfrozen runpy\u003e\", line 98, in _run_module_code\n"}
+,{"stream_name":"stderr","time":20.371668089,"data":"  File \"\u003cfrozen runpy\u003e\", line 88, in _run_code\n"}
+,{"stream_name":"stderr","time":20.37167218,"data":"  File \"/tmp/_payload.py\", line 484, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":20.37167668,"data":"    raise SystemExit(main())\n"}
+,{"stream_name":"stderr","time":20.371680227,"data":"                     ~~~~^^\n"}
+,{"stream_name":"stderr","time":20.37168372,"data":"  File \"/tmp/_payload.py\", line 135, in main\n"}
+,{"stream_name":"stderr","time":20.371687936,"data":"    raise RuntimeError(f\"{arm}: training report not mounted ({slug})\")\n"}
+,{"stream_name":"stderr","time":20.371692107,"data":"RuntimeError: no_trainhn: training report not mounted (dualamp-v5-no-trainhn-20261126)\n"}
+,{"stream_name":"stderr","time":22.750970733,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":22.75099868,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":23.040669172,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":23.040708554,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":24.036449106,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":25.099035879,"data":"[NbConvertApp] Writing 322705 bytes to __results__.html\n"}
+]
