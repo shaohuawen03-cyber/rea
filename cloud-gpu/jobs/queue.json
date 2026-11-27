@@ -3703,10 +3703,11 @@
       "mode": "status",
       "script_path": "cloud-gpu/jobs/amp_benchmark_external.py",
       "kernel_slug": "amp-benchmark-v4d-20261126",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-27T05:43:25Z",
-      "note": "amp benchmark d poll 2."
+      "note": "amp benchmark d poll 2.",
+      "finished_at_utc": "2026-11-27T05:44:05Z"
     },
     {
       "id": "amp-benchmark-v4d-20261126-fetch-2",
@@ -3714,10 +3715,11 @@
       "mode": "output",
       "script_path": "cloud-gpu/jobs/amp_benchmark_external.py",
       "kernel_slug": "amp-benchmark-v4d-20261126",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-27T05:43:25Z",
-      "note": "amp benchmark d poll 2."
+      "note": "amp benchmark d poll 2.",
+      "finished_at_utc": "2026-11-27T05:44:07Z"
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"

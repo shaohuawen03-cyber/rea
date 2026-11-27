@@ -1,0 +1,372 @@
+{
+  "stage": "amp_benchmark_external",
+  "status": "COMPLETED_AMP_BENCHMARK",
+  "leanrea_commit": "f610dc00b1aec3ab948a5b77574af0e644259a13",
+  "max_per_class": 4000,
+  "cohort": {
+    "positives": 14577,
+    "decoys": 14572,
+    "positive_sha256": "9ca0d4076f6d61c16ad31b920afc9029ae463d3df3510049c9b6ac4366a8e40c",
+    "bundle_sha256": "d5dce04e7763dc1abe9cdcf2729de1701cccdf6c893a903e6aee2319058936bd"
+  },
+  "checkpoints": [
+    "M1_seed1.pt",
+    "M1_seed2.pt",
+    "M1_seed3.pt",
+    "M1_seed4.pt",
+    "M1_seed5.pt",
+    "M2_seed1.pt",
+    "M2_seed2.pt",
+    "M2_seed3.pt",
+    "M2_seed4.pt",
+    "M2_seed5.pt",
+    "M3_seed1.pt",
+    "M3_seed2.pt",
+    "M3_seed3.pt",
+    "M3_seed4.pt",
+    "M3_seed5.pt"
+  ],
+  "checkpoint_source": {
+    "loose_mounted": 0,
+    "from_bundle": 15,
+    "bundle": "dualamp_v2_1_model_bundle.zip"
+  },
+  "negatives": {
+    "proteins_total": 117172,
+    "keyword_excluded": 18,
+    "fragments_raw": 351462,
+    "fragments_standard_aa": 351429,
+    "fragments_dedup": 351119,
+    "fragments_hit_positive_4mer_gt08": 31495,
+    "negatives_final": 4000,
+    "seed": 11,
+    "cap": 4000,
+    "neg_mode": "standard",
+    "seconds": 10.3
+  },
+  "dbaasp": {
+    "n_raw": 13404,
+    "n_usable": 9534,
+    "source": "BioGenies/NegativeDatasets data/dbaasp.csv"
+  },
+  "encoder": {
+    "name": "fair-esm",
+    "embed_dim": 0,
+    "is_mock": false
+  },
+  "biophys_scaler": {
+    "status": "ok",
+    "source": "dualamp_v2_1_model_bundle.zip:features/biophys_scaler.joblib",
+    "bytes": 1439,
+    "provenance": "inside mounted bundle"
+  },
+  "checks": {
+    "cross_source_dbaasp": {
+      "n_pos": 4000,
+      "n_neg": 4000,
+      "models": {
+        "M1": {
+          "auroc": 0.9608370625,
+          "auroc_ci95": [
+            0.9571115861498984,
+            0.9645895594918269
+          ],
+          "threshold_from_dev": 0.726138,
+          "sensitivity": 0.7535,
+          "specificity": 0.9645,
+          "precision": 0.955,
+          "mcc": 0.7345,
+          "mean_score": 0.4549
+        },
+        "M2": {
+          "auroc": 0.9668363125,
+          "auroc_ci95": [
+            0.9634298197621879,
+            0.9702248671423799
+          ],
+          "threshold_from_dev": 0.441343,
+          "sensitivity": 0.6342,
+          "specificity": 0.9885,
+          "precision": 0.9822,
+          "mcc": 0.6659,
+          "mean_score": 0.3086
+        },
+        "M3": {
+          "auroc": 0.9671388125,
+          "auroc_ci95": [
+            0.9638244117530644,
+            0.9705156505413736
+          ],
+          "threshold_from_dev": 0.803584,
+          "sensitivity": 0.4432,
+          "specificity": 0.998,
+          "precision": 0.9955,
+          "mcc": 0.5303,
+          "mean_score": 0.2808
+        }
+      },
+      "composition_shift": {
+        "mean_abs_diff": 0.029449687865931013,
+        "l2_distance": 0.17469825027276295,
+        "top_shifted_aa": [
+          {
+            "aa": "K",
+            "delta": 0.10408306701682127
+          },
+          {
+            "aa": "R",
+            "delta": 0.07746544344026114
+          },
+          {
+            "aa": "E",
+            "delta": -0.06548346927556829
+          },
+          {
+            "aa": "D",
+            "delta": -0.048564560474967475
+          },
+          {
+            "aa": "W",
+            "delta": 0.04464857937434122
+          }
+        ]
+      }
+    },
+    "decoy_challenge": {
+      "n_pos": 4000,
+      "n_neg": 4000,
+      "models": {
+        "M1": {
+          "auroc": 0.77140490625,
+          "auroc_ci95": [
+            0.7613449127706641,
+            0.7815635523003627
+          ],
+          "threshold_from_dev": 0.726138,
+          "sensitivity": 0.7302,
+          "specificity": 0.626,
+          "precision": 0.6613,
+          "mcc": 0.3582,
+          "mean_score": 0.6389
+        },
+        "M2": {
+          "auroc": 0.79766846875,
+          "auroc_ci95": [
+            0.7878748094705159,
+            0.8067367897852005
+          ],
+          "threshold_from_dev": 0.441343,
+          "sensitivity": 0.6215,
+          "specificity": 0.822,
+          "precision": 0.7774,
+          "mcc": 0.4527,
+          "mean_score": 0.3933
+        },
+        "M3": {
+          "auroc": 0.80606421875,
+          "auroc_ci95": [
+            0.7963423593651636,
+            0.8151743596574587
+          ],
+          "threshold_from_dev": 0.803584,
+          "sensitivity": 0.4505,
+          "specificity": 0.9433,
+          "precision": 0.8881,
+          "mcc": 0.4525,
+          "mean_score": 0.3397
+        }
+      },
+      "composition_shift": {
+        "mean_abs_diff": 0.007825357562096411,
+        "l2_distance": 0.04494720899840532,
+        "top_shifted_aa": [
+          {
+            "aa": "K",
+            "delta": -0.02846070308132248
+          },
+          {
+            "aa": "G",
+            "delta": -0.013780103206166877
+          },
+          {
+            "aa": "F",
+            "delta": 0.013629434455826463
+          },
+          {
+            "aa": "D",
+            "delta": 0.011524213856219174
+          },
+          {
+            "aa": "R",
+            "delta": -0.011503436495463149
+          }
+        ]
+      },
+      "note": "decoys are exact residue permutations of the training positives; their true positive rate is 0% by construction"
+    },
+    "iid_same_source": {
+      "n_pos": 4000,
+      "n_neg": 4000,
+      "models": {
+        "M1": {
+          "auroc": 0.95407125,
+          "auroc_ci95": [
+            0.9500347625135195,
+            0.9582412667559309
+          ],
+          "threshold_from_dev": 0.726138,
+          "sensitivity": 0.7302,
+          "specificity": 0.9645,
+          "precision": 0.9536,
+          "mcc": 0.7146,
+          "mean_score": 0.4461
+        },
+        "M2": {
+          "auroc": 0.9623289375,
+          "auroc_ci95": [
+            0.9586434374703757,
+            0.9658449642558801
+          ],
+          "threshold_from_dev": 0.441343,
+          "sensitivity": 0.6215,
+          "specificity": 0.9885,
+          "precision": 0.9818,
+          "mcc": 0.6558,
+          "mean_score": 0.3065
+        },
+        "M3": {
+          "auroc": 0.962821875,
+          "auroc_ci95": [
+            0.9592677881384601,
+            0.9662973343561746
+          ],
+          "threshold_from_dev": 0.803584,
+          "sensitivity": 0.4505,
+          "specificity": 0.998,
+          "precision": 0.9956,
+          "mcc": 0.536,
+          "mean_score": 0.2795
+        }
+      },
+      "composition_shift": {
+        "mean_abs_diff": 0.014716416371182737,
+        "l2_distance": 0.08880566130374444,
+        "top_shifted_aa": [
+          {
+            "aa": "E",
+            "delta": -0.05137318473314075
+          },
+          {
+            "aa": "C",
+            "delta": 0.036312161082467
+          },
+          {
+            "aa": "K",
+            "delta": 0.031313311865749045
+          },
+          {
+            "aa": "D",
+            "delta": -0.02975141558859879
+          },
+          {
+            "aa": "F",
+            "delta": 0.022111863458036618
+          }
+        ]
+      },
+      "note": "peptide-level split of the same two pools - this is the inflated number a careless benchmark reports"
+    },
+    "length_extrapolation": {
+      "short_le8": {
+        "n_pos": 686,
+        "n_neg": 89,
+        "models": {
+          "M1": {
+            "auroc": 0.8584695515445343,
+            "auroc_ci95": [
+              0.8180220707240358,
+              0.8968520187775579
+            ],
+            "threshold_from_dev": 0.726138,
+            "sensitivity": 0.8659,
+            "specificity": 0.7303,
+            "precision": 0.9612,
+            "mcc": 0.473,
+            "mean_score": 0.8147
+          },
+          "M2": {
+            "auroc": 0.90696760245029,
+            "auroc_ci95": [
+              0.8776792784663016,
+              0.9321882519491634
+            ],
+            "threshold_from_dev": 0.441343,
+            "sensitivity": 0.7959,
+            "specificity": 0.8539,
+            "precision": 0.9767,
+            "mcc": 0.4621,
+            "mean_score": 0.6703
+          },
+          "M3": {
+            "auroc": 0.9110132014282438,
+            "auroc_ci95": [
+              0.8815868671446652,
+              0.9362533792965628
+            ],
+            "threshold_from_dev": 0.803584,
+            "sensitivity": 0.5845,
+            "specificity": 0.9663,
+            "precision": 0.9926,
+            "mcc": 0.3516,
+            "mean_score": 0.6293
+          }
+        }
+      },
+      "long_ge41": {
+        "n_pos": 978,
+        "n_neg": 978,
+        "models": {
+          "M1": {
+            "auroc": 0.9894917217642951,
+            "auroc_ci95": [
+              0.9843155656364552,
+              0.9937345399248803
+            ],
+            "threshold_from_dev": 0.726138,
+            "sensitivity": 0.8957,
+            "specificity": 0.9969,
+            "precision": 0.9966,
+            "mcc": 0.8972,
+            "mean_score": 0.4643
+          },
+          "M2": {
+            "auroc": 0.9892136198828209,
+            "auroc_ci95": [
+              0.9832300718490876,
+              0.9938694896849165
+            ],
+            "threshold_from_dev": 0.441343,
+            "sensitivity": 0.8701,
+            "specificity": 1.0,
+            "precision": 1.0,
+            "mcc": 0.8776,
+            "mean_score": 0.4281
+          },
+          "M3": {
+            "auroc": 0.9900416525524735,
+            "auroc_ci95": [
+              0.9847712704832626,
+              0.9943347897694553
+            ],
+            "threshold_from_dev": 0.803584,
+            "sensitivity": 0.8211,
+            "specificity": 1.0,
+            "precision": 1.0,
+            "mcc": 0.8345,
+            "mean_score": 0.4236
+          }
+        }
+      }
+    }
+  }
+}

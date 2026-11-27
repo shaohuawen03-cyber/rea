@@ -1,0 +1,82 @@
+[{"stream_name":"stdout","time":4.363426724,"data":"[pip] gdown: rc=0\n"}
+,{"stream_name":"stdout","time":5.925632904,"data":"[pip] requests: rc=0\n"}
+,{"stream_name":"stdout","time":7.9653949950000005,"data":"[pip] fair-esm: rc=0\n"}
+,{"stream_name":"stdout","time":9.516334467,"data":"[pip] pyyaml: rc=0\n"}
+,{"stream_name":"stdout","time":13.00915775,"data":"[pip] biopython: rc=0\n"}
+,{"stream_name":"stdout","time":14.570842188,"data":"[pip] pandas: rc=0\n"}
+,{"stream_name":"stdout","time":16.125539256,"data":"[pip] scikit-learn: rc=0\n"}
+,{"stream_name":"stdout","time":17.664739799,"data":"[pip] joblib: rc=0\n"}
+,{"stream_name":"stderr","time":48.981695383,"data":"/tmp/_payload.py:391: DeprecationWarning: Python 3.14 will, by default, filter extracted tar archives and reject files or modify their metadata. Use the filter argument to control this behavior.\n"}
+,{"stream_name":"stderr","time":48.981728995,"data":"  tar.extractall(tmp / \"negds_x\")\n"}
+,{"stream_name":"stdout","time":57.457654184,"data":"Downloading: \"https://dl.fbaipublicfiles.com/fair-esm/models/esm2_t12_35M_UR50D.pt\" to /root/.cache/torch/hub/checkpoints/esm2_t12_35M_UR50D.pt\n"}
+,{"stream_name":"stdout","time":58.214501455,"data":"Downloading: \"https://dl.fbaipublicfiles.com/fair-esm/regression/esm2_t12_35M_UR50D-contact-regression.pt\" to /root/.cache/torch/hub/checkpoints/esm2_t12_35M_UR50D-contact-regression.pt\n"}
+,{"stream_name":"stdout","time":206.649159321,"data":"{\n"}
+,{"stream_name":"stdout","time":206.649197038,"data":"  \"stage\": \"amp_benchmark_external\",\n"}
+,{"stream_name":"stdout","time":206.649202957,"data":"  \"status\": \"COMPLETED_AMP_BENCHMARK\",\n"}
+,{"stream_name":"stdout","time":206.649207586,"data":"  \"leanrea_commit\": \"f610dc00b1aec3ab948a5b77574af0e644259a13\",\n"}
+,{"stream_name":"stdout","time":206.649212048,"data":"  \"max_per_class\": 4000,\n"}
+,{"stream_name":"stdout","time":206.649216403,"data":"  \"cohort\": {\n"}
+,{"stream_name":"stdout","time":206.649220616,"data":"    \"positives\": 14577,\n"}
+,{"stream_name":"stdout","time":206.649224903,"data":"    \"decoys\": 14572,\n"}
+,{"stream_name":"stdout","time":206.649229372,"data":"    \"positive_sha256\": \"9ca0d4076f6d61c16ad31b920afc9029ae463d3df3510049c9b6ac4366a8e40c\",\n"}
+,{"stream_name":"stdout","time":206.649233834,"data":"    \"bundle_sha256\": \"d5dce04e7763dc1abe9cdcf2729de1701cccdf6c893a903e6aee2319058936bd\"\n"}
+,{"stream_name":"stdout","time":206.649238478,"data":"  },\n"}
+,{"stream_name":"stdout","time":206.649248521,"data":"  \"checkpoints\": [\n"}
+,{"stream_name":"stdout","time":206.649252374,"data":"    \"M1_seed1.pt\",\n"}
+,{"stream_name":"stdout","time":206.649255238,"data":"    \"M1_seed2.pt\",\n"}
+,{"stream_name":"stdout","time":206.649258149,"data":"    \"M1_seed3.pt\",\n"}
+,{"stream_name":"stdout","time":206.649260987,"data":"    \"M1_seed4.pt\",\n"}
+,{"stream_name":"stdout","time":206.649263916,"data":"    \"M1_seed5.pt\",\n"}
+,{"stream_name":"stdout","time":206.649266718,"data":"    \"M2_seed1.pt\",\n"}
+,{"stream_name":"stdout","time":206.649269601,"data":"    \"M2_seed2.pt\",\n"}
+,{"stream_name":"stdout","time":206.649272428,"data":"    \"M2_seed3.pt\",\n"}
+,{"stream_name":"stdout","time":206.649275237,"data":"    \"M2_seed4.pt\",\n"}
+,{"stream_name":"stdout","time":206.64927857200001,"data":"    \"M2_seed5.pt\",\n"}
+,{"stream_name":"stdout","time":206.649281567,"data":"    \"M3_seed1.pt\",\n"}
+,{"stream_name":"stdout","time":206.649284656,"data":"    \"M3_seed2.pt\",\n"}
+,{"stream_name":"stdout","time":206.64928753,"data":"    \"M3_seed3.pt\",\n"}
+,{"stream_name":"stdout","time":206.649290468,"data":"    \"M3_seed4.pt\",\n"}
+,{"stream_name":"stdout","time":206.649304835,"data":"    \"M3_seed5.pt\"\n"}
+,{"stream_name":"stdout","time":206.649307344,"data":"  ],\n"}
+,{"stream_name":"stdout","time":206.649309604,"data":"  \"checkpoint_source\": {\n"}
+,{"stream_name":"stdout","time":206.649311874,"data":"    \"loose_mounted\": 0,\n"}
+,{"stream_name":"stdout","time":206.649314222,"data":"    \"from_bundle\": 15,\n"}
+,{"stream_name":"stdout","time":206.649316532,"data":"    \"bundle\": \"dualamp_v2_1_model_bundle.zip\"\n"}
+,{"stream_name":"stdout","time":206.649318886,"data":"  },\n"}
+,{"stream_name":"stdout","time":206.649321108,"data":"  \"negatives\": {\n"}
+,{"stream_name":"stdout","time":206.649323343,"data":"    \"proteins_total\": 117172,\n"}
+,{"stream_name":"stdout","time":206.64932575,"data":"    \"keyword_excluded\": 18,\n"}
+,{"stream_name":"stdout","time":206.649328097,"data":"    \"fragments_raw\": 351462,\n"}
+,{"stream_name":"stdout","time":206.649330373,"data":"    \"fragments_standard_aa\": 351429,\n"}
+,{"stream_name":"stdout","time":206.649332758,"data":"    \"fragments_dedup\": 351119,\n"}
+,{"stream_name":"stdout","time":206.649335046,"data":"    \"fragments_hit_positive_4mer_gt08\": 31495,\n"}
+,{"stream_name":"stdout","time":206.649337353,"data":"    \"negatives_final\": 4000,\n"}
+,{"stream_name":"stdout","time":206.649339614,"data":"    \"seed\": 11,\n"}
+,{"stream_name":"stdout","time":206.649341866,"data":"    \"cap\": 4000,\n"}
+,{"stream_name":"stdout","time":206.649344101,"data":"    \"neg_mode\": \"standard\",\n"}
+,{"stream_name":"stdout","time":206.649346413,"data":"    \"seconds\": 10.3\n"}
+,{"stream_name":"stdout","time":206.649348669,"data":"  },\n"}
+,{"stream_name":"stdout","time":206.649350821,"data":"  \"dbaasp\": {\n"}
+,{"stream_name":"stdout","time":206.649353048,"data":"    \"n_raw\": 13404,\n"}
+,{"stream_name":"stdout","time":206.649355313,"data":"    \"n_usable\": 9534,\n"}
+,{"stream_name":"stdout","time":206.649357579,"data":"    \"source\": \"BioGenies/NegativeDatasets data/dbaasp.csv\"\n"}
+,{"stream_name":"stdout","time":206.649359937,"data":"  },\n"}
+,{"stream_name":"stdout","time":206.649362074,"data":"  \"encoder\": {\n"}
+,{"stream_name":"stdout","time":206.649364302,"data":"    \"name\": \"fair-esm\",\n"}
+,{"stream_name":"stdout","time":206.649366584,"data":"    \"embed_dim\": 0,\n"}
+,{"stream_name":"stdout","time":206.649368834,"data":"    \"is_mock\": false\n"}
+,{"stream_name":"stdout","time":206.649371071,"data":"  },\n"}
+,{"stream_name":"stdout","time":206.649373211,"data":"  \"biophys_scaler\": {\n"}
+,{"stream_name":"stdout","time":206.649375443,"data":"    \"status\": \"ok\",\n"}
+,{"stream_name":"stdout","time":206.649377827,"data":"    \"source\": \"dualamp_v2_1_model_bundle.zip:features/biophys_scaler.joblib\",\n"}
+,{"stream_name":"stdout","time":206.649380192,"data":"    \"bytes\": 1439,\n"}
+,{"stream_name":"stdout","time":206.649382478,"data":"    \"provenance\": \"inside mounted bundle\"\n"}
+,{"stream_name":"stdout","time":206.649384822,"data":"  }\n"}
+,{"stream_name":"stdout","time":206.649387004,"data":"}\n"}
+,{"stream_name":"stderr","time":212.604817008,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":212.60484495,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":212.833970193,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":212.833995161,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":213.577171817,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":214.491338824,"data":"[NbConvertApp] Writing 327816 bytes to __results__.html\n"}
+]
