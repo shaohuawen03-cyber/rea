@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-27T02:06:01Z",
+  "updated_at_utc": "2026-11-27T02:19:19Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -3261,6 +3261,47 @@
       "created_at_utc": "2026-11-27T02:06:01Z",
       "note": "scaler poll 2.",
       "finished_at_utc": "2026-11-27T02:06:46Z"
+    },
+    {
+      "id": "v4-inspect-inputs-20261126",
+      "provider": "kaggle",
+      "mode": "run",
+      "accelerator": "CPU",
+      "script_path": "cloud-gpu/jobs/inspect_inputs.py",
+      "script_args": [],
+      "extra_pip": [],
+      "serve_minutes": 15.0,
+      "wait": false,
+      "timeout_sec": 1200,
+      "created_at_utc": "2026-11-27T02:19:19Z",
+      "kernel_slug": "v4-inspect-inputs-20261126",
+      "status": "pending",
+      "kernel_sources": [
+        "shaohuawen/dualamp-v4-full-20261126"
+      ],
+      "note": "Diagnostic: list what the mounting of the v4 training output actually produced."
+    },
+    {
+      "id": "v4-inspect-inputs-20261126-status",
+      "provider": "kaggle",
+      "mode": "status",
+      "script_path": "cloud-gpu/jobs/inspect_inputs.py",
+      "kernel_slug": "v4-inspect-inputs-20261126",
+      "status": "pending",
+      "wait": false,
+      "created_at_utc": "2026-11-27T02:19:19Z",
+      "note": "inspect poll."
+    },
+    {
+      "id": "v4-inspect-inputs-20261126-fetch",
+      "provider": "kaggle",
+      "mode": "output",
+      "script_path": "cloud-gpu/jobs/inspect_inputs.py",
+      "kernel_slug": "v4-inspect-inputs-20261126",
+      "status": "pending",
+      "wait": false,
+      "created_at_utc": "2026-11-27T02:19:19Z",
+      "note": "inspect poll."
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
