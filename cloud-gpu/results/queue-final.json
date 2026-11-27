@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-27T03:55:35Z",
+  "updated_at_utc": "2026-11-27T04:20:57Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -3560,6 +3560,62 @@
       "created_at_utc": "2026-11-27T03:55:35Z",
       "note": "amp benchmark b poll 2.",
       "finished_at_utc": "2026-11-27T03:56:17Z"
+    },
+    {
+      "id": "amp-benchmark-v4c-20261126",
+      "provider": "kaggle",
+      "mode": "run",
+      "accelerator": "NvidiaTeslaT4",
+      "script_path": "cloud-gpu/jobs/amp_benchmark_external.py",
+      "script_args": [],
+      "extra_pip": [
+        "gdown",
+        "requests",
+        "fair-esm",
+        "pyyaml",
+        "biopython",
+        "pandas",
+        "scikit-learn",
+        "joblib"
+      ],
+      "serve_minutes": 15.0,
+      "wait": false,
+      "timeout_sec": 12600,
+      "created_at_utc": "2026-11-27T04:20:57Z",
+      "kernel_slug": "amp-benchmark-v4c-20261126",
+      "status": "pushed_async",
+      "kernel_sources": [
+        "shaohuawen/dualamp-v4-full-20261126"
+      ],
+      "inline_json": {
+        "V21_INPUTS_JSON": "cloud-gpu/jobs/v21_inputs.json"
+      },
+      "note": "External benchmark retry 2: encode() returns (residue, mask, mean) - the unpack was shifted by one.",
+      "finished_at_utc": "2026-11-27T04:21:37Z"
+    },
+    {
+      "id": "amp-benchmark-v4c-20261126-status",
+      "provider": "kaggle",
+      "mode": "status",
+      "script_path": "cloud-gpu/jobs/amp_benchmark_external.py",
+      "kernel_slug": "amp-benchmark-v4c-20261126",
+      "status": "completed",
+      "wait": false,
+      "created_at_utc": "2026-11-27T04:20:57Z",
+      "note": "amp benchmark c poll.",
+      "finished_at_utc": "2026-11-27T04:21:37Z"
+    },
+    {
+      "id": "amp-benchmark-v4c-20261126-fetch",
+      "provider": "kaggle",
+      "mode": "output",
+      "script_path": "cloud-gpu/jobs/amp_benchmark_external.py",
+      "kernel_slug": "amp-benchmark-v4c-20261126",
+      "status": "completed",
+      "wait": false,
+      "created_at_utc": "2026-11-27T04:20:57Z",
+      "note": "amp benchmark c poll.",
+      "finished_at_utc": "2026-11-27T04:21:38Z"
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"

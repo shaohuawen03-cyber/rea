@@ -1,0 +1,8 @@
+{
+  "job_id": "amp-benchmark-v4c-20261126-status",
+  "provider": "kaggle",
+  "mode": "status",
+  "kernel_ref": "shaohuawen/amp-benchmark-v4c-20261126",
+  "status_output": "shaohuawen/amp-benchmark-v4c-20261126 has status \"KernelWorkerStatus.RUNNING\"",
+  "checked_at_utc": "2026-11-27T04:21:37Z"
+}
