@@ -3343,14 +3343,15 @@
       "timeout_sec": 1800,
       "created_at_utc": "2026-11-27T02:42:18Z",
       "kernel_slug": "v4-extract-scaler-b-20261126",
-      "status": "pending",
+      "status": "pushed_async",
       "kernel_sources": [
         "shaohuawen/dualamp-v4-full-20261126"
       ],
       "env": {
         "SCALER_SOURCE_KERNEL": "dualamp-v4-full-20261126"
       },
-      "note": "Retry with owner-prefixed kernel_sources: the first attempt saw an empty /kaggle/input."
+      "note": "Retry with owner-prefixed kernel_sources: the first attempt saw an empty /kaggle/input.",
+      "finished_at_utc": "2026-11-27T02:43:04Z"
     },
     {
       "id": "v4-extract-scaler-b-20261126-status",
@@ -3358,10 +3359,11 @@
       "mode": "status",
       "script_path": "cloud-gpu/jobs/extract_scaler.py",
       "kernel_slug": "v4-extract-scaler-b-20261126",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-27T02:42:18Z",
-      "note": "scaler-b poll."
+      "note": "scaler-b poll.",
+      "finished_at_utc": "2026-11-27T02:43:05Z"
     },
     {
       "id": "v4-extract-scaler-b-20261126-fetch",
@@ -3369,10 +3371,11 @@
       "mode": "output",
       "script_path": "cloud-gpu/jobs/extract_scaler.py",
       "kernel_slug": "v4-extract-scaler-b-20261126",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-27T02:42:18Z",
-      "note": "scaler-b poll."
+      "note": "scaler-b poll.",
+      "finished_at_utc": "2026-11-27T02:43:06Z"
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
