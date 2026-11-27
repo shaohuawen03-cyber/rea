@@ -1,0 +1,48 @@
+[{"stream_name":"stdout","time":5.557661371,"data":"[pip] gdown: rc=0\n"}
+,{"stream_name":"stdout","time":7.096973992,"data":"[pip] requests: rc=0\n"}
+,{"stream_name":"stdout","time":9.073570006,"data":"[pip] fair-esm: rc=0\n"}
+,{"stream_name":"stdout","time":10.607424012,"data":"[pip] pyyaml: rc=0\n"}
+,{"stream_name":"stdout","time":13.915596157,"data":"[pip] biopython: rc=0\n"}
+,{"stream_name":"stdout","time":15.479841605,"data":"[pip] pandas: rc=0\n"}
+,{"stream_name":"stdout","time":17.030086803,"data":"[pip] scikit-learn: rc=0\n"}
+,{"stream_name":"stdout","time":18.567544285,"data":"[pip] joblib: rc=0\n"}
+,{"stream_name":"stdout","time":49.828312072,"data":"Downloading: \"https://dl.fbaipublicfiles.com/fair-esm/models/esm2_t12_35M_UR50D.pt\" to /root/.cache/torch/hub/checkpoints/esm2_t12_35M_UR50D.pt\n"}
+,{"stream_name":"stdout","time":50.391076254,"data":"Downloading: \"https://dl.fbaipublicfiles.com/fair-esm/regression/esm2_t12_35M_UR50D-contact-regression.pt\" to /root/.cache/torch/hub/checkpoints/esm2_t12_35M_UR50D-contact-regression.pt\n"}
+,{"stream_name":"stderr","time":51.32341703,"data":"{\n"}
+,{"stream_name":"stderr","time":51.323439101,"data":"  \"stage\": \"amp_calibration_forensics\",\n"}
+,{"stream_name":"stderr","time":51.323442987,"data":"  \"arms\": {},\n"}
+,{"stream_name":"stderr","time":51.323464914,"data":"  \"cohort_source\": \"bundle.zip:frozen/*\",\n"}
+,{"stream_name":"stderr","time":51.323470494,"data":"  \"cohort\": {\n"}
+,{"stream_name":"stderr","time":51.323475098,"data":"    \"positives\": 14577,\n"}
+,{"stream_name":"stderr","time":51.323479959,"data":"    \"decoys\": 14572,\n"}
+,{"stream_name":"stderr","time":51.323484792,"data":"    \"positive_sha256\": \"9ca0d4076f6d61c16ad31b920afc9029ae463d3df3510049c9b6ac4366a8e40c\"\n"}
+,{"stream_name":"stderr","time":51.323489319,"data":"  },\n"}
+,{"stream_name":"stderr","time":51.323493375,"data":"  \"encoder\": {\n"}
+,{"stream_name":"stderr","time":51.323497523,"data":"    \"name\": \"fair-esm\",\n"}
+,{"stream_name":"stderr","time":51.323501842,"data":"    \"is_mock\": false\n"}
+,{"stream_name":"stderr","time":51.323506072,"data":"  },\n"}
+,{"stream_name":"stderr","time":51.323515377,"data":"  \"background_source\": \"repo clone (cloud-gpu/cache/*.gz)\",\n"}
+,{"stream_name":"stderr","time":51.323518709,"data":"  \"status\": \"FAILED\",\n"}
+,{"stream_name":"stderr","time":51.323521521,"data":"  \"error\": \"RuntimeError: no v4 checkpoints inside the bundle\",\n"}
+,{"stream_name":"stderr","time":51.323524634,"data":"  \"traceback\": \"Traceback (most recent call last):\\n  File \\\"/tmp/_payload.py\\\", line 282, in main\\n    raise RuntimeError(\\\"no v4 checkpoints inside the bundle\\\")\\nRuntimeError: no v4 checkpoints inside the bundle\\n\"\n"}
+,{"stream_name":"stderr","time":51.323538482000004,"data":"}\n"}
+,{"stream_name":"stderr","time":51.574333022,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":51.574833521,"data":"  File \"/kaggle/src/script.py\", line 15, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":51.57484648,"data":"    runpy.run_path('/tmp/_payload.py', run_name='__main__')\n"}
+,{"stream_name":"stderr","time":51.574852018,"data":"    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":51.574856791,"data":"  File \"\u003cfrozen runpy\u003e\", line 294, in run_path\n"}
+,{"stream_name":"stderr","time":51.574862221,"data":"  File \"\u003cfrozen runpy\u003e\", line 98, in _run_module_code\n"}
+,{"stream_name":"stderr","time":51.574867731,"data":"  File \"\u003cfrozen runpy\u003e\", line 88, in _run_code\n"}
+,{"stream_name":"stderr","time":51.574872855,"data":"  File \"/tmp/_payload.py\", line 550, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":51.574892992,"data":"    raise SystemExit(main())\n"}
+,{"stream_name":"stderr","time":51.574897486,"data":"                     ~~~~^^\n"}
+,{"stream_name":"stderr","time":51.574900813,"data":"  File \"/tmp/_payload.py\", line 282, in main\n"}
+,{"stream_name":"stderr","time":51.574904774,"data":"    raise RuntimeError(\"no v4 checkpoints inside the bundle\")\n"}
+,{"stream_name":"stderr","time":51.574908987,"data":"RuntimeError: no v4 checkpoints inside the bundle\n"}
+,{"stream_name":"stderr","time":56.981264048,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":56.981290416,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":57.272203569,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":57.272228619,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":58.065528058,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":59.111266361,"data":"[NbConvertApp] Writing 328589 bytes to __results__.html\n"}
+]

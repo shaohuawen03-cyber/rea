@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-27T11:22:21Z",
+  "updated_at_utc": "2026-11-27T11:52:08Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -4133,6 +4133,30 @@
       "created_at_utc": "2026-11-27T11:22:21Z",
       "note": "forensics d poll.",
       "finished_at_utc": "2026-11-27T11:23:07Z"
+    },
+    {
+      "id": "amp-calib-forensics-d-20261126-status-2",
+      "provider": "kaggle",
+      "mode": "status",
+      "script_path": "cloud-gpu/jobs/amp_calibration_forensics.py",
+      "kernel_slug": "amp-calib-forensics-d-20261126",
+      "status": "completed",
+      "wait": false,
+      "created_at_utc": "2026-11-27T11:52:08Z",
+      "note": "forensics d poll 2.",
+      "finished_at_utc": "2026-11-27T11:52:44Z"
+    },
+    {
+      "id": "amp-calib-forensics-d-20261126-fetch-2",
+      "provider": "kaggle",
+      "mode": "output",
+      "script_path": "cloud-gpu/jobs/amp_calibration_forensics.py",
+      "kernel_slug": "amp-calib-forensics-d-20261126",
+      "status": "completed",
+      "wait": false,
+      "created_at_utc": "2026-11-27T11:52:08Z",
+      "note": "forensics d poll 2.",
+      "finished_at_utc": "2026-11-27T11:52:46Z"
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
