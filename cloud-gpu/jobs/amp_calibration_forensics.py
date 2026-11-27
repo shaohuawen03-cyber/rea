@@ -48,10 +48,21 @@ LEANREA_REV = "f610dc00b1aec3ab948a5b77574af0e644259a13"
 POSITIVE_SHA = "9ca0d4076f6d61c16ad31b920afc9029ae463d3df3510049c9b6ac4366a8e40c"
 N_EACH = 2500
 BUNDLE_SHA = "d5dce04e7763dc1abe9cdcf2729de1701cccdf6c893a903e6aee2319058936bd"
-BUNDLE_ID = "1MWre9VE-emU1Ubxi838"
 
 
-def _bundle(tmp: Path) -> Path:
+def _repo(tmp: Path) -> Path:
+    """Clone this repo: it carries the bundle id descriptor and the UniProt background."""
+    d = tmp / "rea"
+    if not (d / "cloud-gpu" / "jobs" / "v21_inputs.json").exists():
+        subprocess.run(["git", "clone", "--depth", "1", "-b",
+                        os.environ.get("REA_BRANCH", "arena/85a1409e-rea"),
+                        "https://github.com/shaohuawen03-cyber/rea.git", str(d)],
+                       check=True, stdout=subprocess.DEVNULL,
+                       stderr=subprocess.DEVNULL)
+    return d
+
+
+def _bundle(tmp: Path, repo_dir: Path) -> Path:
     """Fetch the private bundle, preferring a mount and falling back to Drive.
 
     Kaggle's kernel_sources mount was empty in three of six attempts at this point,
@@ -68,9 +79,22 @@ def _bundle(tmp: Path) -> Path:
         except zipfile.BadZipFile:
             continue
     import gdown  # noqa: PLC0415
+    bids = {(os.environ.get("EVIDENCE_AUDIT_ID") or "").strip()}
+    desc = repo_dir / "cloud-gpu" / "jobs" / "v21_inputs.json"
+    if desc.exists():
+        bids.add(str(json.loads(desc.read_text()).get("private_bundle_drive_id", "")).strip())
+    # Never hardcode the id: a truncated literal fails as a permissions error and looks
+    # like a Drive problem rather than a typo.
+    bids = {b for b in bids if b}
+    if not bids:
+        raise RuntimeError("no private bundle id available (env or v21_inputs.json)")
     dest = tmp / "bundle.zip"
-    got = gdown.download(id=os.environ.get("EVIDENCE_AUDIT_ID", BUNDLE_ID).strip(),
-                         output=str(dest), quiet=True)
+    got = None
+    for b in bids:
+        got = gdown.download(id=b, output=str(dest), quiet=True)
+        if got and sha(dest) == BUNDLE_SHA:
+            break
+        got = None
     if not got or sha(dest) != BUNDLE_SHA:
         raise RuntimeError("private bundle unavailable: mount empty and Drive "
                            "download/hash failed")
@@ -156,7 +180,8 @@ def main() -> int:
 
         # --------------------------------------------------- positives + decoys
         positives = None
-        zip_path = _bundle(tmp)
+        repo_dir = _repo(tmp)
+        zip_path = _bundle(tmp, repo_dir)
         with zipfile.ZipFile(zip_path) as z:
             pf = tmp / "pos.fasta"
             pf.write_bytes(z.read("frozen/positive_core_v2_1.fasta"))
@@ -171,10 +196,9 @@ def main() -> int:
                             "positive_sha256": POSITIVE_SHA}
 
         # ----------------------------------------------------------------- code
-        repo = tmp / "rea"
-        subprocess.run(["pip", "install", "-q", "fair-esm", "pandas", "scikit-learn",
-                        "joblib", "pyyaml", "gdown"], check=False,
-                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        # No pip here: the relay already installs extra_pip before the payload runs, and
+        # a second silent `pip -q` only hid which environment the encoder came from.
+
         subprocess.run(["git", "clone", "--depth", "1", "-b", "main", LEANREA,
                         str(tmp / "leanrea")], check=True,
                        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
@@ -358,13 +382,6 @@ def main() -> int:
         # The UniProt background is not mounted for this job; it is committed to this
         # repo (27.7 MB gz) and v5 reads it from there too, so clone the repo and use
         # the identical files rather than silently substituting a different background.
-        repo_dir = tmp / "rea"
-        if not repo_dir.exists():
-            subprocess.run(["git", "clone", "--depth", "1", "-b",
-                            os.environ.get("REA_BRANCH", "arena/85a1409e-rea"),
-                            "https://github.com/shaohuawen03-cyber/rea.git",
-                            str(repo_dir)], check=True,
-                           stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         sys.path.insert(0, str(repo_dir / "cloud-gpu" / "jobs"))
 
         def _bg(name):
