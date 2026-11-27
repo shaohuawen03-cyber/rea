@@ -392,8 +392,11 @@ def _score_models(pkg: Path, encoder, checkpoints: list[Path], seqs: list[str],
     from dualamp_lite.config import FeatureConfig  # noqa: PLC0415
     from dualamp_lite.models import build_model  # noqa: PLC0415
 
+    # encode() returns (residue, mask, mean) - the mask is SECOND, and reading the mean
+    # into that slot is what produced a (N, 480) tensor where a boolean (N, 50) mask
+    # belonged. The mean is recomputed inside _predict anyway, so it is not unpacked.
     feat = encoder.encode(seqs)
-    residue, mean, mask = feat[0], feat[1], feat[2]
+    residue, mask = feat[0], feat[1]
     max_len = max(len(s) for s in seqs)
     tokens = np.zeros((len(seqs), max_len), dtype=np.int64)
     from dualamp_lite.config import STANDARD_AA  # noqa: PLC0415
