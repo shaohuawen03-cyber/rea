@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-26T14:47:10Z",
+  "updated_at_utc": "2026-11-27T01:49:08Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -3190,6 +3190,53 @@
       "created_at_utc": "2026-11-26T14:47:10Z",
       "note": "poll 2.",
       "finished_at_utc": "2026-11-26T14:47:59Z"
+    },
+    {
+      "id": "v4-extract-scaler-20261126",
+      "provider": "kaggle",
+      "mode": "run",
+      "accelerator": "CPU",
+      "script_path": "cloud-gpu/jobs/extract_scaler.py",
+      "script_args": [],
+      "extra_pip": [],
+      "serve_minutes": 15.0,
+      "wait": false,
+      "timeout_sec": 3600,
+      "created_at_utc": "2026-11-27T01:49:08Z",
+      "kernel_slug": "v4-extract-scaler-20261126",
+      "status": "pushed_async",
+      "kernel_sources": [
+        "shaohuawen/dualamp-v4-full-20261126"
+      ],
+      "env": {
+        "SCALER_SOURCE_KERNEL": "dualamp-v4-full-20261126"
+      },
+      "note": "CPU-only: copy the training-fitted biophys scaler out of the v4 output so M3 can be scored on external benchmarks without refitting.",
+      "finished_at_utc": "2026-11-27T01:49:50Z"
+    },
+    {
+      "id": "v4-extract-scaler-20261126-status",
+      "provider": "kaggle",
+      "mode": "status",
+      "script_path": "cloud-gpu/jobs/extract_scaler.py",
+      "kernel_slug": "v4-extract-scaler-20261126",
+      "status": "completed",
+      "wait": false,
+      "created_at_utc": "2026-11-27T01:49:08Z",
+      "note": "scaler poll.",
+      "finished_at_utc": "2026-11-27T01:49:51Z"
+    },
+    {
+      "id": "v4-extract-scaler-20261126-fetch",
+      "provider": "kaggle",
+      "mode": "output",
+      "script_path": "cloud-gpu/jobs/extract_scaler.py",
+      "kernel_slug": "v4-extract-scaler-20261126",
+      "status": "completed",
+      "wait": false,
+      "created_at_utc": "2026-11-27T01:49:08Z",
+      "note": "scaler poll.",
+      "finished_at_utc": "2026-11-27T01:49:52Z"
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
