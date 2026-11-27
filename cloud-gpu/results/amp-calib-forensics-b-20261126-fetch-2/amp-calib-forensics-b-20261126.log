@@ -1,0 +1,35 @@
+[{"stream_name":"stdout","time":5.239733507,"data":"[pip] gdown: rc=0\n"}
+,{"stream_name":"stdout","time":6.769714806,"data":"[pip] requests: rc=0\n"}
+,{"stream_name":"stdout","time":8.666844369,"data":"[pip] fair-esm: rc=0\n"}
+,{"stream_name":"stdout","time":10.22456617,"data":"[pip] pyyaml: rc=0\n"}
+,{"stream_name":"stdout","time":13.381985177,"data":"[pip] biopython: rc=0\n"}
+,{"stream_name":"stdout","time":14.925113556,"data":"[pip] pandas: rc=0\n"}
+,{"stream_name":"stdout","time":16.473456093,"data":"[pip] scikit-learn: rc=0\n"}
+,{"stream_name":"stdout","time":18.044559935,"data":"[pip] joblib: rc=0\n"}
+,{"stream_name":"stderr","time":18.388350123,"data":"{\n"}
+,{"stream_name":"stderr","time":18.388381586,"data":"  \"stage\": \"amp_calibration_forensics\",\n"}
+,{"stream_name":"stderr","time":18.388386631,"data":"  \"arms\": {},\n"}
+,{"stream_name":"stderr","time":18.388410179,"data":"  \"status\": \"FAILED\",\n"}
+,{"stream_name":"stderr","time":18.388415016,"data":"  \"error\": \"RuntimeError: no bundle zip with frozen/positive_core_v2_1.fasta\",\n"}
+,{"stream_name":"stderr","time":18.388419418,"data":"  \"traceback\": \"Traceback (most recent call last):\\n  File \\\"/tmp/_payload.py\\\", line 148, in main\\n    raise RuntimeError(\\\"no bundle zip with frozen/positive_core_v2_1.fasta\\\")\\nRuntimeError: no bundle zip with frozen/positive_core_v2_1.fasta\\n\"\n"}
+,{"stream_name":"stderr","time":18.388426965,"data":"}\n"}
+,{"stream_name":"stderr","time":18.390138194,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":18.39079775,"data":"  File \"/kaggle/src/script.py\", line 15, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":18.390812974,"data":"    runpy.run_path('/tmp/_payload.py', run_name='__main__')\n"}
+,{"stream_name":"stderr","time":18.390817123,"data":"    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":18.39082056,"data":"  File \"\u003cfrozen runpy\u003e\", line 294, in run_path\n"}
+,{"stream_name":"stderr","time":18.390824886,"data":"  File \"\u003cfrozen runpy\u003e\", line 98, in _run_module_code\n"}
+,{"stream_name":"stderr","time":18.390828791,"data":"  File \"\u003cfrozen runpy\u003e\", line 88, in _run_code\n"}
+,{"stream_name":"stderr","time":18.390832626,"data":"  File \"/tmp/_payload.py\", line 474, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":18.390836767,"data":"    raise SystemExit(main())\n"}
+,{"stream_name":"stderr","time":18.390840679,"data":"                     ~~~~^^\n"}
+,{"stream_name":"stderr","time":18.390844058,"data":"  File \"/tmp/_payload.py\", line 148, in main\n"}
+,{"stream_name":"stderr","time":18.390847397,"data":"    raise RuntimeError(\"no bundle zip with frozen/positive_core_v2_1.fasta\")\n"}
+,{"stream_name":"stderr","time":18.390851031,"data":"RuntimeError: no bundle zip with frozen/positive_core_v2_1.fasta\n"}
+,{"stream_name":"stderr","time":20.435319305,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":20.435344624,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":20.667386032,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":20.667410738,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":21.531060124,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":22.474683729,"data":"[NbConvertApp] Writing 321728 bytes to __results__.html\n"}
+]

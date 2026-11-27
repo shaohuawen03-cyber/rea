@@ -1,0 +1,7 @@
+{
+  "stage": "amp_calibration_forensics",
+  "arms": {},
+  "status": "FAILED",
+  "error": "RuntimeError: no bundle zip with frozen/positive_core_v2_1.fasta",
+  "traceback": "Traceback (most recent call last):\n  File \"/tmp/_payload.py\", line 148, in main\n    raise RuntimeError(\"no bundle zip with frozen/positive_core_v2_1.fasta\")\nRuntimeError: no bundle zip with frozen/positive_core_v2_1.fasta\n"
+}
