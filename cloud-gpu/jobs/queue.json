@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-27T02:42:18Z",
+  "updated_at_utc": "2026-11-27T02:54:24Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -3376,6 +3376,28 @@
       "created_at_utc": "2026-11-27T02:42:18Z",
       "note": "scaler-b poll.",
       "finished_at_utc": "2026-11-27T02:43:06Z"
+    },
+    {
+      "id": "v4-extract-scaler-b-20261126-status-2",
+      "provider": "kaggle",
+      "mode": "status",
+      "script_path": "cloud-gpu/jobs/extract_scaler.py",
+      "kernel_slug": "v4-extract-scaler-b-20261126",
+      "status": "pending",
+      "wait": false,
+      "created_at_utc": "2026-11-27T02:54:24Z",
+      "note": "scaler-b poll 2."
+    },
+    {
+      "id": "v4-extract-scaler-b-20261126-fetch-2",
+      "provider": "kaggle",
+      "mode": "output",
+      "script_path": "cloud-gpu/jobs/extract_scaler.py",
+      "kernel_slug": "v4-extract-scaler-b-20261126",
+      "status": "pending",
+      "wait": false,
+      "created_at_utc": "2026-11-27T02:54:24Z",
+      "note": "scaler-b poll 2."
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
