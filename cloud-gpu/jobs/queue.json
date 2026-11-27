@@ -3244,10 +3244,11 @@
       "mode": "status",
       "script_path": "cloud-gpu/jobs/extract_scaler.py",
       "kernel_slug": "v4-extract-scaler-20261126",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-27T02:06:01Z",
-      "note": "scaler poll 2."
+      "note": "scaler poll 2.",
+      "finished_at_utc": "2026-11-27T02:06:45Z"
     },
     {
       "id": "v4-extract-scaler-20261126-fetch-2",
@@ -3255,10 +3256,11 @@
       "mode": "output",
       "script_path": "cloud-gpu/jobs/extract_scaler.py",
       "kernel_slug": "v4-extract-scaler-20261126",
-      "status": "pending",
+      "status": "completed",
       "wait": false,
       "created_at_utc": "2026-11-27T02:06:01Z",
-      "note": "scaler poll 2."
+      "note": "scaler poll 2.",
+      "finished_at_utc": "2026-11-27T02:06:46Z"
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"

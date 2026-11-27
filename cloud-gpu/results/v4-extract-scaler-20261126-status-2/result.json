@@ -1,0 +1,8 @@
+{
+  "job_id": "v4-extract-scaler-20261126-status-2",
+  "provider": "kaggle",
+  "mode": "status",
+  "kernel_ref": "shaohuawen/v4-extract-scaler-20261126",
+  "status_output": "shaohuawen/v4-extract-scaler-20261126 has status \"KernelWorkerStatus.ERROR\"",
+  "checked_at_utc": "2026-11-27T02:06:45Z"
+}
