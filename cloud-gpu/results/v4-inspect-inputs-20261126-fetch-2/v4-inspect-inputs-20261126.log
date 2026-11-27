@@ -1,0 +1,25 @@
+[{"stream_name":"stdout","time":1.435882811,"data":"{\n"}
+,{"stream_name":"stdout","time":1.43593584,"data":"  \"input.exists\": true,\n"}
+,{"stream_name":"stdout","time":1.435941998,"data":"  \"top\": [\n"}
+,{"stream_name":"stdout","time":1.435946173,"data":"    {\n"}
+,{"stream_name":"stdout","time":1.435950095,"data":"      \"name\": \"notebooks\",\n"}
+,{"stream_name":"stdout","time":1.435954294,"data":"      \"is_dir\": true\n"}
+,{"stream_name":"stdout","time":1.435958262,"data":"    }\n"}
+,{"stream_name":"stdout","time":1.435962515,"data":"  ],\n"}
+,{"stream_name":"stdout","time":1.435970915,"data":"  \"children\": {\n"}
+,{"stream_name":"stdout","time":1.4359737049999999,"data":"    \"notebooks\": [\n"}
+,{"stream_name":"stdout","time":1.435976529,"data":"      \"shaohuawen\"\n"}
+,{"stream_name":"stdout","time":1.435996624,"data":"    ]\n"}
+,{"stream_name":"stdout","time":1.436000864,"data":"  },\n"}
+,{"stream_name":"stdout","time":1.436005954,"data":"  \"scaler_hits\": [],\n"}
+,{"stream_name":"stdout","time":1.436010334,"data":"  \"zip_hits\": [\n"}
+,{"stream_name":"stdout","time":1.436014838,"data":"    \"/kaggle/input/notebooks/shaohuawen/dualamp-v4-full-20261126/dualamp_v2_1_model_bundle.zip\"\n"}
+,{"stream_name":"stdout","time":1.436019277,"data":"  ]\n"}
+,{"stream_name":"stdout","time":1.436041442,"data":"}\n"}
+,{"stream_name":"stderr","time":4.330882398,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":4.330933359,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":4.748095492,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":4.748123756,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":6.951739308,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":8.252964189,"data":"[NbConvertApp] Writing 276173 bytes to __results__.html\n"}
+]

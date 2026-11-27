@@ -1,0 +1,18 @@
+{
+  "input.exists": true,
+  "top": [
+    {
+      "name": "notebooks",
+      "is_dir": true
+    }
+  ],
+  "children": {
+    "notebooks": [
+      "shaohuawen"
+    ]
+  },
+  "scaler_hits": [],
+  "zip_hits": [
+    "/kaggle/input/notebooks/shaohuawen/dualamp-v4-full-20261126/dualamp_v2_1_model_bundle.zip"
+  ]
+}
