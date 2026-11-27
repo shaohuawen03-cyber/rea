@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-27T07:03:25Z",
+  "updated_at_utc": "2026-11-27T07:31:51Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -3801,6 +3801,28 @@
       "created_at_utc": "2026-11-27T07:03:25Z",
       "note": "v5 arm poll 2.",
       "finished_at_utc": "2026-11-27T07:03:58Z"
+    },
+    {
+      "id": "dualamp-v5-no-trainhn-20261126-status-3",
+      "provider": "kaggle",
+      "mode": "status",
+      "script_path": "cloud-gpu/jobs/dualamp_v5_train.py",
+      "kernel_slug": "dualamp-v5-no-trainhn-20261126",
+      "status": "pending",
+      "wait": false,
+      "created_at_utc": "2026-11-27T07:31:51Z",
+      "note": "v5 arm poll 3."
+    },
+    {
+      "id": "dualamp-v5-no-trainhn-20261126-fetch-3",
+      "provider": "kaggle",
+      "mode": "output",
+      "script_path": "cloud-gpu/jobs/dualamp_v5_train.py",
+      "kernel_slug": "dualamp-v5-no-trainhn-20261126",
+      "status": "pending",
+      "wait": false,
+      "created_at_utc": "2026-11-27T07:31:51Z",
+      "note": "v5 arm poll 3."
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
