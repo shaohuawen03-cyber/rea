@@ -437,10 +437,16 @@ def _predict(net, residue, mask, physio, tokens, device) -> "object":
     n = len(tokens)
     empty_physio = (np.zeros((n, 0), dtype=np.float32) if physio is None
                     else physio)
+    # The encoder returns residue as float16/float32; mask must be boolean because the
+    # models use ~mask for the attention/masking path (invert is not defined on floats).
+    # `mean` is recomputed here with masked pooling over real residues only, exactly the
+    # V3 P0 fix, rather than trusting the encoder's own pooling.
+    residue = np.asarray(residue, dtype=np.float32)
+    mask = np.asarray(mask).astype(bool)
+    mean = (residue * mask[..., None]).sum(1) / np.maximum(
+        mask.sum(1, keepdims=True), 1)
     bundle = Bundle(
-        residue=residue, mask=mask,
-        mean=np.asarray(residue, dtype=np.float32).sum(1) / np.maximum(
-            np.asarray(mask, dtype=np.float32).sum(1, keepdims=True), 1.0),
+        residue=residue, mask=mask, mean=mean.astype(np.float32),
         physio=empty_physio, tokens=tokens,
         labels=np.zeros(n, dtype=np.int64), clusters=np.zeros(n, dtype=np.int64),
         seq_ids=np.array([str(i) for i in range(n)]), seqs=np.array(["" for _ in range(n)]),
