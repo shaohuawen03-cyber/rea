@@ -1,0 +1,66 @@
+{
+  "stage": "amp_benchmark_external",
+  "status": "FAILED",
+  "leanrea_commit": "f610dc00b1aec3ab948a5b77574af0e644259a13",
+  "max_per_class": 4000,
+  "cohort": {
+    "positives": 14577,
+    "decoys": 14572,
+    "positive_sha256": "9ca0d4076f6d61c16ad31b920afc9029ae463d3df3510049c9b6ac4366a8e40c",
+    "bundle_sha256": "d5dce04e7763dc1abe9cdcf2729de1701cccdf6c893a903e6aee2319058936bd"
+  },
+  "checkpoints": [
+    "M1_seed1.pt",
+    "M1_seed2.pt",
+    "M1_seed3.pt",
+    "M1_seed4.pt",
+    "M1_seed5.pt",
+    "M2_seed1.pt",
+    "M2_seed2.pt",
+    "M2_seed3.pt",
+    "M2_seed4.pt",
+    "M2_seed5.pt",
+    "M3_seed1.pt",
+    "M3_seed2.pt",
+    "M3_seed3.pt",
+    "M3_seed4.pt",
+    "M3_seed5.pt"
+  ],
+  "checkpoint_source": {
+    "loose_mounted": 0,
+    "from_bundle": 15,
+    "bundle": "dualamp_v2_1_model_bundle.zip"
+  },
+  "negatives": {
+    "proteins_total": 117172,
+    "keyword_excluded": 18,
+    "fragments_raw": 351462,
+    "fragments_standard_aa": 351429,
+    "fragments_dedup": 351119,
+    "fragments_hit_positive_4mer_gt08": 31495,
+    "negatives_final": 4000,
+    "seed": 11,
+    "cap": 4000,
+    "neg_mode": "standard",
+    "seconds": 10.9
+  },
+  "dbaasp": {
+    "n_raw": 13404,
+    "n_usable": 9534,
+    "source": "BioGenies/NegativeDatasets data/dbaasp.csv"
+  },
+  "encoder": {
+    "name": "fair-esm",
+    "embed_dim": 0,
+    "is_mock": false
+  },
+  "biophys_scaler": {
+    "status": "missing",
+    "reason": "training-fitted biophys scaler not mounted; M3 dropped from external tables rather than refitting it"
+  },
+  "m3_excluded": {
+    "reason": "training-fitted biophys scaler not mounted; M3 dropped from external tables rather than refitting it",
+    "dropped_checkpoints": []
+  },
+  "error": "RuntimeError: Given normalized_shape=[35], expected input with shape [*, 35], but got input of size[256, 0]"
+}
