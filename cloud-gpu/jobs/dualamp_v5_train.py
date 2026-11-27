@@ -1382,11 +1382,32 @@ def main() -> int:
         # forces another 90-minute GPU run just to ship the weights. The raw zip is
         # ~760 MB, which the relay cannot route into a public repo, so also emit
         # <2 MiB parts that CAN be reassembled byte-for-byte later.
-        shutil.copy2(private_zip, Path(out) / "dualamp_v2_1_model_bundle.zip")
+        # A controlled arm only needs its metrics: copying the ~760 MB private zip (and
+        # re-splitting it into parts) into the kernel output adds tens of minutes of
+        # upload and fetch traffic per arm and changes nothing about the comparison.
+        # V5_SKIP_BUNDLE=1 keeps the arm lightweight; the winning arm is exported
+        # separately by the model-only extractor when it becomes the release.
+        skip_bundle = (os.environ.get("V5_SKIP_BUNDLE") or "").strip() == "1"
+        if skip_bundle:
+            report["private_bundle_export"] = {"skipped": "V5_SKIP_BUNDLE=1 (arm run)"}
+        else:
+            shutil.copy2(private_zip, Path(out) / "dualamp_v2_1_model_bundle.zip")
         part_size = 1900 * 1024
         parts_dir = Path(out) / "model_bundle_parts"
-        parts_dir.mkdir(parents=True, exist_ok=True)
         part_hashes = []
+        if skip_bundle:
+            (out / "v5_arm_summary.json").write_text(
+                json.dumps({"v5_mode": V5_MODE,
+                            "report": {k: v for k, v in report.items()
+                                       if k not in {"traceback"}}},
+                           ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+            (out / "v2_1_training_report.json").write_text(
+                json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+            print(json.dumps({k: v for k, v in report.items()
+                              if k not in {"metrics", "metrics_summary",
+                                           "calibration_bins"}},
+                             ensure_ascii=False, indent=2)[:6000], flush=True)
+            return 0
         with private_zip.open("rb") as src:
             idx = 0
             while True:
