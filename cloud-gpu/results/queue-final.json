@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-27T03:30:17Z",
+  "updated_at_utc": "2026-11-27T03:55:35Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -3536,6 +3536,30 @@
       "created_at_utc": "2026-11-27T03:30:17Z",
       "note": "amp benchmark b poll.",
       "finished_at_utc": "2026-11-27T03:30:57Z"
+    },
+    {
+      "id": "amp-benchmark-v4b-20261126-status-2",
+      "provider": "kaggle",
+      "mode": "status",
+      "script_path": "cloud-gpu/jobs/amp_benchmark_external.py",
+      "kernel_slug": "amp-benchmark-v4b-20261126",
+      "status": "completed",
+      "wait": false,
+      "created_at_utc": "2026-11-27T03:55:35Z",
+      "note": "amp benchmark b poll 2.",
+      "finished_at_utc": "2026-11-27T03:56:16Z"
+    },
+    {
+      "id": "amp-benchmark-v4b-20261126-fetch-2",
+      "provider": "kaggle",
+      "mode": "output",
+      "script_path": "cloud-gpu/jobs/amp_benchmark_external.py",
+      "kernel_slug": "amp-benchmark-v4b-20261126",
+      "status": "completed",
+      "wait": false,
+      "created_at_utc": "2026-11-27T03:55:35Z",
+      "note": "amp benchmark b poll 2.",
+      "finished_at_utc": "2026-11-27T03:56:17Z"
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"

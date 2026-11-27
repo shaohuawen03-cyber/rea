@@ -1,0 +1,12 @@
+{
+  "job_id": "amp-benchmark-v4b-20261126-fetch-2",
+  "provider": "kaggle",
+  "mode": "output",
+  "kernel_ref": "shaohuawen/amp-benchmark-v4b-20261126",
+  "copied_files": [
+    "amp-benchmark-v4b-20261126.log",
+    "amp_benchmark_report.json"
+  ],
+  "cli_output": "Downloading amp_benchmark_report.json to /tmp/kag_out_gdkktx2k\n\nOutput file downloaded to /tmp/kag_out_gdkktx2k/amp_benchmark_report.json\nKernel log downloaded to /tmp/kag_out_gdkktx2k/amp-benchmark-v4b-20261126.log",
+  "fetched_at_utc": "2026-11-27T03:56:17Z"
+}
