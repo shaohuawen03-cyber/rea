@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-27T08:01:06Z",
+  "updated_at_utc": "2026-11-27T08:32:00Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -3849,6 +3849,57 @@
       "created_at_utc": "2026-11-27T08:01:06Z",
       "note": "v5 arm poll 4.",
       "finished_at_utc": "2026-11-27T08:01:41Z"
+    },
+    {
+      "id": "amp-calib-forensics-20261126",
+      "provider": "kaggle",
+      "mode": "run",
+      "accelerator": "NvidiaTeslaT4",
+      "script_path": "cloud-gpu/jobs/amp_calibration_forensics.py",
+      "script_args": [],
+      "extra_pip": [
+        "gdown",
+        "requests",
+        "fair-esm",
+        "pyyaml",
+        "biopython",
+        "pandas",
+        "scikit-learn",
+        "joblib"
+      ],
+      "serve_minutes": 15.0,
+      "wait": false,
+      "timeout_sec": 12600,
+      "created_at_utc": "2026-11-27T08:32:00Z",
+      "kernel_slug": "amp-calib-forensics-20261126",
+      "status": "pending",
+      "kernel_sources": [
+        "shaohuawen/dualamp-v4-full-20261126"
+      ],
+      "note": "Threshold forensics: is the v4 1%-FPR sensitivity a calibration artefact? Score v4 weights on test positives, decoys and rebuilt real negatives, then compare the dev-mixture quantile against a real-negative-only quantile.",
+      "finished_at_utc": "2026-11-27T05:15:41Z"
+    },
+    {
+      "id": "amp-calib-forensics-20261126-status",
+      "provider": "kaggle",
+      "mode": "status",
+      "script_path": "cloud-gpu/jobs/amp_calibration_forensics.py",
+      "kernel_slug": "amp-calib-forensics-20261126",
+      "status": "pending",
+      "wait": false,
+      "created_at_utc": "2026-11-27T08:32:00Z",
+      "note": "forensics poll."
+    },
+    {
+      "id": "amp-calib-forensics-20261126-fetch",
+      "provider": "kaggle",
+      "mode": "output",
+      "script_path": "cloud-gpu/jobs/amp_calibration_forensics.py",
+      "kernel_slug": "amp-calib-forensics-20261126",
+      "status": "pending",
+      "wait": false,
+      "created_at_utc": "2026-11-27T08:32:00Z",
+      "note": "forensics poll."
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
