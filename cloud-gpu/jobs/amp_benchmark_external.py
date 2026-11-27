@@ -201,14 +201,32 @@ def main() -> int:
         pkg = leanrea / "dualamp-lite"
         sys.path.insert(0, str(pkg))
 
-        checkpoints = sorted(Path("/kaggle/input").rglob("model_*_seed*.pt"))
+        # Checkpoints may arrive as loose files (a model-only kernel output) or only
+        # inside the big private bundle, depending on how Kaggle resolves the mount.
+        # Handle both here so the evaluation never depends on which shape arrived.
+        ckpt_dir = tmp / "ckpts"
+        ckpt_dir.mkdir(exist_ok=True)
+        loose = sorted(Path("/kaggle/input").rglob("*_seed*.pt"))
+        for c in loose:
+            shutil.copy2(c, ckpt_dir / c.name)
+        bundles = sorted(Path("/kaggle/input").rglob("dualamp_v2_1_model_bundle.zip"))
+        extracted = []
+        for b in bundles[:1]:
+            with zipfile.ZipFile(b) as z:
+                for name in z.namelist():
+                    if name.startswith("model/") and name.endswith(".pt"):
+                        target = ckpt_dir / Path(name).name
+                        if not target.exists():
+                            with z.open(name) as src, target.open("wb") as dst:
+                                shutil.copyfileobj(src, dst)
+                            extracted.append(target.name)
+        checkpoints = sorted(ckpt_dir.glob("*_seed*.pt"))
         if not checkpoints:
-            checkpoints = sorted(Path("/kaggle/input").rglob("*_seed*.pt"))
-        if not checkpoints:
-            raise RuntimeError("no .pt checkpoints mounted under /kaggle/input")
+            raise RuntimeError("no .pt checkpoints found (loose or inside the bundle)")
         report["checkpoints"] = [c.name for c in checkpoints]
-        model_dirs = sorted({c.parent for c in checkpoints})
-        report["checkpoint_dirs"] = [str(d) for d in model_dirs]
+        report["checkpoint_source"] = {"loose_mounted": len(loose),
+                                       "from_bundle": len(extracted),
+                                       "bundle": bundles[0].name if bundles else None}
 
         # ---- negatives (the same recipe the model trained on) ------------ #
         sys.path.insert(0, str(repo / "cloud-gpu" / "jobs"))
@@ -245,15 +263,17 @@ def main() -> int:
                              "embed_dim": int(getattr(encoder, "embed_dim", 0)),
                              "is_mock": bool(getattr(encoder, "is_mock", False))}
 
-        scaler = None
-        scaler_files = sorted(Path("/kaggle/input").rglob("*biophys_scaler.joblib"))
-        if scaler_files:
-            import joblib  # noqa: PLC0415
-            scaler = joblib.load(scaler_files[0])
-        report["biophys_scaler"] = (str(scaler_files[0]) if scaler_files
-                                    else "MISSING - M3 cannot be scored faithfully")
+        # The biophys scaler must be the one fitted on the *training* split. Kaggle's
+        # kernel_sources mount proved unreliable (the same attachment was empty twice and
+        # present once), so this never depends on it: if the scaler is not mounted, M3 is
+        # dropped from every external table instead of being scored on different inputs.
+        scaler, scaler_audit = _scaler_for_m3()
+        report["biophys_scaler"] = scaler_audit
         if scaler is None:
-            raise RuntimeError("no biophys scaler mounted; M3 outputs would be wrong")
+            dropped = [c for c in checkpoints if "_M3_" in c.name or "_M3." in c.name]
+            checkpoints = [c for c in checkpoints if c not in dropped]
+            report["m3_excluded"] = {"reason": scaler_audit.get("reason"),
+                                     "dropped_checkpoints": [c.name for c in dropped]}
 
         def score(seqs: list[str]) -> dict:
             return _score_models(pkg, encoder, checkpoints, seqs, tmp, scaler=scaler)
@@ -314,6 +334,22 @@ def main() -> int:
             json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8")
         print(json.dumps(report, indent=2, ensure_ascii=False)[-4000:], flush=True)
         return 1
+
+
+def _scaler_for_m3():
+    """Locate the training-fitted biophys scaler, or refuse to score M3.
+
+    Refitting it here would silently change M3's inputs (the scaler is fitted on the
+    training split only), so a missing scaler is reported as a failure to evaluate M3,
+    never papered over.
+    """
+    scaler_files = sorted(Path("/kaggle/input").rglob("*biophys_scaler.joblib"))
+    if not scaler_files:
+        return (None, {"status": "missing",
+                       "reason": "training-fitted biophys scaler not mounted; M3 dropped "
+                                 "from external tables rather than refitting it"})
+    import joblib  # noqa: PLC0415
+    return joblib.load(scaler_files[0]), {"status": "ok", "source": str(scaler_files[0])}
 
 
 def _download_dbaasp(repo: Path, tmp: Path) -> list[str]:

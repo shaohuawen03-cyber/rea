@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-27T02:54:24Z",
+  "updated_at_utc": "2026-11-27T03:01:23Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -3400,6 +3400,59 @@
       "created_at_utc": "2026-11-27T02:54:24Z",
       "note": "scaler-b poll 2.",
       "finished_at_utc": "2026-11-27T02:55:02Z"
+    },
+    {
+      "id": "amp-benchmark-v4-20261126",
+      "provider": "kaggle",
+      "mode": "run",
+      "accelerator": "NvidiaTeslaT4",
+      "script_path": "cloud-gpu/jobs/amp_benchmark_external.py",
+      "script_args": [],
+      "extra_pip": [
+        "gdown",
+        "requests",
+        "fair-esm",
+        "pyyaml",
+        "biopython",
+        "pandas",
+        "scikit-learn",
+        "joblib"
+      ],
+      "serve_minutes": 15.0,
+      "wait": false,
+      "timeout_sec": 12600,
+      "created_at_utc": "2026-11-27T03:01:23Z",
+      "kernel_slug": "amp-benchmark-v4-20261126",
+      "status": "pending",
+      "kernel_sources": [
+        "shaohuawen/dualamp-v4-full-20261126"
+      ],
+      "inline_json": {
+        "V21_INPUTS_JSON": "cloud-gpu/jobs/v21_inputs.json"
+      },
+      "note": "External benchmark: score the published v4 weights on four independent checks (DBAASP cross-source positives, composition decoys, i.i.d. same-source split, length extrapolation) with the model's own dev-frozen thresholds and per-check composition shift."
+    },
+    {
+      "id": "amp-benchmark-v4-20261126-status",
+      "provider": "kaggle",
+      "mode": "status",
+      "script_path": "cloud-gpu/jobs/amp_benchmark_external.py",
+      "kernel_slug": "amp-benchmark-v4-20261126",
+      "status": "pending",
+      "wait": false,
+      "created_at_utc": "2026-11-27T03:01:23Z",
+      "note": "amp benchmark poll."
+    },
+    {
+      "id": "amp-benchmark-v4-20261126-fetch",
+      "provider": "kaggle",
+      "mode": "output",
+      "script_path": "cloud-gpu/jobs/amp_benchmark_external.py",
+      "kernel_slug": "amp-benchmark-v4-20261126",
+      "status": "pending",
+      "wait": false,
+      "created_at_utc": "2026-11-27T03:01:23Z",
+      "note": "amp benchmark poll."
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
