@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at_utc": "2026-11-27T05:43:25Z",
+  "updated_at_utc": "2026-11-27T06:09:45Z",
   "jobs": [
     {
       "id": "probe-20261112",
@@ -3720,6 +3720,60 @@
       "created_at_utc": "2026-11-27T05:43:25Z",
       "note": "amp benchmark d poll 2.",
       "finished_at_utc": "2026-11-27T05:44:07Z"
+    },
+    {
+      "id": "dualamp-v5-no_trainhn-20261126",
+      "provider": "kaggle",
+      "accelerator": "NvidiaTeslaT4",
+      "mode": "run",
+      "script_path": "cloud-gpu/jobs/dualamp_v5_train.py",
+      "script_args": [],
+      "extra_pip": [
+        "gdown",
+        "requests",
+        "fair-esm",
+        "pyyaml",
+        "biopython",
+        "pandas",
+        "scikit-learn",
+        "matplotlib"
+      ],
+      "serve_minutes": 15.0,
+      "wait": false,
+      "timeout_sec": 12600,
+      "created_at_utc": "2026-11-27T06:09:45Z",
+      "kernel_slug": "dualamp-v5-no-trainhn-20261126",
+      "status": "pending",
+      "env": {
+        "V5_MODE": "no_trainhn",
+        "V5_SKIP_BUNDLE": "1"
+      },
+      "inline_json": {
+        "V21_INPUTS_JSON": "cloud-gpu/jobs/v21_inputs.json"
+      },
+      "note": "v5 controlled arm no_trainhn: exactly v4 minus the trainable decoys - isolates what the decoy injection costs in sensitivity and buys in decoy rejection. V5_SKIP_BUNDLE=1 keeps the arm to metrics only."
+    },
+    {
+      "id": "dualamp-v5-no-trainhn-20261126-status",
+      "provider": "kaggle",
+      "mode": "status",
+      "script_path": "cloud-gpu/jobs/dualamp_v5_train.py",
+      "kernel_slug": "dualamp-v5-no-trainhn-20261126",
+      "status": "pending",
+      "wait": false,
+      "created_at_utc": "2026-11-27T06:09:45Z",
+      "note": "v5 arm poll."
+    },
+    {
+      "id": "dualamp-v5-no-trainhn-20261126-fetch",
+      "provider": "kaggle",
+      "mode": "output",
+      "script_path": "cloud-gpu/jobs/dualamp_v5_train.py",
+      "kernel_slug": "dualamp-v5-no-trainhn-20261126",
+      "status": "pending",
+      "wait": false,
+      "created_at_utc": "2026-11-27T06:09:45Z",
+      "note": "v5 arm poll."
     }
   ],
   "updated_at_ts_utc": "2026-11-24T13:05:42Z"
